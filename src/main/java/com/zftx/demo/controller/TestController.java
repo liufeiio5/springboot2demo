@@ -12,4 +12,9 @@ public class TestController {
     public String show(){
         return "hello";
     }
+
+    @RequestMapping("/index")
+    public String toIndex(){
+        return "index";
+    }
 }
