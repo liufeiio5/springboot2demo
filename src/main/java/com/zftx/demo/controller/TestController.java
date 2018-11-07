@@ -10,7 +10,7 @@ public class TestController {
     @RequestMapping("/show")
     @ResponseBody
     public String show(){
-        return "hello";
+        return "hello world ";
     }
 
     @RequestMapping("/index")

@@ -42,6 +42,17 @@ mybatis:
   - classpath:sql/department.sql
   - classpath:sql/employee.sql
 
-
 server:
   port: 8899
+
+  devtools:
+    livereload:
+      enabled: true #是否支持livereload
+      port: 35729
+    restart:
+      enabled: true #是否支持热部署
+  management:
+    port: 54001
+    health:
+      mail:
+        enabled: false
