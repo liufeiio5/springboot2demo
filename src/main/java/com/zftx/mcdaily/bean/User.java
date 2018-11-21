@@ -22,5 +22,7 @@ public class User
     String birthplace;//籍贯
     String birthday;//生日
     String position;//职位
+    String hobby;//兴趣
+    String motto;//座右铭
 
 }
