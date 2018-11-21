@@ -14,7 +14,7 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    private EventMapper eventMapper;
+    EventMapper eventMapper;
 
     @Override
     public List<Event> findEventAll(Event event) {
@@ -24,5 +24,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public Integer addEvent(Event event) {
         return eventMapper.addEvent(event);
+    }
+
+    @Override
+    public Integer updateEvent(Event event) {
+        return eventMapper.updateEvent(event);
+    }
+
+    @Override
+    public Integer delEvent(Event event) {
+        return eventMapper.delEvent(event);
     }
 }

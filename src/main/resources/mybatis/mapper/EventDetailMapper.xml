@@ -83,4 +83,31 @@
         </trim>
     </insert>
 
+
+    <update id="updateEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail">
+        UPDATE event_detail
+        <set>
+            <if test="eventDetail.eventId!=null">
+                 event_id=#{eventDetail.eventId},
+            </if>
+            <if test="eventDetail.process!=null and eventDetail.process!=''">
+                 process=#{eventDetail.process},
+            </if>
+            <if test="eventDetail.result!=null and eventDetail.result!=''">
+                  result=#{eventDetail.result},
+            </if>
+            <if test="eventDetail.method!=null and eventDetail.method!=''">
+                 method=#{eventDetail.method},
+            </if>
+            <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                  remarks=#{eventDetail.remarks},
+            </if>
+        </set>
+        WHERE id=#{eventDetail.id}
+    </update>
+
+    <delete id="delEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail">
+        delete from event_detail WHERE id=#{eventDetail.id}
+    </delete>
+
 </mapper>

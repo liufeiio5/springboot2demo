@@ -21,4 +21,18 @@ public interface EventMapper {
      */
     public Integer addEvent(@Param("event") Event event);
 
+    /**
+     * 修改事件
+     * @param event
+     * @return
+     */
+    public Integer updateEvent(@Param("event") Event event);
+
+    /**
+     * 删除事件
+     * @param event
+     * @return
+     */
+    public Integer delEvent(@Param("event") Event event);
+
 }

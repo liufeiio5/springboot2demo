@@ -1,10 +1,10 @@
 package com.zftx.mcdaily.controller;
 
+import com.zftx.mcdaily.util.CommUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 
 @Controller
 public class TestController {
@@ -19,4 +19,5 @@ public class TestController {
     public String toIndex(){
         return "index";
     }
+
 }
