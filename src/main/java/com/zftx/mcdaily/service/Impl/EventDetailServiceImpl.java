@@ -30,6 +30,7 @@ public class EventDetailServiceImpl implements EventDetailService {
 
     @Override
     public Integer updateEventDetail(EventDetail eventDetail) {
+        eventDetail.setDate(CommUtil.getDayStringWithMark(eventDetail.getDate()));
         return eventDetailMapper.updateEventDetail(eventDetail);
     }
 

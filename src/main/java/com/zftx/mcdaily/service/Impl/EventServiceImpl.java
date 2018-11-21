@@ -30,6 +30,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Integer updateEvent(Event event) {
+        event.setDate(CommUtil.getDayStringWithMark(event.getDate()));
         return eventMapper.updateEvent(event);
     }
 
