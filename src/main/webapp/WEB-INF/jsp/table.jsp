@@ -46,7 +46,6 @@
 						<select id="surface"></select><br />
 						<select id="line"></select><br />
 						<select id="point"></select><br />
-						<select id="type"></select><br />
 						<textarea id="event"></textarea><br />
 						<textarea id="process"></textarea><br />
 						<textarea id="result"></textarea><br />

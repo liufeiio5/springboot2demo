@@ -27,4 +27,9 @@ public class TestController {
         return "index";
     }
 
+    @RequestMapping(value = "/table")
+    public String table(){
+        return "table";
+    }
+
 }
