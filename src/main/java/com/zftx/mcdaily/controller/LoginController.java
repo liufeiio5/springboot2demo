@@ -4,48 +4,69 @@ import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.UserService;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
+@Slf4j
 public class LoginController {
 
     @Autowired
     private UserService userService;
 
     /**
+     * 访问登录页
+     * @return
+     */
+    @RequestMapping(value = "/login")
+    public String Login(){
+        return "login";
+    }
+
+    /**
      * 用户登录
      * @param user
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(User user){
 
-        boolean check = MD5.check(user.getPassword(), user.getUserName(), "从数据库获取的md5字符串");
-        if(check==true){
-            //TODO
-            return R.ok("登录成功");
-        }else{
-            //TODO
-            return R.error("登录失败");
-        }
-    }
+        user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
+        List<User> user1 = userService.getUser(user);
 
+        if (user1 != null && user1.size() > 0) {
+            log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
+            return R.ok().put("message", "登录成功");
+        } else {
+            log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录失败");
+            return R.error().put("message", "登录失败");
+        }
+
+    }
 
     /**
      * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
      * @param user
      * @return
      */
-    @RequestMapping(value = "/regist")
-    public R regist(User user){
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ResponseBody
+    public R register(User user){
         user.setPassword( MD5.md5(user.getPassword(),user.getUserName()));
-        //TODO
-        return R.ok();
+        String result = userService.insertUser(user);
+        if(result.equals("success")){
+            return  R.ok("注册成功");
+        }else{
+            return R.error("注册失败");
+
+        }
     }
 
 }

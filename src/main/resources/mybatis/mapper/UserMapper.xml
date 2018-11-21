@@ -28,7 +28,7 @@
                    and  user_name like concat(#{user.userName},'%')
                 </if>
                 <if test="user.password != null">
-                    password = #{user.password}
+                    and password = #{user.password}
                 </if>
                 <if test="user.email != null">
                     and  email like concat(#{user.email},'%')

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/test")
 public class TestController {
     @Autowired
     UserService userService;
@@ -19,9 +18,9 @@ public class TestController {
         return "hello world ";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/index")
     public String toIndex(){
-        return "login";
+        return "index";
     }
 
 }
