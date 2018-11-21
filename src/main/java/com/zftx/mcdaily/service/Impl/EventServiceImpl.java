@@ -14,7 +14,7 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    private EventMapper eventMapper;
+    EventMapper eventMapper;
 
     @Override
     public List<Event> findEventAll(Event event) {
