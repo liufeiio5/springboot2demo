@@ -18,4 +18,111 @@
     </resultMap>
     <sql id="columnAll">id,type_id,surface_id,line_id,point_id,point_name,create_user,create_time,update_user,update_time</sql>
     <sql id="columnBase">id,type_id,surface_id,line_id,point_id,point_name</sql>
+
+    <select id="findPointAll" resultMap="point">
+        select
+        <include refid="columnAll"/>
+        from point
+        <if test="point!=null">
+            <where>
+                <if test="point.id!=null">
+                    id=#{point.id}
+                </if>
+                <if test="point.typeId!=null">
+                    and type_id=#{point.typeId}
+                </if>
+                <if test="point.surfaceId!=null">
+                    and  surface_id=#{point.surfaceId}
+                </if>
+                <if test="point.lineId!=null">
+                    and  line_id=#{point.lineId}
+                </if>
+                <if test="point.pointId!=null">
+                    and point_id=#{point.pointId}
+                </if>
+                <if test="point.pointName!=null and point.pointName!=''">
+                    and   point_name=#{point.pointName}
+                </if>
+                <if test="point.createUser!=null">
+                    and create_user=#{point.createUser}
+                </if>
+                <if test="point.createTime!=null">
+                    and  create_time=#{point.createTime}
+                </if>
+                <if test="point.updateUser!=null">
+                    and   update_user=#{point.updateUser}
+                </if>
+                <if test="point.updateTime!=null">
+                    and  update_time=#{point.updateTime}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addPoint" parameterType="com.zftx.mcdaily.bean.Point" useGeneratedKeys="true" keyProperty="point.id">
+        insert ignore into point
+        <trim prefix=" (" suffix=")" suffixOverrides="," >
+            <if test="point!=null">
+                    <if test="point.typeId!=null">
+                        type_id,
+                    </if>
+                    <if test="point.surfaceId!=null">
+                        surface_id,
+                    </if>
+                    <if test="point.lineId!=null">
+                        line_id,
+                    </if>
+                    <if test="point.pointId!=null">
+                        point_id,
+                    </if>
+                    <if test="point.pointName!=null and point.pointName!=''">
+                        point_name,
+                    </if>
+                    <if test="point.createUser!=null">
+                        create_user,
+                    </if>
+                    <if test="point.createTime!=null">
+                        create_time,
+                    </if>
+                    <if test="point.updateUser!=null">
+                        update_user,
+                    </if>
+                    <if test="point.updateTime!=null">
+                        update_time,
+                    </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="point!=null">
+                <if test="point.typeId!=null">
+                    #{point.typeId},
+                </if>
+                <if test="point.surfaceId!=null">
+                    #{point.surfaceId},
+                </if>
+                <if test="point.lineId!=null">
+                    #{point.lineId},
+                </if>
+                <if test="point.pointId!=null">
+                    #{point.pointId},
+                </if>
+                <if test="point.pointName!=null and point.pointName!=''">
+                    #{point.pointName},
+                </if>
+                <if test="point.createUser!=null">
+                    #{point.createUser},
+                </if>
+                <if test="point.createTime!=null">
+                    #{point.createTime},
+                </if>
+                <if test="point.updateUser!=null">
+                    #{point.updateUser},
+                </if>
+                <if test="point.updateTime!=null">
+                    #{point.updateTime},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
 </mapper>
