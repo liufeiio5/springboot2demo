@@ -23,4 +23,14 @@ public class SurfacServiceImpl implements SurfacService {
     public Integer addSurface(Surface surface) {
         return surfaceMapper.addSurface(surface);
     }
+
+    @Override
+    public Integer updateSurface(Surface surface) {
+        return surfaceMapper.updateSurface(surface);
+    }
+
+    @Override
+    public Integer delSurface(Surface surface) {
+        return surfaceMapper.delSurface(surface);
+    }
 }

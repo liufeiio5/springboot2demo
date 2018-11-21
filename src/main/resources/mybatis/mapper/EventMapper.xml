@@ -108,4 +108,44 @@
         </trim>
     </insert>
 
+    <update id="updateEvent" parameterType="com.zftx.mcdaily.bean.Event">
+        UPDATE event
+        <set>
+            <if test="event.pointId!=null">
+                  point_id=#{event.pointId},
+            </if>
+            <if test="event.eventName!=null and event.eventName!=''">
+                  event_name=#{event.eventName},
+            </if>
+            <if test="event.weight!=null">
+                 weight=#{event.weight},
+            </if>
+            <if test="event.status!=null">
+                 status=#{event.status},
+            </if>
+            <if test="event.createUser!=null and event.createUser!=''">
+                  create_user=#{event.createUser},
+            </if>
+            <if test="event.date!=null">
+                 date=#{event.date},
+            </if>
+            <if test="event.time!=null">
+                 time=#{event.time},
+            </if>
+        </set>
+        WHERE id=#{event.id}
+    </update>
+
+
+    <update id="delEvent" parameterType="com.zftx.mcdaily.bean.Event">
+        UPDATE event
+        <set>
+            <if test="event.islive!=null">
+                 islive=#{event.islive}
+            </if>
+        </set>
+        WHERE id=#{event.id}
+    </update>
+
+
 </mapper>

@@ -25,4 +25,14 @@ public class PointServiceImpl implements PointService {
     public Integer addPoint(Point point) {
         return pointMapper.addPoint(point);
     }
+
+    @Override
+    public Integer updatePoint(Point point) {
+        return pointMapper.updatePoint(point);
+    }
+
+    @Override
+    public Integer delPoint(Point point) {
+        return pointMapper.delPoint(point);
+    }
 }
