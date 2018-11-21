@@ -27,11 +27,4 @@ public class TestController {
         return "index";
     }
 
-    @RequestMapping("/deleteType")
-    public String deleteType(Type type){
-        String str=typeService.deleteType(type);
-        return "index";
-    }
-
-
 }
