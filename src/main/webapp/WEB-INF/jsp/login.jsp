@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="/iconfont/style.css" />
 <script type="text/javascript" src="/js/jquery.min.js" ></script>
 <script type="text/javascript" src="/layer/layer.js" ></script>
-    <style>
-        body{margin:0;padding:0;background:url(images/bg.jpg) no-repeat;}
-        .main_content{background:url(images/main_bg.png) repeat;}
-    </style>
+    <%--<style>--%>
+        <%--body{margin:0;padding:0;background:url(images/bg.jpg) no-repeat;}--%>
+        <%--.main_content{background:url(images/main_bg.png) repeat;}--%>
+    <%--</style>--%>
 </head>
 
 <body>
