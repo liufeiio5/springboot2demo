@@ -1,6 +1,6 @@
 package com.zftx.mcdaily.aop.test;
 
-import com.zftx.daynote.aop.service.AService;
+import com.zftx.mcdaily.aop.service.AService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
