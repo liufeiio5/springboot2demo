@@ -1,6 +1,5 @@
 package com.zftx.mcdaily.bean;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

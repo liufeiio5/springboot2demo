@@ -15,4 +15,93 @@
     </resultMap>
     <sql id="columnAll">id,type_id,surface_id,surface_name,create_user,create_time,update_user,update_time</sql>
     <sql id="columnBase">id,type_id,surface_id,surface_name</sql>
+
+    <select id="findAllSurFace" resultMap="surface">
+        select
+        <include refid="columnAll"/>
+        from surface
+        <if test="surface!=null">
+            <where>
+                <if test="surface.id!=null">
+                    id=#{id}
+                </if>
+                <if test="surface.typeId!=null">
+                    and  type_id=#{surface.typeId}
+                </if>
+                <if test="surface.surfaceId!=null">
+                    and  surface_id=#{surface.surfaceId}
+                </if>
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    and   surface_name=#{surface.surfaceName}
+                </if>
+                <if test="surface.createUser!=null">
+                    and  create_user=#{surface.createUser}
+                </if>
+                <if test="surface.createTime!=null">
+                    and create_time=#{surface.createTime}
+                </if>
+                <if test="surface.updateUser!=null">
+                    and  update_user=#{surface.updateUser}
+                </if>
+                <if test="surface.updateTime!=null">
+                    and update_time=#{surface.updateTime}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true" keyProperty="point.id">
+        insert ignore into surface
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="surface!=null">
+                <if test="surface.typeId!=null">
+                    type_id,
+                </if>
+                <if test="surface.surfaceId!=null">
+                    surface_id,
+                </if>
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    surface_name,
+                </if>
+                <if test="surface.createUser!=null">
+                    create_user,
+                </if>
+                <if test="surface.createTime!=null">
+                    create_time,
+                </if>
+                <if test="surface.updateUser!=null">
+                    update_user,
+                </if>
+                <if test="surface.updateTime!=null">
+                    update_time,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surface!=null">
+                <if test="surface.typeId!=null">
+                    #{surface.typeId},
+                </if>
+                <if test="surface.surfaceId!=null">
+                    #{surface.surfaceId},
+                </if>
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    #{surface.surfaceName},
+                </if>
+                <if test="surface.createUser!=null">
+                    #{surface.createUser},
+                </if>
+                <if test="surface.createTime!=null">
+                    #{surface.createTime},
+                </if>
+                <if test="surface.updateUser!=null">
+                    #{surface.updateUser},
+                </if>
+                <if test="surface.updateTime!=null">
+                    #{surface.updateTime},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
 </mapper>

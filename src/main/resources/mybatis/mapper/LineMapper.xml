@@ -17,4 +17,99 @@
     </resultMap>
     <sql id="columnAll">id,type_id,surface_id,line_id,line_name,create_user,create_time,update_user,update_time</sql>
     <sql id="columnBase">id,type_id,surface_id,line_id,line_name</sql>
+
+    <select id="findLineAll" resultMap="line">
+        SELECT <include refid="columnAll"/> FROM line
+        <if test="line!=null">
+            <where>
+                <if test="line.id!=null">
+                      id=#{line.id}
+                </if>
+                <if test="line.typeId!=null">
+                    and type_id=#{line.typeId}
+                </if>
+                <if test="line.surfaceId!=null">
+                    and surface_id=#{line.surfaceId}
+                </if>
+                <if test="line.lineId!=null">
+                    and line_id=#{line.lineId}
+                </if>
+                <if test="line.lineName!=null and line.lineName!=''">
+                    and line_name=#{line.lineName}
+                </if>
+                <if test="line.createUser!=null">
+                    and create_user=#{line.createUser}
+                </if>
+                <if test="line.createTime!=null">
+                    and create_time=#{line.createTime}
+                </if>
+                <if test="line.updateUser!=null">
+                    and update_user=#{line.updateUser}
+                </if>
+                <if test="line.updateTime!=null">
+                    and update_time=#{line.updateTime}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addLine" keyProperty="line.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Line">
+        INSERT ignore into line
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+          <if test="line!=null">
+              <if test="line.typeId!=null">
+                  type_id,
+              </if>
+              <if test="line.surfaceId!=null">
+                  surface_id,
+              </if>
+              <if test="line.lineId!=null">
+                  line_id,
+              </if>
+              <if test="line.lineName!=null and line.lineName!=''">
+                  line_name,
+              </if>
+              <if test="line.createUser!=null">
+                  create_user,
+              </if>
+              <if test="line.createTime!=null">
+                  create_time,
+              </if>
+              <if test="line.updateUser!=null">
+                  update_user,
+              </if>
+              <if test="line.updateTime!=null">
+                  update_time,
+              </if>
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="line!=null">
+                <if test="line.typeId!=null">
+                    #{line.typeId},
+                </if>
+                <if test="line.surfaceId!=null">
+                    #{line.surfaceId},
+                </if>
+                <if test="line.lineId!=null">
+                    #{line.lineId},
+                </if>
+                <if test="line.lineName!=null and line.lineName!=''">
+                    #{line.lineName},
+                </if>
+                <if test="line.createUser!=null">
+                    #{line.createUser},
+                </if>
+                <if test="line.createTime!=null">
+                    #{line.createTime},
+                </if>
+                <if test="line.updateUser!=null">
+                    #{line.updateUser},
+                </if>
+                <if test="line.updateTime!=null">
+                    #{line.updateTime},
+                </if>
+            </if>
+        </trim>
+    </insert>
 </mapper>
