@@ -3,6 +3,7 @@ package com.zftx.mcdaily.service.Impl;
 import com.zftx.mcdaily.bean.Event;
 import com.zftx.mcdaily.mapper.EventMapper;
 import com.zftx.mcdaily.service.EventService;
+import com.zftx.mcdaily.util.CommUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Integer addEvent(Event event) {
+        event.setDate(CommUtil.getDayStringWithMark(event.getDate()));
         return eventMapper.addEvent(event);
     }
 
