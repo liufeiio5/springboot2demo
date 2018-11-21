@@ -19,5 +19,5 @@ public class Event {
     Integer createUser;//创建人
     String date;//日期
     String time;//时间
-    Integer islive;
+    Integer islive;//1:逻辑数据存在；0 逻辑数据删除
 }

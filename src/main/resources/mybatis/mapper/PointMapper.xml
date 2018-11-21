@@ -15,6 +15,7 @@
         <result column="create_time" property="createTime"/>
         <result column="update_user" property="updateUser"/>
         <result column="update_time" property="updateTime"/>
+        <result column="islive" property="islive"/>
     </resultMap>
     <sql id="columnAll">id,type_id,surface_id,line_id,point_id,point_name,create_user,create_time,update_user,update_time</sql>
     <sql id="columnBase">id,type_id,surface_id,line_id,point_id,point_name</sql>
