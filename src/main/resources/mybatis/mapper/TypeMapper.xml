@@ -104,7 +104,7 @@
             <if test="type.createUser != null and type.createUser!=''">
                 create_user=#{type.createUser},
             </if>
-            <if test="type.createTime != null and type.createTime!=''">
+            <if test="type.createTime != null">
                 create_time=#{type.createTime},
             </if>
             <if test="type.islive != null and type.islive!=''">

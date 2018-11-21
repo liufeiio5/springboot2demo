@@ -19,7 +19,6 @@ public class TypeServiceImpl implements TypeService {
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
         log.info(info.toString(),type.toString());
-
         List<Type> list=typeMapper.getType(type);
         if(list.size()>0){
             return list;

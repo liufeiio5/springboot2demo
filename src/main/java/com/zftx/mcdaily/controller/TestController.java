@@ -27,9 +27,11 @@ public class TestController {
         return "index";
     }
 
-    @RequestMapping("/deleteType")
-    public String deleteType(Type type){
-        String str=typeService.deleteType(type);
+    @RequestMapping("/getType")
+    public String getType(Type type){
+        System.out.println("啊啊啊啊啊啊啊啊啊"+type);
+        List<Type> list=typeService.getType(type);
+        /*String str=typeService.getType(type);*/
         return "index";
     }
 
