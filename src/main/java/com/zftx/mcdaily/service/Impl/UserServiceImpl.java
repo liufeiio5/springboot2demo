@@ -40,4 +40,30 @@ public class UserServiceImpl implements UserService {
             return "fails";
         }
     }
+
+    public String updateUser(User user){
+        //日志
+        StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
+        log.info(info.toString(),user.toString());
+
+        int i=userMapper.updateUser(user);
+        if(i>0){
+            return "success";
+        }else{
+            return "fails";
+        }
+    }
+
+    public String deleteUser(User user){
+        //日志
+        StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
+        log.info(info.toString(),user.toString());
+
+        int i=userMapper.deleteUser(user);
+        if(i>0){
+            return "success";
+        }else{
+            return "fails";
+        }
+    }
 }

@@ -20,4 +20,17 @@ public interface UserService {
      */
     public String insertUser(User user);
 
+    /**
+     * 修   用户
+     * @param user
+     * @return
+     */
+    public String updateUser(User user);
+
+    /**
+     * 实际 删
+     * @param user
+     * @return
+     */
+    public String deleteUser(User user);
 }
