@@ -15,7 +15,7 @@
         <result column="time" property="time"/>
         <result column="islive" property="islive"/>
     </resultMap>
-    <sql id="columnAll">id,point_id,event_name,create_user,date,time</sql>
+    <sql id="columnAll">id,point_id,event_name,create_user,date,time,islive</sql>
 
     <select id="findEventAll" resultMap="event">
         SELECT
