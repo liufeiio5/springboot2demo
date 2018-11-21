@@ -2,6 +2,7 @@ package com.zftx.mcdaily.mapper;
 
 
 import com.zftx.mcdaily.bean.EventDetail;
+import com.zftx.mcdaily.bean.Surface;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,5 +22,19 @@ public interface EventDetailMapper {
      * @return
      */
     public Integer addEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
+    /**
+     * 修改事件详情
+     * @param eventDetail
+     * @return
+     */
+    public Integer updateEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
+    /**
+     * 删除事件详情
+     * @param eventDetail
+     * @return
+     */
+    public Integer delEventDetail(@Param("eventDetail") EventDetail eventDetail);
 
 }

@@ -25,4 +25,14 @@ public class EventServiceImpl implements EventService {
     public Integer addEvent(Event event) {
         return eventMapper.addEvent(event);
     }
+
+    @Override
+    public Integer updateEvent(Event event) {
+        return eventMapper.updateEvent(event);
+    }
+
+    @Override
+    public Integer delEvent(Event event) {
+        return eventMapper.delEvent(event);
+    }
 }

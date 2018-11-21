@@ -116,4 +116,49 @@
             </if>
         </trim>
     </insert>
+
+
+    <update id="updateLine" parameterType="com.zftx.mcdaily.bean.Line">
+        UPDATE line
+        <set>
+            <if test="line.typeId!=null">
+                 type_id=#{line.typeId},
+            </if>
+            <if test="line.surfaceId!=null">
+                 surface_id=#{line.surfaceId},
+            </if>
+            <if test="line.lineId!=null">
+                 line_id=#{line.lineId},
+            </if>
+            <if test="line.lineName!=null and line.lineName!=''">
+                 line_name=#{line.lineName},
+            </if>
+            <if test="line.createUser!=null">
+                 create_user=#{line.createUser},
+            </if>
+            <if test="line.createTime!=null">
+                 create_time=#{line.createTime},
+            </if>
+            <if test="line.updateUser!=null">
+                 update_user=#{line.updateUser},
+            </if>
+            <if test="line.updateTime!=null">
+                 update_time=#{line.updateTime}
+            </if>
+        </set>
+        WHERE id=#{line.id}
+    </update>
+
+    <update id="delLine" parameterType="com.zftx.mcdaily.bean.Line">
+        UPDATE line
+        <set>
+            <if test="line.islive!=null">
+                 islive=#{line.islive}
+            </if>
+        </set>
+        WHERE id=#{line.id}
+    </update>
+
+
+
 </mapper>

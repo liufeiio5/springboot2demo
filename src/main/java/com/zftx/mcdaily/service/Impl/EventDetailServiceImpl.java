@@ -25,4 +25,14 @@ public class EventDetailServiceImpl implements EventDetailService {
     public Integer addEventDetail(EventDetail eventDetail) {
         return eventDetailMapper.addEventDetail(eventDetail);
     }
+
+    @Override
+    public Integer updateEventDetail(EventDetail eventDetail) {
+        return eventDetailMapper.updateEventDetail(eventDetail);
+    }
+
+    @Override
+    public Integer delEventDetail(EventDetail eventDetail) {
+        return eventDetailMapper.delEventDetail(eventDetail);
+    }
 }

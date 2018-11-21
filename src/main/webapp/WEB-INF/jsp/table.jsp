@@ -14,22 +14,41 @@
 				initsurface($('#type').val())
 				initline($('#type').val(),$('#surface').val())
                 initpoint($('#type').val(),$('#surface').val(),$('#line').val())
+
+				$('#type').change(function ()
+				{
+                    initsurface($(this).val())
+                    initline($(this).val(),$('#surface').val())
+                    initpoint($(this).val(),$('#surface').val(),$('#line').val())
+                })
+
+                $('#surface').change(function ()
+                {
+                    initline($('#type').val(),$(this).val())
+                    initpoint($('#type').val(),$(this).val(),$('#line').val())
+                })
+
+                $('#line').change(function ()
+                {
+                    initpoint($('#type').val(),$('#surface').val(),$(this).val())
+                })
 				
 			})
-			function inittype()
-			{
+            function inittype()
+            {
                 $('#type').html('');
                 $.ajax({
                     type:"get",
                     url:"getType",
                     dataType:'json',
                     data:{islive:1},
+                    async:false,
                     success :function (data)
-					{
-					    var json = data.data;
-					    for(var i = 0 ; i<json.length ;i++)
+                    {
+                        var json = data.data;
+                        for(var i = 0 ; i<json.length ;i++)
                             $('#type').append($('<option>').val(json[i].typeId).html(json[i].typeName))
-					}
+                    }
                 });
             }
             function initsurface(typeid)
@@ -40,11 +59,12 @@
                     url:"getSurface",
                     dataType:'json',
                     data:{typeId:typeid,islive:1},
+                    async:false,
                     success :function (data)
                     {
                         var json = data.data;
                         for(var i = 0 ; i<json.length ;i++)
-                            $('#surface').append($('<option>').val(json[i].typeId).html(json[i].typeName))
+                            $('#surface').append($('<option>').val(json[i].surfaceId).html(json[i].surfaceName))
                     }
                 });
             }
@@ -58,17 +78,18 @@
                     data:{
                         typeId:typeid,
                         surfaceId:surfaceid,
-						islive:1
-					},
+                        islive:1
+                    },
+                    async:false,
                     success :function (data)
                     {
                         var json = data.data;
                         for(var i = 0 ; i<json.length ;i++)
-                            $('#line').append($('<option>').val(json[i].typeId).html(json[i].typeName))
+                            $('#line').append($('<option>').val(json[i].lineId).html(json[i].lineName))
                     }
                 });
             }
-            function initpoint(typeid,surfaceid,pointid)
+            function initpoint(typeid,surfaceid,lineid)
             {
                 $('#point').html('');
                 $.ajax({
@@ -78,17 +99,20 @@
                     data:{
                         typeId:typeid,
                         surfaceId:surfaceid,
-                        pointId:pointid,
+                        lineId:lineid,
                         islive:1
                     },
+                    async:false,
                     success :function (data)
                     {
                         var json = data.data;
                         for(var i = 0 ; i<json.length ;i++)
-                            $('#point').append($('<option>').val(json[i].typeId).html(json[i].typeName))
+                            $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
                     }
                 });
             }
+
+
 		</script>
 	</head>
 	<body>
@@ -125,15 +149,15 @@
 						<h4 class="modal-title">新增</h4>
 					</div>
 					<div class="modal-body">
-						<select class="form-control" id="type"></select><br />
-						<select class="form-control" id="surface"></select><br />
-						<select class="form-control" id="line"></select><br />
-						<select class="form-control" id="point"></select><br />
-						<textarea class="form-control" id="event"></textarea><br />
-						<textarea class="form-control" id="process"></textarea><br />
-						<textarea class="form-control" id="result"></textarea><br />
-						<textarea class="form-control" id="method"></textarea><br />
-						<textarea class="form-control" id="remarks"></textarea><br />
+						类型<select class="form-control" id="type"></select><br />
+						面<select class="form-control" id="surface"></select><br />
+						线<select class="form-control" id="line"></select><br />
+						点<select class="form-control" id="point"></select><br />
+						事件<textarea class="form-control" id="event"></textarea><br />
+						过程<textarea class="form-control" id="process"></textarea><br />
+						结果<textarea class="form-control" id="result"></textarea><br />
+						解决方案<textarea class="form-control" id="method"></textarea><br />
+						备注<textarea class="form-control" id="remarks"></textarea><br />
 						<button type="add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
 					</div>
 				</div><!-- /.modal-content -->
