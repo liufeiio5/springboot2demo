@@ -1,9 +1,7 @@
 package com.zftx.mcdaily.controller;
 
-import com.zftx.mcdaily.bean.Type;
-import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.service.TypeService;
-import com.zftx.mcdaily.service.UserService;
+import com.zftx.mcdaily.bean.Hobby;
+import com.zftx.mcdaily.service.HobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,7 @@ import java.util.List;
 @Controller
 public class TestController {
     @Autowired
-    TypeService typeService;
+    HobbyService hobbyService;
 
     @RequestMapping("/show")
     @ResponseBody
@@ -27,11 +25,9 @@ public class TestController {
         return "index";
     }
 
-    @RequestMapping("/getType")
-    public String getType(Type type){
-        System.out.println("啊啊啊啊啊啊啊啊啊"+type);
-        List<Type> list=typeService.getType(type);
-        /*String str=typeService.getType(type);*/
+    @RequestMapping("/deleteHobby")
+    public String deleteHobby(Hobby hobby){
+        String str= hobbyService.deleteHobby(hobby);
         return "index";
     }
 
