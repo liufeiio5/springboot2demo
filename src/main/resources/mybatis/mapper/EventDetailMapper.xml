@@ -12,4 +12,75 @@
         <result column="remarks" property="remarks"/>
     </resultMap>
     <sql id="columnAll">id,event_id,process,result,method,remarks</sql>
+
+    <select id="findAll" resultMap="eventDetail">
+        SELECT
+        <include refid="columnAll"/>
+        FROM event_detail
+        <if test="eventDetail!=null">
+            <where>
+                <if test="eventDetail.id!=null">
+                    id=#{eventDetail.id}
+                </if>
+                <if test="eventDetail.eventId!=null">
+                   and event_id=#{eventDetail.eventId}
+                </if>
+                <if test="eventDetail.process!=null and eventDetail.process!=''">
+                    and process=#{eventDetail.process}
+                </if>
+                <if test="eventDetail.result!=null and eventDetail.result!=''">
+                    and  result=#{eventDetail.result}
+                </if>
+                <if test="eventDetail.method!=null and eventDetail.method!=''">
+                    and method=#{eventDetail.method}
+                </if>
+                <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                    and  remarks=#{eventDetail.remarks}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail" useGeneratedKeys="true" keyProperty="eventDetail.id">
+        INSERT ignore INTO event_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eventDetail!=null">
+                <if test="eventDetail.eventId!=null">
+                    event_id,
+                </if>
+                <if test="eventDetail.process!=null and eventDetail.process!=''">
+                    process,
+                </if>
+                <if test="eventDetail.result!=null and eventDetail.result!=''">
+                    result,
+                </if>
+                <if test="eventDetail.method!=null and eventDetail.method!=''">
+                    method,
+                </if>
+                <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                    remarks,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="eventDetail!=null">
+                <if test="eventDetail.eventId!=null">
+                    #{eventDetail.eventId},
+                </if>
+                <if test="eventDetail.process!=null and eventDetail.process!=''">
+                    #{eventDetail.process},
+                </if>
+                <if test="eventDetail.result!=null and eventDetail.result!=''">
+                    #{eventDetail.result},
+                </if>
+                <if test="eventDetail.method!=null and eventDetail.method!=''">
+                    #{eventDetail.method},
+                </if>
+                <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                    #{eventDetail.remarks},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
 </mapper>

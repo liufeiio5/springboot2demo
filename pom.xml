@@ -148,7 +148,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
         </dependency>
-        <!-- md5 end-->
 
     </dependencies>
 

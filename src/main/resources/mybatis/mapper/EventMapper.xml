@@ -8,9 +8,104 @@
         <id column="id" property="id"/>
         <result column="point_id" property="pointId"/>
         <result column="event_name" property="eventName"/>
+        <result column="weight" property="weight"/>
+        <result column="status" property="status"/>
         <result column="create_user" property="createUser"/>
         <result column="date" property="date"/>
         <result column="time" property="time"/>
+        <result column="islive" property="islive"/>
     </resultMap>
-    <sql id="columnAll">id,point_id,event_name,create_user,date,time</sql>
+    <sql id="columnAll">id,point_id,event_name,create_user,date,time,islive</sql>
+
+    <select id="findEventAll" resultMap="event">
+        SELECT
+        <include refid="columnAll"/>
+        FROM event
+        <if test="event!=null">
+            <where>
+                <if test="event.id!=null">
+                    id=#{event.id}
+                </if>
+                <if test="event.pointId!=null">
+                    and  point_id=#{event.pointId}
+                </if>
+                <if test="event.eventName!=null and event.eventName!=''">
+                    and  event_name=#{event.eventName}
+                </if>
+                <if test="event.weight!=null">
+                    and weight=#{event.weight}
+                </if>
+                <if test="event.status!=null">
+                    and status=#{event.status}
+                </if>
+                <if test="event.createUser!=null and event.createUser!=''">
+                    and  create_user=#{event.createUser}
+                </if>
+                <if test="event.date!=null">
+                    and date=#{event.date}
+                </if>
+                <if test="event.time!=null">
+                    and time=#{event.time}
+                </if>
+                <if test="event.islive!=null">
+                    and islive=#{event.islive}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addEvent" keyProperty="event.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Event">
+        INSERT ignore INTO event
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="event != null">
+                <if test="event.pointId != null">
+                    point_id,
+                </if>
+                <if test="event.eventName!=null and event.eventName!=''">
+                    event_name,
+                </if>
+                <if test="event.weight!=null">
+                     weight,
+                </if>
+                <if test="event.status!=null">
+                     status,
+                </if>
+                <if test="event.createUser!=null">
+                    create_user,
+                </if>
+                <if test="event.date!=null">
+                    date,
+                </if>
+                <if test="event.time!=null">
+                    time,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="event!=null">
+                <if test="event.pointId!=null">
+                    #{event.pointId},
+                </if>
+                <if test="event.eventName!=null and event.eventName!=''">
+                    #{event.eventName},
+                </if>
+                <if test="event.weight!=null">
+                     #{event.weight},
+                </if>
+                <if test="event.status!=null">
+                     #{event.status},
+                </if>
+                <if test="event.createUser!=null">
+                    #{event.createUser},
+                </if>
+                <if test="event.date!=null and event.date!=''">
+                    #{event.date},
+                </if>
+                <if test="event.time!=null and event.time!=''">
+                    #{event.time},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
 </mapper>
