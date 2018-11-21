@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="/iconfont/style.css" />
 <script type="text/javascript" src="/js/jquery.min.js" ></script>
 <script type="text/javascript" src="/layer/layer.js" ></script>
-    <style>
-        body{margin:0;padding:0;background:url(images/bg.jpg) no-repeat;}
-        .main_content{background:url(images/main_bg.png) repeat;}
-    </style>
+    <%--<style>--%>
+        <%--body{margin:0;padding:0;background:url(images/bg.jpg) no-repeat;}--%>
+        <%--.main_content{background:url(images/main_bg.png) repeat;}--%>
+    <%--</style>--%>
 </head>
 
 <body>
@@ -24,17 +24,17 @@
                 <form>
                     <div class="form-group mg-t20">
                         <i class="icon-user icon_font"></i>
-                        <input type="tel" class="login_input" id="username" placeholder="请输入用户名" />
+                        <input type="tel" class="login_input" id="userName" placeholder="请输入用户名" />
                     </div>
                     <div class="form-group mg-t20">
                         <i class="icon-lock icon_font"></i>
                         <input type="password" class="login_input" id="password" placeholder="请输入密码" />
                     </div>
-                    <div class="checkbox mg-b25">
-                        <label>
-                            <input type="checkbox" />记住账号
-                        </label>
-                    </div>
+                    <%--<div class="checkbox mg-b25">--%>
+                        <%--<label>--%>
+                            <%--<input type="checkbox" />记住账号--%>
+                        <%--</label>--%>
+                    <%--</div>--%>
                     <input type="button" class="login_btn" value="登录" onclick="Login()" />
                </form>
         </div><!--row end-->
@@ -43,19 +43,38 @@
 </html>
 <script>
 	function Login() {
-	    var use = $("#username").val();
-	    var paw = $("#password").val();
-		if(use == ""){
+	    var userName = $("#userName").val();
+	    var password = $("#password").val();
+		if(userName == ""){
 			layer.alert("<p style='color:#333333'>" + "请输入用户名" + "</p>",{
 				icon:0
 			});
 			return false;
 		}
-		if(paw == ""){
+		if(password == ""){
 			layer.alert("<p style='color:#333333'>" + "请输入密码" + "</p>",{
 				icon:0
 			});
 			return false;
 		}
+        $.ajax({
+            url:"/userLogin",
+            data:{
+                userName:userName,
+                password:password
+            },
+            dataType:"json",
+            type:"GET",
+            success:function (data) {
+                if(data.code==200){
+                    alert("登录成功")
+                    window.location.href="http://localhost:9000/index"
+                }else{
+                    alert("登录失败")
+                    window.location.href="http://localhost:9000/login"
+                }
+            }
+        })
+
 	}
 </script>

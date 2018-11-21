@@ -1,7 +1,15 @@
+html{height: 100%;}
 body{
 	color:#fff; 
 	font-family:"微软雅黑"; 
 	font-size:14px;
+	height: auto;
+	background: url(../images/bg.jpg) no-repeat center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: rgba(255, 255, 255, .95);
 }
 
 /*把整个屏幕真正撑开--而且能自己实现居中*/
@@ -15,6 +23,7 @@ body{
 }
 
 .main_content{
+	background:url(../images/main_bg.png) repeat;
 	margin-left:auto; 
 	margin-right:auto; 
 	text-align:left; 
