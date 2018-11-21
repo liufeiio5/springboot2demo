@@ -8,9 +8,12 @@
         <id column="id" property="id"/>
         <result column="point_id" property="pointId"/>
         <result column="event_name" property="eventName"/>
+        <result column="weight" property="weight"/>
+        <result column="status" property="status"/>
         <result column="create_user" property="createUser"/>
         <result column="date" property="date"/>
         <result column="time" property="time"/>
+        <result column="islive" property="islive"/>
     </resultMap>
     <sql id="columnAll">id,point_id,event_name,create_user,date,time</sql>
 
@@ -29,6 +32,12 @@
                 <if test="event.eventName!=null and event.eventName!=''">
                     and  event_name=#{event.eventName}
                 </if>
+                <if test="event.weight!=null">
+                    and weight=#{event.weight}
+                </if>
+                <if test="event.status!=null">
+                    and status=#{event.status}
+                </if>
                 <if test="event.createUser!=null and event.createUser!=''">
                     and  create_user=#{event.createUser}
                 </if>
@@ -37,6 +46,9 @@
                 </if>
                 <if test="event.time!=null">
                     and time=#{event.time}
+                </if>
+                <if test="event.islive!=null">
+                    and islive=#{event.islive}
                 </if>
             </where>
         </if>
@@ -51,6 +63,12 @@
                 </if>
                 <if test="event.eventName!=null and event.eventName!=''">
                     event_name,
+                </if>
+                <if test="event.weight!=null">
+                     weight,
+                </if>
+                <if test="event.status!=null">
+                     status,
                 </if>
                 <if test="event.createUser!=null">
                     create_user,
@@ -70,6 +88,12 @@
                 </if>
                 <if test="event.eventName!=null and event.eventName!=''">
                     #{event.eventName},
+                </if>
+                <if test="event.weight!=null">
+                     #{event.weight},
+                </if>
+                <if test="event.status!=null">
+                     #{event.status},
                 </if>
                 <if test="event.createUser!=null">
                     #{event.createUser},

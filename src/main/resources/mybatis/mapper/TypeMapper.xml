@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.TypeMapper">
+    <resultMap id="type" type="com.zftx.mcdaily.bean.Type">
+        <id column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
+        <result column="type_name" property="typeName"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="islive" property="islive"/>
+    </resultMap>
+
+    <sql id="typeAll">id,type_id,type_name,create_user,create_time,islive</sql>
+    <select id="getType" resultMap="type">
+        select <include refid="typeAll" /> from type
+        <if test="type != null">
+            <where>
+                <if test="type.id != null">
+                    id = #{type.id}
+                </if>
+                <if test="type.typeId != null">
+                  and  type_id = #{type.typeId}
+                </if>
+                <if test="type.typeName != null and type.typeName !=''">
+                  and type_name like concat(#{type.typeName},'%')
+                </if>
+                <if test="type.createUser != null">
+                  and  create_user = #{type.createUser}
+                </if>
+                <if test="type.createTime != null">
+                   and create_time =#{type.createTime}
+                </if>
+                <if test="type.islive != null">
+                   and islive =#{type.islive}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加类型-->
+    <insert id="insertType" keyProperty="type.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Type">
+        insert ignore into type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                <if test="type.id !=null">
+                    id,
+                </if>
+                <if test="type.typeId !=null">
+                    type_id,
+                </if>
+                <if test="type.typeName !=null">
+                    type_name,
+                </if>
+                <if test="type.createUser !=null">
+                    create_user,
+                </if>
+                <if test="type.createTime !=null">
+                    create_time,
+                </if>
+                <if test="type.islive != null">
+                    islive =#{type.islive}
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                <if test="type.id !=null">
+                    #{type.id,jdbcType=INTEGER},
+                </if>
+                <if test="type.typeId !=null">
+                    #{type.typeId},
+                </if>
+                <if test="type.typeName !=null and type.typeName!=''">
+                    #{type.typeName},
+                </if>
+                <if test="type.createUser !=null">
+                    #{type.createUser},
+                </if>
+                <if test="type.createTime !=null">
+                    #{type.createTime},
+                </if>
+                <if test="type.islive !=null">
+                    #{type.islive},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+   <!-- 修改用户-->
+    <update id="updateType" parameterType="com.zftx.mcdaily.bean.Type">
+        UPDATE  type
+        <set>
+            <if test="type.id !=null">
+                id=#{type.id,jdbcType=INTEGER},
+            </if>
+            <if test="type.typeId !=null">
+                type_id=#{type.typeId},
+            </if>
+            <if test="type.typeName != null and type.typeName!=''">
+                type_name=#{type.typeName},
+            </if>
+            <if test="type.createUser != null and type.createUser!=''">
+                create_user=#{type.createUser},
+            </if>
+            <if test="type.createTime != null">
+                create_time=#{type.createTime},
+            </if>
+            <if test="type.islive != null and type.islive!=''">
+                islive=#{type.islive},
+            </if>
+        </set>
+        WHERE id=#{type.id}
+    </update>
+
+    <!--实际删除 用户-->
+    <delete id="deleteType" parameterType="com.zftx.mcdaily.bean.Type">
+       delete from type  where id=#{type.id}
+    </delete>
+</mapper>

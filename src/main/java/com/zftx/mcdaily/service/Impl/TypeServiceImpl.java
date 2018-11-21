@@ -1,8 +1,8 @@
 package com.zftx.mcdaily.service.Impl;
 
-import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.mapper.UserMapper;
-import com.zftx.mcdaily.service.UserService;
+import com.zftx.mcdaily.bean.Type;
+import com.zftx.mcdaily.mapper.TypeMapper;
+import com.zftx.mcdaily.service.TypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +11,15 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class TypeServiceImpl implements TypeService {
     @Autowired
-    UserMapper userMapper;
+    TypeMapper typeMapper;
 
-    public List<User> getUser(User user){
+    public List<Type> getType(Type type){
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
-        log.info(info.toString(),user.toString());
-
-        List<User> list=userMapper.getUser(user);
+        log.info(info.toString(),type.toString());
+        List<Type> list=typeMapper.getType(type);
         if(list.size()>0){
             return list;
         }else{
@@ -28,12 +27,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String insertUser(User user){
+    public String insertType(Type type){
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
-        log.info(info.toString(),user.toString());
+        log.info(info.toString(),type.toString());
 
-        int i=userMapper.insertUser(user);
+        int i=typeMapper.insertType(type);
         if(i>0){
             return "success";
         }else{
@@ -41,12 +40,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String updateUser(User user){
+    public String updateType(Type type){
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
-        log.info(info.toString(),user.toString());
+        log.info(info.toString(),type.toString());
 
-        int i=userMapper.updateUser(user);
+        int i=typeMapper.updateType(type);
         if(i>0){
             return "success";
         }else{
@@ -54,16 +53,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String deleteUser(User user){
+    public String deleteType(Type type){
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
-        log.info(info.toString(),user.toString());
+        log.info(info.toString(),type.toString());
 
-        int i=userMapper.deleteUser(user);
+        int i=typeMapper.deleteType(type);
         if(i>0){
             return "success";
         }else{
             return "fails";
         }
     }
+
 }
