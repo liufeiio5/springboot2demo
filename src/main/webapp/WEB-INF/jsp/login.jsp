@@ -30,11 +30,11 @@
                         <i class="icon-lock icon_font"></i>
                         <input type="password" class="login_input" id="password" placeholder="请输入密码" />
                     </div>
-                    <div class="checkbox mg-b25">
-                        <label>
-                            <input type="checkbox" />记住账号
-                        </label>
-                    </div>
+                    <%--<div class="checkbox mg-b25">--%>
+                        <%--<label>--%>
+                            <%--<input type="checkbox" />记住账号--%>
+                        <%--</label>--%>
+                    <%--</div>--%>
                     <input type="button" class="login_btn" value="登录" onclick="Login()" />
                </form>
         </div><!--row end-->
