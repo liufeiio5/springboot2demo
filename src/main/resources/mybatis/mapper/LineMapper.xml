@@ -67,9 +67,7 @@
               <if test="line.surfaceId!=null">
                   surface_id,
               </if>
-              <if test="line.lineId!=null">
                   line_id,
-              </if>
               <if test="line.lineName!=null and line.lineName!=''">
                   line_name,
               </if>
@@ -95,9 +93,7 @@
                 <if test="line.surfaceId!=null">
                     #{line.surfaceId},
                 </if>
-                <if test="line.lineId!=null">
-                    #{line.lineId},
-                </if>
+                (SELECT CASE  WHEN MAX(l.line_id) IS NULL THEN '1' ELSE MAX(l.line_id)+1 END FROM line l),
                 <if test="line.lineName!=null and line.lineName!=''">
                     #{line.lineName},
                 </if>

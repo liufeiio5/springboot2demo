@@ -196,7 +196,7 @@
             
         </tbody>
     </table>
-    
+
   		<div class="modal fade" id="addModal"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog">
 				<div class="modal-content">

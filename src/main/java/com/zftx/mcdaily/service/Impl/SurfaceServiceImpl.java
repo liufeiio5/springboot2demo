@@ -2,14 +2,14 @@ package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.Surface;
 import com.zftx.mcdaily.mapper.SurfaceMapper;
-import com.zftx.mcdaily.service.SurfacService;
+import com.zftx.mcdaily.service.SurfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SurfacServiceImpl implements SurfacService {
+public class SurfaceServiceImpl implements SurfaceService {
 
     @Autowired
     private SurfaceMapper surfaceMapper;
