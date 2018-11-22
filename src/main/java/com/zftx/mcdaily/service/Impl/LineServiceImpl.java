@@ -24,4 +24,14 @@ public class LineServiceImpl implements LineService {
     public Integer addLine(Line line) {
         return lineMapper.addLine(line);
     }
+
+    @Override
+    public Integer updateLine(Line line) {
+        return lineMapper.updateLine(line);
+    }
+
+    @Override
+    public Integer delLine(Line line) {
+        return lineMapper.delLine(line);
+    }
 }

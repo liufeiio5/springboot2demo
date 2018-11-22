@@ -24,34 +24,38 @@
         <if test="surface!=null">
             <where>
                 <if test="surface.id!=null">
-                    id=#{id}
+                    id=#{surface.id}
                 </if>
                 <if test="surface.typeId!=null">
-                    and  type_id=#{surface.typeId}
+                    and type_id=#{surface.typeId}
                 </if>
                 <if test="surface.surfaceId!=null">
-                    and  surface_id=#{surface.surfaceId}
+                    and surface_id=#{surface.surfaceId}
                 </if>
                 <if test="surface.surfaceName!=null and surface.surfaceName!=''">
-                    and   surface_name=#{surface.surfaceName}
+                    and surface_name=#{surface.surfaceName}
                 </if>
                 <if test="surface.createUser!=null">
-                    and  create_user=#{surface.createUser}
+                    and create_user=#{surface.createUser}
                 </if>
                 <if test="surface.createTime!=null">
                     and create_time=#{surface.createTime}
                 </if>
                 <if test="surface.updateUser!=null">
-                    and  update_user=#{surface.updateUser}
+                    and update_user=#{surface.updateUser}
                 </if>
                 <if test="surface.updateTime!=null">
                     and update_time=#{surface.updateTime}
+                </if>
+                <if test="surface.islive!=null">
+                    and islive=#{surface.islive}
                 </if>
             </where>
         </if>
     </select>
 
-    <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true" keyProperty="point.id">
+    <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true"
+            keyProperty="point.id">
         insert ignore into surface
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="surface!=null">
@@ -104,5 +108,43 @@
             </if>
         </trim>
     </insert>
+
+    <update id="updateSurface" parameterType="com.zftx.mcdaily.bean.Surface">
+        UPDATE surface
+        <set>
+            <if test="surface.typeId!=null">
+                type_id=#{surface.typeId},
+            </if>
+            <if test="surface.surfaceId!=null">
+                surface_id=#{surface.surfaceId},
+            </if>
+            <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                surface_name=#{surface.surfaceName},
+            </if>
+            <if test="surface.createUser!=null">
+                create_user=#{surface.createUser},
+            </if>
+            <if test="surface.createTime!=null">
+                create_time=#{surface.createTime},
+            </if>
+            <if test="surface.updateUser!=null">
+                update_user=#{surface.updateUser},
+            </if>
+            <if test="surface.updateTime!=null">
+                update_time=#{surface.updateTime}
+            </if>
+        </set>
+        WHERE id=#{surface.id}
+    </update>
+
+    <update id="delSurface" parameterType="com.zftx.mcdaily.bean.Surface">
+        UPDATE surface
+        <set>
+            <if test="surface.islive!=null">
+                islive=#{surface.islive}
+            </if>
+        </set>
+        WHERE id=#{surface.id}
+    </update>
 
 </mapper>
