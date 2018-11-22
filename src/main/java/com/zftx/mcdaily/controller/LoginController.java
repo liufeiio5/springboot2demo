@@ -7,10 +7,8 @@ import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
+@SessionAttributes(value={"user","try"})
 @Slf4j
 public class LoginController {
 
@@ -51,7 +50,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/table")
-    public String table(){
+    public String table(HttpSession session)
+    {
+        if (session.getAttribute("user") == null)
+            return "login";
         return "table";
     }
 
@@ -63,11 +65,11 @@ public class LoginController {
      */
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
-    public R login(HttpSession session, User user){
-        log.info(">>>>>>>>>>>>>>>"+session.getId());
+    public R login(HttpSession session, User user, Model model){
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
-        List<User> user1 = userService.getUser(user);
-        if (user1 != null && user1.size() > 0) {
+        List<User> list = userService.getUser(user);
+        model.addAttribute("user",list.get(0));
+        if (list != null && list.size() > 0) {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
             return R.ok().put("message", "登录成功");
         } else {
@@ -126,9 +128,10 @@ public class LoginController {
      */
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyInfo(Event event,EventDetail eventDetail){
+    public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
-        return R.ok().put("data",eventList);
+        User user = (User) session.getAttribute("user");
+        return R.ok().put("data",eventList).put("username",user.getUserName());
     }
 
 }
