@@ -62,9 +62,7 @@
                 <if test="surface.typeId!=null">
                     type_id,
                 </if>
-                <if test="surface.surfaceId!=null">
                     surface_id,
-                </if>
                 <if test="surface.surfaceName!=null and surface.surfaceName!=''">
                     surface_name,
                 </if>
@@ -87,10 +85,8 @@
                 <if test="surface.typeId!=null">
                     #{surface.typeId},
                 </if>
-                <if test="surface.surfaceId!=null">
-                    #{surface.surfaceId},
-                </if>
-                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                (SELECT CASE  WHEN MAX(s.surface_id) IS NULL THEN '1' ELSE MAX(s.surface_id)+1 END FROM surface s),
+               <if test="surface.surfaceName!=null and surface.surfaceName!=''">
                     #{surface.surfaceName},
                 </if>
                 <if test="surface.createUser!=null">
