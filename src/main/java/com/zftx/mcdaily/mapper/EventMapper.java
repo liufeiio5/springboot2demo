@@ -4,6 +4,7 @@ import com.zftx.mcdaily.bean.Event;
 import com.zftx.mcdaily.bean.EventDetail;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface EventMapper {
@@ -41,6 +42,6 @@ public interface EventMapper {
      * @param event
      * @return
      */
-     public List<Event> findEventByEventDetail(@Param("event") Event event,@Param("eventDetail") EventDetail eventDetail);
+     public List<HashMap<String,Object>> findEventByEventDetail(@Param("event") Event event, @Param("eventDetail") EventDetail eventDetail);
 
 }

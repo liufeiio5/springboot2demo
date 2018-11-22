@@ -14,7 +14,7 @@
         <result column="date" property="date"/>
         <result column="time" property="time"/>
         <result column="islive" property="islive"/>
-        <association property="eventDetail"  javaType="com.zftx.mcdaily.bean.EventDetail">
+        <association property="eventDetail" javaType="com.zftx.mcdaily.bean.EventDetail">
             <id column="id" property="id"/>
             <result column="event_id" property="eventId"/>
             <result column="process" property="process"/>
@@ -37,10 +37,10 @@
                     id=#{event.id}
                 </if>
                 <if test="event.pointId!=null">
-                    and  point_id=#{event.pointId}
+                    and point_id=#{event.pointId}
                 </if>
                 <if test="event.eventName!=null and event.eventName!=''">
-                    and  event_name=#{event.eventName}
+                    and event_name=#{event.eventName}
                 </if>
                 <if test="event.weight!=null">
                     and weight=#{event.weight}
@@ -49,7 +49,7 @@
                     and status=#{event.status}
                 </if>
                 <if test="event.createUser!=null and event.createUser!=''">
-                    and  create_user=#{event.createUser}
+                    and create_user=#{event.createUser}
                 </if>
                 <if test="event.date!=null">
                     and date=#{event.date}
@@ -75,10 +75,10 @@
                     event_name,
                 </if>
                 <if test="event.weight!=null">
-                     weight,
+                    weight,
                 </if>
                 <if test="event.status!=null">
-                     status,
+                    status,
                 </if>
                 <if test="event.createUser!=null">
                     create_user,
@@ -100,10 +100,10 @@
                     #{event.eventName},
                 </if>
                 <if test="event.weight!=null">
-                     #{event.weight},
+                    #{event.weight},
                 </if>
                 <if test="event.status!=null">
-                     #{event.status},
+                    #{event.status},
                 </if>
                 <if test="event.createUser!=null">
                     #{event.createUser},
@@ -122,25 +122,25 @@
         UPDATE event
         <set>
             <if test="event.pointId!=null">
-                  point_id=#{event.pointId},
+                point_id=#{event.pointId},
             </if>
             <if test="event.eventName!=null and event.eventName!=''">
-                  event_name=#{event.eventName},
+                event_name=#{event.eventName},
             </if>
             <if test="event.weight!=null">
-                 weight=#{event.weight},
+                weight=#{event.weight},
             </if>
             <if test="event.status!=null">
-                 status=#{event.status},
+                status=#{event.status},
             </if>
             <if test="event.createUser!=null and event.createUser!=''">
-                  create_user=#{event.createUser},
+                create_user=#{event.createUser},
             </if>
             <if test="event.date!=null">
-                 date=#{event.date},
+                date=#{event.date},
             </if>
             <if test="event.time!=null">
-                 time=#{event.time},
+                time=#{event.time},
             </if>
         </set>
         WHERE id=#{event.id}
@@ -151,56 +151,63 @@
         UPDATE event
         <set>
             <if test="event.islive!=null">
-                 islive=#{event.islive}
+                islive=#{event.islive}
             </if>
         </set>
         WHERE id=#{event.id}
     </update>
 
 
-    <select id="findEventByEventDetail" resultMap="event">
-        SELECT  <include refid="columnAllss"/> FROM event e
-        INNER JOIN event_detail d ON e.id=d.event_id
-            <where>
-                <if test="event.pointId!=null">
-                      e.point_id=#{event.pointId}
-                </if>
-                <if test="event.eventName!=null and event.eventName!=''">
-                    and  e.event_name=#{event.eventName}
-                </if>
-                <if test="event.weight!=null">
-                    and e.weight=#{event.weight}
-                </if>
-                <if test="event.status!=null">
-                    and e.status=#{event.status}
-                </if>
-                <if test="event.createUser!=null and event.createUser!=''">
-                    and  e.create_user=#{event.createUser}
-                </if>
-                <if test="event.date!=null">
-                    and e.date=#{event.date}
-                </if>
-                <if test="event.time!=null">
-                    and e.time=#{event.time}
-                </if>
-                <if test="event.islive!=null">
-                    and e.islive=#{event.islive}
-                </if>
-                <if test="eventDetail.eventId!=null">
-                    and d.event_id=#{eventDetail.eventId}
-                </if>
-                <if test="eventDetail.process!=null and eventDetail.process!=''">
-                    and d.process=#{eventDetail.process}
-                </if>
-                <if test="eventDetail.result!=null and eventDetail.result!=''">
-                    and  d.result=#{eventDetail.result}
-                </if>
-                <if test="eventDetail.method!=null and eventDetail.method!=''">
-                    and d.method=#{eventDetail.method}
-                </if>
-                <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
-                    and  d.remarks=#{eventDetail.remarks}
-                </if>
-            </where>
+    <select id="findEventByEventDetail" resultType="java.util.HashMap">
+        SELECT
+        e.id,e.date,e.time,t.type_name,s.surface_name,l.line_name,p.point_name,e.event_name,d.process,d.result,d.method,d.remarks
+        FROM
+        EVENT e
+        INNER JOIN event_detail d ON e.id = d.event_id
+        INNER JOIN point p ON e.point_id = p.point_id
+        INNER JOIN type t ON p.type_id=t.type_id
+        INNER JOIN surface s ON p.surface_id=s.surface_id
+        INNER JOIN line l ON p.line_id=l.line_id
+        <where>
+            <if test="event.pointId!=null">
+                e.point_id=#{event.pointId}
+            </if>
+            <if test="event.eventName!=null and event.eventName!=''">
+                and e.event_name=#{event.eventName}
+            </if>
+            <if test="event.weight!=null">
+                and e.weight=#{event.weight}
+            </if>
+            <if test="event.status!=null">
+                and e.status=#{event.status}
+            </if>
+            <if test="event.createUser!=null and event.createUser!=''">
+                and e.create_user=#{event.createUser}
+            </if>
+            <if test="event.date!=null">
+                and e.date=#{event.date}
+            </if>
+            <if test="event.time!=null">
+                and e.time=#{event.time}
+            </if>
+            <if test="event.islive!=null">
+                and e.islive=#{event.islive}
+            </if>
+            <if test="eventDetail.eventId!=null">
+                and d.event_id=#{eventDetail.eventId}
+            </if>
+            <if test="eventDetail.process!=null and eventDetail.process!=''">
+                and d.process=#{eventDetail.process}
+            </if>
+            <if test="eventDetail.result!=null and eventDetail.result!=''">
+                and d.result=#{eventDetail.result}
+            </if>
+            <if test="eventDetail.method!=null and eventDetail.method!=''">
+                and d.method=#{eventDetail.method}
+            </if>
+            <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                and d.remarks=#{eventDetail.remarks}
+            </if>
+        </where>
     </select>
 </mapper>
