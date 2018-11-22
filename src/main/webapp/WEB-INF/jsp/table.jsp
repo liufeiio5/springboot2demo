@@ -10,6 +10,7 @@
 		
 		<script>
 			$(function  () {
+                fic();
 				inittype();
 				initsurface($('#type').val())
 				initline($('#type').val(),$('#surface').val())
@@ -61,19 +62,20 @@
 
             function fic(){
                 $("#tbody").empty();
-                var userId = $("#userId").val();
+                var eventId = $("#eventId").val();
                 $.ajax({
                     type: 'get',
-                    url: '/getDailyRecord',
+                    url: '/getDaily',
                     dataType: 'json',
                     data: {
-                        userId:userId
+                        eventId:eventId
                     },
                     success: function (data) {
                         var str;
                         for (i in  data.data) {
-                            str = '<td>' + data.data[i].id + '</td>' +
-                                '<td>' + data.data[i].userId + '</td>' +
+                            str = '<td>' + data.data[i].eventId + '</td>' +
+                                '<td>' + data.data[i].date + '</td>' +
+                                '<td>' + data.data[i].time + '</td>' +
                                 '<td>' + data.data[i].type + '</td>' +
                                 '<td>' + data.data[i].surface + '</td>' +
                                 '<td>' + data.data[i].line + '</td>' +
@@ -82,9 +84,7 @@
                                 '<td>' + data.data[i].process + '</td>'+
                                 '<td>' + data.data[i].result + '</td>'+
                                 '<td>' + data.data[i].method + '</td>' +
-                                '<td>' + data.data[i].remark + '</td>'+
-                                '<td>' + data.data[i].dateTime + '</td>'+
-                                '<td>' + data.data[i].createTime + '</td>';
+                                '<td>' + data.data[i].remark + '</td>';
                             $("#tbody").append('<tr>' + str + '</tr>');
                         }
                     },

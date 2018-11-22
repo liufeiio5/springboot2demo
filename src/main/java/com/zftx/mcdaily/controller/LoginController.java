@@ -106,30 +106,30 @@ public class LoginController {
         }
     }
 
-    /**
-     * 获取日报信息
-     * @return
-     */
-    @RequestMapping(value = "/getDaily",method = RequestMethod.POST)
-    @ResponseBody
-    public R getDaily(Event event) {
-        List<Event> eventList = eventService.findEventAll(event);
-        List<Map<String, String>> resultMap = new ArrayList<>();
-        for (int i = 0; i < eventList.size(); i++) {
-            Event event1 = eventList.get(i);
-            Map<String, String> map = new HashMap<>();
-            map.put("eventName", event1.getEventName());
-            map.put("eventId", event1.getId().toString());
-            map.put("date", event1.getDate());
-            for (int j = 0; j < event1.getEventDetails().size(); j++) {
-                map.put("process", event1.getEventDetails().get(j).getProcess());
-                map.put("result", event1.getEventDetails().get(j).getResult());
-                map.put("method", event1.getEventDetails().get(j).getMethod());
-                map.put("remark", event1.getEventDetails().get(j).getRemarks());
-            }
-            resultMap.add(map);
-        }
-        return R.ok().put("data", resultMap);
-    }
+//    /**
+//     * 获取日报信息
+//     * @return
+//     */
+//    @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
+//    @ResponseBody
+//    public R getDaily(Event event) {
+//        List<Event> eventList = eventService.findEventAll(event);
+//        List<Map<String, String>> resultMap = new ArrayList<>();
+//        for (int i = 0; i < eventList.size(); i++) {
+//            Event event1 = eventList.get(i);
+//            Map<String, String> map = new HashMap<>();
+//            map.put("eventName", event1.getEventName());
+//            map.put("eventId", event1.getId().toString());
+//            map.put("date", event1.getDate());
+//            for (int j = 0; j < event1.getEventDetails().size(); j++) {
+//                map.put("process", event1.getEventDetails().get(j).getProcess());
+//                map.put("result", event1.getEventDetails().get(j).getResult());
+//                map.put("method", event1.getEventDetails().get(j).getMethod());
+//                map.put("remark", event1.getEventDetails().get(j).getRemarks());
+//            }
+//            resultMap.add(map);
+//        }
+//        return R.ok().put("data", resultMap);
+//    }
 
 }
