@@ -226,15 +226,15 @@
                             str = '<td>' + data.data[i].id + '</td>' +
                                 '<td>' + data.data[i].date + '</td>' +
                                 '<td>' + data.data[i].time + '</td>' +
-                                '<td>' + data.data[i].type + '</td>' +
-                                '<td>' + data.data[i].surface + '</td>' +
-                                '<td>' + data.data[i].line + '</td>' +
-                                '<td>' + data.data[i].point + '</td>'+
-                                '<td>' + data.data[i].eventName + '</td>'+
+                                '<td>' + data.data[i].type_name + '</td>' +
+                                '<td>' + data.data[i].surface_name + '</td>' +
+                                '<td>' + data.data[i].line_name + '</td>' +
+                                '<td>' + data.data[i].point_name + '</td>'+
+                                '<td>' + data.data[i].event_name + '</td>'+
                                 '<td>' + data.data[i].process + '</td>'+
                                 '<td>' + data.data[i].result + '</td>' +
                                 '<td>' + data.data[i].method + '</td>'+
-                                '<td>' + data.data[i].remark + '</td>';
+                                '<td>' + data.data[i].remarks + '</td>';
                             $("#tbody").append('<tr>' + str + '</tr>');
                         }
                     },
