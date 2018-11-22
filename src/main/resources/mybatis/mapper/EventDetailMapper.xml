@@ -53,9 +53,7 @@
         INSERT ignore INTO event_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="eventDetail!=null">
-                <if test="eventDetail.eventId!=null">
                     event_id,
-                </if>
                 <if test="eventDetail.process!=null and eventDetail.process!=''">
                     process,
                 </if>
@@ -78,9 +76,7 @@
         </trim>
         <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
             <if test="eventDetail!=null">
-                <if test="eventDetail.eventId!=null">
-                    #{eventDetail.eventId},
-                </if>
+                (SELECT CASE  WHEN MAX(e.event_id) IS NULL THEN '1' ELSE MAX(e.event_id)+1 END FROM event_detail e),
                 <if test="eventDetail.process!=null and eventDetail.process!=''">
                     #{eventDetail.process},
                 </if>
