@@ -1,6 +1,5 @@
 package com.zftx.mcdaily.mapper;
 
-import com.zftx.mcdaily.bean.Line;
 import com.zftx.mcdaily.bean.Point;
 import org.apache.ibatis.annotations.Param;
 

@@ -20,4 +20,7 @@ public class Event {
     String date;//日期
     String time;//时间
     Integer islive;
+
+    EventDetail eventDetail; //事件详情
+
 }
