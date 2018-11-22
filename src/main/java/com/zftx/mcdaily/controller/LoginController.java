@@ -7,10 +7,13 @@ import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,11 +63,10 @@ public class LoginController {
      */
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
-    public R login(User user){
-
+    public R login(HttpSession session, User user){
+        log.info(">>>>>>>>>>>>>>>"+session.getId());
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> user1 = userService.getUser(user);
-
         if (user1 != null && user1.size() > 0) {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
             return R.ok().put("message", "登录成功");
@@ -95,8 +97,9 @@ public class LoginController {
 
     @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R addDaily(String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
-
+    public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
+        User user = (User)session.getAttribute("user");
+        System.out.println("用户："+user.getId());
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
@@ -124,22 +127,8 @@ public class LoginController {
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail){
-        List<Event> eventList = eventService.findEventByEventDetail(event,eventDetail);
-        List<Map<String,String>> mapList = new ArrayList<>();
-        for(int i=0;i<eventList.size();i++){
-            Event event1 = eventList.get(i);
-            Map<String,String> map = new HashMap<>();
-            map.put("id",event1.getId().toString());
-            map.put("eventName",event1.getEventName());
-            map.put("date",event1.getDate());
-            map.put("time",event1.getTime());
-            map.put("process",event1.getEventDetail().getProcess());
-            map.put("result",event1.getEventDetail().getResult());
-            map.put("method",event1.getEventDetail().getMethod());
-            map.put("remark",event1.getEventDetail().getRemarks());
-            mapList.add(map);
-        }
-        return R.ok().put("data",mapList);
+        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
+        return R.ok().put("data",eventList);
     }
 
 }
