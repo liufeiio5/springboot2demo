@@ -21,8 +21,6 @@ public class Event {
     String time;//时间
     Integer islive;
 
-
-
     EventDetail eventDetail; //事件详情
 
 }

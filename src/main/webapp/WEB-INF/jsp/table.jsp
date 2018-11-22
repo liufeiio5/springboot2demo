@@ -12,6 +12,7 @@
 
 		<script>
 			$(function  () {
+                fic();
 				inittype();
 				initsurface($('#type').val())
 				initline($('#type').val(),$('#surface').val())
@@ -206,6 +207,40 @@
                 });
 
 			})
+
+            function fic(){
+			    console.log(2222222222222222222222222);
+                $("#tbody").empty();
+                var eventId = $("#eventId").val();
+                $.ajax({
+                    type: 'get',
+                    url: '/getDailyInfo',
+                    dataType: 'json',
+                    data: {
+                        eventId:eventId,
+                        isLive: 1
+                    },
+                    success: function (data) {
+                        var str;
+                        for (i in  data.data) {
+                            str = '<td>' + data.data[i].id + '</td>' +
+                                '<td>' + data.data[i].date + '</td>' +
+                                '<td>' + data.data[i].time + '</td>' +
+                                '<td>' + data.data[i].type_name + '</td>' +
+                                '<td>' + data.data[i].surface_name + '</td>' +
+                                '<td>' + data.data[i].line_name + '</td>' +
+                                '<td>' + data.data[i].point_name + '</td>'+
+                                '<td>' + data.data[i].event_name + '</td>'+
+                                '<td>' + data.data[i].process + '</td>'+
+                                '<td>' + data.data[i].result + '</td>' +
+                                '<td>' + data.data[i].method + '</td>'+
+                                '<td>' + data.data[i].remarks + '</td>';
+                            $("#tbody").append('<tr>' + str + '</tr>');
+                        }
+                    },
+                })
+            }
+
 			function inittype()
 			{
                 $('#type').html('');
@@ -291,28 +326,31 @@
 		
 		<button style="margin: 30px;" class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
 		<span style="float: right;margin:20px 40px 0px 0px" id="usename"></span>
-		<table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>编号</th>
-            <th>日期</th>
-            <th>时间点</th>
-            <th>类型</th>
-            <th>面</th>
-			<th>线</th>
-			<th>点</th>
-			<th>事件</th>
-			<th>过程</th>
-			<th>结果</th>
-			<th>解决方案</th>
-			<th>备注</th>
-        </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
-    
+		<div>
+			<table class="table table-bordered" id="table-bordered">
+				<thead>
+				<tr>
+					<th>编号</th>
+					<th>日期</th>
+					<th>时间点</th>
+					<th>类型</th>
+					<th>面</th>
+					<th>线</th>
+					<th>点</th>
+					<th>事件</th>
+					<th>过程</th>
+					<th>结果</th>
+					<th>解决方案</th>
+					<th>备注</th>
+				</tr>
+				</thead>
+				<tbody id="tbody">
+
+				</tbody>
+			</table>
+		</div>
+
+
   		<div class="modal fade" id="addModal"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog">
 				<div class="modal-content">
