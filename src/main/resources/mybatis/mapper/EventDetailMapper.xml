@@ -10,8 +10,10 @@
         <result column="result" property="result"/>
         <result column="method" property="method"/>
         <result column="remarks" property="remarks"/>
+        <result column="date" property="date"/>
+        <result column="time" property="time"/>
     </resultMap>
-    <sql id="columnAll">id,event_id,process,result,method,remarks</sql>
+    <sql id="columnAll">id,event_id,process,result,method,remarks,date，time</sql>
 
     <select id="findAll" resultMap="eventDetail">
         SELECT
@@ -37,6 +39,12 @@
                 <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
                     and  remarks=#{eventDetail.remarks}
                 </if>
+                <if test="eventDetail.date!=null and eventDetail.date!=''">
+                    and  date=#{eventDetail.date}
+                </if>
+                <if test="eventDetail.time!=null and eventDetail.time!=''">
+                    and  time=#{eventDetail.time}
+                </if>
             </where>
         </if>
     </select>
@@ -60,6 +68,12 @@
                 <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
                     remarks,
                 </if>
+                <if test="eventDetail.date!=null and eventDetail.date!=''">
+                    date,
+                </if>
+                <if test="eventDetail.time!=null and eventDetail.time!=''">
+                    time,
+                </if>
             </if>
         </trim>
         <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
@@ -79,8 +93,47 @@
                 <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
                     #{eventDetail.remarks},
                 </if>
+                <if test="eventDetail.date!=null and eventDetail.date!=''">
+                    #{eventDetail.date},
+                </if>
+                <if test="eventDetail.time!=null and eventDetail.time!=''">
+                    #{eventDetail.time},
+                </if>
             </if>
         </trim>
     </insert>
+
+
+    <update id="updateEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail">
+        UPDATE event_detail
+        <set>
+            <if test="eventDetail.eventId!=null">
+                 event_id=#{eventDetail.eventId},
+            </if>
+            <if test="eventDetail.process!=null and eventDetail.process!=''">
+                 process=#{eventDetail.process},
+            </if>
+            <if test="eventDetail.result!=null and eventDetail.result!=''">
+                  result=#{eventDetail.result},
+            </if>
+            <if test="eventDetail.method!=null and eventDetail.method!=''">
+                 method=#{eventDetail.method},
+            </if>
+            <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                  remarks=#{eventDetail.remarks},
+            </if>
+            <if test="eventDetail.date!=null and eventDetail.date!=''">
+                 date=#{eventDetail.date},
+            </if>
+            <if test="eventDetail.time!=null and eventDetail.time!=''">
+                 time=#{eventDetail.time},
+            </if>
+        </set>
+        WHERE id=#{eventDetail.id}
+    </update>
+
+    <delete id="delEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail">
+        delete from event_detail WHERE id=#{eventDetail.id}
+    </delete>
 
 </mapper>

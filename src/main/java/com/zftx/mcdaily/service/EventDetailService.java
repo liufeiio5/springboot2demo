@@ -21,5 +21,19 @@ public interface EventDetailService {
      */
     public Integer addEventDetail(EventDetail eventDetail);
 
+    /**
+     * 修改事件详情
+     * @param eventDetail
+     * @return
+     */
+    public Integer updateEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
+    /**
+     * 删除事件详情
+     * @param eventDetail
+     * @return
+     */
+    public Integer delEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
 
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -92,10 +94,11 @@ public class LoginController {
 
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
 
-        event.setEventName(eventName).setPointId(point);
+        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date()));
         Integer eventResult = eventService.addEvent(event);
-         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark);
+         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
         Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
         if(eventResult>0&&eventDetialResult>0){
             return R.ok("添加成功").put("eventResult",eventDetail).put("eventDetialResult",eventDetialResult);

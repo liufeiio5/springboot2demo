@@ -103,7 +103,6 @@
                         surfaceId:surfaceid,
 						islive:1
 					},
-                    async:false,
                     success :function (data)
                     {
                         var json = data.data;
