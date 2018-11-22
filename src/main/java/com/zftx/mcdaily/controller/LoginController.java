@@ -1,10 +1,17 @@
 package com.zftx.mcdaily.controller;
 
+import com.zftx.mcdaily.bean.Event;
+import com.zftx.mcdaily.bean.EventDetail;
+import com.zftx.mcdaily.bean.Point;
 import com.zftx.mcdaily.bean.User;
+import com.zftx.mcdaily.service.EventDetailService;
+import com.zftx.mcdaily.service.EventService;
+import com.zftx.mcdaily.service.PointService;
 import com.zftx.mcdaily.service.UserService;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +27,15 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventService eventService;
+
+    @Autowired
+    private EventDetailService eventDetailService;
+
+    @Autowired
+    private PointService pointService;
+
     /**
      * 访问登录页
      * @return
@@ -28,6 +44,7 @@ public class LoginController {
     public String Login(){
         return "login";
     }
+
 
     /**
      * 用户登录
@@ -66,6 +83,24 @@ public class LoginController {
         }else{
             return R.error("注册失败");
 
+        }
+    }
+
+    @RequestMapping(value = "/addDaily")
+    @ResponseBody
+    public R addDaily(String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
+
+        Event event = new Event();
+        EventDetail eventDetail = new EventDetail();
+
+        event.setEventName(eventName).setPointId(point);
+        Integer eventResult = eventService.addEvent(event);
+         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark);
+        Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
+        if(eventResult>0&&eventDetialResult>0){
+            return R.ok("添加成功").put("eventResult",eventDetail).put("eventDetialResult",eventDetialResult);
+        }else{
+            return R.error("添加失败");
         }
     }
 
