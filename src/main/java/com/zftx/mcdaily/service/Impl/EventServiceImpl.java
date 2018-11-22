@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -38,8 +39,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> findEventByEventDetail(Event event, EventDetail eventDetail) {
+    public List<HashMap<String,Object>> findEventByEventDetail(Event event, EventDetail eventDetail) {
         return eventMapper.findEventByEventDetail(event,eventDetail);
+
     }
 
 

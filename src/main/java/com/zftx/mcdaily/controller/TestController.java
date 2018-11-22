@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.zftx.mcdaily.bean.Event;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,7 @@ public class TestController {
     @ResponseBody
     public R findAll(Event event, EventDetail eventDetail) {
 
-        List<Event> list = eventService.findEventByEventDetail(event,eventDetail);
+        List<HashMap<String,Object>> list =  eventService.findEventByEventDetail(event,eventDetail);
 
         /*for (Event event1 : list) {
             return R.ok().put("data1", event1.getEventDetail().getProcess());
