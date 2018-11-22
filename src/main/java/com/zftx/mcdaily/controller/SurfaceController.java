@@ -32,4 +32,20 @@ public class SurfaceController {
             return R.error("数据获取失败");
         }
     }
+
+    /**
+     * 添加面信息
+     * @param surface
+     * @return
+     */
+    @RequestMapping(value = "/addSurface",method = RequestMethod.POST)
+    @ResponseBody
+    public R addSurface(Surface surface){
+        Integer result = surfacService.addSurface(surface);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
 }

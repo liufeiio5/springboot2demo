@@ -3,6 +3,8 @@ package com.zftx.mcdaily.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 事件
  */
@@ -20,4 +22,6 @@ public class Event {
     String date;//日期
     String time;//时间
     Integer islive;
+    List<EventDetail> eventDetails;
+
 }

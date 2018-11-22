@@ -57,6 +57,39 @@
                 })
 
 			})
+
+
+            function fic(){
+                $("#tbody").empty();
+                var userId = $("#userId").val();
+                $.ajax({
+                    type: 'get',
+                    url: '/getDailyRecord',
+                    dataType: 'json',
+                    data: {
+                        userId:userId
+                    },
+                    success: function (data) {
+                        var str;
+                        for (i in  data.data) {
+                            str = '<td>' + data.data[i].id + '</td>' +
+                                '<td>' + data.data[i].userId + '</td>' +
+                                '<td>' + data.data[i].type + '</td>' +
+                                '<td>' + data.data[i].surface + '</td>' +
+                                '<td>' + data.data[i].line + '</td>' +
+                                '<td>' + data.data[i].point + '' + '</td>' +
+                                '<td>' + data.data[i].event + '</td>'+
+                                '<td>' + data.data[i].process + '</td>'+
+                                '<td>' + data.data[i].result + '</td>'+
+                                '<td>' + data.data[i].method + '</td>' +
+                                '<td>' + data.data[i].remark + '</td>'+
+                                '<td>' + data.data[i].dateTime + '</td>'+
+                                '<td>' + data.data[i].createTime + '</td>';
+                            $("#tbody").append('<tr>' + str + '</tr>');
+                        }
+                    },
+                })
+            }
 			function inittype()
 			{
                 $('#type').html('');
