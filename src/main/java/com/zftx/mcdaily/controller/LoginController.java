@@ -1,17 +1,10 @@
 package com.zftx.mcdaily.controller;
 
-import com.zftx.mcdaily.bean.Event;
-import com.zftx.mcdaily.bean.EventDetail;
-import com.zftx.mcdaily.bean.Point;
-import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.service.EventDetailService;
-import com.zftx.mcdaily.service.EventService;
-import com.zftx.mcdaily.service.PointService;
-import com.zftx.mcdaily.service.UserService;
+import com.zftx.mcdaily.bean.*;
+import com.zftx.mcdaily.service.*;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +30,14 @@ public class LoginController {
     @Autowired
     private PointService pointService;
 
+    @Autowired
+    private SurfaceService surfaceService;
+
+    @Autowired
+    private TypeService typeService;
+
+    @Autowired
+    private LineService lineService;
     /**
      * 访问登录页
      * @return
@@ -44,6 +45,11 @@ public class LoginController {
     @RequestMapping(value = "/login")
     public String Login(){
         return "login";
+    }
+
+    @RequestMapping(value = "/table")
+    public String table(){
+        return "table";
     }
 
 
@@ -94,7 +100,10 @@ public class LoginController {
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
-
+        typeService.insertType(new Type().setTypeName(type));
+        surfaceService.addSurface(new Surface().setSurfaceName(surface));
+        lineService.addLine(new Line().setLineName(line));
+        pointService.addPoint(new Point().setPointName(point.toString()));
         event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date()));
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
@@ -106,30 +115,31 @@ public class LoginController {
         }
     }
 
-//    /**
-//     * 获取日报信息
-//     * @return
-//     */
-//    @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
-//    @ResponseBody
-//    public R getDaily(Event event) {
-//        List<Event> eventList = eventService.findEventAll(event);
-//        List<Map<String, String>> resultMap = new ArrayList<>();
-//        for (int i = 0; i < eventList.size(); i++) {
-//            Event event1 = eventList.get(i);
-//            Map<String, String> map = new HashMap<>();
-//            map.put("eventName", event1.getEventName());
-//            map.put("eventId", event1.getId().toString());
-//            map.put("date", event1.getDate());
-//            for (int j = 0; j < event1.getEventDetails().size(); j++) {
-//                map.put("process", event1.getEventDetails().get(j).getProcess());
-//                map.put("result", event1.getEventDetails().get(j).getResult());
-//                map.put("method", event1.getEventDetails().get(j).getMethod());
-//                map.put("remark", event1.getEventDetails().get(j).getRemarks());
-//            }
-//            resultMap.add(map);
-//        }
-//        return R.ok().put("data", resultMap);
-//    }
+
+    /**
+     * 获取日报详细信息
+     * @param event
+     * @return
+     */
+    @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public R getDailyInfo(Event event,EventDetail eventDetail){
+        List<Event> eventList = eventService.findEventByEventDetail(event,eventDetail);
+        List<Map<String,String>> mapList = new ArrayList<>();
+        for(int i=0;i<eventList.size();i++){
+            Event event1 = eventList.get(i);
+            Map<String,String> map = new HashMap<>();
+            map.put("id",event1.getId().toString());
+            map.put("eventName",event1.getEventName());
+            map.put("date",event1.getDate());
+            map.put("time",event1.getTime());
+            map.put("process",event1.getEventDetail().getProcess());
+            map.put("result",event1.getEventDetail().getResult());
+            map.put("method",event1.getEventDetail().getMethod());
+            map.put("remark",event1.getEventDetail().getRemarks());
+            mapList.add(map);
+        }
+        return R.ok().put("data",mapList);
+    }
 
 }

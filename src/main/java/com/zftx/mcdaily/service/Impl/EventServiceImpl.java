@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.Event;
+import com.zftx.mcdaily.bean.EventDetail;
 import com.zftx.mcdaily.mapper.EventMapper;
 import com.zftx.mcdaily.service.EventService;
 import com.zftx.mcdaily.util.CommUtil;
@@ -38,4 +39,11 @@ public class EventServiceImpl implements EventService {
     public Integer delEvent(Event event) {
         return eventMapper.delEvent(event);
     }
+
+    @Override
+    public List<Event> findEventByEventDetail(Event event, EventDetail eventDetail) {
+        return eventMapper.findEventByEventDetail(event,eventDetail);
+    }
+
+
 }
