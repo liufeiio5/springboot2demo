@@ -15,40 +15,63 @@
 				initline($('#type').val(),$('#surface').val())
                 initpoint($('#type').val(),$('#surface').val(),$('#line').val())
 
-				$('#type').change(function ()
-				{
-                    initsurface($(this).val())
-                    initline($(this).val(),$('#surface').val())
-                    initpoint($(this).val(),$('#surface').val(),$('#line').val())
+                $('#add').click(function ()
+                {
+                    var type = $('#type').val();
+                    var surface = $('#surface').val();
+                    var line = $('#line').val();
+                    var point = $('#point').val();
+                    var eventName=$("#event").val();
+                    var process=$("#process").val();
+                    var result=$("#result").val();
+                    var method=$("#method").val();
+                    var remarks=$("#remarks").val();
+                    $.ajax({
+                        url:"addDaily",
+                        dataType:'json',
+                        data:{
+                            type:type,
+                            surface:surface,
+                            line:line,
+                            point:point,
+                            eventName:eventName,
+                            process:process,
+                            result:result,
+                            method:method,
+                            remarks:remarks
+                        },
+                        success :function (data)
+                        {
+                            if(data.code==200){
+                                $("#event").val('');
+                                $("#process").val('');
+                                $("#result").val('');
+                                $("#method").val('');
+                                $("#remarks").val('');
+                                alert("添加成功");
+                            }else{
+                                alert("添加失败");
+                            }
+                        }
+                    });
                 })
 
-                $('#surface').change(function ()
-                {
-                    initline($('#type').val(),$(this).val())
-                    initpoint($('#type').val(),$(this).val(),$('#line').val())
-                })
-
-                $('#line').change(function ()
-                {
-                    initpoint($('#type').val(),$('#surface').val(),$(this).val())
-                })
-				
 			})
-            function inittype()
-            {
+			function inittype()
+			{
                 $('#type').html('');
                 $.ajax({
                     type:"get",
                     url:"getType",
                     dataType:'json',
                     data:{islive:1},
-                    async:false,
+					async:false,
                     success :function (data)
-                    {
-                        var json = data.data;
-                        for(var i = 0 ; i<json.length ;i++)
+					{
+					    var json = data.data;
+					    for(var i = 0 ; i<json.length ;i++)
                             $('#type').append($('<option>').val(json[i].typeId).html(json[i].typeName))
-                    }
+					}
                 });
             }
             function initsurface(typeid)
@@ -78,9 +101,8 @@
                     data:{
                         typeId:typeid,
                         surfaceId:surfaceid,
-                        islive:1
-                    },
-                    async:false,
+						islive:1
+					},
                     success :function (data)
                     {
                         var json = data.data;
@@ -106,12 +128,13 @@
                     success :function (data)
                     {
                         var json = data.data;
-                        for(var i = 0 ; i<json.length ;i++)
+                        for(var i = 0 ; i<json.length ;i++) {
                             $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
+							return json[i].pointId;
+                        }
                     }
                 });
             }
-
 
 		</script>
 	</head>
@@ -149,16 +172,25 @@
 						<h4 class="modal-title">新增</h4>
 					</div>
 					<div class="modal-body">
-						类型<select class="form-control" id="type"></select><br />
-						面<select class="form-control" id="surface"></select><br />
-						线<select class="form-control" id="line"></select><br />
-						点<select class="form-control" id="point"></select><br />
-						事件<textarea class="form-control" id="event"></textarea><br />
-						过程<textarea class="form-control" id="process"></textarea><br />
-						结果<textarea class="form-control" id="result"></textarea><br />
-						解决方案<textarea class="form-control" id="method"></textarea><br />
-						备注<textarea class="form-control" id="remarks"></textarea><br />
-						<button type="add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
+						<p>类型:</p>
+						<select class="form-control" id="type"></select><br />
+						<p>面:</p>
+						<select class="form-control" id="surface"></select><br />
+						<p>线:</p>
+						<select class="form-control" id="line"></select><br />
+						<p>点:</p>
+						<select class="form-control" id="point"></select><br />
+						<p>事件:</p>
+						<textarea class="form-control" id="event"></textarea><br />
+						<p>过程:</p>
+						<textarea class="form-control" id="process"></textarea><br />
+						<p>结果:</p>
+						<textarea class="form-control" id="result"></textarea><br />
+						<p>解决方法:</p>
+						<textarea class="form-control" id="method"></textarea><br />
+						<p>备注:</p>
+						<textarea class="form-control" id="remarks"></textarea><br />
+						<button id="add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
