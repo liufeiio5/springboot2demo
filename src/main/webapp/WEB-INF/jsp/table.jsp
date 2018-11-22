@@ -9,9 +9,13 @@
 		<script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
 		<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/layer/layer.js" ></script>
+		<script type="text/javascript" src="/laydate/laydate.js" ></script>
 
 		<script>
 			$(function  () {
+                laydate.render({elem : '#startdate'});
+                laydate.render({elem : '#enddate'});
+
                 fic();
 				inittype();
 				initsurface($('#type').val())
@@ -51,9 +55,10 @@
                                 $("#result").val('');
                                 $("#method").val('');
                                 $("#remarks").val('');
-                                alert("添加成功");
+                                window.location.href="/table";
+                                layer.msg("添加成功");
                             }else{
-                                alert("添加失败");
+                                layer.msg("添加失败");
                             }
                         }
                     });
@@ -323,8 +328,12 @@
 		</script>
 	</head>
 	<body>
-		
-		<button style="margin: 30px;" class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+		<input type="text" id="startdate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+		—
+		<input type="text" id="enddate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
+		<input  id="userid"  placeholder="请输入用户ID"/>
+		<button style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
+		<button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
 		<span style="float: right;margin:20px 40px 0px 0px" id="username"></span>
 		<div>
 			<table class="table table-bordered" id="table-bordered">
