@@ -14,8 +14,18 @@
         <result column="date" property="date"/>
         <result column="time" property="time"/>
         <result column="islive" property="islive"/>
+        <association property="eventDetail"  javaType="com.zftx.mcdaily.bean.EventDetail">
+            <id column="id" property="id"/>
+            <result column="event_id" property="eventId"/>
+            <result column="process" property="process"/>
+            <result column="result" property="result"/>
+            <result column="method" property="method"/>
+            <result column="remarks" property="remarks"/>
+        </association>
     </resultMap>
-    <sql id="columnAll">id,point_id,event_name,create_user,date,time,islive</sql>
+
+    <sql id="columnAll">id,point_id,event_name,create_user,date,time</sql>
+    <sql id="columnAllss">e.id,e.point_id,e.event_name,e.create_user,e.date,e.time,d.id,d.event_id,d.process,d.result,d.method,d.remarks</sql>
 
     <select id="findEventAll" resultMap="event">
         SELECT
@@ -148,4 +158,49 @@
     </update>
 
 
+    <select id="findEventByEventDetail" resultMap="event">
+        SELECT  <include refid="columnAllss"/> FROM event e
+        INNER JOIN event_detail d ON e.id=d.event_id
+            <where>
+                <if test="event.pointId!=null">
+                      e.point_id=#{event.pointId}
+                </if>
+                <if test="event.eventName!=null and event.eventName!=''">
+                    and  e.event_name=#{event.eventName}
+                </if>
+                <if test="event.weight!=null">
+                    and e.weight=#{event.weight}
+                </if>
+                <if test="event.status!=null">
+                    and e.status=#{event.status}
+                </if>
+                <if test="event.createUser!=null and event.createUser!=''">
+                    and  e.create_user=#{event.createUser}
+                </if>
+                <if test="event.date!=null">
+                    and e.date=#{event.date}
+                </if>
+                <if test="event.time!=null">
+                    and e.time=#{event.time}
+                </if>
+                <if test="event.islive!=null">
+                    and e.islive=#{event.islive}
+                </if>
+                <if test="eventDetail.eventId!=null">
+                    and d.event_id=#{eventDetail.eventId}
+                </if>
+                <if test="eventDetail.process!=null and eventDetail.process!=''">
+                    and d.process=#{eventDetail.process}
+                </if>
+                <if test="eventDetail.result!=null and eventDetail.result!=''">
+                    and  d.result=#{eventDetail.result}
+                </if>
+                <if test="eventDetail.method!=null and eventDetail.method!=''">
+                    and d.method=#{eventDetail.method}
+                </if>
+                <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
+                    and  d.remarks=#{eventDetail.remarks}
+                </if>
+            </where>
+    </select>
 </mapper>

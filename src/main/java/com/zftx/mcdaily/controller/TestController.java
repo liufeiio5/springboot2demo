@@ -18,10 +18,4 @@ public class TestController {
     public String toIndex(){
         return "index";
     }
-
-    @RequestMapping(value = "/table")
-    public String table(){
-        return "table";
-    }
-
 }

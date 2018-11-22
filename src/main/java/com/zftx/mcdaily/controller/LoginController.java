@@ -2,7 +2,6 @@ package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Event;
 import com.zftx.mcdaily.bean.EventDetail;
-import com.zftx.mcdaily.bean.Point;
 import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.EventDetailService;
 import com.zftx.mcdaily.service.EventService;
@@ -11,7 +10,6 @@ import com.zftx.mcdaily.service.UserService;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -110,7 +108,7 @@ public class LoginController {
      * 获取日报信息
      * @return
      */
-    @RequestMapping(value = "/getDaily",method = RequestMethod.POST)
+   /* @RequestMapping(value = "/getDaily",method = RequestMethod.POST)
     @ResponseBody
     public R getDaily(Event event) {
         List<Event> eventList = eventService.findEventAll(event);
@@ -130,6 +128,6 @@ public class LoginController {
             resultMap.add(map);
         }
         return R.ok().put("data", resultMap);
-    }
+    }*/
 
 }
