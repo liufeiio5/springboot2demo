@@ -41,7 +41,7 @@ public class SurfaceController {
     @RequestMapping(value = "/addSurface",method = RequestMethod.POST)
     @ResponseBody
     public R addSurface(Surface surface){
-        Integer result = surfacService.addSurface(surface);
+        Integer result = surfaceService.addSurface(surface);
         if(result>0){
             return R.ok("添加成功").put("result",result);
         }else{
