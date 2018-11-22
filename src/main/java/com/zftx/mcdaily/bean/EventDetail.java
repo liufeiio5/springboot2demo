@@ -3,6 +3,8 @@ package com.zftx.mcdaily.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 事件详情
  */
@@ -17,4 +19,6 @@ public class EventDetail
     String result;//解决结果
     String method;//解决方案
     String remarks;//备注
+    String date;//日期
+    String time;//时间
 }

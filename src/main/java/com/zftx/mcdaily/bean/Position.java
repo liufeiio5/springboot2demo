@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 兴趣表
+ *职位
  */
+
 @Data
 @Accessors(chain = true)
-public class Hobby {
-    private  Integer id; //兴趣Id
-    private  String value; //兴趣内容
-
+public class Position {
+    private Integer id;
+    private String value;  //职位名
 }

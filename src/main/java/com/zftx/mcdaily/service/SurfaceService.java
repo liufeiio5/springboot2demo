@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface SurfacService {
+public interface SurfaceService {
 
     /**
      *  查询面

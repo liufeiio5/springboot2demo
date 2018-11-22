@@ -68,7 +68,7 @@
             success:function (data) {
                 if(data.code==200){
                     alert("登录成功")
-                    window.location.href="http://localhost:9000/index"
+                    window.location.href="http://localhost:9000/table"
                 }else{
                     alert("登录失败")
                     window.location.href="http://localhost:9000/login"

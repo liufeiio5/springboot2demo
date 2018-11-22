@@ -4,6 +4,7 @@ import com.zftx.mcdaily.bean.Event;
 import com.zftx.mcdaily.bean.EventDetail;
 import com.zftx.mcdaily.mapper.EventMapper;
 import com.zftx.mcdaily.service.EventService;
+import com.zftx.mcdaily.util.CommUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    private EventMapper eventMapper;
+    EventMapper eventMapper;
 
     @Override
     public List<Event> findEventAll(Event event) {
@@ -25,11 +26,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Integer addEvent(Event event) {
+        event.setDate(CommUtil.getDayStringWithMark(event.getDate()));
         return eventMapper.addEvent(event);
     }
 
     @Override
     public Integer updateEvent(Event event) {
+        event.setDate(CommUtil.getDayStringWithMark(event.getDate()));
         return eventMapper.updateEvent(event);
     }
 
