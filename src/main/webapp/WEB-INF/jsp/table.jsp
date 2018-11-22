@@ -208,6 +208,7 @@
 
 			})
 
+			//展示日报信息
             function fic(){
 			    console.log(2222222222222222222222222);
                 $("#tbody").empty();
@@ -221,6 +222,7 @@
                         isLive: 1
                     },
                     success: function (data) {
+                        console.log(data);
                         var str;
                         for (i in  data.data) {
                             str = '<td>' + data.data[i].id + '</td>' +
@@ -237,6 +239,8 @@
                                 '<td>' + data.data[i].remarks + '</td>';
                             $("#tbody").append('<tr>' + str + '</tr>');
                         }
+                        $('#userName').text(data.status);
+                        $('#total_li').show();
                     },
                 })
             }
@@ -323,9 +327,8 @@
 		</script>
 	</head>
 	<body>
-		
 		<button style="margin: 30px;" class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-		<span style="float: right;margin:20px 40px 0px 0px" id="usename"></span>
+		<span style="float: right;margin:20px 40px 0px 0px" id="userName"></span>
 		<div>
 			<table class="table table-bordered" id="table-bordered">
 				<thead>

@@ -7,10 +7,8 @@ import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,10 +62,13 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user){
-        log.info(">>>>>>>>>>>>>>>"+session.getId());
+
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> user1 = userService.getUser(user);
+        session.setAttribute("userId",user1.get(0).getId().toString());//保存当前登录用户的ID到session中
+        session.setAttribute("username",user1.get(0).getUserName());//保存当前登录用户的用户名到session中
         if (user1 != null && user1.size() > 0) {
+
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
             return R.ok().put("message", "登录成功");
         } else {
@@ -78,7 +79,7 @@ public class LoginController {
     }
 
     /**
-     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
+     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5加密密码）
      * @param user
      * @return
      */
@@ -91,15 +92,28 @@ public class LoginController {
             return  R.ok("注册成功");
         }else{
             return R.error("注册失败");
-
         }
     }
 
+    /**
+     * 添加日报
+     * @param session
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remark
+     * @return
+     */
     @RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
-        User user = (User)session.getAttribute("user");
-        System.out.println("用户："+user.getId());
+
+        String userId = (String) session.getAttribute("userId");//获取当前登录用户ID
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
@@ -107,7 +121,7 @@ public class LoginController {
         surfaceService.addSurface(new Surface().setSurfaceName(surface));
         lineService.addLine(new Line().setLineName(line));
         pointService.addPoint(new Point().setPointName(point.toString()));
-        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date()));
+        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date())).setCreateUser(Integer.parseInt(userId));
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
         Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
@@ -126,9 +140,10 @@ public class LoginController {
      */
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyInfo(Event event,EventDetail eventDetail){
+    public R getDailyInfo(HttpSession session,Event event,EventDetail eventDetail){
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
-        return R.ok().put("data",eventList);
+        String username = (String) session.getAttribute("username");//通过过session获取当前登录用户的名字
+        return R.ok().put("data",eventList).put("userName",username);
     }
 
 }

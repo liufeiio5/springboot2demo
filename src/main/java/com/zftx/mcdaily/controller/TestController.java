@@ -43,11 +43,19 @@ public class TestController {
         return R.ok().put("data", list);
     }
 
+    @RequestMapping(value = "/setUserId")
+    @ResponseBody
+    public R setUserId(HttpSession session){
+        session.setAttribute("username","hfaksjdhfaksdf");
+        return R.ok();
+    }
+
     @RequestMapping(value = "/getUserId")
     @ResponseBody
     public R getUserId(HttpSession session){
         User user = (User)session.getAttribute("user");
         //System.out.println("用户："+user.getId());
-        return R.ok().put("session.id",session.getId());
+        //return R.ok().put("user",session.getAttribute("username"));
+        return R.ok().put("user",user.toString());
     }
 }
