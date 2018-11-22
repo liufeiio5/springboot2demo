@@ -19,23 +19,39 @@ public class EventDetailServiceImpl implements EventDetailService {
 
     @Override
     public List<EventDetail> findAll(EventDetail eventDetail) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：eventDetail{},");
+        log.info(info.toString(),eventDetail.toString());
         return eventDetailMapper.findAll(eventDetail);
     }
 
     @Override
     public Integer addEventDetail(EventDetail eventDetail) {
         eventDetail.setDate(CommUtil.getDayStringWithMark(eventDetail.getDate()));
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：eventDetail{},");
+        log.info(info.toString(),eventDetail.toString());
         return eventDetailMapper.addEventDetail(eventDetail);
     }
 
     @Override
     public Integer updateEventDetail(EventDetail eventDetail) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：eventDetail{},");
+        log.info(info.toString(),eventDetail.toString());
         eventDetail.setDate(CommUtil.getDayStringWithMark(eventDetail.getDate()));
         return eventDetailMapper.updateEventDetail(eventDetail);
     }
 
     @Override
     public Integer delEventDetail(EventDetail eventDetail) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：eventDetail{},");
+        log.info(info.toString(),eventDetail.toString());
         return eventDetailMapper.delEventDetail(eventDetail);
     }
 }
