@@ -209,7 +209,6 @@
 			})
 
             function fic(){
-			    console.log(2222222222222222222222222);
                 $("#tbody").empty();
                 var eventId = $("#eventId").val();
                 $.ajax({
@@ -221,6 +220,7 @@
                         isLive: 1
                     },
                     success: function (data) {
+                        $('#username').html('欢迎 '+data.username+' 登录米仓日报');
                         var str;
                         for (i in  data.data) {
                             str = '<td>' + data.data[i].id + '</td>' +
@@ -325,7 +325,7 @@
 	<body>
 		
 		<button style="margin: 30px;" class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-		<span style="float: right;margin:20px 40px 0px 0px" id="usename"></span>
+		<span style="float: right;margin:20px 40px 0px 0px" id="username"></span>
 		<div>
 			<table class="table table-bordered" id="table-bordered">
 				<thead>
