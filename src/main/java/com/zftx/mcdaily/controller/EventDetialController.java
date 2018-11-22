@@ -15,7 +15,7 @@ public class EventDetialController {
     @Autowired
     private EventDetailService eventDetailService;
 
-    @RequestMapping(value = "/addEventDetial",method = RequestMethod.POST)
+    @RequestMapping(value = "/addEventDetial",method = RequestMethod.GET)
     @ResponseBody
     public R addEventDetial(EventDetail eventDetail){
 
@@ -26,4 +26,5 @@ public class EventDetialController {
             return R.error("添加数据失败");
         }
     }
+
 }
