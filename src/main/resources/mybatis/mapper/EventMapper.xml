@@ -208,6 +208,7 @@
             <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
                 and d.remarks=#{eventDetail.remarks}
             </if>
+             order by e.id desc
         </where>
     </select>
     
