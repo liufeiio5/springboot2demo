@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Point;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.PointService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -35,7 +37,9 @@ public class PointController {
      */
     @RequestMapping(value = "/addPoint",method = RequestMethod.POST)
     @ResponseBody
-    public R addPoint(Point point){
+    public R addPoint(HttpSession session,Point point){
+        User user = (User) session.getAttribute("user");
+        point.setCreateUser(user.getId());
         Integer result = pointService.addPoint(point);
         if(result>0){
             return R.ok("添加成功").put("result",result);

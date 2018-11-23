@@ -8,11 +8,11 @@ import java.util.List;
 
 @Repository
 public interface TypeMapper {
-    public List<Type> getType(@Param("type")Type type);
+    public List<Type> getType(@Param("type") Type type);
 
-    public int insertType(@Param("type")Type type);
+    public int insertType(@Param("type") Type type);
 
-    public int updateType(@Param("type")Type type);
+    public int updateType(@Param("type") Type type);
 
-    public int deleteType(@Param("type")Type type);
+    public int deleteType(@Param("type") Type type);
 }

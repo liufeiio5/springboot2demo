@@ -14,8 +14,8 @@
         <result column="process" property="process"/>
         <result column="result" property="result"/>
         <result column="method" property="method"/>
-        <result column="dateTime" property="dateTime"/>
-        <result column="createTime" property="createTime"/>
+        <result column="date" property="date"/>
+        <result column="time" property="time"/>
     </resultMap>
 
     <select id="getDailyRecord" resultMap="dailyRecord">
@@ -38,11 +38,11 @@
                   <if test="dailyRecord.point != null">
                       and point=#{dailyRecord.point}
                   </if>
-                  <if test="dailyRecord.dateTime != null">
-                      and dateTime=#{dailyRecord.dateTime}
+                  <if test="dailyRecord.date != null">
+                      and daily_record.date=#{dailyRecord.date}
                   </if>
-                  <if test="dailyRecord.createTime != null">
-                      and createTime=#{dailyRecord.createTime}
+                  <if test="dailyRecord.time != null">
+                      and daily_record.time=#{dailyRecord.time}
                   </if>
               </where>
 
@@ -64,7 +64,8 @@
                 result,
                 method,
                 remark,
-                date_time,
+                daily_record.date,
+                daily_record.time
             </if>
         </trim>
         <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
@@ -99,8 +100,11 @@
                 <if test="dailyRecord.remark!=null ">
                     #{dailyRecord.remark},
                 </if>
-                <if test="dailyRecord.dateTime!=null ">
-                    #{dailyRecord.dateTime},
+                <if test="dailyRecord.date!=null ">
+                    #{dailyRecord.date},
+                </if>
+                <if test="dailyRecord.time!=null ">
+                    #{dailyRecord.time}
                 </if>
 
             </if>

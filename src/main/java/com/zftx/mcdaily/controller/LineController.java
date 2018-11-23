@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Line;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.LineService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -35,7 +37,9 @@ public class LineController {
      */
     @RequestMapping(value = "/addLine",method = RequestMethod.POST)
     @ResponseBody
-    public R addLine(Line line){
+    public R addLine(HttpSession session,Line line){
+        User user = (User) session.getAttribute("user");
+        line.setCreateUser(user.getId());
         Integer result = lineService.addLine(line);
         if(result>0){
             return R.ok("添加成功").put("result",result);
