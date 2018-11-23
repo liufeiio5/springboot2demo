@@ -59,7 +59,7 @@
         join line l on p.line_id=l.line_id
         join user u on d.user_id = u.id
         <where>
-            <if test="startDate != null and endDate != nul">
+            <if test="startDate != null and endDate != null">
                 d.date between #{startDate} and #{endDate}
             </if>
             <if test="userId != null">
@@ -129,6 +129,9 @@
         </trim>
     </insert>
 
-
+    <!--实际删除 综合表-->
+    <delete id="deleteDailyRecord" parameterType="com.zftx.mcdaily.bean.DailyRecord">
+       delete from daily_record  where id=#{dailyRecord.id}
+    </delete>
 
 </mapper>

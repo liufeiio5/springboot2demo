@@ -260,9 +260,8 @@
         }
 
         $.ajax({
-            url: "register",
+            url: "/register",
             data: {
-
                 'fullName': fullName,
                 'userName': userName,
                 'password': hex_md5(hex_md5(passwords)),
@@ -285,12 +284,5 @@
                 }
             }
         })
-
-
     }
-
-    $('body').on('hidden.bs.modal', '.modal', function () {
-        $(this).removeData('bs.modal');
-    });
-
 </script>

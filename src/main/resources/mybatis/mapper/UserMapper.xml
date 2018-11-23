@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="full_name" property="fullName"/>
         <result column="user_name" property="userName"/>
+        <result column="full_name" property="fullName"/>
         <result column="password" property="password"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
@@ -26,7 +27,10 @@
                     id = #{user.id}
                 </if>
                 <if test="user.userName != null">
-                   and  user_name like concat(#{user.userName},'%')
+                   and  user_name =#{user.userName}
+                </if>
+                <if test="user.fullName != null">
+                    and  full_name like concat(#{user.fullName},'%')
                 </if>
                 <if test="user.password != null">
                    and password = #{user.password}
@@ -138,6 +142,9 @@
         <set>
             <if test="user.userName != null and user.userName!=''">
                 user_name=#{user.userName},
+            </if>
+            <if test="user.fullName != null and user.fullName!=''">
+                full_name=#{user.fullName},
             </if>
             <if test="user.password != null ">
                 password=#{user.password},

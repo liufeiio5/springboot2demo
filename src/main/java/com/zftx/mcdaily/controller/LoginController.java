@@ -22,12 +22,6 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    private EventService eventService;
-
-    @Autowired
-    private EventDetailService eventDetailService;
-
-    @Autowired
     private PointService pointService;
 
     @Autowired
@@ -53,8 +47,8 @@ public class LoginController {
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-        /*if (session.getAttribute("user") == null)
-            return "login";*/
+        if (session.getAttribute("user") == null)
+            return "login";
         return "table";
     }
 
@@ -67,7 +61,6 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
-        System.out.println(user.getPassword()+"222222222222222222");
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
@@ -78,7 +71,6 @@ public class LoginController {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录失败");
             return R.error().put("message", "登录失败");
         }
-
     }
 
     /**
@@ -95,7 +87,7 @@ public class LoginController {
      * @param remarks
      * @return
      */
-    @RequestMapping(value = "/addDaily")
+    /*@RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
         //获取用户信息
@@ -132,7 +124,7 @@ public class LoginController {
         }else{
             return R.error("添加失败");
         }
-    }
+    }*/
 
     /**
      * 添加日报记录
@@ -176,33 +168,14 @@ public class LoginController {
      */
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
-    public R register(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
+    public R registers(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
 //        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
         String result = userService.insertUser(new User().setPassword(MD5.md5(password,userName)).setUserName(userName).setFullName(fullName).setEmail(email).setPhone(phone).
         setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
-        System.out.println(password+"1111111111111111111");
         if(result.equals("success")){
             return  R.ok("注册成功").put("result",result);
         }else{
             return R.error("注册失败").put("result",result);
         }
-    }
-
-
-
-    /**
-     * 获取日报详细信息
-     * @param event
-     * @return
-     */
-    @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
-    @ResponseBody
-    public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
-        //获取当前登录用户的信息
-        User user = (User) session.getAttribute("user");
-        //设置查询条件为当前登录用户的ID
-        event.setCreateUser(user.getId());
-        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
-        return R.ok().put("data",eventList).put("username",user.getUserName());
     }
 }

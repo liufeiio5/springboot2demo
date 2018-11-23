@@ -9,11 +9,11 @@ import java.util.List;
 @Repository
 public interface HobbyMapper {
 
-    public List<Hobby> getHobby(@Param("hobby")Hobby hobby);
+    public List<Hobby> getHobby(@Param("hobby") Hobby hobby);
 
-    public int insertHobby(@Param("hobby")Hobby hobby);
+    public int insertHobby(@Param("hobby") Hobby hobby);
 
-    public int updateHobby(@Param("hobby")Hobby hobby);
+    public int updateHobby(@Param("hobby") Hobby hobby);
 
-    public int deleteHobby(@Param("hobby")Hobby hobby);
+    public int deleteHobby(@Param("hobby") Hobby hobby);
 }

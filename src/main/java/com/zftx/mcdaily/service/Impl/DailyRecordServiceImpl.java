@@ -45,4 +45,18 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         log.info(info.toString(),dailyRecord.toString());
         return dailyRecordMapper.addDailyRecord(dailyRecord);
     }
+
+    /**
+     * 删除日报
+     * @param dailyRecord
+     * @return
+     */
+    public String deleteDailyRecord(DailyRecord dailyRecord){
+        int i=dailyRecordMapper.deleteDailyRecord(dailyRecord);
+        if(i>0){
+            return "success";
+        }else{
+            return "fails";
+        }
+    }
 }
