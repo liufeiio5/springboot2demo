@@ -101,15 +101,10 @@ public class LoginController {
     @ResponseBody
     public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
         User user = (User)session.getAttribute("user");
-        System.out.println("用户："+user.getId());
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
-        typeService.insertType(new Type().setTypeName(type));
-        surfaceService.addSurface(new Surface().setSurfaceName(surface));
-        lineService.addLine(new Line().setLineName(line));
-        pointService.addPoint(new Point().setPointName(point.toString()));
-        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date()));
+        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date())).setCreateUser(user.getId());
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
         Integer eventDetialResult = eventDetailService.addEventDetail(eventDetail);
@@ -129,8 +124,9 @@ public class LoginController {
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
-        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         User user = (User) session.getAttribute("user");
+        event.setCreateUser(user.getId());
+        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
     }
 
