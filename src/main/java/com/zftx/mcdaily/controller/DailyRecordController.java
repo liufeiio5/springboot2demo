@@ -50,7 +50,7 @@ public class DailyRecordController {
         if(list !=null &&list.size()>0){
             return R.ok("数据获取成功").put("data",list).put("userName",user.getUserName());
         }else{
-            return R.error("获取数据失败");
+            return R.error("获取数据失败").put("userName",user.getUserName());
         }
     }
 
