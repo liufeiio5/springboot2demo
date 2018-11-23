@@ -46,16 +46,19 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/login")
-    public String Login(){
+    public String Login(HttpSession session){
         return "login";
     }
 
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("user") == null) {
             return "login";
-        return "table";
+        }else {
+            return "table";
+        }
+
     }
 
 
@@ -67,6 +70,7 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
+        session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
@@ -125,19 +129,19 @@ public class LoginController {
         event.setEventName(eventName).setPointId(point).setDate(dateFormat1.format(new Date())).setCreateUser(user.getId()).setTime(dateFormat.format(new Date()));
 
         //添加日报的时候添加的type surface line point 关联当前登录的用户ID
-        typeService.insertType(new Type().setCreateUser(user.getId().toString()));
+        typeService.insertType(new Type().setCreateUser(user.getId()));
         surfaceService.addSurface(new Surface().setTypeId(type).setCreateUser(user.getId()));
         lineService.addLine(new Line().setSurfaceId(surface).setCreateUser(user.getId()));
         pointService.addPoint(new Point().setSurfaceId(surface).setLineId(line).setCreateUser(user.getId()));
 
-        //插入到日报统一记录表
-        dailyRecordService.addDailyRecord(new DailyRecord()
-                .setUserId(user.getId()).setType(type.toString())
-                .setSurface(surface.toString()).setLine(line.toString())
-                .setPoint(point.toString()).setEvent(eventName)
-                .setProcess(process).setResult(result).setMethod(method)
-                .setRemark(remarks).setDate(dateFormat1.format(new Date()))
-                .setTime(dateFormat.format(new Date())));
+//        //插入到日报统一记录表
+//        dailyRecordService.addDailyRecord(new DailyRecord()
+//                .setUserId(user.getId()).setType(type.toString())
+//                .setSurface(surface.toString()).setLine(line.toString())
+//                .setPoint(point.toString()).setEvent(eventName)
+//                .setProcess(process).setResult(result).setMethod(method)
+//                .setRemark(remarks).setDate(dateFormat1.format(new Date()))
+//                .setTime(dateFormat.format(new Date())));
         //获取事件插入成功后返回的id
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result)
