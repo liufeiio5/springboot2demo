@@ -25,4 +25,11 @@ public class TestController {
         return "index";
     }
 
+    @RequestMapping(value = "/getUserId")
+    @ResponseBody
+    public R getUserId(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        //System.out.println("用户："+user.getId());
+        return R.ok().put("session.id",session.getId());
+    }
 }

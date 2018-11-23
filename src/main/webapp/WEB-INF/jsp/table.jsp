@@ -42,6 +42,7 @@
                 })
 
 
+
                 $('#add').click(function ()
                 {
                     var type = $('#type').val();
@@ -116,6 +117,9 @@
                 })
 
 
+
+
+
 			})
 
             function inittable(){
@@ -124,12 +128,12 @@
                     type: 'get',
                     url: '/getDaily',
                     dataType: 'json',
-                    data: {
-                        isLive: 1
+                    data:
+                     {
+
                     },
                     success: function (data) {
                         $('#username').html('欢迎 '+data.username+' 登录米仓日报');
-
                         for (i in  data.data)
                         {
                             var tr = $('<tr>') ;
@@ -145,9 +149,40 @@
                             tr.append($('<td>').html(data.data[i].result))
                             tr.append($('<td>').html(data.data[i].method))
                             tr.append($('<td>').html(data.data[i].remark))
-                            tr.append($('<button>').addClass('btn btn-danger').attr('data-toggle','modal').attr('data-target','#setModal').html('<i class="glyphicon glyphicon-edit"></i>'))
+                            var set = $('<button>').addClass('btn btn-warning').css('margin-right','10px').attr('data-toggle','modal').attr('data-target','#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                            var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                            var td =$('<td>');
+                            td.append(set);
+                            td.append(del);
+                            tr.append(td);
                             $("#tbody").append(tr);
                         }
+                        $('.delbtn').click(function (){
+                            layer.confirm('确认要删除吗？', function(index) {
+                                $.ajax({
+                                    dataType: 'json',
+                                    type: "post",
+                                    url: "/deleteDailyRecord",
+                                    data: { id:$('.delbtn').parent().parent().children().eq(0).text()},
+                                    success: function(data) {
+                                        if(data.code == "200") {
+                                            layer.msg('已删除!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                            window.location.href="/table"
+                                        } else {
+                                            layer.msg(data.result, {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                        }
+
+                                    }
+                                });
+
+                            });
+                        })
                     },
                 })
             }
@@ -231,28 +266,6 @@
                 });
             }
 
-            //删除
-			function del(id){
-			    alert(id)
-			    if(confirm("是否确定要删除?")) {
-                    $.ajax({
-                        url: "/deleteDailyRecord",
-                        data: {
-                            id: id,
-                        },
-                        dataType: "json",
-                        success: function (data) {
-                            if (data) {
-                                alert("删除成功")
-                                inittable();
-                            } else {
-                                alert("删除失败")
-                            }
-                        }
-                    })
-                }
-			}
-
 		</script>
 	</head>
 	<body>
@@ -279,7 +292,7 @@
 					<th>结果</th>
 					<th>解决方案</th>
 					<th>备注</th>
-					<th>操作</th>
+                    <th>操作</th>
 				</tr>
 				</thead>
 				<tbody id="tbody">
