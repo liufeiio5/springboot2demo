@@ -1,8 +1,10 @@
 package com.zftx.mcdaily.service;
 
 import com.zftx.mcdaily.bean.Event;
+import com.zftx.mcdaily.bean.EventDetail;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface EventService {
@@ -34,5 +36,12 @@ public interface EventService {
      * @return
      */
     public Integer delEvent(Event event);
+
+    /**
+     * 事件和事件详情查询
+     * @param event
+     * @return
+     */
+    public List<HashMap<String,Object>> findEventByEventDetail(Event event, EventDetail eventDetail);
 
 }

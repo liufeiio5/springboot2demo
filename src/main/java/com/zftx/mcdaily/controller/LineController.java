@@ -6,6 +6,7 @@ import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -24,6 +25,22 @@ public class LineController {
             return R.ok("数据获取成功").put("data",lines);
         }else{
             return R.error("获取数据失败");
+        }
+    }
+
+    /**
+     * 添加线
+     * @param line
+     * @return
+     */
+    @RequestMapping(value = "/addLine",method = RequestMethod.POST)
+    @ResponseBody
+    public R addLine(Line line){
+        Integer result = lineService.addLine(line);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
         }
     }
 }

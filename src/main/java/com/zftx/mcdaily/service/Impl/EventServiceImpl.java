@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.Event;
+import com.zftx.mcdaily.bean.EventDetail;
 import com.zftx.mcdaily.mapper.EventMapper;
 import com.zftx.mcdaily.service.EventService;
 import com.zftx.mcdaily.util.CommUtil;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -38,4 +40,12 @@ public class EventServiceImpl implements EventService {
     public Integer delEvent(Event event) {
         return eventMapper.delEvent(event);
     }
+
+    @Override
+    public List<HashMap<String,Object>> findEventByEventDetail(Event event, EventDetail eventDetail) {
+        return eventMapper.findEventByEventDetail(event,eventDetail);
+
+    }
+
+
 }

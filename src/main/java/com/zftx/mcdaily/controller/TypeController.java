@@ -27,4 +27,20 @@ public class TypeController {
             return R.error("获取数据失败");
         }
     }
+
+    /**
+     * 添加类型
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "/addType",method = RequestMethod.POST)
+    @ResponseBody
+    public R addType(Type type){
+        String result = typeService.insertType(type);
+        if("success".equals(result)){
+            return R.ok("添加成功").put("result",result);
+        }else {
+            return R.error("添加失败");
+        }
+    }
 }

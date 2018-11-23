@@ -27,4 +27,20 @@ public class PointController {
             return R.error("获取数据失败");
         }
     }
+
+    /**
+     * 添加点
+     * @param point
+     * @return
+     */
+    @RequestMapping(value = "/addPoint",method = RequestMethod.POST)
+    @ResponseBody
+    public R addPoint(Point point){
+        Integer result = pointService.addPoint(point);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
 }

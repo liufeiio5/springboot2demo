@@ -1,7 +1,7 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Surface;
-import com.zftx.mcdaily.service.SurfacService;
+import com.zftx.mcdaily.service.SurfaceService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SurfaceController {
 
     @Autowired
-    private SurfacService surfacService;
+    private SurfaceService surfaceService;
 
     /**
      * 获取面信息接口
@@ -25,11 +25,27 @@ public class SurfaceController {
     @RequestMapping(value = "/getSurface",method = RequestMethod.GET)
     @ResponseBody
     public R getSurface(Surface surface){
-        List<Surface> surfaceList = surfacService.findAllSurFace(surface);
+        List<Surface> surfaceList = surfaceService.findAllSurFace(surface);
         if(surfaceList.size()>0&&surface != null){
             return R.ok("数据获取成功").put("data",surfaceList);
         }else{
             return R.error("数据获取失败");
+        }
+    }
+
+    /**
+     * 添加面信息
+     * @param surface
+     * @return
+     */
+    @RequestMapping(value = "/addSurface",method = RequestMethod.POST)
+    @ResponseBody
+    public R addSurface(Surface surface){
+        Integer result = surfaceService.addSurface(surface);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
         }
     }
 }

@@ -3,6 +3,8 @@ package com.zftx.mcdaily.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 事件详情
  */

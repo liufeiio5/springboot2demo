@@ -1,26 +1,21 @@
 package com.zftx.mcdaily.controller;
 
-import com.zftx.mcdaily.bean.Event;
-import com.zftx.mcdaily.bean.EventDetail;
-import com.zftx.mcdaily.bean.Point;
-import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.service.EventDetailService;
-import com.zftx.mcdaily.service.EventService;
-import com.zftx.mcdaily.service.PointService;
-import com.zftx.mcdaily.service.UserService;
+import com.zftx.mcdaily.bean.*;
+import com.zftx.mcdaily.service.*;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -38,6 +33,14 @@ public class LoginController {
     @Autowired
     private PointService pointService;
 
+    @Autowired
+    private SurfaceService surfaceService;
+
+    @Autowired
+    private TypeService typeService;
+
+    @Autowired
+    private LineService lineService;
     /**
      * 访问登录页
      * @return
@@ -45,6 +48,11 @@ public class LoginController {
     @RequestMapping(value = "/login")
     public String Login(){
         return "login";
+    }
+
+    @RequestMapping(value = "/table")
+    public String table(){
+        return "table";
     }
 
 
@@ -55,11 +63,10 @@ public class LoginController {
      */
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
-    public R login(User user){
-
+    public R login(HttpSession session, User user){
+        log.info(">>>>>>>>>>>>>>>"+session.getId());
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> user1 = userService.getUser(user);
-
         if (user1 != null && user1.size() > 0) {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
             return R.ok().put("message", "登录成功");
@@ -90,12 +97,16 @@ public class LoginController {
 
     @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R addDaily(String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
-
+    public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
+        User user = (User)session.getAttribute("user");
+        System.out.println("用户："+user.getId());
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
-
+        typeService.insertType(new Type().setTypeName(type));
+        surfaceService.addSurface(new Surface().setSurfaceName(surface));
+        lineService.addLine(new Line().setLineName(line));
+        pointService.addPoint(new Point().setPointName(point.toString()));
         event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date()));
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
@@ -105,6 +116,19 @@ public class LoginController {
         }else{
             return R.error("添加失败");
         }
+    }
+
+
+    /**
+     * 获取日报详细信息
+     * @param event
+     * @return
+     */
+    @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public R getDailyInfo(Event event,EventDetail eventDetail){
+        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
+        return R.ok().put("data",eventList);
     }
 
 }
