@@ -120,13 +120,11 @@
 
             function inittable(){
                 $("#tbody").empty();
-                var eventId = $("eventId").val();
                 $.ajax({
                     type: 'get',
                     url: '/getDaily',
                     dataType: 'json',
                     data: {
-                        eventId:eventId,
                         isLive: 1
                     },
                     success: function (data) {
