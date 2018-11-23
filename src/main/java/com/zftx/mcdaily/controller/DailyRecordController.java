@@ -19,12 +19,6 @@ public class DailyRecordController {
     @Autowired
     private DailyRecordService dailyRecordService;
 
-    @RequestMapping(value = "/dailyRecord")
-    public String dailyRecord(){
-        return "dailyRecord";
-    }
-
-
     /**
      * 查询日报
      * @param userId 用户id
