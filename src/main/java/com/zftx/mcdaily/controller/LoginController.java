@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -144,8 +142,8 @@ public class LoginController {
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result)
                  .setMethod(method).setRemarks(remarks).setDate(dateFormat1.format(new Date())).setTime(dateFormat.format(new Date()));
-        Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
-
+         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
+        Integer eventDetialResult = eventDetailService.addEventDetail(eventDetail);
         if(eventResult>0&&eventDetialResult>0){
             return R.ok("添加成功").put("eventResult",eventDetail).put("eventDetialResult",eventDetialResult);
         }else{

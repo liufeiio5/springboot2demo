@@ -31,7 +31,7 @@ public interface EventMapper {
     public Integer updateEvent(@Param("event") Event event);
 
     /**
-     * 删除事件
+     * 删除事件逻辑
      * @param event
      * @return
      */
@@ -43,5 +43,12 @@ public interface EventMapper {
      * @return
      */
      public List<HashMap<String,Object>> findEventByEventDetail(@Param("event") Event event, @Param("eventDetail") EventDetail eventDetail);
+
+    /**
+     * 删除事件详情物理
+     * @param event
+     * @return
+     */
+    public Integer delEventDetailById(@Param("event") Event event);
 
 }

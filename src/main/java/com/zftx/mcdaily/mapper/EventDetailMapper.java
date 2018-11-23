@@ -31,10 +31,11 @@ public interface EventDetailMapper {
     public Integer updateEventDetail(@Param("eventDetail") EventDetail eventDetail);
 
     /**
-     * 删除事件详情
+     * 删除事件详情逻辑
      * @param eventDetail
      * @return
      */
     public Integer delEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
 
 }
