@@ -42,7 +42,7 @@
                       and daily_record.date=#{dailyRecord.date}
                   </if>
                   <if test="dailyRecord.time != null">
-                      and createTime=#{dailyRecord.createTime}
+                      and daily_record.time=#{dailyRecord.time}
                   </if>
               </where>
 
