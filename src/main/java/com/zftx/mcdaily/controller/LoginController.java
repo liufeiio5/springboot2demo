@@ -85,13 +85,12 @@ public class LoginController {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public R register(User user){
-        user.setPassword( MD5.md5(user.getPassword(),user.getUserName()));
+        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
         String result = userService.insertUser(user);
         if(result.equals("success")){
             return  R.ok("注册成功");
         }else{
             return R.error("注册失败");
-
         }
     }
 
@@ -127,5 +126,4 @@ public class LoginController {
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
     }
-
 }
