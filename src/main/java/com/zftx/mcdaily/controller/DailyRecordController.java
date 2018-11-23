@@ -49,9 +49,9 @@ public class DailyRecordController {
 
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
         if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list).put("userName",user.getUserName());
+            return R.ok("数据获取成功").put("data",list).put("userName",user.getFullName());
         }else{
-            return R.error("获取数据失败").put("userName",user.getUserName());
+            return R.error("获取数据失败").put("userName",user.getFullName());
         }
     }
 

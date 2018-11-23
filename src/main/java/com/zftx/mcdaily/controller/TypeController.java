@@ -48,4 +48,20 @@ public class TypeController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 添加类型
+     * @param type
+     * @return
+     */
+    @RequestMapping("/insertType")
+    @ResponseBody
+    public R insertType(Type type){
+        String result = typeService.insertType(type);
+        if("success".equals(result)){
+            return R.ok("添加成功").put("result",result);
+        }else {
+            return R.error("添加失败");
+        }
+    }
 }

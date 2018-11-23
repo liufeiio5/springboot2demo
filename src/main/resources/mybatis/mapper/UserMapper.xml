@@ -18,7 +18,7 @@
         <result column="motto" property="motto"/>
     </resultMap>
 
-    <sql id="userAll">id,user_name,password,email,phone,birthplace,birthday,position,hobby,motto</sql>
+    <sql id="userAll">id,user_name,full_name,password,email,phone,birthplace,birthday,position,hobby,motto</sql>
     <select id="getUser" resultMap="user">
         select <include refid="userAll" /> from user
         <if test="user != null">

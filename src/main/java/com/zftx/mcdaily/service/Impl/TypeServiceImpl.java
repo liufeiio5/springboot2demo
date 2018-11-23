@@ -31,7 +31,7 @@ public class TypeServiceImpl implements TypeService {
         //日志
         StringBuilder info = new StringBuilder().append(this.getClass().getName()).append("||").append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：User:{}");
         log.info(info.toString(),type.toString());
-
+        System.out.println("凄凄切切群群群群群"+type);
         int i=typeMapper.insertType(type);
         if(i>0){
             return "success";
