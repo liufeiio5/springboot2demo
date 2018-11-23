@@ -118,7 +118,7 @@
 
 			})
 
-            function fic(){
+            function inittable(){
                 $("#tbody").empty();
                 $.ajax({
                     type: 'get',
