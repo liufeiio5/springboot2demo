@@ -139,7 +139,7 @@
                     dataType: 'json',
                     data:data,
                     success: function (data) {
-                        $('#username').html('欢迎 '+data.username+' 登录米仓日报');
+                        $('#username').html('欢迎 '+'<font color="red">'+data.userName+'</font>'+' 登录米仓日报');
                         for (i in  data.data)
                         {
                             var tr = $('<tr>') ;
@@ -281,7 +281,7 @@
 		<input  id="userid"  placeholder="请输入用户ID"/>
 		<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 		<button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-		<span style="float: right;margin:20px 40px 0px 0px" id="username"></span>
+		<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 		<div>
 			<table class="table table-bordered" id="table-bordered">
 				<thead>
