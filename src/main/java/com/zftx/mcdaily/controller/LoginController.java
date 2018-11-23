@@ -125,7 +125,7 @@ public class LoginController {
         event.setEventName(eventName).setPointId(point).setDate(dateFormat1.format(new Date())).setCreateUser(user.getId()).setTime(dateFormat.format(new Date()));
 
         //添加日报的时候添加的type surface line point 关联当前登录的用户ID
-        typeService.insertType(new Type().setCreateUser(user.getId().toString()));
+        typeService.insertType(new Type().setCreateUser(user.getId()));
         surfaceService.addSurface(new Surface().setTypeId(type).setCreateUser(user.getId()));
         lineService.addLine(new Line().setSurfaceId(surface).setCreateUser(user.getId()));
         pointService.addPoint(new Point().setSurfaceId(surface).setLineId(line).setCreateUser(user.getId()));

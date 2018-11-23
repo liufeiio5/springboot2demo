@@ -6,6 +6,7 @@
     <resultMap id="user" type="com.zftx.mcdaily.bean.User">
         <id column="id" property="id"/>
         <result column="user_name" property="userName"/>
+        <result column="full_name" property="fullName"/>
         <result column="password" property="password"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
@@ -25,7 +26,10 @@
                     id = #{user.id}
                 </if>
                 <if test="user.userName != null">
-                   and  user_name like concat(#{user.userName},'%')
+                   and  user_name =#{user.userName}
+                </if>
+                <if test="user.fullName != null">
+                    and  full_name like concat(#{user.fullName},'%')
                 </if>
                 <if test="user.password != null">
                    and password = #{user.password}
@@ -63,6 +67,9 @@
                 <if test="user.userName !=null">
                     user_name,
                 </if>
+                <if test="user.fullName !=null">
+                    full_name,
+                </if>
                 <if test="user.password !=null">
                     password,
                 </if>
@@ -96,6 +103,9 @@
                 </if>
                 <if test="user.userName !=null">
                     #{user.userName},
+                </if>
+                <if test="user.fullName !=null">
+                    #{user.fullName},
                 </if>
                 <if test="user.password !=null">
                     #{user.password},
@@ -131,6 +141,9 @@
         <set>
             <if test="user.userName != null and user.userName!=''">
                 user_name=#{user.userName},
+            </if>
+            <if test="user.fullName != null and user.fullName!=''">
+                full_name=#{user.fullName},
             </if>
             <if test="user.password != null ">
                 password=#{user.password},

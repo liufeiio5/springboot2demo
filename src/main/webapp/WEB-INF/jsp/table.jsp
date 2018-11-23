@@ -283,7 +283,8 @@
                                 '<td>' + data.data[i].process + '</td>'+
                                 '<td>' + data.data[i].result + '</td>' +
                                 '<td>' + data.data[i].method + '</td>'+
-                                '<td>' + data.data[i].remarks + '</td>';
+                                '<td>' + data.data[i].remarks + '</td>'+
+								'<td>' +'<button class="btn btn-danger" id="delete" title="删除"  onclick="del('+data.data[i].id+')"><i class="glyphicon glyphicon-trash"></i></button>'+ '</td>';
                             $("#tbody").append('<tr>' + str + '</tr>');
                         }
                     },
@@ -369,6 +370,26 @@
                 });
             }
 
+            //删除
+			function del(id){
+			    if(confirm("是否确定要删除?")) {
+                    $.ajax({
+                        url: "/deleteDailyRecord",
+                        data: {
+                            id: id,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                alert("删除成功")
+                                fic();
+                            } else {
+                                alert("删除失败")
+                            }
+                        }
+                    })
+                }
+			}
 		</script>
 	</head>
 	<body>
@@ -395,6 +416,7 @@
 					<th>结果</th>
 					<th>解决方案</th>
 					<th>备注</th>
+					<th>操作</th>
 				</tr>
 				</thead>
 				<tbody id="tbody">

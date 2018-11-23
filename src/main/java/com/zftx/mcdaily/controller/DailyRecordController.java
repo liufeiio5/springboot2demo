@@ -43,4 +43,24 @@ public class DailyRecordController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 删除日报
+     * @param dailyRecord
+     * @return
+     */
+    @RequestMapping("/deleteDailyRecord")
+    @ResponseBody
+    public R deleteDailyRecord(DailyRecord dailyRecord){
+        if(dailyRecord.getId()!=null&&dailyRecord.getId()!=0) {
+            String str = dailyRecordService.deleteDailyRecord(dailyRecord);
+            if ("success".equals(str)) {
+                return R.ok("删除成功");
+            } else {
+                return R.error("删除失败");
+            }
+        }else{
+            return R.error("参数有误!");
+        }
+    }
 }

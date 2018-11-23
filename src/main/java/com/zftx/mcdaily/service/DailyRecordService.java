@@ -20,4 +20,12 @@ public interface DailyRecordService {
      * @return
      */
     public Integer addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
+
+    /**
+     * 删除日报
+     * @param dailyRecord
+     * @return
+     */
+    public String deleteDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
+
 }

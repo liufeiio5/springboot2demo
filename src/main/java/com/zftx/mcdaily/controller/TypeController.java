@@ -39,7 +39,7 @@ public class TypeController {
     @ResponseBody
     public R addType(HttpSession session,Type type){
         User user = (User) session.getAttribute("user");
-        type.setCreateUser(user.getId().toString());
+        type.setCreateUser(user.getId());
         System.out.println("用户ID+++++++++++++++++++++》》》》："+user.getId());
         String result = typeService.insertType(type);
         if("success".equals(result)){

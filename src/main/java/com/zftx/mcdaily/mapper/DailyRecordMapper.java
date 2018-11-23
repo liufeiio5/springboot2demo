@@ -29,12 +29,12 @@ public interface DailyRecordMapper {
      * @param dailyRecord
      * @return
      */
-    public Integer deleteDailyRecord(DailyRecord dailyRecord);
+    public Integer deleteDailyRecord(@Param("dailyRecord")DailyRecord dailyRecord);
 
     /**
      * 修改日报
      * @param dailyRecord
      * @return
      */
-    public Integer updateDailyRecord(DailyRecord dailyRecord);
+    public Integer updateDailyRecord(@Param("dailyRecord")DailyRecord dailyRecord);
 }
