@@ -55,8 +55,8 @@ public class LoginController {
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-        if (session.getAttribute("user") == null)
-            return "login";
+//        if (session.getAttribute("user") == null)
+//            return "login";
         return "table";
     }
 
