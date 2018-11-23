@@ -23,11 +23,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
+    /*@Autowired
     private EventService eventService;
 
     @Autowired
-    private EventDetailService eventDetailService;
+    private EventDetailService eventDetailService;*/
 
     @Autowired
     private PointService pointService;
@@ -114,7 +114,7 @@ public class LoginController {
      * @param remarks
      * @return
      */
-    @RequestMapping(value = "/addDaily")
+    /*@RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
         //获取用户信息
@@ -151,7 +151,7 @@ public class LoginController {
         }else{
             return R.error("添加失败");
         }
-    }
+    }*/
 
     /**
      * 添加日报记录
@@ -193,13 +193,13 @@ public class LoginController {
      * @param event
      * @return
      */
-    @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
         User user = (User) session.getAttribute("user");
         event.setCreateUser(user.getId());
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
-    }
+    }*/
 
 }
