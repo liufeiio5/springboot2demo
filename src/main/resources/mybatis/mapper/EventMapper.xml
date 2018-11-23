@@ -210,4 +210,8 @@
             </if>
         </where>
     </select>
+    
+    <delete id="delEventDetailById" parameterType="com.zftx.mcdaily.bean.Event">
+        delete from event where id=#{event.id}
+    </delete>
 </mapper>

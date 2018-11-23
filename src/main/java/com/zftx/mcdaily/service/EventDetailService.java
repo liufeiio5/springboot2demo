@@ -26,14 +26,16 @@ public interface EventDetailService {
      * @param eventDetail
      * @return
      */
-    public Integer updateEventDetail(@Param("eventDetail") EventDetail eventDetail);
+    public Integer updateEventDetail(EventDetail eventDetail);
 
     /**
      * 删除事件详情
      * @param eventDetail
      * @return
      */
-    public Integer delEventDetail(@Param("eventDetail") EventDetail eventDetail);
+    public Integer delEventDetail(EventDetail eventDetail);
+
+
 
 
 }

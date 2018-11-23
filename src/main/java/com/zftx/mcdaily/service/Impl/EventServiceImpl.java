@@ -67,5 +67,12 @@ public class EventServiceImpl implements EventService {
 
     }
 
-
+    @Override
+    public Integer delEventDetailById(Event event) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：event{},");
+        log.info(info.toString(),event.toString());
+        return eventMapper.delEventDetailById(event);
+    }
 }

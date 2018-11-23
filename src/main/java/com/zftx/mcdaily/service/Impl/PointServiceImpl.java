@@ -51,4 +51,13 @@ public class PointServiceImpl implements PointService {
         log.info(info.toString(),point.toString());
         return pointMapper.delPoint(point);
     }
+
+    @Override
+    public Integer delPointById(Point point) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：point{},");
+        log.info(info.toString(),point.toString());
+        return pointMapper.delPointById(point);
+    }
 }

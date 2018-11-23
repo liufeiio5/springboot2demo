@@ -44,4 +44,11 @@ public interface EventMapper {
      */
      public List<HashMap<String,Object>> findEventByEventDetail(@Param("event") Event event, @Param("eventDetail") EventDetail eventDetail);
 
+    /**
+     * 删除事件详情物理
+     * @param event
+     * @return
+     */
+    public Integer delEventDetailById(@Param("event") Event event);
+
 }

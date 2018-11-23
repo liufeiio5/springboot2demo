@@ -35,4 +35,11 @@ public interface PointMapper {
      */
     public Integer delPoint(@Param("point") Point point);
 
+    /**
+     * 删除点
+     * @param point
+     * @return
+     */
+    public Integer delPointById(@Param("point") Point point);
+
 }

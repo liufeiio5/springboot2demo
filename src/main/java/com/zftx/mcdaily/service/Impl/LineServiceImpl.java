@@ -51,4 +51,13 @@ public class LineServiceImpl implements LineService {
         log.info(info.toString(),line.toString());
         return lineMapper.delLine(line);
     }
+
+    @Override
+    public Integer delLineById(Line line) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：line{},");
+        log.info(info.toString(),line.toString());
+        return lineMapper.delLineById(line);
+    }
 }

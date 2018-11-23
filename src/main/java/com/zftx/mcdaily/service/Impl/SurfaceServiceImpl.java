@@ -51,4 +51,13 @@ public class SurfaceServiceImpl implements SurfaceService {
         log.info(info.toString(),surface.toString());
         return surfaceMapper.delSurface(surface);
     }
+
+    @Override
+    public Integer delSurfaceById(Surface surface) {
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：surface{},");
+        log.info(info.toString(),surface.toString());
+        return surfaceMapper.delSurfaceById(surface);
+    }
 }

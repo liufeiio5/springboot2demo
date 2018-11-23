@@ -35,4 +35,11 @@ public interface SurfaceMapper {
      * @return
      */
     public Integer delSurface(@Param("surface") Surface surface);
+
+    /**
+     * 删除面
+     * @param surface
+     * @return
+     */
+    public Integer delSurfaceById(@Param("surface") Surface surface);
 }

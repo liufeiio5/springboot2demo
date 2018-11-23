@@ -36,4 +36,11 @@ public interface LineMapper {
      */
     public Integer delLine(@Param("line") Line line);
 
+    /**
+     * 删除线
+     * @param line
+     * @return
+     */
+    public Integer delLineById(@Param("line") Line line);
+
 }
