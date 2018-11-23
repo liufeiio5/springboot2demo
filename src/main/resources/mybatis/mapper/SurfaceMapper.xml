@@ -143,4 +143,8 @@
         WHERE id=#{surface.id}
     </update>
 
+    <delete id="delSurfaceById" parameterType="com.zftx.mcdaily.bean.Surface">
+        delete from surface WHERE id=#{surface.id}
+    </delete>
+
 </mapper>

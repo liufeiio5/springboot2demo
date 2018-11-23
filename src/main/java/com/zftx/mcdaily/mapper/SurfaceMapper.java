@@ -30,9 +30,16 @@ public interface SurfaceMapper {
     public Integer updateSurface(@Param("surface") Surface surface);
 
     /**
-     * 删除面
+     * 删除面逻辑删除
      * @param surface
      * @return
      */
     public Integer delSurface(@Param("surface") Surface surface);
+
+    /**
+     * 删除面物理删除
+     * @param surface
+     * @return
+     */
+    public Integer delSurfaceById(@Param("surface") Surface surface);
 }

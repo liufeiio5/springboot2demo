@@ -3,10 +3,11 @@ package com.zftx.mcdaily.mapper;
 import com.zftx.mcdaily.bean.Event;
 import com.zftx.mcdaily.bean.EventDetail;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
-
+@Repository
 public interface EventMapper {
 
     /**
@@ -31,7 +32,7 @@ public interface EventMapper {
     public Integer updateEvent(@Param("event") Event event);
 
     /**
-     * 删除事件
+     * 删除事件逻辑
      * @param event
      * @return
      */
@@ -43,5 +44,12 @@ public interface EventMapper {
      * @return
      */
      public List<HashMap<String,Object>> findEventByEventDetail(@Param("event") Event event, @Param("eventDetail") EventDetail eventDetail);
+
+    /**
+     * 删除事件详情物理
+     * @param event
+     * @return
+     */
+    public Integer delEventDetailById(@Param("event") Event event);
 
 }

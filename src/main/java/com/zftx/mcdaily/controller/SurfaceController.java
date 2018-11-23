@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Surface;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.SurfaceService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -40,7 +42,9 @@ public class SurfaceController {
      */
     @RequestMapping(value = "/addSurface",method = RequestMethod.POST)
     @ResponseBody
-    public R addSurface(Surface surface){
+    public R addSurface(HttpSession session, Surface surface){
+        User user = (User) session.getAttribute("user");
+        surface.setCreateUser(user.getId());
         Integer result = surfaceService.addSurface(surface);
         if(result>0){
             return R.ok("添加成功").put("result",result);

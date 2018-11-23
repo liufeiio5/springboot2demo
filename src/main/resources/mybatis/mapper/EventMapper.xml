@@ -162,7 +162,7 @@
         SELECT
         e.id,e.date,e.time,t.type_name,s.surface_name,l.line_name,p.point_name,e.event_name,d.process,d.result,d.method,d.remarks
         FROM
-        EVENT e
+        event e
         INNER JOIN event_detail d ON e.id = d.event_id
         INNER JOIN point p ON e.point_id = p.point_id
         INNER JOIN type t ON p.type_id=t.type_id
@@ -181,7 +181,7 @@
             <if test="event.status!=null">
                 and e.status=#{event.status}
             </if>
-            <if test="event.createUser!=null and event.createUser!=''">
+            <if test="event.createUser!=null">
                 and e.create_user=#{event.createUser}
             </if>
             <if test="event.date!=null">
@@ -208,6 +208,11 @@
             <if test="eventDetail.remarks!=null and eventDetail.remarks!=''">
                 and d.remarks=#{eventDetail.remarks}
             </if>
+             order by e.id desc
         </where>
     </select>
+    
+    <delete id="delEventDetailById" parameterType="com.zftx.mcdaily.bean.Event">
+        delete from event where id=#{event.id}
+    </delete>
 </mapper>

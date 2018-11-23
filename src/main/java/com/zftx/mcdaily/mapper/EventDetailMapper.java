@@ -4,9 +4,10 @@ package com.zftx.mcdaily.mapper;
 import com.zftx.mcdaily.bean.EventDetail;
 import com.zftx.mcdaily.bean.Surface;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface EventDetailMapper {
 
     /**
@@ -31,10 +32,11 @@ public interface EventDetailMapper {
     public Integer updateEventDetail(@Param("eventDetail") EventDetail eventDetail);
 
     /**
-     * 删除事件详情
+     * 删除事件详情逻辑
      * @param eventDetail
      * @return
      */
     public Integer delEventDetail(@Param("eventDetail") EventDetail eventDetail);
+
 
 }
