@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,11 +23,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
+    /*@Autowired
     private EventService eventService;
 
     @Autowired
-    private EventDetailService eventDetailService;
+    private EventDetailService eventDetailService;*/
 
     @Autowired
     private PointService pointService;
@@ -112,7 +114,7 @@ public class LoginController {
      * @param remarks
      * @return
      */
-    @RequestMapping(value = "/addDaily")
+    /*@RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
         //获取用户信息
@@ -149,7 +151,7 @@ public class LoginController {
         }else{
             return R.error("添加失败");
         }
-    }
+    }*/
 
     /**
      * 添加日报记录
@@ -191,15 +193,13 @@ public class LoginController {
      * @param event
      * @return
      */
-    @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
-        //获取当前登录用户的信息
         User user = (User) session.getAttribute("user");
-        //设置查询条件为当前登录用户的ID
         event.setCreateUser(user.getId());
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
-    }
+    }*/
 
 }

@@ -3,9 +3,11 @@ package com.zftx.mcdaily.mapper;
 import com.zftx.mcdaily.bean.Point;
 import com.zftx.mcdaily.bean.Surface;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface SurfaceMapper {
 
     /**
