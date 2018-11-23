@@ -166,7 +166,7 @@
                                     data: { id:$(this).parent().parent().children().eq(0).text()},
                                     success: function(data) {
                                         if(data.code == "200") {
-                                            $(obj).parents("tr").remove();
+                                            $(obj).parent().parent().remove();
                                             layer.msg('已删除!', {
                                                 icon: 1,
                                                 time: 1000

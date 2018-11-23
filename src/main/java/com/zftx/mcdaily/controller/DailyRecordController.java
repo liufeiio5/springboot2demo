@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.DailyRecord;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.DailyRecordService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +21,6 @@ public class DailyRecordController {
     @Autowired
     private DailyRecordService dailyRecordService;
 
-    @RequestMapping(value = "/dailyRecord")
-    public String dailyRecord(){
-        return "dailyRecord";
-    }
-
-
     /**
      * 查询日报
      * @param userId 用户id
@@ -34,7 +30,14 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyRecord(Integer userId, String startDate, String endDate){
+    public R getDailyRecord(Integer userId, String startDate, String endDate, HttpSession session)
+    {
+
+
+        User user = (User) session.getAttribute("user");
+        userId = userId != null ? userId : user.getId();
+//        startDate = (startDate != null && endDate != null) ? startDate : ;
+//        endDate = (startDate != null && endDate != null) ? endDate : ;
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
         if(list !=null &&list.size()>0){
             return R.ok("数据获取成功").put("data",list);

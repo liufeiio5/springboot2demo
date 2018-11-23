@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -22,12 +21,6 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private EventService eventService;
-
-    @Autowired
-    private EventDetailService eventDetailService;
 
     @Autowired
     private PointService pointService;
@@ -97,7 +90,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/addDaily")
+    /*@RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
         User user = (User)session.getAttribute("user");
@@ -116,11 +109,11 @@ public class LoginController {
     }
 
 
-    /**
+    *//**
      * 获取日报详细信息
      * @param event
      * @return
-     */
+     *//*
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
@@ -128,6 +121,6 @@ public class LoginController {
         event.setCreateUser(user.getId());
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
-    }
+    }*/
 
 }
