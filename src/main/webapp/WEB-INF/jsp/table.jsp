@@ -122,14 +122,15 @@
 
 			})
 
-            function fic(){
+            function inittable(){
                 $("#tbody").empty();
                 $.ajax({
                     type: 'get',
                     url: '/getDaily',
                     dataType: 'json',
-                    data: {
-                        isLive: 1
+                    data:
+                     {
+
                     },
                     success: function (data) {
                         $('#username').html('欢迎 '+data.username+' 登录米仓日报');
@@ -291,6 +292,7 @@
 					<th>结果</th>
 					<th>解决方案</th>
 					<th>备注</th>
+                    <th>操作</th>
 				</tr>
 				</thead>
 				<tbody id="tbody">

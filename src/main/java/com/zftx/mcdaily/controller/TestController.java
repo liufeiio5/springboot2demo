@@ -25,21 +25,6 @@ public class TestController {
         return "index";
     }
 
-    @Autowired
-    private EventService eventService;
-
-    @RequestMapping("/findAll")
-    @ResponseBody
-    public R findAll(Event event, EventDetail eventDetail) {
-
-        List<HashMap<String,Object>> list = eventService.findEventByEventDetail(event,eventDetail);
-
-        /*for (Event event1 : list) {
-            return R.ok().put("data1", event1.getEventDetail().getProcess());
-        }*/
-        return R.ok().put("data", list);
-    }
-
     @RequestMapping(value = "/getUserId")
     @ResponseBody
     public R getUserId(HttpSession session){
