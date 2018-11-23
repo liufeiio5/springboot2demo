@@ -100,6 +100,20 @@ public class LoginController {
         }
     }
 
+    /**
+     * 添加日报、添加日报记录
+     * @param session
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remarks
+     * @return
+     */
     @RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
@@ -108,8 +122,8 @@ public class LoginController {
         //初始化查询条件
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
         event.setEventName(eventName).setPointId(point).setDate(dateFormat1.format(new Date())).setCreateUser(user.getId()).setTime(dateFormat.format(new Date()));
 
         //添加日报的时候添加的type surface line point 关联当前登录的用户ID
