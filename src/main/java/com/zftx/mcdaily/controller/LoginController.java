@@ -55,8 +55,8 @@ public class LoginController {
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-//        if (session.getAttribute("user") == null)
-//            return "login";
+        if (session.getAttribute("user") == null)
+            return "login";
         return "table";
     }
 
@@ -153,6 +153,40 @@ public class LoginController {
         }
     }
 
+    /**
+     * 添加日报记录
+     * @param session
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remarks
+     * @return
+     */
+    @RequestMapping(value = "/addDailyRecord")
+    @ResponseBody
+    public R addDailyRecord(HttpSession session,String type,String surface,String line,String point,String eventName,String process,String result,String method,String remarks){
+        User user = (User) session.getAttribute("user");
+        SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");//格式化时间
+        SimpleDateFormat dateFormatDate = new SimpleDateFormat("yyyyMMdd");//格式化日期
+        //插入到日报统一记录表
+        Integer recordResult = dailyRecordService.addDailyRecord(new DailyRecord()
+                .setUserId(user.getId()).setType(type)
+                .setSurface(surface).setLine(line)
+                .setPoint(point).setEvent(eventName)
+                .setProcess(process).setResult(result).setMethod(method)
+                .setRemark(remarks).setDate(dateFormatDate.format(new Date()))
+                .setTime(dateFormatTime.format(new Date())));
+        if(recordResult>0){
+            return R.ok("日报记录添加成功").put("result",recordResult);
+        }else{
+            return R.error("日报记录添加失败");
+        }
+    }
 
     /**
      * 获取日报详细信息
