@@ -44,9 +44,6 @@
         insert ignore into type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="type != null">
-                <if test="type.id !=null">
-                    id,
-                </if>
                     type_id,
                 <if test="type.typeName !=null">
                     type_name,
@@ -64,9 +61,6 @@
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="type != null">
-                <if test="type.id !=null">
-                    #{type.id,jdbcType=INTEGER},
-                </if>
                 (SELECT CASE  WHEN MAX(t.type_id) IS NULL THEN '1' ELSE MAX(t.type_id)+1 END FROM type t),
                 <if test="type.typeName !=null and type.typeName!=''">
                     #{type.typeName},

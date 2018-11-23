@@ -36,6 +36,7 @@ public class DailyRecordController {
     {
         //登录用户
         User user = (User) session.getAttribute("user");
+        System.out.println(user == null? "null" : user.toString());
         //日历
         Calendar calendar = Calendar.getInstance();
         //当前系统时间的  前七天
@@ -48,9 +49,9 @@ public class DailyRecordController {
 
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
         if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list).put("userName",user.getUserName());
+            return R.ok("数据获取成功").put("data",list).put("userName",user.getFullName());
         }else{
-            return R.error("获取数据失败").put("userName",user.getUserName());
+            return R.error("获取数据失败").put("userName",user.getFullName());
         }
     }
 
