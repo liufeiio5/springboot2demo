@@ -134,14 +134,14 @@ public class LoginController {
         lineService.addLine(new Line().setSurfaceId(surface).setCreateUser(user.getId()));
         pointService.addPoint(new Point().setSurfaceId(surface).setLineId(line).setCreateUser(user.getId()));
 
-//        //插入到日报统一记录表
-//        dailyRecordService.addDailyRecord(new DailyRecord()
-//                .setUserId(user.getId()).setType(type.toString())
-//                .setSurface(surface.toString()).setLine(line.toString())
-//                .setPoint(point.toString()).setEvent(eventName)
-//                .setProcess(process).setResult(result).setMethod(method)
-//                .setRemark(remarks).setDate(dateFormat1.format(new Date()))
-//                .setTime(dateFormat.format(new Date())));
+        //插入到日报统一记录表
+        dailyRecordService.addDailyRecord(new DailyRecord()
+                .setUserId(user.getId()).setType(type.toString())
+                .setSurface(surface.toString()).setLine(line.toString())
+                .setPoint(point.toString()).setEvent(eventName)
+                .setProcess(process).setResult(result).setMethod(method)
+                .setRemark(remarks).setDate(dateFormat1.format(new Date()))
+                .setTime(dateFormat.format(new Date())));
         //获取事件插入成功后返回的id
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result)
