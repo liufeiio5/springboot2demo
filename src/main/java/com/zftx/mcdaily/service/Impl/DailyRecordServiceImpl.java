@@ -45,4 +45,17 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         log.info(info.toString(),dailyRecord.toString());
         return dailyRecordMapper.addDailyRecord(dailyRecord);
     }
+
+    /**
+     * 修改日报
+     * @param dailyRecord
+     * @return
+     */
+    public Integer updateDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
+        //日志
+        StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
+                append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：DailyRecord{},");
+        log.info(info.toString(),dailyRecord.toString());
+        return dailyRecordMapper.updateDailyRecord(dailyRecord);
+    }
 }

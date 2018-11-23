@@ -32,4 +32,11 @@ public interface DailyRecordService {
      * @return
      */
     public Integer addDailyRecord(DailyRecord dailyRecord);
+
+    /**
+     * 修改日报
+     * @param dailyRecord
+     * @return
+     */
+    public Integer updateDailyRecord(DailyRecord dailyRecord);
 }
