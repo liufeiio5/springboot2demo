@@ -40,6 +40,9 @@ public class LoginController {
 
     @Autowired
     private LineService lineService;
+
+    @Autowired
+    private DailyRecordService dailyRecordService;
     /**
      * 访问登录页
      * @return
@@ -99,15 +102,36 @@ public class LoginController {
 
     @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R addDaily(HttpSession session,String type,String surface,String line,Integer point,String eventName,String process,String result,String method,String remark){
+    public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
+        //获取用户信息
         User user = (User)session.getAttribute("user");
+        //初始化查询条件
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd : HH:mm:ss");
-        event.setEventName(eventName).setPointId(point).setDate(dateFormat.format(new Date())).setCreateUser(user.getId());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");
+        event.setEventName(eventName).setPointId(point).setDate(dateFormat1.format(new Date())).setCreateUser(user.getId()).setTime(dateFormat.format(new Date()));
+
+        //添加日报的时候添加的type surface line point 关联当前登录的用户ID
+        typeService.insertType(new Type().setCreateUser(user.getId().toString()));
+        surfaceService.addSurface(new Surface().setTypeId(type).setCreateUser(user.getId()));
+        lineService.addLine(new Line().setSurfaceId(surface).setCreateUser(user.getId()));
+        pointService.addPoint(new Point().setSurfaceId(surface).setLineId(line).setCreateUser(user.getId()));
+
+        //插入到日报统一记录表
+        dailyRecordService.addDailyRecord(new DailyRecord()
+                .setUserId(user.getId()).setType(type.toString())
+                .setSurface(surface.toString()).setLine(line.toString())
+                .setPoint(point.toString()).setEvent(eventName)
+                .setProcess(process).setResult(result).setMethod(method)
+                .setRemark(remarks).setDate(dateFormat1.format(new Date()))
+                .setTime(dateFormat.format(new Date())));
+        //获取事件插入成功后返回的id
         Integer eventResult = eventService.addEvent(event);
-         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remark).setDate(dateFormat.format(new Date()));
+         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result)
+                 .setMethod(method).setRemarks(remarks).setDate(dateFormat1.format(new Date())).setTime(dateFormat.format(new Date()));
         Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
+
         if(eventResult>0&&eventDetialResult>0){
             return R.ok("添加成功").put("eventResult",eventDetail).put("eventDetialResult",eventDetialResult);
         }else{
@@ -124,7 +148,9 @@ public class LoginController {
     @RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
     @ResponseBody
     public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
+        //获取当前登录用户的信息
         User user = (User) session.getAttribute("user");
+        //设置查询条件为当前登录用户的ID
         event.setCreateUser(user.getId());
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());

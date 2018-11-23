@@ -50,7 +50,7 @@
     </select>
 
     <insert id="addEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail" useGeneratedKeys="true" keyProperty="eventDetail.id">
-        INSERT ignore INTO event_detail
+        INSERT  INTO event_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="eventDetail!=null">
                     event_id,
@@ -76,7 +76,9 @@
         </trim>
         <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
             <if test="eventDetail!=null">
-                (SELECT CASE  WHEN MAX(e.event_id) IS NULL THEN '1' ELSE MAX(e.event_id)+1 END FROM event_detail e),
+                <if test="eventDetail.eventId != null and eventDetail.eventId != ''">
+                    #{eventDetail.eventId},
+                </if>
                 <if test="eventDetail.process!=null and eventDetail.process!=''">
                     #{eventDetail.process},
                 </if>

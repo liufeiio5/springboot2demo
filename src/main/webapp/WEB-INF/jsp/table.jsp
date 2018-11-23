@@ -208,6 +208,7 @@
 
 			})
 
+			//日报添加
             function fic(){
                 $("#tbody").empty();
                 var eventId = $("#eventId").val();
