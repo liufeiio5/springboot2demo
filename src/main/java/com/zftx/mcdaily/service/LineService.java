@@ -34,4 +34,11 @@ public interface LineService {
      * @return
      */
     public Integer delLine(Line line);
+
+    /**
+     * 删除线
+     * @param line
+     * @return
+     */
+    public Integer delLineById(Line line);
 }

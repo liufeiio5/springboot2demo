@@ -29,10 +29,17 @@ public interface LineMapper {
     public Integer updateLine(@Param("line") Line line);
 
     /**
-     * 删除线
+     * 删除线逻辑删除
      * @param line
      * @return
      */
     public Integer delLine(@Param("line") Line line);
+
+    /**
+     * 删除线物理删除
+     * @param line
+     * @return
+     */
+    public Integer delLineById(@Param("line") Line line);
 
 }

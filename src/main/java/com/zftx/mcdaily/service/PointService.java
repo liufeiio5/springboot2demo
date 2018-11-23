@@ -35,4 +35,11 @@ public interface PointService {
      */
     public Integer delPoint(Point point);
 
+    /**
+     * 删除点
+     * @param point
+     * @return
+     */
+    public Integer delPointById(Point point);
+
 }

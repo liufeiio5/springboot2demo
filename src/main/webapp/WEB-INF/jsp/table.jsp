@@ -122,8 +122,7 @@
 
 			})
 
-			//初始化table和查询
-            function inittable(){
+            function fic(){
                 $("#tbody").empty();
                 $.ajax({
                     type: 'get',
@@ -292,7 +291,6 @@
 					<th>结果</th>
 					<th>解决方案</th>
 					<th>备注</th>
-					<th>操作</th>
 				</tr>
 				</thead>
 				<tbody id="tbody">
