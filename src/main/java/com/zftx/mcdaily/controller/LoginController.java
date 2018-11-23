@@ -46,19 +46,16 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/login")
-    public String Login(HttpSession session){
+    public String Login(){
         return "login";
     }
 
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-        if (session.getAttribute("user") == null) {
-            return "login";
-        }else {
-            return "table";
-        }
-
+        /*if (session.getAttribute("user") == null)
+            return "login";*/
+        return "table";
     }
 
 
@@ -70,7 +67,6 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
-        session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
