@@ -25,4 +25,15 @@ public class EventController {
             return R.error("添加失败");
         }
     }
+
+    @RequestMapping(value = "/updateEvent",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateEvent(Event event){
+        Integer result = eventService.updateEvent(event);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
 }

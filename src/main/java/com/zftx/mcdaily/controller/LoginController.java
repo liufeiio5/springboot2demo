@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,6 +68,7 @@ public class LoginController {
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
+        session.setAttribute("user",null);
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
         if (list != null && list.size() > 0) {
@@ -100,6 +99,20 @@ public class LoginController {
         }
     }
 
+    /**
+     * 添加日报、添加日报记录
+     * @param session
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remarks
+     * @return
+     */
     @RequestMapping(value = "/addDaily")
     @ResponseBody
     public R addDaily(HttpSession session,Integer type,Integer surface,Integer line,Integer point,String eventName,String process,String result,String method,String remarks){
@@ -108,8 +121,8 @@ public class LoginController {
         //初始化查询条件
         Event event = new Event();
         EventDetail eventDetail = new EventDetail();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
         event.setEventName(eventName).setPointId(point).setDate(dateFormat1.format(new Date())).setCreateUser(user.getId()).setTime(dateFormat.format(new Date()));
 
         //添加日报的时候添加的type surface line point 关联当前登录的用户ID
@@ -130,8 +143,8 @@ public class LoginController {
         Integer eventResult = eventService.addEvent(event);
          eventDetail.setEventId(event.getId()).setProcess(process).setResult(result)
                  .setMethod(method).setRemarks(remarks).setDate(dateFormat1.format(new Date())).setTime(dateFormat.format(new Date()));
-        Integer eventDetialResult =eventDetailService.addEventDetail(eventDetail);
-
+         eventDetail.setEventId(event.getId()).setProcess(process).setResult(result).setMethod(method).setRemarks(remarks).setDate(dateFormat.format(new Date()));
+        Integer eventDetialResult = eventDetailService.addEventDetail(eventDetail);
         if(eventResult>0&&eventDetialResult>0){
             return R.ok("添加成功").put("eventResult",eventDetail).put("eventDetialResult",eventDetialResult);
         }else{
@@ -139,6 +152,40 @@ public class LoginController {
         }
     }
 
+    /**
+     * 添加日报记录
+     * @param session
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remarks
+     * @return
+     */
+    @RequestMapping(value = "/addDailyRecord")
+    @ResponseBody
+    public R addDailyRecord(HttpSession session,String type,String surface,String line,String point,String eventName,String process,String result,String method,String remarks){
+        User user = (User) session.getAttribute("user");
+        SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");//格式化时间
+        SimpleDateFormat dateFormatDate = new SimpleDateFormat("yyyyMMdd");//格式化日期
+        //插入到日报统一记录表
+        Integer recordResult = dailyRecordService.addDailyRecord(new DailyRecord()
+                .setUserId(user.getId()).setType(type)
+                .setSurface(surface).setLine(line)
+                .setPoint(point).setEvent(eventName)
+                .setProcess(process).setResult(result).setMethod(method)
+                .setRemark(remarks).setDate(dateFormatDate.format(new Date()))
+                .setTime(dateFormatTime.format(new Date())));
+        if(recordResult>0){
+            return R.ok("日报记录添加成功").put("result",recordResult);
+        }else{
+            return R.error("日报记录添加失败");
+        }
+    }
 
     /**
      * 获取日报详细信息
@@ -155,9 +202,5 @@ public class LoginController {
         List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
         return R.ok().put("data",eventList).put("username",user.getUserName());
     }
-
-    /**
-     * 修改日报
-     */
 
 }

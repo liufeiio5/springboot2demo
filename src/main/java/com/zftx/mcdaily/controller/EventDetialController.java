@@ -27,4 +27,15 @@ public class EventDetialController {
         }
     }
 
+    @RequestMapping(value = "/updateEventDetial",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateEventDetial(EventDetail eventDetail){
+
+        Integer result = eventDetailService.updateEventDetail(eventDetail);
+        if(result>0){
+            return R.ok("添加数据成功").put("result",result);
+        }else {
+            return R.error("添加数据失败");
+        }
+    }
 }

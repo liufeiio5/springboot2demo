@@ -44,4 +44,12 @@ public interface EventService {
      */
     public List<HashMap<String,Object>> findEventByEventDetail(Event event, EventDetail eventDetail);
 
+
+    /**
+     * 删除事件详情物理
+     * @param event
+     * @return
+     */
+    public Integer delEventDetailById(Event event);
+
 }

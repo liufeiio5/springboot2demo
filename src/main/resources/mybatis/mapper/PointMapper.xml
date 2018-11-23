@@ -169,4 +169,8 @@
         WHERE id=#{point.id}
     </update>
 
+    <delete id="delPointById">
+        delete from point WHERE id=#{point.id}
+    </delete>
+
 </mapper>

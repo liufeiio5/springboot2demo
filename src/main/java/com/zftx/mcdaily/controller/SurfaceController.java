@@ -52,4 +52,20 @@ public class SurfaceController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 修改面信息
+     */
+    @RequestMapping(value = "/updateSurface",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateSurface(HttpSession session,Surface surface){
+        User user = (User) session.getAttribute("user");
+        surface.setCreateUser(user.getId());
+        Integer result = surfaceService.updateSurface(surface);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
 }

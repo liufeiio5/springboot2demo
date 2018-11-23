@@ -155,6 +155,10 @@
         WHERE id=#{line.id}
     </update>
 
+    <delete id="delLineById" parameterType="com.zftx.mcdaily.bean.Line">
+        delete from line WHERE id=#{line.id}
+    </delete>
+
 
 
 </mapper>

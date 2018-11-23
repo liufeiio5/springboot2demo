@@ -24,6 +24,7 @@
 
                 $('#add').click(function ()
                 {
+
                     var type = $('#type').val();
                     var surface = $('#surface').val();
                     var line = $('#line').val();
@@ -33,6 +34,7 @@
                     var result=$("#result").val();
                     var method=$("#method").val();
                     var remarks=$("#remarks").val();
+                    addDailyRecord();
                     $.ajax({
                         url:"addDaily",
                         dataType:'json',
@@ -212,6 +214,47 @@
                 });
 
 			})
+
+			function addDailyRecord() {
+                var type = $('#type').val();
+                var surface = $('#surface').val();
+                var line = $('#line').val();
+                var point = $('#point').val();
+                var eventName=$("#event").val();
+                var process=$("#process").val();
+                var result=$("#result").val();
+                var method=$("#method").val();
+                var remarks=$("#remarks").val();
+                $.ajax({
+                    url:"addDailyRecord",
+                    dataType:'json',
+                    data:{
+                        type:type,
+                        surface:surface,
+                        line:line,
+                        point:point,
+                        eventName:eventName,
+                        process:process,
+                        result:result,
+                        method:method,
+                        remarks:remarks
+                    },
+                    success :function (data)
+                    {
+                        if(data.code==200){
+                            $("#event").val('');
+                            $("#process").val('');
+                            $("#result").val('');
+                            $("#method").val('');
+                            $("#remarks").val('');
+                            window.location.href="/table";
+                            layer.msg("添加成功");
+                        }else{
+                            layer.msg("添加失败");
+                        }
+                    }
+                });
+            }
 
 			//日报添加
             function fic(){
