@@ -29,14 +29,14 @@ public interface PointMapper {
     public Integer updatePoint(@Param("point") Point point);
 
     /**
-     * 删除点
+     * 删除点逻辑删除
      * @param point
      * @return
      */
     public Integer delPoint(@Param("point") Point point);
 
     /**
-     * 删除点
+     * 删除点物理删除
      * @param point
      * @return
      */

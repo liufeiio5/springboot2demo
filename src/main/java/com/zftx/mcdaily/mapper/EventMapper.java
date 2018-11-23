@@ -31,7 +31,7 @@ public interface EventMapper {
     public Integer updateEvent(@Param("event") Event event);
 
     /**
-     * 删除事件
+     * 删除事件逻辑
      * @param event
      * @return
      */
