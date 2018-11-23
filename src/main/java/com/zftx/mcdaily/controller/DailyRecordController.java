@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -16,6 +18,30 @@ public class DailyRecordController {
 
     @Autowired
     private DailyRecordService dailyRecordService;
+
+    @RequestMapping(value = "/dailyRecord")
+    public String dailyRecord(){
+        return "dailyRecord";
+    }
+
+
+    /**
+     * 查询日报
+     * @param userId 用户id
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @return
+     */
+    @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
+    @ResponseBody
+    public R getDailyRecord(Integer userId, String startDate, String endDate){
+        ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
+        if(list !=null &&list.size()>0){
+            return R.ok("数据获取成功").put("data",list);
+        }else{
+            return R.error("获取数据失败");
+        }
+    }
 
     /**
      * 查询日报信息
