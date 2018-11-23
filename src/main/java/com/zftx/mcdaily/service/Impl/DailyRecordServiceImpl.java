@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -18,6 +20,11 @@ public class DailyRecordServiceImpl implements DailyRecordService {
 
     public List<DailyRecord> getDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         return dailyRecordMapper.getDailyRecord(dailyRecord);
+    }
+
+    public ArrayList<HashMap<String,Object>> getDailyRecord(Integer userId, String startDate, String endDate)
+    {
+        return dailyRecordMapper.getDaily(userId,startDate,endDate);
     }
 
     /**
