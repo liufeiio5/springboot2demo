@@ -67,6 +67,7 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
+        System.out.println(user.getPassword()+"222222222222222222");
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
@@ -78,23 +79,6 @@ public class LoginController {
             return R.error().put("message", "登录失败");
         }
 
-    }
-
-    /**
-     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
-     * @param user
-     * @return
-     */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    @ResponseBody
-    public R register(User user){
-        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
-        String result = userService.insertUser(user);
-        if(result.equals("success")){
-            return  R.ok("注册成功");
-        }else{
-            return R.error("注册失败");
-        }
     }
 
     /**
@@ -184,6 +168,27 @@ public class LoginController {
             return R.error("日报记录添加失败");
         }
     }
+
+    /**
+     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ResponseBody
+    public R register(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
+//        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
+        String result = userService.insertUser(new User().setPassword(MD5.md5(password,userName)).setUserName(userName).setFullName(fullName).setEmail(email).setPhone(phone).
+        setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
+        System.out.println(password+"1111111111111111111");
+        if(result.equals("success")){
+            return  R.ok("注册成功").put("result",result);
+        }else{
+            return R.error("注册失败").put("result",result);
+        }
+    }
+
+
 
     /**
      * 获取日报详细信息

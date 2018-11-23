@@ -125,7 +125,6 @@
                 <if test="dailyRecord.time!=null ">
                     #{dailyRecord.time}
                 </if>
-
             </if>
         </trim>
     </insert>
