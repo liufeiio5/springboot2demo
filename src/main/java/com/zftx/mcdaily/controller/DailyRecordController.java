@@ -50,7 +50,6 @@ public class DailyRecordController {
     {
         //登录用户
         User user = (User) session.getAttribute("user");
-        System.out.println(user == null? "null" : user.toString());
         //日历
         Calendar calendar = Calendar.getInstance();
         //当前系统时间的  前七天
@@ -153,7 +152,6 @@ public class DailyRecordController {
         }else {
             addPoint.setPointId(point);
             dailyRecord.setPoint(point.toString());
-
         }
 
         //插入到日报统一记录表

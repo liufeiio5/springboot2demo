@@ -23,75 +23,57 @@
             initline($('#type').val(),$('#surface').val())
             initpoint($('#type').val(),$('#surface').val(),$('#line').val())
 
-            $('#type').change(function ()
-            {
-                initsurface($('#type').val())
-                initline($('#type').val(),$('#surface').val())
-                initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-            })
 
-            $('#surface').change(function ()
-            {
-                initline($('#type').val(),$('#surface').val())
-                initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-            })
-
-            $('#line').change(function ()
-            {
-                initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-            })
-
-
-
-            $('#add').click(function ()
-            {
-                var type = $('#type').val();
-                var surface = $('#surface').val();
-                var line = $('#line').val();
-                var point = $('#point').val();
-                var eventName=$("#event").val();
-                var process=$("#process").val();
-                var result=$("#result").val();
-                var method=$("#method").val();
-                var remarks=$("#remarks").val();
-                var typeName = $('#addtype').val();
-                var surfaceName = $('#addsurface').val();
-                var lineName = $('#addline').val();
-                var pointName = $('#addpoint').val();
-                $.ajax({
-                    url:"addDaily",
-                    dataType:'json',
-                    data:{
-                        type:type,
-                        surface:surface,
-                        line:line,
-                        point:point,
-                        eventName:eventName,
-                        process:process,
-                        result:result,
-                        method:method,
-                        remarks:remarks,
-                        typeName:typeName,
-                        surfaceName:surfaceName,
-                        lineName:lineName,
-                        pointName:pointName
-                    },
-                    success :function (data)
-                    {
-                        if(data.code==200){
-                            $("#event").val('');
-                            $("#process").val('');
-                            $("#result").val('');
-                            $("#method").val('');
-                            $("#remarks").val('');
-                            window.location.href="/table";
-                            layer.msg("添加成功");
-                        }else{
-                            layer.msg("添加失败");
-                        }
-                    }
-                });
-            })
+                $('#add').click(function ()
+                {
+                    checkAddInput();
+                    var type = $('#type').val();
+                    var surface = $('#surface').val();
+                    var line = $('#line').val();
+                    var point = $('#point').val();
+                    var eventName=$("#event").val();
+                    var process=$("#process").val();
+                    var result=$("#result").val();
+                    var method=$("#method").val();
+                    var remarks=$("#remarks").val();
+                    var typeName = $('#addtype').val();
+                    var surfaceName = $('#addsurface').val();
+                    var lineName = $('#addline').val();
+                    var pointName = $('#addpoint').val();
+                        $.ajax({
+                            url:"addDaily",
+                            dataType:'json',
+                            data:{
+                                type:type,
+                                surface:surface,
+                                line:line,
+                                point:point,
+                                eventName:eventName,
+                                process:process,
+                                result:result,
+                                method:method,
+                                remarks:remarks,
+                                typeName:typeName,
+                                surfaceName:surfaceName,
+                                lineName:lineName,
+                                pointName:pointName
+                            },
+                            success :function (data)
+                            {
+                                if(data.code==200){
+                                    $("#event").val('');
+                                    $("#process").val('');
+                                    $("#result").val('');
+                                    $("#method").val('');
+                                    $("#remarks").val('');
+                                    window.location.href="/table";
+                                    layer.msg("添加成功");
+                                }else{
+                                    layer.msg("添加失败");
+                                }
+                            }
+                        });
+                })
 
             $('#type').next().bind('click',function()
             {
@@ -129,25 +111,25 @@
 
         })
 
-        function inittable(){
-            var startDate = $('#startDate').val().replace('-','').replace('-','');
-            var endDate = $('#endDate').val().replace('-','').replace('-','');
+        function inittable() {
+            var startDate = $('#startDate').val().replace('-', '').replace('-', '');
+            var endDate = $('#endDate').val().replace('-', '').replace('-', '');
             var userid = $('#userid').val();
-            var data ={};
-            if(startDate != '' && endDate != '' && userid != '')
-                data = {startDate : startDate,endDate : endDate,userId : userid};
-            if(startDate != '' && endDate != '' && userid == '')
-                data = {startDate : startDate,endDate : endDate};
-            if(startDate == '' && endDate == '' && userid != '')
-                data = {userId : userid};
+            var data = {};
+            if (startDate != '' && endDate != '' && userid != '')
+                data = {startDate: startDate, endDate: endDate, userId: userid};
+            if (startDate != '' && endDate != '' && userid == '')
+                data = {startDate: startDate, endDate: endDate};
+            if (startDate == '' && endDate == '' && userid != '')
+                data = {userId: userid};
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
                 url: '/getDaily',
                 dataType: 'json',
-                data:data,
+                data: data,
                 success: function (data) {
-                    $('#username').html('欢迎 '+'<font color="red">'+data.fullName+'</font>'+' 登录米仓日报');
+                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓日报');
                     for (i in  data.data) {
                         var tr = $('<tr>');
                         if (typeof (data.data[i].id) != 'undefined') {
@@ -173,21 +155,21 @@
                             $("#tbody").append(tr);
                         }
                     }
-                    $('.delbtn').click(function (){
-                        var id =$(this).parent().parent().children().eq(0).text()
-                        layer.confirm('确认要删除吗？', function(index) {
+                    $('.delbtn').click(function () {
+                        var id = $(this).parent().parent().children().eq(0).text()
+                        layer.confirm('确认要删除吗？', function (index) {
                             $.ajax({
                                 dataType: 'json',
                                 type: "post",
                                 url: "/deleteDailyRecord",
-                                data: { id:id},
-                                success: function(data) {
-                                    if(data.code == "200") {
+                                data: {id: id},
+                                success: function (data) {
+                                    if (data.code == "200") {
                                         layer.msg('已删除!', {
                                             icon: 1,
                                             time: 1000
                                         });
-                                        window.location.href="/table"
+                                        window.location.href = "/table"
                                     } else {
                                         layer.msg(data.result, {
                                             icon: 1,
@@ -201,18 +183,18 @@
                         });
                     })
                     //修改
-                    $('.updbtn').click(function (){
-                        var id=$(this).parent().parent().children().eq(0).text()
-                        var setType=$(this).parent().parent().children().eq(4).text()
-                        var setSurface=$(this).parent().parent().children().eq(5).text()
-                        var setLine=$(this).parent().parent().children().eq(6).text()
-                        var setPoint=$(this).parent().parent().children().eq(7).text()
-                        updtype(setType,setSurface,setLine,setPoint);
-                        var setEvent=$(this).parent().parent().children().eq(8).text()
-                        var setProcess=$(this).parent().parent().children().eq(9).text()
-                        var setResult=$(this).parent().parent().children().eq(10).text()
-                        var setMethod=$(this).parent().parent().children().eq(11).text()
-                        var setRemarks=$(this).parent().parent().children().eq(12).text()
+                    $('.updbtn').click(function () {
+                        var id = $(this).parent().parent().children().eq(0).text()
+                        var setType = $(this).parent().parent().children().eq(4).text()
+                        var setSurface = $(this).parent().parent().children().eq(5).text()
+                        var setLine = $(this).parent().parent().children().eq(6).text()
+                        var setPoint = $(this).parent().parent().children().eq(7).text()
+                        updtype(setType, setSurface, setLine, setPoint);
+                        var setEvent = $(this).parent().parent().children().eq(8).text()
+                        var setProcess = $(this).parent().parent().children().eq(9).text()
+                        var setResult = $(this).parent().parent().children().eq(10).text()
+                        var setMethod = $(this).parent().parent().children().eq(11).text()
+                        var setRemarks = $(this).parent().parent().children().eq(12).text()
                         $('#setEvent').html(setEvent);
                         $('#setProcess').html(setProcess);
                         $('#setResult').html(setResult);
@@ -226,18 +208,18 @@
                                     type: "post",
                                     url: "/updateDaily",
                                     data: {
-                                        id:id,
-                                        typeId:$('#setType').val(),
-                                        surfaceId:$('#setSurface').val(),
-                                        lineId:$('#setLine').val(),
-                                        pointId:$('#setPoint').val(),
-                                        eventName:$('#setEvent').val(),
-                                        process:$('#setProcess').val(),
-                                        result:$('#setResult').val(),
-                                        method:$('#setMethod').val(),
-                                        remark:$('#setRemarks').val(),
-										isLive:1
-									},
+                                        id: id,
+                                        typeId: $('#setType').val(),
+                                        surfaceId: $('#setSurface').val(),
+                                        lineId: $('#setLine').val(),
+                                        pointId: $('#setPoint').val(),
+                                        eventName: $('#setEvent').val(),
+                                        process: $('#setProcess').val(),
+                                        result: $('#setResult').val(),
+                                        method: $('#setMethod').val(),
+                                        remark: $('#setRemarks').val(),
+                                        isLive: 1
+                                    },
                                     success: function (data) {
                                         if (data.code == "200") {
                                             layer.msg('已修改!', {
@@ -261,84 +243,103 @@
             })
         }
 
-        function inittype()
-        {
-            $('#type').html('');
-            $.ajax({
-                type:"get",
-                url:"getType",
-                dataType:'json',
-                data:{islive:1},
-                async:false,
-                success :function (data)
-                {
-                    var json = data.data;
-                    for(var i in json)
-                        $('#type').append($('<option>').val(json[i].typeId).html(json[i].typeName))
-                }
-            });
-        }
-        function initsurface(typeid)
-        {
-            $('#surface').html('');
-            $.ajax({
-                type:"get",
-                url:"getSurface",
-                dataType:'json',
-                data:{typeId:typeid,islive:1},
-                async:false,
-                success :function (data)
-                {
-                    var json = data.data;
-                    for(var i in json)
-                        $('#surface').append($('<option>').val(json[i].surfaceId).html(json[i].surfaceName))
-                }
-            });
-        }
-        function initline(typeid,surfaceid)
-        {
-            $('#line').html('');
-            $.ajax({
-                type:"get",
-                url:"getLine",
-                dataType:'json',
-                data:{
-                    //typeId:typeid,
-                    surfaceId:surfaceid,
-                    islive:1
-                },
-                success :function (data)
-                {
-                    var json = data.data;
-                    for(var i in json)
-                        $('#line').append($('<option>').val(json[i].lineId).html(json[i].lineName))
-                }
-            });
-        }
-        function initpoint(typeid,surfaceid,lineid)
-        {
-            $('#point').html('');
-            $.ajax({
-                type:"get",
-                url:"getPoint",
-                dataType:'json',
-                data:{
-                    //typeId:typeid,
-                    surfaceId:surfaceid,
-                    lineId:lineid,
-                    islive:1
-                },
-                async:false,
-                success :function (data)
-                {
-                    var json = data.data;
-                    for(var i in json) {
-                        $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
-                        return json[i].pointId;
+			function inittype()
+			{
+                $('#type').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getType",
+                    dataType:'json',
+                    data:{islive:1},
+					async:false,
+                    success :function (data)
+					{
+					    var json = data.data;
+					    for(var i in json)
+                            $('#type').append($('<option>').val(json[i].typeId).html(json[i].typeName))
+					}
+                });
+            }
+            function initsurface(typeid)
+            {
+                console.log("type_id====="+typeid)
+                $('#surface').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getSurface",
+                    dataType:'json',
+                    data:{
+						islive:1
+					},
+                    async:false,
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i in json)
+                            $('#surface').append($('<option>').val(json[i].surfaceId).html(json[i].surfaceName))
                     }
-                }
-            });
-        }
+                });
+            }
+            function initline(typeid,surfaceid)
+            {
+                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid)
+                $('#line').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getLine",
+                    dataType:'json',
+                    data:{
+						islive:1
+					},
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i in json)
+                            $('#line').append($('<option>').val(json[i].lineId).html(json[i].lineName))
+                    }
+                });
+            }
+            function initpoint(typeid,surfaceid,lineid)
+            {
+                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid+"=========:lineid"+lineid)
+				$('#point').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getPoint",
+                    dataType:'json',
+                    data:{
+                        islive:1
+                    },
+                    async:false,
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i in json) {
+                            $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
+                        }
+                    }
+                });
+            }
+
+            //检查事件 过程 结果 的输入是否为空
+            function checkAddInput() {
+				var event = $("#event").val();
+				var process = $("#process").val();
+				var result = $("#result").val();
+				if(event==null||event==''){
+				    alert("事件不能为空！");
+				    ajax().abort;
+				}
+				if(process==null||process==''){
+				    alert("过程不能为空！");
+				    ajax.abort;
+				}
+				if(result==null||result==''){
+				    alert("结果不能为空!");
+				    ajax.abort;
+				}
+            }
+
 
         //修改获取type
         function updtype(setType,setSurface,setLine,setPoint){
