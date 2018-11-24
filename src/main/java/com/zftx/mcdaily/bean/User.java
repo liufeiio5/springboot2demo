@@ -12,7 +12,8 @@ import lombok.experimental.Accessors;
 public class User
 {
     Integer id;//用户id
-    String userName;//用户姓名
+    String userName;//用户名
+    String fullName;//用户真实姓名
     String password;//密码
     String email;//邮箱
     String phone;//手机号

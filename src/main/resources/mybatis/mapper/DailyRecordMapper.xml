@@ -125,11 +125,13 @@
                 <if test="dailyRecord.time!=null ">
                     #{dailyRecord.time}
                 </if>
-
             </if>
         </trim>
     </insert>
 
-
+    <!--实际删除 综合表-->
+    <delete id="deleteDailyRecord" parameterType="com.zftx.mcdaily.bean.DailyRecord">
+       delete from daily_record  where id=#{dailyRecord.id}
+    </delete>
 
 </mapper>

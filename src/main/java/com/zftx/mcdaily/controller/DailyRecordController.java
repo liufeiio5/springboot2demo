@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.*;
 
 @Controller
@@ -31,10 +35,9 @@ public class DailyRecordController {
     @ResponseBody
     public R getDailyRecord(Integer userId, String startDate, String endDate, HttpSession session)
     {
-        System.out.println("========================================进入");
         //登录用户
         User user = (User) session.getAttribute("user");
-        System.out.println("用户名===================================："+user.getUserName());
+        System.out.println(user == null? "null" : user.toString());
         user = new User().setId(26);
         //日历
         Calendar calendar = Calendar.getInstance();
@@ -51,9 +54,9 @@ public class DailyRecordController {
         map.put("username",user.getUserName());
         list.add(map);
         if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list);
+            return R.ok("数据获取成功").put("data",list).put("userName",user.getFullName());
         }else{
-            return R.error("获取数据失败");
+            return R.error("获取数据失败").put("userName",user.getFullName());
         }
     }
 
@@ -87,6 +90,26 @@ public class DailyRecordController {
             return R.ok("添加成功").put("result",result);
         }else {
             return R.error("添加失败");
+        }
+    }
+
+    /**
+     * 删除日报
+     * @param dailyRecord
+     * @return
+     */
+    @RequestMapping(value = "/deleteDailyRecord",method = RequestMethod.POST)
+    @ResponseBody
+    public R deleteDailyRecord(DailyRecord dailyRecord){
+        if(dailyRecord.getId()!=null&&dailyRecord.getId()!=0) {
+            String str = dailyRecordService.deleteDailyRecord(dailyRecord);
+            if ("success".equals(str)) {
+                return R.ok("删除成功");
+            } else {
+                return R.error("删除失败");
+            }
+        }else{
+            return R.error("参数有误!");
         }
     }
 }

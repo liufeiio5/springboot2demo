@@ -13,8 +13,8 @@
 
 		<script>
 			$(function  () {
-                laydate.render({elem : '#startdate'});
-                laydate.render({elem : '#enddate'});
+                laydate.render({elem : '#startDate'});
+                laydate.render({elem : '#endDate'});
 
                 //初始化
                 inittable();
@@ -124,21 +124,30 @@
                     $('#point').toggle()
                 })
 
+                $('#query').click(function () { inittable() })
+
+
 			})
 
-
             function inittable(){
+                var startDate = $('#startDate').val().replace('-','').replace('-','');
+                var endDate = $('#endDate').val().replace('-','').replace('-','');
+                var userid = $('#userid').val();
+                var data ={};
+                if(startDate != '' && endDate != '' && userid != '')
+                    data = {startDate : startDate,endDate : endDate,userId : userid};
+                if(startDate != '' && endDate != '' && userid == '')
+                    data = {startDate : startDate,endDate : endDate};
+                if(startDate == '' && endDate == '' && userid != '')
+                    data = {userId : userid};
                 $("#tbody").empty();
                 $.ajax({
                     type: 'get',
                     url: '/getDaily',
                     dataType: 'json',
-                    data:
-                     {
-
-                    },
+                    data:data,
                     success: function (data) {
-                        $('#username').html('欢迎 '+data.username+' 登录米仓日报');
+                        $('#username').html('欢迎 '+'<font color="red">'+data.userName+'</font>'+' 登录米仓日报');
                         for (i in  data.data)
                         {
                             var tr = $('<tr>') ;
@@ -168,14 +177,14 @@
                                     dataType: 'json',
                                     type: "post",
                                     url: "/deleteDailyRecord",
-                                    data: { id:$(this).parent().parent().children().eq(0).text()},
+                                    data: { id:$('.delbtn').parent().parent().children().eq(0).text()},
                                     success: function(data) {
                                         if(data.code == "200") {
-                                            $(obj).parent().parent().remove();
                                             layer.msg('已删除!', {
                                                 icon: 1,
                                                 time: 1000
                                             });
+                                            window.location.href="/table"
                                         } else {
                                             layer.msg(data.result, {
                                                 icon: 1,
@@ -281,9 +290,9 @@
 		—
 		<input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
 		<input  id="userid"  placeholder="请输入用户ID"/>
-		<button style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
+		<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 		<button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-		<span style="float: right;margin:20px 40px 0px 0px" id="username"></span>
+		<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 		<div>
 			<table class="table table-bordered" id="table-bordered">
 				<thead>

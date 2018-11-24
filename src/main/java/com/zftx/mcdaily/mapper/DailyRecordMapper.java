@@ -32,19 +32,19 @@ public interface DailyRecordMapper {
      * @param endDate 结束日期
      * @return
      */
-    public ArrayList<HashMap<String,Object>> getDaily(@Param("userId") Integer userId,@Param("startDate") String startDate,@Param("endDate") String endDate);
+    public ArrayList<HashMap<String,Object>> getDaily(@Param("userId") Integer userId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     /**
      * 删除日报
      * @param dailyRecord
      * @return
      */
-    public Integer deleteDailyRecord(DailyRecord dailyRecord);
+    public Integer deleteDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
 
     /**
      * 修改日报
      * @param dailyRecord
      * @return
      */
-    public Integer updateDailyRecord(DailyRecord dailyRecord);
+    public Integer updateDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
 }

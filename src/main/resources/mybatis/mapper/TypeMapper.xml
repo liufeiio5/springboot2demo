@@ -44,9 +44,6 @@
         insert  into type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="type != null">
-                <if test="type.id !=null">
-                    id,
-                </if>
                     type_id,
                 <if test="type.typeName !=null">
                     type_name,
@@ -64,9 +61,6 @@
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="type != null">
-                <if test="type.id !=null">
-                    #{type.id,jdbcType=INTEGER},
-                </if>
                 (SELECT CASE  WHEN MAX(t.type_id) IS NULL THEN '1' ELSE MAX(t.type_id)+1 END FROM type t),
                 <if test="type.typeName !=null and type.typeName!=''">
                     #{type.typeName},
@@ -84,7 +78,7 @@
         </trim>
     </insert>
 
-   <!-- 修改用户-->
+   <!-- 修改类型-->
     <update id="updateType" parameterType="com.zftx.mcdaily.bean.Type">
         UPDATE  type
         <set>
@@ -97,7 +91,7 @@
             <if test="type.typeName != null and type.typeName!=''">
                 type_name=#{type.typeName},
             </if>
-            <if test="type.createUser != null and type.createUser!=''">
+            <if test="type.createUser != null">
                 create_user=#{type.createUser},
             </if>
             <if test="type.createTime != null">
@@ -110,7 +104,7 @@
         WHERE id=#{type.id}
     </update>
 
-    <!--实际删除 用户-->
+    <!--实际删除 类型-->
     <delete id="deleteType" parameterType="com.zftx.mcdaily.bean.Type">
        delete from type  where id=#{type.id}
     </delete>

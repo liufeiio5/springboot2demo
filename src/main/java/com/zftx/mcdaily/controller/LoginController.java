@@ -48,8 +48,8 @@ public class LoginController {
     @RequestMapping(value = "/table")
     public String table(HttpSession session)
     {
-        /*if (session.getAttribute("user") == null)
-            return "login";*/
+        if (session.getAttribute("user") == null)
+            return "login";
         return "table";
     }
 
@@ -71,25 +71,6 @@ public class LoginController {
         } else {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录失败");
             return R.error().put("message", "登录失败");
-        }
-
-    }
-
-    /**
-     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
-     * @param user
-     * @return
-     */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    @ResponseBody
-    public R register(User user){
-        user.setPassword( MD5.md5(user.getPassword(),user.getUserName()));
-        String result = userService.insertUser(user);
-        if(result.equals("success")){
-            return  R.ok("注册成功");
-        }else{
-            return R.error("注册失败");
-
         }
     }
 
@@ -235,17 +216,20 @@ public class LoginController {
     }
 
     /**
-     * 获取日报详细信息
-     * @param event
+     * 注册，初始化调用（第一阶段内部使用初始化数据接口，主要是为了MD5 加密密码）
+     * @param
      * @return
      */
-    /*@RequestMapping(value = "/getDailyInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
-    public R getDailyInfo(Event event,EventDetail eventDetail,HttpSession session){
-        User user = (User) session.getAttribute("user");
-        event.setCreateUser(user.getId());
-        List<HashMap<String,Object>> eventList = eventService.findEventByEventDetail(event,eventDetail);
-        return R.ok().put("data",eventList).put("username",user.getUserName());
-    }*/
-
+    public R registers(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
+//        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
+        String result = userService.insertUser(new User().setPassword(MD5.md5(password,userName)).setUserName(userName).setFullName(fullName).setEmail(email).setPhone(phone).
+        setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
+        if(result.equals("success")){
+            return  R.ok("注册成功").put("result",result);
+        }else{
+            return R.error("注册失败").put("result",result);
+        }
+    }
 }
