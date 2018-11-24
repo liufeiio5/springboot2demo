@@ -165,7 +165,7 @@
                                 tr.append($('<td>').html(data.data[i].result))
                                 tr.append($('<td>').html(data.data[i].method))
                                 tr.append($('<td>').html(data.data[i].remark))
-                                var set = $('<button>').addClass('btn btn-warning').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                                var set = $('<button>').addClass('btn btn-warning updbtn').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
                                 var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                                 var td = $('<td>');
                                 td.append(set);
@@ -200,6 +200,63 @@
                                 });
 
                             });
+                        })
+						//修改
+						$('.updbtn').click(function (){
+						    var setType=$(this).parent().parent().children().eq(4).text()
+						    var setSurface=$(this).parent().parent().children().eq(5).text()
+						    var setLine=$(this).parent().parent().children().eq(6).text()
+						    var setPoint=$(this).parent().parent().children().eq(6).text()
+						    var setEvent=$(this).parent().parent().children().eq(7).text()
+						    var setProcess=$(this).parent().parent().children().eq(8).text()
+						    var setResult=$(this).parent().parent().children().eq(9).text()
+						    var setMethod=$(this).parent().parent().children().eq(10).text()
+						    var setRemarks=$(this).parent().parent().children().eq(11).text()
+							$('#setType').html('<option value="setType">'+setType+'</option>');
+							$('#setSurface').html('<option value="setSurface">'+setSurface+'</option>');
+							$('#setLine').html('<option value="setLine">'+setLine+'</option>');
+							$('#setPoint').html('<option value="setPoint">'+setPoint+'</option>');
+							$('#setEvent').html(setEvent);
+							$('#setProcess').html(setProcess);
+							$('#setResult').html(setResult);
+							$('#setMethod').html(setMethod);
+							$('#setRemarks').html(setRemarks);
+
+                            $('#setUpd').click(function () {
+                                var typeName=$('setType').value;
+                                var typeName=$('setSurface').value;
+                                var typeName=$('setLine').value;
+                                var typeName=$('setPoint').value;
+                                var typeName=$('setEvent').value;
+                                var typeName=$('setProcess').value;
+                                var typeName=$('setResult').value;
+                                var typeName=$('setMethod').value;
+                                var typeName=$('setRemarks').value;
+                                layer.confirm('确认要修改吗？', function (index) {
+                                    $.ajax({
+                                        dataType: 'json',
+                                        type: "post",
+                                        url: "/deleteDailyRecord",
+                                        data: {id: id},
+                                        success: function (data) {
+                                            if (data.code == "200") {
+                                                layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                                window.location.href = "/table"
+                                            } else {
+                                                layer.msg(data.result, {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }
+
+                                        }
+                                    });
+
+                                });
+                            })
                         })
                     },
                 })
@@ -476,7 +533,7 @@
 							</tbody></table>
 						<div class="modal-footer">
 							<button data-dismiss="modal" class="btn btn-default">关闭</button>
-							<button id="set" class="btn btn-primary">提交</button>
+							<button id="setUpd" class="btn btn-primary">提交</button>
 						</div>
 					</div>
 				</div><!-- /.modal-content -->
