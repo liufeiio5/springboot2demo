@@ -54,35 +54,43 @@
                     var result=$("#result").val();
                     var method=$("#method").val();
                     var remarks=$("#remarks").val();
-                    $.ajax({
-                        url:"addDaily",
-                        dataType:'json',
-                        data:{
-                            type:type,
-                            surface:surface,
-                            line:line,
-                            point:point,
-                            eventName:eventName,
-                            process:process,
-                            result:result,
-                            method:method,
-                            remarks:remarks
-                        },
-                        success :function (data)
-                        {
-                            if(data.code==200){
-                                $("#event").val('');
-                                $("#process").val('');
-                                $("#result").val('');
-                                $("#method").val('');
-                                $("#remarks").val('');
-                                window.location.href="/table";
-                                layer.msg("添加成功");
-                            }else{
-                                layer.msg("添加失败");
+                    var typeName = $('#addtype').val();
+                    var surfaceName = $('#addsurface').val();
+                    var lineName = $('#addline').val();
+                    var pointName = $('#addpoint').val();
+                        $.ajax({
+                            url:"addDaily",
+                            dataType:'json',
+                            data:{
+                                type:type,
+                                surface:surface,
+                                line:line,
+                                point:point,
+                                eventName:eventName,
+                                process:process,
+                                result:result,
+                                method:method,
+                                remarks:remarks,
+                                typeName:typeName,
+                                surfaceName:surfaceName,
+                                lineName:lineName,
+                                pointName:pointName
+                            },
+                            success :function (data)
+                            {
+                                if(data.code==200){
+                                    $("#event").val('');
+                                    $("#process").val('');
+                                    $("#result").val('');
+                                    $("#method").val('');
+                                    $("#remarks").val('');
+                                    window.location.href="/table";
+                                    layer.msg("添加成功");
+                                }else{
+                                    layer.msg("添加失败");
+                                }
                             }
-                        }
-                    });
+                        });
                 })
 
                 $('#type').next().bind('click',function()
@@ -116,11 +124,8 @@
                     $('#point').toggle()
                 })
 
-
-
-
-
 			})
+
 
             function inittable(){
                 $("#tbody").empty();
@@ -199,13 +204,14 @@
                     success :function (data)
 					{
 					    var json = data.data;
-					    for(var i = 0 ; i<json.length ;i++)
+					    for(var i in json)
                             $('#type').append($('<option>').val(json[i].typeId).html(json[i].typeName))
 					}
                 });
             }
             function initsurface(typeid)
             {
+                console.log("=============typeId:"+typeid);
                 $('#surface').html('');
                 $.ajax({
                     type:"get",
@@ -216,40 +222,42 @@
                     success :function (data)
                     {
                         var json = data.data;
-                        for(var i = 0 ; i<json.length ;i++)
+                        for(var i in json)
                             $('#surface').append($('<option>').val(json[i].surfaceId).html(json[i].surfaceName))
                     }
                 });
             }
             function initline(typeid,surfaceid)
             {
+                console.log("===================typeId:"+typeid+"====surfaceId:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
                     url:"getLine",
                     dataType:'json',
                     data:{
-                        typeId:typeid,
+                        //typeId:typeid,
                         surfaceId:surfaceid,
 						islive:1
 					},
                     success :function (data)
                     {
                         var json = data.data;
-                        for(var i = 0 ; i<json.length ;i++)
+                        for(var i in json)
                             $('#line').append($('<option>').val(json[i].lineId).html(json[i].lineName))
                     }
                 });
             }
             function initpoint(typeid,surfaceid,lineid)
             {
+                console.log("===================typeId:"+typeid+"====surfaceId:"+surfaceid+"======lineId:"+lineid);
                 $('#point').html('');
                 $.ajax({
                     type:"get",
                     url:"getPoint",
                     dataType:'json',
                     data:{
-                        typeId:typeid,
+                        //typeId:typeid,
                         surfaceId:surfaceid,
                         lineId:lineid,
                         islive:1
@@ -258,7 +266,7 @@
                     success :function (data)
                     {
                         var json = data.data;
-                        for(var i = 0 ; i<json.length ;i++) {
+                        for(var i in json) {
                             $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
 							return json[i].pointId;
                         }

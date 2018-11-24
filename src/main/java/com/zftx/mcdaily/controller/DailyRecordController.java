@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class DailyRecordController {
@@ -34,8 +31,10 @@ public class DailyRecordController {
     @ResponseBody
     public R getDailyRecord(Integer userId, String startDate, String endDate, HttpSession session)
     {
+        System.out.println("========================================进入");
         //登录用户
         User user = (User) session.getAttribute("user");
+        System.out.println("用户名===================================："+user.getUserName());
         user = new User().setId(26);
         //日历
         Calendar calendar = Calendar.getInstance();
@@ -48,6 +47,9 @@ public class DailyRecordController {
         endDate = (startDate != null && endDate != null) ? endDate : Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"";
 
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("username",user.getUserName());
+        list.add(map);
         if(list !=null &&list.size()>0){
             return R.ok("数据获取成功").put("data",list);
         }else{
@@ -73,8 +75,14 @@ public class DailyRecordController {
 
     @RequestMapping(value = "/addDailyRecord",method = RequestMethod.POST)
     @ResponseBody
-    public R addDailyRecord(DailyRecord dailyRecord){
-        Integer result = dailyRecordService.addDailyRecord(dailyRecord);
+    public R addDailyRecord(DailyRecord dailyRecord,String addtype,String addsurtface,String addline,String addpoint){
+        Integer result=null;
+        if(addtype!=null&&!"".equals(addtype)){
+             result = dailyRecordService.addDailyRecord(dailyRecord.setType(addtype).setSurface(addsurtface).setLine(addline).setPoint(addpoint));
+        }else {
+            result=dailyRecordService.addDailyRecord(dailyRecord);
+        }
+
         if(result>0){
             return R.ok("添加成功").put("result",result);
         }else {

@@ -55,8 +55,8 @@
     </select>
 
     <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true"
-            keyProperty="point.id">
-        insert ignore into surface
+            keyProperty="surface.id">
+        insert  into surface
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="surface!=null">
                 <if test="surface.typeId!=null">

@@ -64,7 +64,7 @@
     </select>
 
     <insert id="addPoint" parameterType="com.zftx.mcdaily.bean.Point" useGeneratedKeys="true" keyProperty="point.id">
-        insert ignore into point
+        insert  into point
         <trim prefix=" (" suffix=")" suffixOverrides="," >
             <if test="point!=null">
                     <if test="point.typeId!=null">

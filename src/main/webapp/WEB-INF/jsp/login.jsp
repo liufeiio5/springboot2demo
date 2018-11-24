@@ -25,11 +25,11 @@
                 <form>
                     <div class="form-group mg-t20">
                         <i class="icon-user icon_font"></i>
-                        <input type="tel" class="login_input" id="userName" placeholder="请输入用户名" value="李鹏成" />
+                        <input type="tel" class="login_input" id="userName" placeholder="请输入用户名" value="卜志锋" />
                     </div>
                     <div class="form-group mg-t20">
                         <i class="icon-lock icon_font"></i>
-                        <input type="password" class="login_input" id="password" placeholder="请输入密码" value="lpc3236" />
+                        <input type="password" class="login_input" id="password" placeholder="请输入密码" value="bzf7330" />
                     </div>
                     <%--<div class="checkbox mg-b25">--%>
                         <%--<label>--%>
@@ -62,7 +62,8 @@
             url:"/userLogin",
             data:{
                 userName:userName,
-                password:hex_md5(hex_md5('password'))
+                //password:hex_md5(hex_md5('password'))
+                password:password
             },
             dataType:"json",
             type:"GET",

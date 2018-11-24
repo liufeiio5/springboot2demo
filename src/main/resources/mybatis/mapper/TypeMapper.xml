@@ -41,7 +41,7 @@
 
     <!--添加类型-->
     <insert id="insertType" keyProperty="type.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Type">
-        insert ignore into type
+        insert  into type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="type != null">
                 <if test="type.id !=null">

@@ -15,4 +15,5 @@ public interface TypeMapper {
     public int updateType(@Param("type")Type type);
 
     public int deleteType(@Param("type")Type type);
+
 }
