@@ -47,4 +47,23 @@ public class PointController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 修改点
+     * @param point
+     * @return
+     */
+    @RequestMapping(value = "/updatePoint",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updatePoint(HttpSession session,Point point){
+        User user = (User) session.getAttribute("user");
+        point.setCreateUser(user.getId());
+        Integer result = pointService.updatePoint(point);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
+
 }

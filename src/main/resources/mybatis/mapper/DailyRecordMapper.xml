@@ -14,6 +14,7 @@
         <result column="process" property="process"/>
         <result column="result" property="result"/>
         <result column="method" property="method"/>
+        <result column="remark" property="remark"/>
         <result column="date" property="date"/>
         <result column="time" property="time"/>
     </resultMap>
@@ -128,6 +129,50 @@
             </if>
         </trim>
     </insert>
+
+    <update id="updateDailyRecord" parameterType="com.zftx.mcdaily.bean.DailyRecord">
+        UPDATE daily_record
+        <set>
+            <if test="dailyRecord.userId!=null">
+                user_id=#{dailyRecord.userId},
+            </if>
+            <if test="dailyRecord.type!=null and dailyRecord.type !=''">
+                type=#{dailyRecord.type},
+            </if>
+            <if test="dailyRecord.surface!=null and dailyRecord.surface !=''">
+                surface=#{dailyRecord.surface},
+            </if>
+            <if test="dailyRecord.line!=null and dailyRecord.line !=''">
+                line=#{dailyRecord.line},
+            </if>
+            <if test="dailyRecord.point!=null and dailyRecord.point!=''">
+                point=#{dailyRecord.point},
+            </if>
+            <if test="dailyRecord.event!=null and dailyRecord.event!=''">
+                event=#{dailyRecord.event},
+            </if>
+            <if test="dailyRecord.process!=null and dailyRecord.process!=''">
+                process=#{dailyRecord.process},
+            </if>
+            <if test="dailyRecord.result!=null and dailyRecord.result!=''">
+                result=#{dailyRecord.result},
+            </if>
+            <if test="dailyRecord.method!=null and dailyRecord.method!=''">
+                method=#{dailyRecord.method},
+            </if>
+            <if test="dailyRecord.remark!=null and dailyRecord.remark!=''">
+                remark=#{dailyRecord.remark},
+            </if>
+            <if test="dailyRecord.date!=null and dailyRecord.date!=''">
+                date=#{dailyRecord.date},
+            </if>
+            <if test="dailyRecord.time!=null and dailyRecord.time!=''">
+                time=#{dailyRecord.time},
+            </if>
+        </set>
+        WHERE user_id=#{dailyRecord.userId}
+    </update>
+
 
     <!--实际删除 综合表-->
     <delete id="deleteDailyRecord" parameterType="com.zftx.mcdaily.bean.DailyRecord">

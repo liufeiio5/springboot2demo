@@ -33,6 +33,13 @@ public interface DailyRecordService {
      */
     public Integer addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
 
+
+    /**
+     * 修改日报
+     * @param dailyRecord
+     * @return
+     */
+    public Integer updateDailyRecord(DailyRecord dailyRecord);
     /**
      * 删除日报
      * @param dailyRecord

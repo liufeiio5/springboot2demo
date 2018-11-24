@@ -53,7 +53,6 @@ public class LoginController {
         return "table";
     }
 
-
     /**
      * 用户登录
      * @param user
@@ -64,6 +63,7 @@ public class LoginController {
     public R login(HttpSession session, User user, Model model){
         session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
+        session.setAttribute("user",null);
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));
         if (list != null && list.size() > 0) {
@@ -162,6 +162,7 @@ public class LoginController {
             dailyRecord.setPoint(point.toString());
 
         }
+
 
         //插入到日报统一记录表
         Integer dailyResult = dailyRecordService.addDailyRecord(dailyRecord

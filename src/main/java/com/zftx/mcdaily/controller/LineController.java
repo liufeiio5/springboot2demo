@@ -47,4 +47,22 @@ public class LineController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 修改线
+     * @param line
+     * @return
+     */
+    @RequestMapping(value = "/updateLine",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateLine(HttpSession session,Line line){
+        User user = (User) session.getAttribute("user");
+        line.setCreateUser(user.getId());
+        Integer result = lineService.updateLine(line);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
 }
