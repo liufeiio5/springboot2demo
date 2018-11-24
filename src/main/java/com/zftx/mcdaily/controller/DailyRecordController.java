@@ -1,8 +1,5 @@
 package com.zftx.mcdaily.controller;
 
-import com.zftx.mcdaily.bean.DailyRecord;
-import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.service.DailyRecordService;
 import com.zftx.mcdaily.bean.*;
 import com.zftx.mcdaily.service.*;
 import com.zftx.mcdaily.util.R;
@@ -14,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
@@ -28,9 +23,6 @@ public class DailyRecordController {
 
     @Autowired
     private DailyRecordService dailyRecordService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private PointService pointService;
@@ -77,34 +69,107 @@ public class DailyRecordController {
     }
 
     /**
-     * 查询日报信息
-     * @param dailyRecord
+     * 添加日报记录
+     * @param session
+     * @param typeName
+     * @param type
+     * @param surface
+     * @param line
+     * @param point
+     * @param surfaceName
+     * @param lineName
+     * @param pointName
+     * @param eventName
+     * @param process
+     * @param result
+     * @param method
+     * @param remarks
      * @return
      */
-    @RequestMapping(value = "/getDailyRecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R getDailyRecord(DailyRecord dailyRecord){
-        List<DailyRecord> dailyRecords = dailyRecordService.getDailyRecord(dailyRecord);
-        if(dailyRecords !=null &&dailyRecords.size()>0){
-            return R.ok("数据获取成功").put("data",dailyRecords);
+    public R addDaily(HttpSession session,String typeName,Integer type,Integer surface,Integer line,Integer point,String surfaceName,String lineName,String pointName,String eventName,String process,String result,String method,String remarks){
+        //获取用户信息
+        User user = (User)session.getAttribute("user");
+        //初始化查询条件
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
+
+        Type addType = new Type();
+        Surface addSurface = new Surface();
+        Line addLine = new Line();
+        Point addPoint = new Point();
+        DailyRecord dailyRecord = new DailyRecord();
+
+        //添加日报的时候添加的type surface line point 关联当前登录的用户ID
+        if(typeName != null && !"".equals(typeName)){
+            typeService.insertType(addType.setCreateUser(user.getId()).setTypeName(typeName));
+            //获取当前插入完成后类型的typeId
+            addType = typeService.getType(addType.setId(addType.getId())).get(0);
+            dailyRecord.setType(addType.getTypeId().toString());
         }else{
-            return R.error("获取数据失败");
-        }
-    }
-
-    @RequestMapping(value = "/addDailyRecord",method = RequestMethod.POST)
-    @ResponseBody
-    public R addDailyRecord(DailyRecord dailyRecord,String addtype,String addsurtface,String addline,String addpoint){
-        Integer result=null;
-        if(addtype!=null&&!"".equals(addtype)){
-             result = dailyRecordService.addDailyRecord(dailyRecord.setType(addtype).setSurface(addsurtface).setLine(addline).setPoint(addpoint));
-        }else {
-            result=dailyRecordService.addDailyRecord(dailyRecord);
+            addType.setTypeId(type);
+            dailyRecord.setType(type.toString());
         }
 
-        if(result>0){
-            return R.ok("添加成功").put("result",result);
+        //插入面记录表，关联当前用户和上下级
+        if(surfaceName != null && !"".equals(surfaceName)){
+            surfaceService.addSurface(addSurface.setTypeId(addType.getTypeId())
+                    .setCreateUser(user.getId())
+                    .setSurfaceName(surfaceName));
+            //获取surface 插入完成后surfaceId
+            addSurface = surfaceService.findAllSurFace(addSurface.setId(addSurface.getId())).get(0);
+            dailyRecord.setSurface(addSurface.getSurfaceId().toString());
+
+        }else{
+            addSurface.setSurfaceId(surface);
+            dailyRecord.setSurface(surface.toString());
+        }
+
+        //插入线记录表，关联当前登录用户，和上下级
+        if(lineName != null && !"".equals(lineName)){
+            lineService.addLine(addLine.setTypeId(addType.getTypeId())
+                    .setSurfaceId(addSurface.getSurfaceId())
+                    .setCreateUser(user.getId())
+                    .setLineName(lineName));
+            //获取插入完成后返回的lineId
+            addLine = lineService.findLineAll(addLine.setId(addLine.getId())).get(0);
+            dailyRecord.setLine(addLine.getLineId().toString());
         }else {
+            addLine.setLineId(line);
+            dailyRecord.setLine(line.toString());
+        }
+
+        //插入点记录表，关联当前用户和上下级
+        if(pointName != null && !"".equals(pointName)){
+            pointService.addPoint(addPoint.setTypeId(addType.getTypeId())
+                    .setSurfaceId(addSurface.getSurfaceId())
+                    .setLineId(addLine.getLineId())
+                    .setCreateUser(user.getId())
+                    .setPointName(pointName));
+            //获取插入完场后的pointId
+            addPoint = pointService.findPointAll(addPoint.setId(addPoint.getId())).get(0);
+            dailyRecord.setPoint(addPoint.getPointId().toString());
+        }else {
+            addPoint.setPointId(point);
+            dailyRecord.setPoint(point.toString());
+
+        }
+
+        //插入到日报统一记录表
+        Integer dailyResult = dailyRecordService.addDailyRecord(dailyRecord
+                .setUserId(user.getId())
+                .setEvent(eventName)
+                .setProcess(process)
+                .setResult(result)
+                .setMethod(method)
+                .setRemark(remarks)
+                .setDate(dateFormat1.format(new Date()))
+                .setTime(dateFormat.format(new Date())));
+
+        if(dailyResult>0){
+            return R.ok("添加成功").put("dailyResult",dailyResult);
+        }else{
             return R.error("添加失败");
         }
     }
@@ -149,6 +214,7 @@ public class DailyRecordController {
             return R.error("修改失败");
         }
     }
+
 
 
 
