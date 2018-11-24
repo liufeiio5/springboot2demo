@@ -58,7 +58,7 @@
     </select>
 
     <insert id="addLine" keyProperty="line.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Line">
-        INSERT ignore into line
+        INSERT  into line
         <trim prefix=" (" suffix=")" suffixOverrides=",">
           <if test="line!=null">
               <if test="line.typeId!=null">

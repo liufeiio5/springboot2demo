@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.*;
 
 @Controller
 public class DailyRecordController {
@@ -41,7 +42,6 @@ public class DailyRecordController {
         Calendar calendar = Calendar.getInstance();
         //当前系统时间的  前七天
         calendar.add(Calendar.DATE,-7);
-
         if(user != null)
             userId = userId != null ? userId : user.getId();
         startDate = (startDate != null && endDate != null) ? startDate : calendar.get(Calendar.YEAR)+""+(calendar.get(Calendar.MONTH)+1)+""+calendar.get(Calendar.DAY_OF_MONTH)+"";
@@ -49,9 +49,9 @@ public class DailyRecordController {
 
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
         if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list).put("userName",user.getFullName());
+            return R.ok("数据获取成功").put("data",list).put("fullName",user.getFullName());
         }else{
-            return R.error("获取数据失败").put("userName",user.getFullName());
+            return R.error("获取数据失败").put("fullName",user.getFullName());
         }
     }
 
@@ -73,8 +73,14 @@ public class DailyRecordController {
 
     @RequestMapping(value = "/addDailyRecord",method = RequestMethod.POST)
     @ResponseBody
-    public R addDailyRecord(DailyRecord dailyRecord){
-        Integer result = dailyRecordService.addDailyRecord(dailyRecord);
+    public R addDailyRecord(DailyRecord dailyRecord,String addtype,String addsurtface,String addline,String addpoint){
+        Integer result=null;
+        if(addtype!=null&&!"".equals(addtype)){
+             result = dailyRecordService.addDailyRecord(dailyRecord.setType(addtype).setSurface(addsurtface).setLine(addline).setPoint(addpoint));
+        }else {
+            result=dailyRecordService.addDailyRecord(dailyRecord);
+        }
+
         if(result>0){
             return R.ok("添加成功").put("result",result);
         }else {

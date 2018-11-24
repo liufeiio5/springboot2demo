@@ -54,9 +54,9 @@
         select d.id,d.date,d.time,t.type_name as typeName,s.surface_name as surfaceName,l.line_name as lineName,p.point_name as pointName,d.event,d.process,d.result,d.method,d.remark
         from daily_record d
         join point p on d.point = p.point_id
-        join type t on p.type_id=t.type_id
-        join surface s on p.surface_id=s.surface_id
-        join line l on p.line_id=l.line_id
+        join type t on d.type=t.type_id
+        join surface s on d.surface=s.surface_id
+        join line l on d.line=l.line_id
         join user u on d.user_id = u.id
         <where>
             <if test="startDate != null and endDate != null">
@@ -66,7 +66,7 @@
                 and u.id = #{userId}
             </if>
         </where>
-        order by d.date desc
+        order by d.id desc
     </select>
 
     <insert id="addDailyRecord" keyProperty="dailyRecord.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.DailyRecord">
