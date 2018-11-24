@@ -62,6 +62,7 @@ public class LoginController {
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
+        session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         List<User> list = userService.getUser(user);
         model.addAttribute("user",list.get(0));

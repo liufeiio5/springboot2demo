@@ -147,32 +147,35 @@
                     dataType: 'json',
                     data:data,
                     success: function (data) {
-                        $('#username').html('欢迎 '+'<font color="red">'+data.userName+'</font>'+' 登录米仓日报');
-                        for (i in  data.data)
-                        {
-                            var tr = $('<tr>') ;
-                            tr.append($('<td>').html(data.data[i].id))
-                            tr.append($('<td>').html(data.data[i].date))
-                            tr.append($('<td>').html(data.data[i].time))
-                            tr.append($('<td>').html(data.data[i].typeName))
-                            tr.append($('<td>').html(data.data[i].surfaceName))
-                            tr.append($('<td>').html(data.data[i].lineName))
-                            tr.append($('<td>').html(data.data[i].pointName))
-                            tr.append($('<td>').html(data.data[i].event))
-                            tr.append($('<td>').html(data.data[i].process))
-                            tr.append($('<td>').html(data.data[i].result))
-                            tr.append($('<td>').html(data.data[i].method))
-                            tr.append($('<td>').html(data.data[i].remark))
-                            var set = $('<button>').addClass('btn btn-warning').css('margin-right','10px').attr('data-toggle','modal').attr('data-target','#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
-                            var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
-                            var td =$('<td>');
-                            td.append(set);
-                            td.append(del);
-                            tr.append(td);
-                            $("#tbody").append(tr);
+                        console.info(data)
+                        $('#username').html('欢迎 '+'<font color="red">'+data.fullName+'</font>'+' 登录米仓日报');
+                        for (i in  data.data) {
+                            var tr = $('<tr>');
+                            if (typeof (data.data[i].id) != 'undefined') {
+                                tr.append($('<td>').html(data.data[i].id))
+                                tr.append($('<td>').html(data.data[i].date))
+                                tr.append($('<td>').html(data.data[i].time))
+                                tr.append($('<td>').html(data.data[i].typeName))
+                                tr.append($('<td>').html(data.data[i].surfaceName))
+                                tr.append($('<td>').html(data.data[i].lineName))
+                                tr.append($('<td>').html(data.data[i].pointName))
+                                tr.append($('<td>').html(data.data[i].event))
+                                tr.append($('<td>').html(data.data[i].process))
+                                tr.append($('<td>').html(data.data[i].result))
+                                tr.append($('<td>').html(data.data[i].method))
+                                tr.append($('<td>').html(data.data[i].remark))
+                                var set = $('<button>').addClass('btn btn-warning').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                                var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                                var td = $('<td>');
+                                td.append(set);
+                                td.append(del);
+                                tr.append(td);
+                                $("#tbody").append(tr);
+                            }
                         }
                         $('.delbtn').click(function (){
                             layer.confirm('确认要删除吗？', function(index) {
+                                alert($('.delbtn').parent().parent().children().eq(0).text())
                                 $.ajax({
                                     dataType: 'json',
                                     type: "post",
