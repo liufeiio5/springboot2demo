@@ -224,7 +224,6 @@
             }
             function initsurface(typeid)
             {
-                $('#surface').html('');
                 $.ajax({
                     type:"get",
                     url:"getSurface",
@@ -305,8 +304,6 @@
 				    ajax.abort;
 				}
             }
-
-
 	</script>
 </head>
 <body>
@@ -356,7 +353,7 @@
 								<td style="width:12%;">类型:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addtype" style="display:none;">
-									<select class="form-control" id="type"></select>&nbsp;<button class="btn btn-danger" onclick="showSelect();">
+									<select class="form-control" id="type"></select>&nbsp;<button class="btn btn-danger">
 									<i class="glyphicon glyphicon-transfer"></i></button>
 								</td>
 							</tr>
@@ -437,7 +434,7 @@
 								<td style="width:12%;">类型:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetType" style="display:none;">
-									<select class="form-control" id="setType"></select>&nbsp;<button class="btn btn-danger" onclick="showSelect();">
+									<select class="form-control" id="setType"></select>&nbsp;<button class="btn btn-danger">
 									<i class="glyphicon glyphicon-transfer"></i></button>
 								</td>
 							</tr>
