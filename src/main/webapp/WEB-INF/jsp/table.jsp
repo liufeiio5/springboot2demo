@@ -23,25 +23,6 @@
 				initline($('#type').val(),$('#surface').val())
                 initpoint($('#type').val(),$('#surface').val(),$('#line').val())
 
-				$('#type').change(function ()
-				{
-                    initsurface($('#type').val())
-                    initline($('#type').val(),$('#surface').val())
-                    initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-                })
-
-                $('#surface').change(function ()
-                {
-                    initline($('#type').val(),$('#surface').val())
-                    initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-                })
-
-                $('#line').change(function ()
-                {
-                    initpoint($('#type').val(),$('#surface').val(),$('#line').val())
-                })
-
-
 
                 $('#add').click(function ()
                 {
@@ -224,12 +205,13 @@
             }
             function initsurface(typeid)
             {
+                console.log("type_id====="+typeid)
+                $('#surface').html('');
                 $.ajax({
                     type:"get",
                     url:"getSurface",
                     dataType:'json',
                     data:{
-                        typeId:typeid,
 						islive:1
 					},
                     async:false,
@@ -243,14 +225,13 @@
             }
             function initline(typeid,surfaceid)
             {
+                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
                     url:"getLine",
                     dataType:'json',
                     data:{
-                        typeId:typeid,
-                        surfaceId:surfaceid,
 						islive:1
 					},
                     success :function (data)
@@ -263,15 +244,13 @@
             }
             function initpoint(typeid,surfaceid,lineid)
             {
-                $('#point').html('');
+                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid+"=========:lineid"+lineid)
+				$('#point').html('');
                 $.ajax({
                     type:"get",
                     url:"getPoint",
                     dataType:'json',
                     data:{
-                        typeId:typeid,
-                        surfaceId:surfaceid,
-                        lineId:lineid,
                         islive:1
                     },
                     async:false,
@@ -280,7 +259,6 @@
                         var json = data.data;
                         for(var i in json) {
                             $('#point').append($('<option>').val(json[i].pointId).html(json[i].pointName))
-							return json[i].pointId;
                         }
                     }
                 });
@@ -304,6 +282,8 @@
 				    ajax.abort;
 				}
             }
+
+
 	</script>
 </head>
 <body>
@@ -353,7 +333,7 @@
 								<td style="width:12%;">类型:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addtype" style="display:none;">
-									<select class="form-control" id="type"></select>&nbsp;<button class="btn btn-danger">
+									<select class="form-control" id="type"></select>&nbsp;<button class="btn btn-danger" onclick="showSelect();">
 									<i class="glyphicon glyphicon-transfer"></i></button>
 								</td>
 							</tr>
@@ -434,7 +414,7 @@
 								<td style="width:12%;">类型:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetType" style="display:none;">
-									<select class="form-control" id="setType"></select>&nbsp;<button class="btn btn-danger">
+									<select class="form-control" id="setType"></select>&nbsp;<button class="btn btn-danger" onclick="showSelect();">
 									<i class="glyphicon glyphicon-transfer"></i></button>
 								</td>
 							</tr>

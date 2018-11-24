@@ -23,7 +23,10 @@ public class PointController {
     @ResponseBody
     public R getPoint(HttpSession session,Point point){
         User user = (User) session.getAttribute("user");
-        List<Point> pointList = pointService.findPointAll(point.setCreateUser(user.getId()));
+        point.setCreateUser(user.getId());
+        System.out.println("用户ID"+user.getId());
+        List<Point> pointList = pointService.findPointAll(point);
+        System.out.println("点数据=========================："+pointList);
         if(pointList.size()>0 && pointList != null){
             return R.ok("数据获取成功").put("data",pointList);
         }else {
