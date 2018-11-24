@@ -51,7 +51,7 @@
     </select>
 
     <select id="getDaily" resultType="java.util.HashMap">
-        select d.id,u.full_name as fullName,d.date,d.time,t.type_name as typeName,s.surface_name as surfaceName,l.line_name as lineName,p.point_name as pointName,d.event,d.process,d.result,d.method,d.remark
+        select d.id,u.full_name as fullName,d.date,d.time,t.type_id as typeId,t.type_name as typeName,s.surface_id as surfaceId,s.surface_name as surfaceName,l.line_id as lineId,l.line_name as lineName,p.point_id as pointId,p.point_name as pointName,d.event,d.process,d.result,d.method,d.remark
         from daily_record d
         join point p on d.point = p.point_id
         join type t on d.type=t.type_id
