@@ -153,6 +153,7 @@
                             var tr = $('<tr>');
                             if (typeof (data.data[i].id) != 'undefined') {
                                 tr.append($('<td>').html(data.data[i].id))
+                                tr.append($('<td>').html(data.data[i].fullName))
                                 tr.append($('<td>').html(data.data[i].date))
                                 tr.append($('<td>').html(data.data[i].time))
                                 tr.append($('<td>').html(data.data[i].typeName))
@@ -297,7 +298,8 @@
 	<table class="table table-bordered" id="table-bordered">
 		<thead>
 		<tr>
-			<th width="50px">编&nbsp;号</th>
+			<th width="75px">编号</th>
+			<th width="75px">发布人</th>
 			<th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
 			<th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
 			<th width="50px">类型</th>
