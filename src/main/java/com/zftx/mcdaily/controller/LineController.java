@@ -21,8 +21,9 @@ public class LineController {
 
     @RequestMapping(value = "/getLine")
     @ResponseBody
-    public R getLine(Line line){
-        List<Line> lines = lineService.findLineAll(line);
+    public R getLine(HttpSession session,Line line){
+        User user = (User) session.getAttribute("user");
+        List<Line> lines = lineService.findLineAll(line.setCreateUser(user.getId()));
         if(lines.size()>0&&lines != null){
             return R.ok("数据获取成功").put("data",lines);
         }else{

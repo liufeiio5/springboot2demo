@@ -45,6 +45,7 @@
 
                 $('#add').click(function ()
                 {
+                    checkAddInput();
                     var type = $('#type').val();
                     var surface = $('#surface').val();
                     var line = $('#line').val();
@@ -229,7 +230,10 @@
                     type:"get",
                     url:"getSurface",
                     dataType:'json',
-                    data:{typeId:typeid,islive:1},
+                    data:{
+                        typeId:typeid,
+						islive:1
+					},
                     async:false,
                     success :function (data)
                     {
@@ -247,7 +251,7 @@
                     url:"getLine",
                     dataType:'json',
                     data:{
-                        //typeId:typeid,
+                        typeId:typeid,
                         surfaceId:surfaceid,
 						islive:1
 					},
@@ -267,7 +271,7 @@
                     url:"getPoint",
                     dataType:'json',
                     data:{
-                        //typeId:typeid,
+                        typeId:typeid,
                         surfaceId:surfaceid,
                         lineId:lineid,
                         islive:1
@@ -283,6 +287,26 @@
                     }
                 });
             }
+
+            //检查事件 过程 结果 的输入是否为空
+            function checkAddInput() {
+				var event = $("#event").val();
+				var process = $("#process").val();
+				var result = $("#result").val();
+				if(event==null||event==''){
+				    alert("事件不能为空！");
+				    ajax().abort;
+				}
+				if(process==null||process==''){
+				    alert("过程不能为空！");
+				    ajax.abort;
+				}
+				if(result==null||result==''){
+				    alert("结果不能为空!");
+				    ajax.abort;
+				}
+            }
+
 
 	</script>
 </head>
