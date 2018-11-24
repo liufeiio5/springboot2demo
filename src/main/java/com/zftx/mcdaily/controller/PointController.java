@@ -21,8 +21,9 @@ public class PointController {
 
     @RequestMapping(value = "/getPoint",method = RequestMethod.GET)
     @ResponseBody
-    public R getPoint(Point point){
-        List<Point> pointList = pointService.findPointAll(point);
+    public R getPoint(HttpSession session,Point point){
+        User user = (User) session.getAttribute("user");
+        List<Point> pointList = pointService.findPointAll(point.setCreateUser(user.getId()));
         if(pointList.size()>0 && pointList != null){
             return R.ok("数据获取成功").put("data",pointList);
         }else {

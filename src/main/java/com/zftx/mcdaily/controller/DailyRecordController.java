@@ -153,7 +153,6 @@ public class DailyRecordController {
         }else {
             addPoint.setPointId(point);
             dailyRecord.setPoint(point.toString());
-
         }
 
         //插入到日报统一记录表
