@@ -5,7 +5,9 @@
 <mapper namespace="com.zftx.mcdaily.mapper.UserMapper">
     <resultMap id="user" type="com.zftx.mcdaily.bean.User">
         <id column="id" property="id"/>
+        <result column="full_name" property="fullName"/>
         <result column="user_name" property="userName"/>
+        <result column="full_name" property="fullName"/>
         <result column="password" property="password"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
@@ -16,7 +18,7 @@
         <result column="motto" property="motto"/>
     </resultMap>
 
-    <sql id="userAll">id,user_name,password,email,phone,birthplace,birthday,position,hobby,motto</sql>
+    <sql id="userAll">id,user_name,full_name,password,email,phone,birthplace,birthday,position,hobby,motto</sql>
     <select id="getUser" resultMap="user">
         select <include refid="userAll" /> from user
         <if test="user != null">
@@ -25,7 +27,10 @@
                     id = #{user.id}
                 </if>
                 <if test="user.userName != null">
-                   and  user_name like concat(#{user.userName},'%')
+                   and  user_name =#{user.userName}
+                </if>
+                <if test="user.fullName != null">
+                    and  full_name like concat(#{user.fullName},'%')
                 </if>
                 <if test="user.password != null">
                    and password = #{user.password}
@@ -60,6 +65,9 @@
                 <if test="user.id !=null">
                     id,
                 </if>
+                <if test="user.fullName !=null">
+                    full_name,
+                </if>
                 <if test="user.userName !=null">
                     user_name,
                 </if>
@@ -93,6 +101,9 @@
             <if test="user != null">
                 <if test="user.id !=null">
                     #{user.id,jdbcType=INTEGER},
+                </if>
+                <if test="user.fullName !=null">
+                    #{user.fullName},
                 </if>
                 <if test="user.userName !=null">
                     #{user.userName},
@@ -131,6 +142,9 @@
         <set>
             <if test="user.userName != null and user.userName!=''">
                 user_name=#{user.userName},
+            </if>
+            <if test="user.fullName != null and user.fullName!=''">
+                full_name=#{user.fullName},
             </if>
             <if test="user.password != null ">
                 password=#{user.password},

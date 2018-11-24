@@ -50,19 +50,18 @@ public class TypeController {
     }
 
     /**
-     * 修改类型
+     * 添加类型
+     * @param type
+     * @return
      */
-    @RequestMapping(value = "/updateType",method = RequestMethod.PUT)
+    @RequestMapping("/insertType")
     @ResponseBody
-    public R updateType(HttpSession session,Type type){
-        User user = (User) session.getAttribute("user");
-        type.setCreateUser(user.getId());
-        System.out.println("用户ID+++++++++++++++++++++》》》》："+user.getId());
-        String result = typeService.updateType(type);
-        if ("success".equals(result)){
-            return  R.ok("添加成功").put("result",result);
+    public R insertType(Type type){
+        String result = typeService.insertType(type);
+        if("success".equals(result)){
+            return R.ok("添加成功").put("result",result);
         }else {
-            return  R.error("添加失败");
+            return R.error("添加失败");
         }
     }
 }
