@@ -190,7 +190,7 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/updateDaily")
     @ResponseBody
-    public R addDaily(HttpSession session, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark){
+    public R addDaily(HttpSession session,Integer id, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark){
         //获取用户信息
         User user = (User)session.getAttribute("user");
         //user = new User().setId(8);
@@ -200,7 +200,9 @@ public class DailyRecordController {
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
 
         //修改日报统一记录表
-        DailyRecord dailyRecord = new DailyRecord().setUserId(user.getId()).setType(typeId.toString())
+        System.out.println("#########################"+typeId);
+        DailyRecord dailyRecord = new DailyRecord().setUserId(user.getId()).setId(id)
+                .setType(typeId.toString())
                 .setSurface(surfaceId.toString()).setLine(lineId.toString())
                 .setPoint(pointId.toString()).setEvent(eventName)
                 .setProcess(process).setResult(result).setMethod(method)

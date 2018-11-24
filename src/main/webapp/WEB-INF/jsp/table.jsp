@@ -202,6 +202,7 @@
                     })
                     //修改
                     $('.updbtn').click(function (){
+                        var id=$(this).parent().parent().children().eq(0).text()
                         var setType=$(this).parent().parent().children().eq(4).text()
                         var setSurface=$(this).parent().parent().children().eq(5).text()
                         var setLine=$(this).parent().parent().children().eq(6).text()
@@ -219,30 +220,22 @@
                         $('#setRemarks').html(setRemarks);
 
                         $('#setUpd').click(function () {
-                            var typeId=$('setType').value;
-                            var surfaceId=$('setSurface').value;
-                            var lineId=$('setLine').value;
-                            var pointId=$('setPoint').value;
-                            var eventName=$('setEvent').value;
-                            var process=$('setProcess').value;
-                            var result=$('setResult').value;
-                            var method=$('setMethod').value;
-                            var remark=$('setRemarks').value;
                             layer.confirm('确认要修改吗？', function (index) {
                                 $.ajax({
                                     dataType: 'json',
                                     type: "post",
                                     url: "/updateDaily",
                                     data: {
-                                        typeId:typeId,
-                                        surfaceId:surfaceId,
-                                        lineId:lineId,
-                                        pointId:pointId,
-                                        eventName:eventName,
-                                        process:process,
-                                        result:result,
-                                        method:method,
-                                        remark:remark,
+                                        id:id,
+                                        typeId:$('#setType').val(),
+                                        surfaceId:$('#setSurface').val(),
+                                        lineId:$('#setLine').val(),
+                                        pointId:$('#setPoint').val(),
+                                        eventName:$('#setEvent').val(),
+                                        process:$('#setProcess').val(),
+                                        result:$('#setResult').val(),
+                                        method:$('#setMethod').val(),
+                                        remark:$('#setRemarks').val(),
 										isLive:1
 									},
                                     success: function (data) {
@@ -471,13 +464,13 @@
         function check2(){
             $("setLine").html("")
             $("setPoint").html("")
-            initline($('#setType').val(),$('#setSurface').val(),null,null)
-            initpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
+            updline($('#setType').val(),$('#setSurface').val(),null,null)
+            updpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
         }
 
-       function check2(){
+       function check3(){
            $("setPoint").html("")
-            initpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
+           updpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
         }
 	</script>
 </head>

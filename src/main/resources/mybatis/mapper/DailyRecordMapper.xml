@@ -162,14 +162,18 @@
             <if test="dailyRecord.remark!=null and dailyRecord.remark!=''">
                 remark=#{dailyRecord.remark},
             </if>
-            <if test="dailyRecord.date!=null and dailyRecord.date!=''">
-                date=#{dailyRecord.date},
-            </if>
             <if test="dailyRecord.time!=null and dailyRecord.time!=''">
                 time=#{dailyRecord.time},
             </if>
         </set>
-        WHERE user_id=#{dailyRecord.userId}
+        <where>
+            <if test="dailyRecord.id!=null and dailyRecord.id!=0">
+              and id=#{dailyRecord.id}
+            </if>
+            <if test="dailyRecord.userId!=null and dailyRecord.id!=0">
+               and  user_id=#{dailyRecord.userId}
+            </if>
+        </where>
     </update>
 
 
