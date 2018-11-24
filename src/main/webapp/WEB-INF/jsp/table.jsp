@@ -283,36 +283,36 @@
                 });
             }
 
-		</script>
-	</head>
-	<body>
-		<input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
-		—
-		<input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
-		<input  id="userid"  placeholder="请输入用户ID"/>
-		<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
-		<button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-		<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
-		<div>
-			<table class="table table-bordered" id="table-bordered">
-				<thead>
-				<tr>
-					<th>编号</th>
-					<th>日期</th>
-					<th>时间点</th>
-					<th>类型</th>
-					<th>面</th>
-					<th>线</th>
-					<th>点</th>
-					<th>事件</th>
-					<th>过程</th>
-					<th>结果</th>
-					<th>解决方案</th>
-					<th>备注</th>
-                    <th>操作</th>
-				</tr>
-				</thead>
-				<tbody id="tbody">
+	</script>
+</head>
+<body>
+<input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+—
+<input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
+<input  id="userid"  placeholder="请输入用户ID"/>
+<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<div>
+	<table class="table table-bordered" id="table-bordered">
+		<thead>
+		<tr>
+			<th width="50px">编&nbsp;号</th>
+			<th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
+			<th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
+			<th width="50px">类型</th>
+			<th width="50px">&nbsp;&nbsp;面</th>
+			<th width="75px"><span>线</span></th>
+			<th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
+			<th width="150px"  style="text-align: center">事件</th>
+			<th width="150px" style="text-align: center">过程</th>
+			<th width="150px" style="text-align: center">结果</th>
+			<th width="150px" style="text-align: center">解决方案</th>
+			<th width="150px" style="text-align: center">备注</th>
+			<th width="150px" style="text-align: center">操作</th>
+		</tr>
+		</thead>
+		<tbody id="tbody">
 
 				</tbody>
 			</table>
@@ -363,7 +363,7 @@
 							<tr>
 								<td style="width:12%;">事件:</td>
 								<td style="width:60%;">
-									<textarea class="form-control" id="event" ></textarea>
+									<textarea class="form-control" id="event"></textarea>
 								</td>
 							</tr>
 							<tr>
