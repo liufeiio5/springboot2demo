@@ -198,7 +198,6 @@ public class DailyRecordController {
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
 
         //修改日报统一记录表
-        System.out.println("#########################"+typeId);
         DailyRecord dailyRecord = new DailyRecord().setUserId(user.getId()).setId(id)
                 .setType(typeId.toString())
                 .setSurface(surfaceId.toString()).setLine(lineId.toString())
