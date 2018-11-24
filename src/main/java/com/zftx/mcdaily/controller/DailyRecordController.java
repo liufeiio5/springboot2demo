@@ -48,9 +48,6 @@ public class DailyRecordController {
         endDate = (startDate != null && endDate != null) ? endDate : Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"";
 
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("username",user.getUserName());
-        list.add(map);
         if(list !=null &&list.size()>0){
             return R.ok("数据获取成功").put("data",list).put("fullName",user.getFullName());
         }else{

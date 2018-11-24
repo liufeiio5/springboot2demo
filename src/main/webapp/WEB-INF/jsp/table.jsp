@@ -174,13 +174,13 @@
                             }
                         }
                         $('.delbtn').click(function (){
+                            var id =$(this).parent().parent().children().eq(0).text()
                             layer.confirm('确认要删除吗？', function(index) {
-                                alert($('.delbtn').parent().parent().children().eq(0).text())
                                 $.ajax({
                                     dataType: 'json',
                                     type: "post",
                                     url: "/deleteDailyRecord",
-                                    data: { id:$('.delbtn').parent().parent().children().eq(0).text()},
+                                    data: { id:id},
                                     success: function(data) {
                                         if(data.code == "200") {
                                             layer.msg('已删除!', {
@@ -223,7 +223,6 @@
             }
             function initsurface(typeid)
             {
-                console.log("=============typeId:"+typeid);
                 $('#surface').html('');
                 $.ajax({
                     type:"get",
@@ -241,7 +240,6 @@
             }
             function initline(typeid,surfaceid)
             {
-                console.log("===================typeId:"+typeid+"====surfaceId:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
@@ -262,7 +260,6 @@
             }
             function initpoint(typeid,surfaceid,lineid)
             {
-                console.log("===================typeId:"+typeid+"====surfaceId:"+surfaceid+"======lineId:"+lineid);
                 $('#point').html('');
                 $.ajax({
                     type:"get",
@@ -366,7 +363,7 @@
 							<tr>
 								<td style="width:12%;">事件:</td>
 								<td style="width:60%;">
-									<textarea class="form-control" id="event"></textarea>
+									<textarea class="form-control" id="event" ></textarea>
 								</td>
 							</tr>
 							<tr>
