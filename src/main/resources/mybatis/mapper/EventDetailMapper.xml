@@ -127,7 +127,7 @@
                  time=#{eventDetail.time},
             </if>
         </set>
-        WHERE id=#{eventDetail.id}
+        WHERE id=#{eventDetail.eventId}
     </update>
 
     <delete id="delEventDetail" parameterType="com.zftx.mcdaily.bean.EventDetail">

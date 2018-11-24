@@ -67,7 +67,12 @@
                 <if test="type.id !=null">
                     #{type.id,jdbcType=INTEGER},
                 </if>
-                (SELECT CASE  WHEN MAX(t.type_id) IS NULL THEN '1' ELSE MAX(t.type_id)+1 END FROM type t),
+                <if test="type.typeId==null">
+                    (SELECT CASE  WHEN MAX(t.type_id) IS NULL THEN '1' ELSE MAX(t.type_id)+1 END FROM type t),
+                </if>
+                <if test="type.typeId!=null">
+                    #{type.typeId}
+                </if>
                 <if test="type.typeName !=null and type.typeName!=''">
                     #{type.typeName},
                 </if>

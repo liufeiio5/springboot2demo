@@ -5,18 +5,20 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/css/table.css" rel="stylesheet">
+		<!--<link href="/css/table.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="/css/table.css" />
 		<script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
 		<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<!--<script type="text/javascript" src="/layer/layer.js" ></script>-->
 		<script type="text/javascript" src="/layer/layer.js" ></script>
 		<script type="text/javascript" src="/laydate/laydate.js" ></script>
 
 		<script>
 			$(function  () {
-                laydate.render({elem : '#startdate'});
-                laydate.render({elem : '#enddate'});
+             laydate.render({elem : '#startdate'});
+              laydate.render({elem : '#enddate'});
 
-                //初始化
+                //新增初始化
                 inittable();
 				inittype();
 				initsurface($('#type').val())
@@ -40,8 +42,34 @@
                 {
                     initpoint($('#type').val(),$('#surface').val(),$('#line').val())
                 })
+//              修改初始化
+//				initaddtable();
+                initaddtype();
+				initaddsurface($('#setType').val())
+				initaddline($('#setType').val(),$('#setSurface').val())
+                initaddpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val())
+
+				$('#type').change(function ()
+				{
+                    initsurface($('#setType').val())
+                    initline($('#setType').val(),$('#setSurface').val())
+                    initpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val())
+                })
+
+                $('#surface').change(function ()
+                {
+                    initline($('#setType').val(),$('#setSurface').val())
+                    initpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val())
+                })
+
+                $('#line').change(function ()
+                {
+                    initpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val())
+                })
 
 
+
+//新增
                 $('#add').click(function ()
                 {
                     var type = $('#type').val();
@@ -83,7 +111,7 @@
                         }
                     });
                 })
-
+// 类型、面、线、点
                 $('#type').next().bind('click',function()
                 {
                     $('#addtype').val('')
@@ -115,17 +143,21 @@
                     $('#point').toggle()
                 })
 
-
 			})
+			
+			
+			
+			
 
             function inittable(){
                 $("#tbody").empty();
                 $.ajax({
                     type: 'get',
-                    url: '/getDaily',
+                    url: 'getDaily',
                     dataType: 'json',
-                    data: {
-                        isLive: 1
+                    data:
+                     {
+
                     },
                     success: function (data) {
                         $('#username').html('欢迎 '+data.username+' 登录米仓日报');
@@ -144,13 +176,44 @@
                             tr.append($('<td>').html(data.data[i].result))
                             tr.append($('<td>').html(data.data[i].method))
                             tr.append($('<td>').html(data.data[i].remark))
-                            tr.append($('<button>').addClass('btn btn-danger').attr('data-toggle','modal').attr('data-target','#setModal').html('<i class="glyphicon glyphicon-edit"></i>'))
+                            var set = $('<button>').addClass('btn btn-warning').css('margin-right','10px').attr('data-toggle','modal').attr('data-target','#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                            var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                            var td =$('<td>');
+                            td.append(set);
+                            td.append(del);
+                            tr.append(td);
                             $("#tbody").append(tr);
                         }
+                        $('.delbtn').click(function (){
+                            layer.confirm('确认要删除吗？', function(index) {
+                                $.ajax({
+                                    dataType: 'json',
+                                    type: "post",
+                                    url: "deleteDailyRecord",
+                                    data: { id:$(this).parent().parent().children().eq(0).text()},
+                                    success: function(data) {
+                                        if(data.code == "200") {
+                                            $(obj).parent().parent().remove();
+                                            layer.msg('已删除!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                        } else {
+                                            layer.msg(data.result, {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                        }
+
+                                    }
+                                });
+
+                            });
+                        })
                     },
                 })
             }
-
+//新增的四个
 			function inittype()
 			{
                 $('#type').html('');
@@ -158,7 +221,6 @@
                     type:"get",
                     url:"getType",
                     dataType:'json',
-                    data:{islive:1},
 					async:false,
                     success :function (data)
 					{
@@ -229,6 +291,111 @@
                     }
                 });
             }
+//添加的四个选项
+			function initaddtype()
+			{
+                $('#setType').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getType",
+                    dataType:'json',
+					async:false,
+                    success :function (data)
+					{
+					    var json = data.data;
+					    for(var i = 0 ; i<json.length ;i++)
+                            $('#setType').append($('<option>').val(json[i].typeId).html(json[i].typeName))
+					}
+                });
+            }
+            function initaddsurface(typeid)
+            {
+                $('#setSurface').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getSurface",
+                    dataType:'json',
+                    data:{typeId:typeid,islive:1},
+                    async:false,
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i = 0 ; i<json.length ;i++)
+                            $('#setSurface').append($('<option>').val(json[i].surfaceId).html(json[i].surfaceName))
+                    }
+                });
+            }
+            function initaddline(typeid,surfaceid)
+            {
+                $('#setLine').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getLine",
+                    dataType:'json',
+                    data:{
+                        typeId:typeid,
+                        surfaceId:surfaceid,
+						islive:1
+					},
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i = 0 ; i<json.length ;i++)
+                            $('#setLine').append($('<option>').val(json[i].lineId).html(json[i].lineName))
+                    }
+                });
+            }
+            function initaddpoint(typeid,surfaceid,lineid)
+            {
+                $('#setPoint').html('');
+                $.ajax({
+                    type:"get",
+                    url:"getPoint",
+                    dataType:'json',
+                    data:{
+                        typeId:typeid,
+                        surfaceId:surfaceid,
+                        lineId:lineid,
+                        islive:1
+                    },
+                    async:false,
+                    success :function (data)
+                    {
+                        var json = data.data;
+                        for(var i = 0 ; i<json.length ;i++) {
+                            $('#setPoint').append($('<option>').val(json[i].pointId).html(json[i].pointName))
+							return json[i].pointId;
+                        }
+                    }
+                });
+            }
+            
+              function initaddtable(){
+                $("#tbody").html();
+                $.ajax({
+                    type: 'get',
+                    url: 'getDaily',
+                    dataType: 'json',
+                    data:
+                     {
+
+                    },
+                    success: function (data) {
+                        for (i in  data.data)
+                        {
+                   	
+                        	   $('#setEvent').append($('<option>').html(data.data[i].event))
+                           $('#setEvent').append($('<option>').html(data.data[i].process))
+                           $('#setEvent').append($('<option>').html(data.data[i].result))
+                             $('#setEvent').append($('<option>').html(data.data[i].method))
+                            $('#setEvent').append($('<option>').html(data.data[i].remark))
+                 
+                        }
+                    },
+                })
+            }
+            
+
 
 		</script>
 	</head>
@@ -256,6 +423,7 @@
 					<th>结果</th>
 					<th>解决方案</th>
 					<th>备注</th>
+                    <th>操作</th>
 				</tr>
 				</thead>
 				<tbody id="tbody">
@@ -359,32 +527,36 @@
 								<td style="width:12%;">类型:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetType" style="display:none;">
-									<select class="form-control" id="setType"></select>&nbsp;<button class="btn btn-danger" onclick="showSelect();">
-									<i class="glyphicon glyphicon-transfer"></i></button>
+									<select class="form-control" id="setType"></select>&nbsp;
+									<!--<button class="btn btn-danger" onclick="showSelect();">
+									<i class="glyphicon glyphicon-transfer"></i></button>-->
 								</td>
 							</tr>
 							<tr>
 								<td style="width:12%;">面:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetSurface" style="display:none;">
-									<select class="form-control" id="setSurface"></select>&nbsp;<button class="btn btn-danger">
-									<i class="glyphicon glyphicon-transfer"></i></button>
+									<select class="form-control" id="setSurface"></select>&nbsp;
+									<!--<button class="btn btn-danger">
+									<i class="glyphicon glyphicon-transfer"></i></button>-->
 								</td>
 							</tr>
 							<tr>
 								<td style="width:12%;">线:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetLine" style="display:none;">
-									<select class="form-control" id="setLine"></select>&nbsp;<button class="btn btn-danger">
-									<i class="glyphicon glyphicon-transfer"></i></button>
+									<select class="form-control" id="setLine"></select>&nbsp;
+									<!--<button class="btn btn-danger">
+									<i class="glyphicon glyphicon-transfer"></i></button>-->
 								</td>
 							</tr>
 							<tr>
 								<td style="width:12%;">点:</td>
 								<td style="width:60%;">
 									<input type="text" class="form-control" id="addSetPoint" style="display:none;">
-									<select class="form-control" id="setPoint"></select>&nbsp;<button class="btn btn-danger">
-									<i class="glyphicon glyphicon-transfer"></i></button>
+									<select class="form-control" id="setPoint"></select>&nbsp;
+									<!--<button class="btn btn-danger">
+									<i class="glyphicon glyphicon-transfer"></i></button>-->
 								</td>
 							</tr>
 							<tr>
