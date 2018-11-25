@@ -87,7 +87,8 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R addDaily(HttpSession session,String typeName,Integer type,Integer surface,Integer line,Integer point,String surfaceName,String lineName,String pointName,String eventName,String process,String result,String method,String remarks){
+    public R addDaily(HttpSession session,String typeName,Integer type,Integer surface,Integer line,Integer point,String surfaceName,String lineName,
+                      String pointName,String eventName,String process,String result,String method,String remarks,String selectDate){
         //获取用户信息
         User user = (User)session.getAttribute("user");
         //初始化查询条件
@@ -109,6 +110,13 @@ public class DailyRecordController {
         }else{
             addType.setTypeId(type);
             dailyRecord.setType(type.toString());
+        }
+
+        //自己选择时间，或者使用当前默认时间
+        if(selectDate!=null&&!"".equals(selectDate)){
+            dailyRecord.setDate(selectDate);
+        }else{
+            dailyRecord.setDate(dateFormat1.format(new Date()));
         }
 
         //插入面记录表，关联当前用户和上下级
@@ -162,7 +170,6 @@ public class DailyRecordController {
                 .setResult(result)
                 .setMethod(method)
                 .setRemark(remarks)
-                .setDate(dateFormat1.format(new Date()))
                 .setTime(dateFormat.format(new Date())));
 
         if(dailyResult>0){

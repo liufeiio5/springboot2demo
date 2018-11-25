@@ -15,6 +15,7 @@
         $(function  () {
             laydate.render({elem : '#startDate'});
             laydate.render({elem : '#endDate'});
+            laydate.render({elem : '#selectDate'})
 
             //初始化
             inittable();
@@ -40,6 +41,7 @@
                     var surfaceName = $('#addsurface').val();
                     var lineName = $('#addline').val();
                     var pointName = $('#addpoint').val();
+                    var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
                         $.ajax({
                             url:"addDaily",
                             dataType:'json',
@@ -56,7 +58,8 @@
                                 typeName:typeName,
                                 surfaceName:surfaceName,
                                 lineName:lineName,
-                                pointName:pointName
+                                pointName:pointName,
+								selectDate:selectDate
                             },
                             success :function (data)
                             {
@@ -115,6 +118,7 @@
             var startDate = $('#startDate').val().replace('-', '').replace('-', '');
             var endDate = $('#endDate').val().replace('-', '').replace('-', '');
             var userid = $('#userid').val();
+            var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
             var data = {};
             if (startDate != '' && endDate != '' && userid != '')
                 data = {startDate: startDate, endDate: endDate, userId: userid};
@@ -122,6 +126,8 @@
                 data = {startDate: startDate, endDate: endDate};
             if (startDate == '' && endDate == '' && userid != '')
                 data = {userId: userid};
+            if (selectDate !='')
+                data = {selectDate: ''};
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
@@ -451,7 +457,7 @@
         }
 	</script>
 </head>
-<body>
+<body onkeydown="inittable()">
 <input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
 —
 <input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
@@ -495,7 +501,14 @@
 			</div>
 			<div class="modal-body">
 				<table>
-					<tbody><tr>
+					<tbody>
+					<tr>
+						<td style="width:12%;">日期:</td>
+						<td>
+							<input type="text" id="selectDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+						</td>
+					</tr>
+					<tr>
 						<td style="width:12%;">类型:</td>
 						<td style="width:60%;">
 							<input type="text" class="form-control" id="addtype" style="display:none;">
