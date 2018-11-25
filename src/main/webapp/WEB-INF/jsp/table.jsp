@@ -455,9 +455,13 @@
                 }
             });
         }
+        function onkeydownfun() {
+            if (event.keyCode == 13)
+                inittable()
+        }
 	</script>
 </head>
-<body onkeydown="inittable()">
+<body onkeydown="onkeydownfun()">
 <input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
 —
 <input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />

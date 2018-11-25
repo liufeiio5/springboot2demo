@@ -87,8 +87,9 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/addDaily")
     @ResponseBody
-    public R addDaily(HttpSession session,String typeName,Integer type,Integer surface,Integer line,Integer point,String surfaceName,String lineName,
-                      String pointName,String eventName,String process,String result,String method,String remarks,String selectDate){
+    public R addDaily(HttpSession session,String typeName,Integer type,Integer surface,Integer line,
+                      Integer point,String surfaceName,String lineName,String pointName,String eventName,
+                      String process,String result,String method,String remarks,String selectDate){
         //获取用户信息
         User user = (User)session.getAttribute("user");
         //初始化查询条件
@@ -103,13 +104,83 @@ public class DailyRecordController {
 
         //添加日报的时候添加的type surface line point 关联当前登录的用户ID
         if(typeName != null && !"".equals(typeName)){
-            typeService.insertType(addType.setCreateUser(user.getId()).setTypeName(typeName));
-            //获取当前插入完成后类型的typeId
-            addType = typeService.getType(addType.setId(addType.getId())).get(0);
-            dailyRecord.setType(addType.getTypeId().toString());
+            //判断当前新添加的类型是否重复
+            addType=typeService.getType(addType.setTypeName(typeName).setCreateUser(user.getId())).get(0);
+            if(addType==null){
+                typeService.insertType(addType.setCreateUser(user.getId()).setTypeName(typeName));
+                //获取当前插入完成后类型的typeId
+                addType = typeService.getType(addType.setId(addType.getId())).get(0);
+                dailyRecord.setType(addType.getTypeId().toString());
+            }else{
+                addType = typeService.getType(addType.setId(addType.getId())).get(0);
+                dailyRecord.setType(addType.getTypeId().toString());
+            }
         }else{
             addType.setTypeId(type);
             dailyRecord.setType(type.toString());
+        }
+
+        //插入面记录表，关联当前用户和上下级
+        if(surfaceName != null && !"".equals(surfaceName)){
+            //判断当前新增面是否重复
+            addSurface=surfaceService.findAllSurFace(addSurface.setSurfaceName(surfaceName).setCreateUser(user.getId())).get(0);
+            if(addSurface==null){
+                surfaceService.addSurface(addSurface.setTypeId(addType.getTypeId())
+                        .setCreateUser(user.getId())
+                        .setSurfaceName(surfaceName));
+                //获取surface 插入完成后surfaceId
+                addSurface = surfaceService.findAllSurFace(addSurface.setId(addSurface.getId())).get(0);
+                dailyRecord.setSurface(addSurface.getSurfaceId().toString());
+            }else{
+                addSurface = surfaceService.findAllSurFace(addSurface.setId(addSurface.getId())).get(0);
+                dailyRecord.setSurface(addSurface.getSurfaceId().toString());
+            }
+        }else{
+            addSurface.setSurfaceId(surface);
+            dailyRecord.setSurface(surface.toString());
+        }
+
+        //插入线记录表，关联当前登录用户，和上下级
+        if(lineName != null && !"".equals(lineName)){
+            //判断当前新增线是否重复
+            addLine=lineService.findLineAll(addLine.setLineName(lineName).setCreateUser(user.getId())).get(0);
+            if(addLine==null){
+                lineService.addLine(addLine.setTypeId(addType.getTypeId())
+                        .setSurfaceId(addSurface.getSurfaceId())
+                        .setCreateUser(user.getId())
+                        .setLineName(lineName));
+                //获取插入完成后返回的lineId
+                addLine = lineService.findLineAll(addLine.setId(addLine.getId())).get(0);
+                dailyRecord.setLine(addLine.getLineId().toString());
+            }else{
+                addLine = lineService.findLineAll(addLine.setId(addLine.getId())).get(0);
+                dailyRecord.setLine(addLine.getLineId().toString());
+            }
+        }else {
+            addLine.setLineId(line);
+            dailyRecord.setLine(line.toString());
+        }
+
+        //插入点记录表，关联当前用户和上下级
+        if(pointName != null && !"".equals(pointName)){
+            //判断当前新增点是否重复
+            addPoint=pointService.findPointAll(addPoint.setPointName(pointName).setCreateUser(user.getId())).get(0);
+            if(addPoint==null){
+                pointService.addPoint(addPoint.setTypeId(addType.getTypeId())
+                        .setSurfaceId(addSurface.getSurfaceId())
+                        .setLineId(addLine.getLineId())
+                        .setCreateUser(user.getId())
+                        .setPointName(pointName));
+                //获取插入完场后的pointId
+                addPoint = pointService.findPointAll(addPoint.setId(addPoint.getId())).get(0);
+                dailyRecord.setPoint(addPoint.getPointId().toString());
+            }else{
+                addPoint = pointService.findPointAll(addPoint.setId(addPoint.getId())).get(0);
+                dailyRecord.setPoint(addPoint.getPointId().toString());
+            }
+        }else {
+            addPoint.setPointId(point);
+            dailyRecord.setPoint(point.toString());
         }
 
         //自己选择时间，或者使用当前默认时间
@@ -118,50 +189,6 @@ public class DailyRecordController {
         }else{
             dailyRecord.setDate(dateFormat1.format(new Date()));
         }
-
-        //插入面记录表，关联当前用户和上下级
-        if(surfaceName != null && !"".equals(surfaceName)){
-            surfaceService.addSurface(addSurface.setTypeId(addType.getTypeId())
-                    .setCreateUser(user.getId())
-                    .setSurfaceName(surfaceName));
-            //获取surface 插入完成后surfaceId
-            addSurface = surfaceService.findAllSurFace(addSurface.setId(addSurface.getId())).get(0);
-            dailyRecord.setSurface(addSurface.getSurfaceId().toString());
-
-        }else{
-            addSurface.setSurfaceId(surface);
-            dailyRecord.setSurface(surface.toString());
-        }
-
-        //插入线记录表，关联当前登录用户，和上下级
-        if(lineName != null && !"".equals(lineName)){
-            lineService.addLine(addLine.setTypeId(addType.getTypeId())
-                    .setSurfaceId(addSurface.getSurfaceId())
-                    .setCreateUser(user.getId())
-                    .setLineName(lineName));
-            //获取插入完成后返回的lineId
-            addLine = lineService.findLineAll(addLine.setId(addLine.getId())).get(0);
-            dailyRecord.setLine(addLine.getLineId().toString());
-        }else {
-            addLine.setLineId(line);
-            dailyRecord.setLine(line.toString());
-        }
-
-        //插入点记录表，关联当前用户和上下级
-        if(pointName != null && !"".equals(pointName)){
-            pointService.addPoint(addPoint.setTypeId(addType.getTypeId())
-                    .setSurfaceId(addSurface.getSurfaceId())
-                    .setLineId(addLine.getLineId())
-                    .setCreateUser(user.getId())
-                    .setPointName(pointName));
-            //获取插入完场后的pointId
-            addPoint = pointService.findPointAll(addPoint.setId(addPoint.getId())).get(0);
-            dailyRecord.setPoint(addPoint.getPointId().toString());
-        }else {
-            addPoint.setPointId(point);
-            dailyRecord.setPoint(point.toString());
-        }
-
         //插入到日报统一记录表
         Integer dailyResult = dailyRecordService.addDailyRecord(dailyRecord
                 .setUserId(user.getId())
@@ -178,6 +205,7 @@ public class DailyRecordController {
             return R.error("添加失败");
         }
     }
+
 
     /**
      * 修改日报、修改日报记录
