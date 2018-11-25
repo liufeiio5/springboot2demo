@@ -165,11 +165,13 @@
                                 data: {id: id},
                                 success: function (data) {
                                     if (data.code == "200") {
-                                        layer.msg('已删除!', {
-                                            icon: 1,
-                                            time: 1000
-                                        });
-                                        window.location.href = "/table"
+                                            layer.msg('已删除!', {
+                                                icon: 1,
+                                                time:1000
+                                            });
+                                        setTimeout(function wlh() {
+                                            window.location.href = "/table"
+                                        },500)
                                     } else {
                                         layer.msg(data.result, {
                                             icon: 1,
@@ -222,11 +224,13 @@
                                     },
                                     success: function (data) {
                                         if (data.code == "200") {
+                                            setTimeout(function wlh() {
+                                                window.location.href = "/table"
+                                            },500)
                                             layer.msg('已修改!', {
                                                 icon: 1,
                                                 time: 1000
                                             });
-                                            window.location.href = "/table"
                                         } else {
                                             layer.msg(data.result, {
                                                 icon: 1,
@@ -357,8 +361,7 @@
                         if (json[i].typeName == setType) {
                             str = '<option value="' + json[i].typeId + '" selected="selected">' + json[i].typeName + '</option>';
                             $('#setType').append(str)
-                            var typeId = json[i].typeId
-                            updsurface(typeId, setSurface, setLine, setPoint)
+                            updsurface( setSurface, setLine, setPoint)
                         } else {
                             str = '<option value="' + json[i].typeId + '">' + json[i].typeName + '</option>';
                             $('#setType').append(str)
@@ -368,13 +371,13 @@
             });
         }
         //修改获取surface
-        function updsurface(typeId,setSurface,setLine,setPoint) {
+        function updsurface(setSurface,setLine,setPoint) {
             $('#setSurface').html('');
             $.ajax({
                 type:"get",
                 url:"getSurface",
                 dataType:'json',
-                data:{typeId:typeId,islive:1},
+                data:{islive:1},
                 async:false,
                 success :function (data)
                 {
@@ -384,8 +387,7 @@
                         if (json[i].surfaceName == setSurface) {
                             str = '<option value="' + json[i].surfaceId + '" selected="selected">' + json[i].surfaceName + '</option>';
                             $('#setSurface').append(str)
-                            var surfaceId = json[i].surfaceId;
-                            updline(typeId,surfaceId, setLine, setPoint)
+                            updline(setLine, setPoint)
                         } else {
                             str = '<option value="' + json[i].surfaceId + '">' + json[i].surfaceName + '</option>';
                             $('#setSurface').append(str)
@@ -394,26 +396,24 @@
                 }
             });
         }
-        function updline(typeId,surfaceId,setLine,setPoint){
+        function updline(setLine,setPoint){
             $('#setLine').html('');
             $.ajax({
                 type:"get",
                 url:"getLine",
                 dataType:'json',
                 data:{
-                    typeId:typeId,
-                    surfaceId:surfaceId,
                     islive:1
                 },
                 success :function (data) {
                     var json = data.data;
-                    var str;
+                    var str=null;
+                    $('#setLine').html('');
                     for(var i in json) {
                         if (json[i].lineName == setLine) {
                             str = '<option value="' + json[i].lineId + '" selected="selected">' + json[i].lineName + '</option>';
                             $('#setLine').append(str)
-                            var lineId = json[i].lineId;
-                            updpoint(typeId,surfaceId,lineId, setPoint)
+                            updpoint(setPoint)
                         } else {
                             str = '<option value="' + json[i].lineId + '">' + json[i].lineName + '</option>';
                             $('#setLine').append(str)
@@ -422,7 +422,7 @@
                 }
             });
         }
-        function updpoint(typeId,surfaceId,lineId,setPoint)
+        function updpoint(setPoint)
         {
             $('#setPoint').html('');
             $.ajax({
@@ -430,9 +430,6 @@
                 url:"getPoint",
                 dataType:'json',
                 data:{
-                    typeId:typeId,
-                    surfaceId:surfaceId,
-                    lineId:lineId,
                     islive:1
                 },
                 async:false,
@@ -451,27 +448,6 @@
                     }
                 }
             });
-        }
-
-        function check1() {
-            $("setSurface").html("")
-            $("setLine").html("")
-            $("setPoint").html("")
-            updsurface($('#setType').val(),null,null,null)
-            updline($('#setType').val(),$('#setSurface').val(),null,null)
-            updpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
-        }
-
-        function check2(){
-            $("setLine").html("")
-            $("setPoint").html("")
-            updline($('#setType').val(),$('#setSurface').val(),null,null)
-            updpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
-        }
-
-       function check3(){
-           $("setPoint").html("")
-           updpoint($('#setType').val(),$('#setSurface').val(),$('#setLine').val(),null)
         }
 	</script>
 </head>
