@@ -69,8 +69,13 @@
                                     $("#result").val('');
                                     $("#method").val('');
                                     $("#remarks").val('');
-                                    window.location.href="/table";
-                                    layer.msg("添加成功");
+                                    layer.msg('添加成功!', {
+                                        icon: 1,
+                                        time:1000
+                                    });
+                                    setTimeout(function wlh() {
+                                        window.location.href = "/table"
+                                    },500)
                                 }else{
                                     layer.msg("添加失败");
                                 }
