@@ -158,10 +158,10 @@
             type: "GET",
             success: function (data) {
                 if (data.code == 200) {
-                    window.location.href = "http://localhost:9000/table"
+                    window.location.href = "/table"
                 } else {
                     layer.msg("登录失败")
-                    window.location.href = "http://localhost:9000/login"
+                    window.location.href = "/login"
                 }
             }
         })
