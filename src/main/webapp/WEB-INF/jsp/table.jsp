@@ -296,7 +296,6 @@
             }
             function initsurface(typeid)
             {
-                console.log("type_id====="+typeid)
                 $('#surface').html('');
                 $.ajax({
                     type:"get",
@@ -316,7 +315,6 @@
             }
             function initline(typeid,surfaceid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
@@ -335,7 +333,6 @@
             }
             function initpoint(typeid,surfaceid,lineid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid+"=========:lineid"+lineid)
 				$('#point').html('');
                 $.ajax({
                     type:"get",
