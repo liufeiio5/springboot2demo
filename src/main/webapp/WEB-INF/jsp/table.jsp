@@ -10,6 +10,7 @@
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/layer/layer.js" ></script>
 	<script type="text/javascript" src="/laydate/laydate.js" ></script>
+	<script type="text/javascript" src="/js/Date.js" ></script>
 
 	<script>
         $(function  () {
@@ -139,8 +140,18 @@
             }
             if (startDate == '' && endDate == '' && userid != '')
                 data = {userId: userid};
-            if (selectDate !='')
-                data = {selectDate: ''};
+            if (startDate !='' && endDate == '')
+			{
+                if(userid != '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd'), userId: userid};
+                if(userid == '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd')};
+			}
+            if (startDate =='' && endDate != '')
+            {
+                layer.msg('结束日期不为空时,开始日期也不能为空')
+				return ;
+            }
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
