@@ -282,8 +282,8 @@
             dataType: "json",
             success: function (data) {
                 if (data.code == 200) {
-                    window.location.href="/login";
                     layer.msg("添加成功！");
+                    window.location.href="/login";
                 }else{
                     layer.msg("添加失败！");
                 }

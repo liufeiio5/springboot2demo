@@ -36,6 +36,14 @@ public class DailyRecordController {
     @Autowired
     private LineService lineService;
 
+    @RequestMapping(value = "/table")
+    public String table(HttpSession session)
+    {
+        if (session.getAttribute("user") == null)
+            return "redirect:/login";
+        return "table";
+    }
+
 
     /**
      * 查询日报
@@ -46,25 +54,31 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyRecord(Integer userId, String startDate, String endDate, HttpSession session)
+    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session)
     {
         //登录用户
         User user = (User) session.getAttribute("user");
-        //日历
-        Calendar calendar = Calendar.getInstance();
-        //当前系统时间的  前七天
-        calendar.add(Calendar.DATE,-7);
-        if(user != null)
-            userId = userId != null ? userId : user.getId();
-        startDate = (startDate != null && endDate != null) ? startDate : calendar.get(Calendar.YEAR)+""+(calendar.get(Calendar.MONTH)+1)+""+calendar.get(Calendar.DAY_OF_MONTH)+"";
-        endDate = (startDate != null && endDate != null) ? endDate : Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"";
-
-        ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
-        if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list).put("fullName",user.getFullName());
-        }else{
-            return R.error("获取数据失败").put("fullName",user.getFullName());
+        if(user != null && user.getId() != null && userId == null)
+            userId = user.getId();
+        if(startDate != null && endDate != null)
+            if(startDate>endDate)
+                return R.error("结束日期不能比开始日期早").put("fullName",user != null ? user.getFullName():"");
+        if(startDate == null && endDate == null)
+        {
+            //日历
+            Calendar calendar = Calendar.getInstance();
+            //当前系统时间的  前七天
+            calendar.add(Calendar.DATE,-7);
+            startDate = Integer.parseInt(calendar.get(Calendar.YEAR)+""+(calendar.get(Calendar.MONTH)+1)+""+calendar.get(Calendar.DAY_OF_MONTH)+"");
+            endDate = Integer.parseInt(Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"");
         }
+
+
+        ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());
+        if(list !=null &&list.size()>0)
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
+        else
+            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"");
     }
 
     /**
