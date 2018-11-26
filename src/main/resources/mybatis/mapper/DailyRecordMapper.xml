@@ -20,7 +20,6 @@
     </resultMap>
 
     <select id="getDailyRecord" resultMap="dailyRecord">
-
           select * from daily_record
           <if test="dailyRecord != null">
               <where>
@@ -52,7 +51,7 @@
     </select>
 
     <select id="getDaily" resultType="java.util.HashMap">
-        select d.id,d.date,d.time,t.type_name as typeName,s.surface_name as surfaceName,l.line_name as lineName,p.point_name as pointName,d.event,d.process,d.result,d.method,d.remark
+        select d.id,u.full_name as fullName,d.date,d.time,t.type_id as typeId,t.type_name as typeName,s.surface_id as surfaceId,s.surface_name as surfaceName,l.line_id as lineId,l.line_name as lineName,p.point_id as pointId,p.point_name as pointName,d.event,d.process,d.result,d.method,d.remark
         from daily_record d
         join point p on d.point = p.point_id
         join type t on d.type=t.type_id
@@ -163,14 +162,18 @@
             <if test="dailyRecord.remark!=null and dailyRecord.remark!=''">
                 remark=#{dailyRecord.remark},
             </if>
-            <if test="dailyRecord.date!=null and dailyRecord.date!=''">
-                date=#{dailyRecord.date},
-            </if>
             <if test="dailyRecord.time!=null and dailyRecord.time!=''">
                 time=#{dailyRecord.time},
             </if>
         </set>
-        WHERE user_id=#{dailyRecord.userId}
+        <where>
+            <if test="dailyRecord.id!=null and dailyRecord.id!=0">
+              and id=#{dailyRecord.id}
+            </if>
+            <if test="dailyRecord.userId!=null and dailyRecord.id!=0">
+               and  user_id=#{dailyRecord.userId}
+            </if>
+        </where>
     </update>
 
 

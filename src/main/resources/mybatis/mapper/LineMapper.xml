@@ -24,7 +24,7 @@
         <if test="line!=null">
             <where>
                 <if test="line.id!=null">
-                      id=#{line.id}
+                    id=#{line.id}
                 </if>
                 <if test="line.typeId!=null">
                     and type_id=#{line.typeId}
@@ -60,30 +60,30 @@
     <insert id="addLine" keyProperty="line.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Line">
         INSERT  into line
         <trim prefix=" (" suffix=")" suffixOverrides=",">
-          <if test="line!=null">
-              <if test="line.typeId!=null">
-                  type_id,
-              </if>
-              <if test="line.surfaceId!=null">
-                  surface_id,
-              </if>
-                  line_id,
-              <if test="line.lineName!=null and line.lineName!=''">
-                  line_name,
-              </if>
-              <if test="line.createUser!=null">
-                  create_user,
-              </if>
-              <if test="line.createTime!=null">
-                  create_time,
-              </if>
-              <if test="line.updateUser!=null">
-                  update_user,
-              </if>
-              <if test="line.updateTime!=null">
-                  update_time,
-              </if>
-          </if>
+            <if test="line!=null">
+                <if test="line.typeId!=null">
+                    type_id,
+                </if>
+                <if test="line.surfaceId!=null">
+                    surface_id,
+                </if>
+                line_id,
+                <if test="line.lineName!=null and line.lineName!=''">
+                    line_name,
+                </if>
+                <if test="line.createUser!=null">
+                    create_user,
+                </if>
+                <if test="line.createTime!=null">
+                    create_time,
+                </if>
+                <if test="line.updateUser!=null">
+                    update_user,
+                </if>
+                <if test="line.updateTime!=null">
+                    update_time,
+                </if>
+            </if>
         </trim>
         <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
             <if test="line!=null">
@@ -118,28 +118,28 @@
         UPDATE line
         <set>
             <if test="line.typeId!=null">
-                 type_id=#{line.typeId},
+                type_id=#{line.typeId},
             </if>
             <if test="line.surfaceId!=null">
-                 surface_id=#{line.surfaceId},
+                surface_id=#{line.surfaceId},
             </if>
             <if test="line.lineId!=null">
-                 line_id=#{line.lineId},
+                line_id=#{line.lineId},
             </if>
             <if test="line.lineName!=null and line.lineName!=''">
-                 line_name=#{line.lineName},
+                line_name=#{line.lineName},
             </if>
             <if test="line.createUser!=null">
-                 create_user=#{line.createUser},
+                create_user=#{line.createUser},
             </if>
             <if test="line.createTime!=null">
-                 create_time=#{line.createTime},
+                create_time=#{line.createTime},
             </if>
             <if test="line.updateUser!=null">
-                 update_user=#{line.updateUser},
+                update_user=#{line.updateUser},
             </if>
             <if test="line.updateTime!=null">
-                 update_time=#{line.updateTime}
+                update_time=#{line.updateTime}
             </if>
         </set>
         WHERE id=#{line.id}
@@ -149,7 +149,7 @@
         UPDATE line
         <set>
             <if test="line.islive!=null">
-                 islive=#{line.islive}
+                islive=#{line.islive}
             </if>
         </set>
         WHERE id=#{line.id}

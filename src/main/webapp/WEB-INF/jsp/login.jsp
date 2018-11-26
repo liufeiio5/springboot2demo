@@ -18,7 +18,7 @@
     <%--</style>--%>
 </head>
 
-<body>
+<body  onkeydown="keyLogin();">
 <div class="container wrap1" style="height:450px;">
     <h2 class="mg-b20 text-center box">米仓金服日报系统</h2>
     <div class="col-sm-8 col-md-5 center-auto pd-sm-50 pd-xs-20 main_content">
@@ -128,6 +128,11 @@
 </body>
 </html>
 <script>
+    function keyLogin(){
+        if (event.keyCode==13)
+            $(".login_btn").click();
+    }
+
     function Login() {
         var userName = $("#userName").val();
         var password = $("#password").val();
