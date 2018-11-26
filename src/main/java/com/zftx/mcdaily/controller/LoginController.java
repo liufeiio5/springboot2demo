@@ -30,13 +30,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/table")
-    public String table(HttpSession session)
-    {
-        if (session.getAttribute("user") == null)
-            return "login";
-        return "table";
-    }
+
 
 
     /**
