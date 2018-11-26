@@ -509,7 +509,7 @@
 					<tr>
 						<td style="width:12%;">日期:</td>
 						<td>
-							<input type="text" id="selectDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+							<input type="text" id="selectDate" name="user_date"style="width:130px" class="layui-input form-control" placeholder="请选择开始时间" />
 						</td>
 					</tr>
 					<tr>
