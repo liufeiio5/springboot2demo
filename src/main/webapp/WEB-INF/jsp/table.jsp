@@ -470,7 +470,7 @@
 	</script>
 </head>
 <body onkeydown="onkeydownfun()">
-<input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始日期" />
+<input type="text" id="startDate" name="user_date"style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始日期" />
 —
 <input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input  id="userid"  placeholder="请输入用户ID"/>

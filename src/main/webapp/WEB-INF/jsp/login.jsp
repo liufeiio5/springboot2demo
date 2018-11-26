@@ -34,7 +34,7 @@
             </div>
             <div class="checkbox mg-b25" style="text-align: right;">
                 <label>
-                    <a style="color: white;" data-toggle="modal" data-target="#Modal" id="register">立即注册</a>
+                    <a style="color: white;" data-toggle="modal" data-target="#Modal">立即注册</a>
                 </label>
             </div>
             <input type="button" class="login_btn" value="登录" onclick="Login()"/>
@@ -119,7 +119,7 @@
                 </table>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                    <button id="add" class="btn btn-primary" onclick="add()">提交</button>
+                    <button id="add" class="btn btn-primary">提交</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -168,10 +168,10 @@
     }
 
     $('#register').click(function () {
-        $('input').val('');
+        $('#Modal input').val('');
     })
 
-    function add() {
+    $('#add ').click(function () {
         var fullName = $('#fullName').val();
         var userName = $('#userNames').val();
         var passwords = $('#passwords').val();
@@ -283,11 +283,12 @@
             success: function (data) {
                 if (data.code == 200) {
                     layer.msg("添加成功！");
-                    window.location.href="/login";
+                    $('#Modal .modal-footer button').eq(0).trigger('click')
                 }else{
                     layer.msg("添加失败！");
                 }
             }
         })
-    }
+
+    })
 </script>
