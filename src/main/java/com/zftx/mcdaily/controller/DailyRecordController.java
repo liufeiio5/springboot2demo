@@ -235,13 +235,10 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/updateDaily")
     @ResponseBody
-    public R addDaily(HttpSession session,Integer id, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark){
+    public R addDaily(HttpSession session,Integer id, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark,String time){
         //获取用户信息
         User user = (User)session.getAttribute("user");
-        //user = new User().setId(8);
         //初始化查询条件
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
 
         //修改日报统一记录表
@@ -251,7 +248,7 @@ public class DailyRecordController {
                 .setPoint(pointId.toString()).setEvent(eventName)
                 .setProcess(process).setResult(result).setMethod(method)
                 .setRemark(remark).setDate(dateFormat1.format(new Date()))
-                .setTime(dateFormat.format(new Date()));
+                .setTime(time);
         Integer dailyRecordResult = dailyRecordService.updateDailyRecord(dailyRecord);
 
         if(dailyRecordResult>0){

@@ -15,8 +15,12 @@
         $(function  () {
             laydate.render({elem : '#startDate'});
             laydate.render({elem : '#endDate'});
-            laydate.render({elem : '#selectDate'})
-
+            laydate.render({elem : '#selectDate'});
+            //时间选择器
+            laydate.render({
+                elem: '#selectTime'
+                ,type: 'time'
+            });
             //初始化
             inittable();
             inittype();
@@ -124,6 +128,7 @@
             var endDate = $('#endDate').val().replace('-', '').replace('-', '');
             var userid = $('#userid').val();
             var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
+            var selectTime = $('#selectTime').val();
             var data = {};
             if (startDate != '' && endDate != '')
             {
@@ -141,6 +146,8 @@
                 data = {userId: userid};
             if (selectDate !='')
                 data = {selectDate: ''};
+            if (selectTime !='')
+                data = {selectTime: ''}
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
@@ -239,6 +246,7 @@
                                         result: $('#setResult').val(),
                                         method: $('#setMethod').val(),
                                         remark: $('#setRemarks').val(),
+										time: $('#selectTime').val(),
                                         isLive: 1
                                     },
                                     success: function (data) {
@@ -606,7 +614,14 @@
 			</div>
 			<div class="modal-body">
 				<table>
-					<tbody><tr>
+					<tbody>
+					<tr>
+						<td style="width:12%;">日期:</td>
+						<td>
+							<input type="text" id="selectTime" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+						</td>
+					</tr>
+					<tr>
 						<td style="width:12%;">类型:</td>
 						<td style="width:60%;">
 							<input type="text" class="form-control" id="addSetType" style="display:none;">
