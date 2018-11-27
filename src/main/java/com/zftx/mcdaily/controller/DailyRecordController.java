@@ -110,6 +110,13 @@ public class DailyRecordController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
 
+        //不能提前插入第二天或之后的日报
+        if(selectDate!=null&& selectDate!="") {
+            if (Integer.parseInt(selectDate) > Integer.parseInt(dateFormat1.format(new Date()))) {
+                return R.error("不能提前创建日报");
+            }
+        }
+
         Type addType = new Type();
         Surface addSurface = new Surface();
         Line addLine = new Line();

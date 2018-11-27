@@ -81,7 +81,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/table"
                                     },500)
-                                }else{
+                                }else if(data.message="不能提前创建日报"){
+                                    layer.msg("不能提前创建日报，您这样做，欺君当斩");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }
