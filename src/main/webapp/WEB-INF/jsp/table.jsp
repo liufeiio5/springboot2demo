@@ -187,7 +187,7 @@
                     }
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
-                        layer.confirm('确认要删除吗？', function (index) {
+                        layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？',{title:'信息',btn: ['朕意已决','泥奏凯，朕再想一想'] },function (index) {
                             $.ajax({
                                 dataType: 'json',
                                 type: "post",
