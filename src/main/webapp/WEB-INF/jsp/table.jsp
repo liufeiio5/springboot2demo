@@ -10,6 +10,7 @@
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/layer/layer.js" ></script>
 	<script type="text/javascript" src="/laydate/laydate.js" ></script>
+	<script type="text/javascript" src="/js/Date.js" ></script>
 
 	<script>
         $(function  () {
@@ -144,10 +145,18 @@
             }
             if (startDate == '' && endDate == '' && userid != '')
                 data = {userId: userid};
-            if (selectDate !='')
-                data = {selectDate: ''};
-            if (selectTime !='')
-                data = {selectTime: ''}
+            if (startDate !='' && endDate == '')
+			{
+                if(userid != '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd'), userId: userid};
+                if(userid == '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd')};
+			}
+            if (startDate =='' && endDate != '')
+            {
+                layer.msg('结束日期不为空时,开始日期也不能为空')
+				return ;
+            }
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
@@ -293,7 +302,6 @@
             }
             function initsurface(typeid)
             {
-                console.log("type_id====="+typeid)
                 $('#surface').html('');
                 $.ajax({
                     type:"get",
@@ -313,7 +321,6 @@
             }
             function initline(typeid,surfaceid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
@@ -332,7 +339,6 @@
             }
             function initpoint(typeid,surfaceid,lineid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid+"=========:lineid"+lineid)
 				$('#point').html('');
                 $.ajax({
                     type:"get",
