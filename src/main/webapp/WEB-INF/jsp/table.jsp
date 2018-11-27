@@ -10,6 +10,7 @@
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/layer/layer.js" ></script>
 	<script type="text/javascript" src="/laydate/laydate.js" ></script>
+	<script type="text/javascript" src="/js/Date.js" ></script>
 
 	<script>
         $(function  () {
@@ -69,8 +70,13 @@
                                     $("#result").val('');
                                     $("#method").val('');
                                     $("#remarks").val('');
-                                    window.location.href="/table";
-                                    layer.msg("添加成功");
+                                    layer.msg('添加成功!', {
+                                        icon: 1,
+                                        time:1000
+                                    });
+                                    setTimeout(function wlh() {
+                                        window.location.href = "/table"
+                                    },500)
                                 }else{
                                     layer.msg("添加失败");
                                 }
@@ -120,14 +126,32 @@
             var userid = $('#userid').val();
             var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
             var data = {};
-            if (startDate != '' && endDate != '' && userid != '')
-                data = {startDate: startDate, endDate: endDate, userId: userid};
-            if (startDate != '' && endDate != '' && userid == '')
-                data = {startDate: startDate, endDate: endDate};
+            if (startDate != '' && endDate != '')
+            {
+                if(parseInt(startDate)>parseInt(endDate))
+                {
+                    layer.msg('结束日期不能比开始日期早')
+                    return ;
+                }
+                if(userid != '')
+                    data = {startDate: startDate, endDate: endDate, userId: userid};
+                if(userid == '')
+                    data = {startDate: startDate, endDate: endDate};
+            }
             if (startDate == '' && endDate == '' && userid != '')
                 data = {userId: userid};
-            if (selectDate !='')
-                data = {selectDate: ''};
+            if (startDate !='' && endDate == '')
+			{
+                if(userid != '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd'), userId: userid};
+                if(userid == '')
+                    data = {startDate: startDate, endDate: new Date().format('yyyyMMdd')};
+			}
+            if (startDate =='' && endDate != '')
+            {
+                layer.msg('结束日期不为空时,开始日期也不能为空')
+				return ;
+            }
             $("#tbody").empty();
             $.ajax({
                 type: 'get',
@@ -272,7 +296,6 @@
             }
             function initsurface(typeid)
             {
-                console.log("type_id====="+typeid)
                 $('#surface').html('');
                 $.ajax({
                     type:"get",
@@ -292,7 +315,6 @@
             }
             function initline(typeid,surfaceid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid)
                 $('#line').html('');
                 $.ajax({
                     type:"get",
@@ -311,7 +333,6 @@
             }
             function initpoint(typeid,surfaceid,lineid)
             {
-                console.log("type_id====="+typeid+"========surfaceid:"+surfaceid+"=========:lineid"+lineid)
 				$('#point').html('');
                 $.ajax({
                     type:"get",
@@ -462,9 +483,9 @@
 	</script>
 </head>
 <body onkeydown="onkeydownfun()">
-<input type="text" id="startDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+<input type="text" id="startDate" name="user_date"style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始日期" />
 —
-<input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束时间" />
+<input type="text" id="endDate" name="user_date"style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input  id="userid"  placeholder="请输入用户ID"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
