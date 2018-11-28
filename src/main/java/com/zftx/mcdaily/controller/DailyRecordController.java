@@ -36,6 +36,14 @@ public class DailyRecordController {
     @Autowired
     private LineService lineService;
 
+    @RequestMapping(value = "/table")
+    public String table(HttpSession session)
+    {
+        if (session.getAttribute("user") == null)
+            return "redirect:/login";
+        return "table";
+    }
+
 
     /**
      * 查询日报
@@ -46,25 +54,31 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyRecord(Integer userId, String startDate, String endDate, HttpSession session)
+    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session)
     {
         //登录用户
         User user = (User) session.getAttribute("user");
-        //日历
-        Calendar calendar = Calendar.getInstance();
-        //当前系统时间的  前七天
-        calendar.add(Calendar.DATE,-7);
-        if(user != null)
-            userId = userId != null ? userId : user.getId();
-        startDate = (startDate != null && endDate != null) ? startDate : calendar.get(Calendar.YEAR)+""+(calendar.get(Calendar.MONTH)+1)+""+calendar.get(Calendar.DAY_OF_MONTH)+"";
-        endDate = (startDate != null && endDate != null) ? endDate : Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"";
-
-        ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate, endDate);
-        if(list !=null &&list.size()>0){
-            return R.ok("数据获取成功").put("data",list).put("fullName",user.getFullName());
-        }else{
-            return R.error("获取数据失败").put("fullName",user.getFullName());
+        if(user != null && user.getId() != null && userId == null)
+            userId = user.getId();
+        if(startDate != null && endDate != null)
+            if(startDate>endDate)
+                return R.error("结束日期不能比开始日期早").put("fullName",user != null ? user.getFullName():"");
+        if(startDate == null && endDate == null)
+        {
+            //日历
+            Calendar calendar = Calendar.getInstance();
+            //当前系统时间的  前七天
+            calendar.add(Calendar.DATE,-7);
+            startDate = Integer.parseInt(calendar.get(Calendar.YEAR)+""+(calendar.get(Calendar.MONTH)+1)+""+calendar.get(Calendar.DAY_OF_MONTH)+"");
+            endDate = Integer.parseInt(Tool.getYear()+""+Tool.getMonth()+""+Tool.getToday()+"");
         }
+
+
+        ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());
+        if(list !=null &&list.size()>0)
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
+        else
+            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"");
     }
 
     /**
@@ -95,6 +109,13 @@ public class DailyRecordController {
         //初始化查询条件
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
+
+        //不能提前插入第二天或之后的日报
+        if(selectDate!=null&& selectDate!="") {
+            if (Integer.parseInt(selectDate) > Integer.parseInt(dateFormat1.format(new Date()))) {
+                return R.error("不能提前创建日报");
+            }
+        }
 
         Type addType = new Type();
         Surface addSurface = new Surface();
@@ -221,13 +242,10 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/updateDaily")
     @ResponseBody
-    public R addDaily(HttpSession session,Integer id, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark){
+    public R addDaily(HttpSession session,Integer id, Integer typeId,Integer surfaceId,Integer lineId,Integer pointId,String eventName, String process, String result, String method, String remark,String time){
         //获取用户信息
         User user = (User)session.getAttribute("user");
-        //user = new User().setId(8);
         //初始化查询条件
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
 
         //修改日报统一记录表
@@ -237,7 +255,7 @@ public class DailyRecordController {
                 .setPoint(pointId.toString()).setEvent(eventName)
                 .setProcess(process).setResult(result).setMethod(method)
                 .setRemark(remark).setDate(dateFormat1.format(new Date()))
-                .setTime(dateFormat.format(new Date()));
+                .setTime(time);
         Integer dailyRecordResult = dailyRecordService.updateDailyRecord(dailyRecord);
 
         if(dailyRecordResult>0){
