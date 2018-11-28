@@ -265,9 +265,6 @@ public class DailyRecordController {
         }
     }
 
-
-
-
     /**
      * 删除日报
      * @param dailyRecord
