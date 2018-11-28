@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class TypeServiceImpl implements TypeService {
+
     @Autowired
     TypeMapper typeMapper;
 
@@ -65,5 +66,4 @@ public class TypeServiceImpl implements TypeService {
             return "fails";
         }
     }
-
 }

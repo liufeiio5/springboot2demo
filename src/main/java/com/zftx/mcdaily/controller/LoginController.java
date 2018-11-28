@@ -30,13 +30,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/table")
-    public String table(HttpSession session)
-    {
-        if (session.getAttribute("user") == null)
-            return "login";
-        return "table";
-    }
+
 
 
     /**
@@ -69,7 +63,6 @@ public class LoginController {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public R registers(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
-//        user.setPassword(MD5.md5(user.getPassword(),user.getUserName()));
         String result = userService.insertUser(new User().setPassword(MD5.md5(password,userName)).setUserName(userName).setFullName(fullName).setEmail(email).setPhone(phone).
         setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
         if(result.equals("success")){

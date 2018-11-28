@@ -18,7 +18,7 @@
     <%--</style>--%>
 </head>
 
-<body>
+<body  onkeydown="keyLogin();">
 <div class="container wrap1" style="height:450px;">
     <h2 class="mg-b20 text-center box">米仓金服日报系统</h2>
     <div class="col-sm-8 col-md-5 center-auto pd-sm-50 pd-xs-20 main_content">
@@ -34,7 +34,7 @@
             </div>
             <div class="checkbox mg-b25" style="text-align: right;">
                 <label>
-                    <a style="color: white;" data-toggle="modal" data-target="#Modal" id="register">立即注册</a>
+                    <a style="color: white;" data-toggle="modal" data-target="#Modal">立即注册</a>
                 </label>
             </div>
             <input type="button" class="login_btn" value="登录" onclick="Login()"/>
@@ -119,7 +119,7 @@
                 </table>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
-                    <button id="add" class="btn btn-primary" onclick="add()">提交</button>
+                    <button id="add" class="btn btn-primary">提交</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -128,6 +128,11 @@
 </body>
 </html>
 <script>
+    function keyLogin(){
+        if (event.keyCode==13)
+            $(".login_btn").click();
+    }
+
     function Login() {
         var userName = $("#userName").val();
         var password = $("#password").val();
@@ -153,20 +158,20 @@
             type: "GET",
             success: function (data) {
                 if (data.code == 200) {
-                    window.location.href = "http://localhost:9000/table"
+                    window.location.href = "/table"
                 } else {
                     layer.msg("登录失败")
-                    window.location.href = "http://localhost:9000/login"
+                    window.location.href = "/login"
                 }
             }
         })
     }
 
     $('#register').click(function () {
-        $('input').val('');
+        $('#Modal input').val('');
     })
 
-    function add() {
+    $('#add ').click(function () {
         var fullName = $('#fullName').val();
         var userName = $('#userNames').val();
         var passwords = $('#passwords').val();
@@ -277,12 +282,13 @@
             dataType: "json",
             success: function (data) {
                 if (data.code == 200) {
-                    window.location.href="/login";
                     layer.msg("添加成功！");
+                    $('#Modal .modal-footer button').eq(0).trigger('click')
                 }else{
                     layer.msg("添加失败！");
                 }
             }
         })
-    }
+
+    })
 </script>

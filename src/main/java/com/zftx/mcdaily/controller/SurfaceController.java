@@ -26,8 +26,9 @@ public class SurfaceController {
      */
     @RequestMapping(value = "/getSurface",method = RequestMethod.GET)
     @ResponseBody
-    public R getSurface(Surface surface){
-        List<Surface> surfaceList = surfaceService.findAllSurFace(surface);
+    public R getSurface(HttpSession session,Surface surface){
+        User user = (User)session.getAttribute("user");
+        List<Surface> surfaceList = surfaceService.findAllSurFace(surface.setCreateUser(user.getId()));
         if(surfaceList.size()>0&&surface != null){
             return R.ok("数据获取成功").put("data",surfaceList);
         }else{
