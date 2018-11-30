@@ -21,7 +21,10 @@ public class PointController {
 
     @RequestMapping(value = "/getPoint",method = RequestMethod.GET)
     @ResponseBody
-    public R getPoint(Point point){
+    public R getPoint(HttpSession session,Point point){
+        User user = (User) session.getAttribute("user");
+        point.setCreateUser(user.getId());
+        System.out.println("用户ID"+user.getId());
         List<Point> pointList = pointService.findPointAll(point);
         if(pointList.size()>0 && pointList != null){
             return R.ok("数据获取成功").put("data",pointList);
@@ -47,4 +50,23 @@ public class PointController {
             return R.error("添加失败");
         }
     }
+
+    /**
+     * 修改点
+     * @param point
+     * @return
+     */
+    @RequestMapping(value = "/updatePoint",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updatePoint(HttpSession session,Point point){
+        User user = (User) session.getAttribute("user");
+        point.setCreateUser(user.getId());
+        Integer result = pointService.updatePoint(point);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
+
 }

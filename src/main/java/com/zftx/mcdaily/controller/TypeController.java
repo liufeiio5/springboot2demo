@@ -21,8 +21,9 @@ public class TypeController {
 
     @RequestMapping(value = "/getType",method = RequestMethod.GET)
     @ResponseBody
-    public R getType(Type type){
-        List<Type> typeList = typeService.getType(type);
+    public R getType(HttpSession session, Type type){
+        User user = (User) session.getAttribute("user");
+        List<Type> typeList = typeService.getType(type.setCreateUser(user.getId()));
         if(typeList.size()>0&&typeList != null){
             return R.ok("数据获取成功").put("data",typeList);
         }else {
@@ -40,7 +41,22 @@ public class TypeController {
     public R addType(HttpSession session,Type type){
         User user = (User) session.getAttribute("user");
         type.setCreateUser(user.getId());
-        System.out.println("用户ID+++++++++++++++++++++》》》》："+user.getId());
+        String result = typeService.insertType(type);
+        if("success".equals(result)){
+            return R.ok("添加成功").put("result",result);
+        }else {
+            return R.error("添加失败");
+        }
+    }
+
+    /**
+     * 添加类型
+     * @param type
+     * @return
+     */
+    @RequestMapping("/insertType")
+    @ResponseBody
+    public R insertType(Type type){
         String result = typeService.insertType(type);
         if("success".equals(result)){
             return R.ok("添加成功").put("result",result);

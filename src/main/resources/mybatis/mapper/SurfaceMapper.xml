@@ -55,14 +55,14 @@
     </select>
 
     <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true"
-            keyProperty="point.id">
-        insert ignore into surface
+            keyProperty="surface.id">
+        insert  into surface
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="surface!=null">
                 <if test="surface.typeId!=null">
                     type_id,
                 </if>
-                    surface_id,
+                surface_id,
                 <if test="surface.surfaceName!=null and surface.surfaceName!=''">
                     surface_name,
                 </if>
@@ -86,7 +86,7 @@
                     #{surface.typeId},
                 </if>
                 (SELECT CASE  WHEN MAX(s.surface_id) IS NULL THEN '1' ELSE MAX(s.surface_id)+1 END FROM surface s),
-               <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
                     #{surface.surfaceName},
                 </if>
                 <if test="surface.createUser!=null">

@@ -26,8 +26,9 @@ public class SurfaceController {
      */
     @RequestMapping(value = "/getSurface",method = RequestMethod.GET)
     @ResponseBody
-    public R getSurface(Surface surface){
-        List<Surface> surfaceList = surfaceService.findAllSurFace(surface);
+    public R getSurface(HttpSession session,Surface surface){
+        User user = (User)session.getAttribute("user");
+        List<Surface> surfaceList = surfaceService.findAllSurFace(surface.setCreateUser(user.getId()));
         if(surfaceList.size()>0&&surface != null){
             return R.ok("数据获取成功").put("data",surfaceList);
         }else{
@@ -46,6 +47,22 @@ public class SurfaceController {
         User user = (User) session.getAttribute("user");
         surface.setCreateUser(user.getId());
         Integer result = surfaceService.addSurface(surface);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
+
+    /**
+     * 修改面信息
+     */
+    @RequestMapping(value = "/updateSurface",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateSurface(HttpSession session,Surface surface){
+        User user = (User) session.getAttribute("user");
+        surface.setCreateUser(user.getId());
+        Integer result = surfaceService.updateSurface(surface);
         if(result>0){
             return R.ok("添加成功").put("result",result);
         }else{

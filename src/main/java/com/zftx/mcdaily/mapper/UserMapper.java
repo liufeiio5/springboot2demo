@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    public List<User> getUser(@Param("user")User user);
+    public List<User> getUser(@Param("user") User user);
 
-    public int insertUser(@Param("user")User user);
+    public int insertUser(@Param("user") User user);
 
-    public int updateUser(@Param("user")User user);
+    public int updateUser(@Param("user") User user);
 
-    public int deleteUser(@Param("user")User user);
+    public int deleteUser(@Param("user") User user);
 
 }

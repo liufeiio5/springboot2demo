@@ -21,8 +21,9 @@ public class LineController {
 
     @RequestMapping(value = "/getLine")
     @ResponseBody
-    public R getLine(Line line){
-        List<Line> lines = lineService.findLineAll(line);
+    public R getLine(HttpSession session,Line line){
+        User user = (User) session.getAttribute("user");
+        List<Line> lines = lineService.findLineAll(line.setCreateUser(user.getId()));
         if(lines.size()>0&&lines != null){
             return R.ok("数据获取成功").put("data",lines);
         }else{
@@ -41,6 +42,24 @@ public class LineController {
         User user = (User) session.getAttribute("user");
         line.setCreateUser(user.getId());
         Integer result = lineService.addLine(line);
+        if(result>0){
+            return R.ok("添加成功").put("result",result);
+        }else{
+            return R.error("添加失败");
+        }
+    }
+
+    /**
+     * 修改线
+     * @param line
+     * @return
+     */
+    @RequestMapping(value = "/updateLine",method = RequestMethod.PUT)
+    @ResponseBody
+    public R updateLine(HttpSession session,Line line){
+        User user = (User) session.getAttribute("user");
+        line.setCreateUser(user.getId());
+        Integer result = lineService.updateLine(line);
         if(result>0){
             return R.ok("添加成功").put("result",result);
         }else{
