@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/table.css" />
+    <link rel="stylesheet" href="/css/table.css"/>
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
@@ -16,62 +16,75 @@
         .asd {
             width: 150px;
         }
-        #table-bordered thead tr th{
+
+        #table-bordered thead tr th {
             text-align: center;
         }
-        #table-bordered thead tr th:nth-of-type(1){
+
+        #table-bordered thead tr th:nth-of-type(1) {
             width: 50px;
         }
-        #table-bordered thead tr th:nth-of-type(2){
+
+        #table-bordered thead tr th:nth-of-type(2) {
             width: 70px;
         }
-        #table-bordered thead tr th:nth-of-type(3){
+
+        #table-bordered thead tr th:nth-of-type(3) {
             width: 80px;
         }
-        #table-bordered thead tr th:nth-of-type(4){
+
+        #table-bordered thead tr th:nth-of-type(4) {
             width: 80px;
         }
-        #table-bordered thead tr th:nth-of-type(5){
+
+        #table-bordered thead tr th:nth-of-type(5) {
             width: 60px;
         }
-        #table-bordered thead tr th:nth-of-type(6){
+
+        #table-bordered thead tr th:nth-of-type(6) {
             max-width: 450px;
             min-width: 300px;
         }
-        #table-bordered thead tr th:nth-of-type(7){
+
+        #table-bordered thead tr th:nth-of-type(7) {
             width: 100px;
         }
-        #table-bordered thead tr th:nth-of-type(8){
+
+        #table-bordered thead tr th:nth-of-type(8) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(9){
+
+        #table-bordered thead tr th:nth-of-type(9) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(10){
+
+        #table-bordered thead tr th:nth-of-type(10) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(11){
+
+        #table-bordered thead tr th:nth-of-type(11) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(12){
+
+        #table-bordered thead tr th:nth-of-type(12) {
             width: 120px;
         }
     </style>
     <script>
-        $(function() {
+        $(function () {
             var mapss
             laydate.render({
                 elem: '#startDate'
-                ,type: 'month'
+                , type: 'month'
 
             });
             laydate.render({
                 elem: '#endDate'
-                ,type: 'month'
+                , type: 'month'
             });
             laydate.render({
                 elem: '#sDate',
-                done: (function(value) {
+                done: (function (value) {
                     var start = $("#sDate").val();
                     var year = start.slice(0, 4);
                     var month = start.slice(5, 7);
@@ -147,42 +160,42 @@
                 inittable()
             })
 
-            $("#sDate").click(function() {
+            $("#sDate").click(function () {
                 $("#eDate").val("");
                 $("#week").val("");
             })
 
-            $('#add').click(function() {
+            $('#add').click(function () {
                 var difficulty = $('#difficulty').val();
                 var programme = $('#programme').val();
                 var suggest = $('#suggest').val();
                 var remark = $('#remark').val();
-                var sdate = $('#sDate').val().replace('-','').replace('-','');
-                var edate = $('#eDate').val().replace('-','').replace('-','');
-                var week = $('#week').val().replace('第','').replace('周','');
-                if(difficulty==""){
+                var sdate = $('#sDate').val().replace('-', '').replace('-', '');
+                var edate = $('#eDate').val().replace('-', '').replace('-', '');
+                var week = $('#week').val().replace('第', '').replace('周', '');
+                if (difficulty == "") {
                     layer.msg('优秀是好事儿,但咱们不骄傲')
                 }
-                if(difficulty!="" && programme==""){
+                if (difficulty != "" && programme == "") {
                     layer.msg('问题都解决了，却不知如何解决的，不可原谅。')
                     return false;
                 }
-                if(suggest==""){
+                if (suggest == "") {
                     layer.msg('我们期待您下次的建议。')
                 }
                 $.ajax({
                     url: "/addWeekly",
                     dataType: 'json',
                     data: {
-                        difficulty:difficulty,
-                        programme:programme,
-                        suggest:suggest,
-                        remark:remark,
-                        week:week ,
-                        sdate:sdate,
-                        edate:edate,
+                        difficulty: difficulty,
+                        programme: programme,
+                        suggest: suggest,
+                        remark: remark,
+                        week: week,
+                        sdate: sdate,
+                        edate: edate,
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
                                 icon: 1,
@@ -225,12 +238,12 @@
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week))
+                        tr.append($('<td id="juphp">').html(json[i].week))
                         var summaryId = json[i].summary_id
                         var id = json[i].id
-                        tr.append($('<td>').append($('<button>').attr('summaryId',json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width','100%').addClass('addtel' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addtel' + '_' + id)))
                         summary(id, summaryId)
-                        tr.append($('<td>').addClass('progress'+'_' + id))
+                        tr.append($('<td>').addClass('progress' + '_' + id))
                         tr.append($('<td>').html(json[i].difficulty))
                         tr.append($('<td>').html(json[i].programme))
                         tr.append($('<td>').html(json[i].suggest))
@@ -244,9 +257,31 @@
                         $("#tbody").append(tr);
                     }
 
+                    $('#juphp').click(function () {
+                        var week = $(this).parent().parent().children().eq(1).text();
+                        alert(week)
+                        $.ajax({
+                            type: 'get',
+                            url: 'getWeekly',
+                            dataType: 'json',
+                            data:{
+                                'week': week
+                            },
+                            success: function (data) {
+                                if (data.data[i] != null) {
+                                    window.location.href = "/table"
+                                } else {
+                                    window.location.href = "/weekly"
+                                }
+                            }
+                        })
+                    })
+
+
                     //删除
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
+                        alert(id)
                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                             title: '信息',
                             btn: ['朕意已决', '泥奏凯，朕再想一想']
@@ -331,19 +366,19 @@
                     })
                     //提交  添加周小结
                     $("#addSummary").click(function () {
-                        var summaryId=$("#midleValueId").val()
+                        var summaryId = $("#midleValueId").val()
                         $.ajax({
                             url: "/addSummary",
                             dataType: 'json',
                             data: {
-                                summaryId:summaryId,
-                                content:$('#addcontent').val(),
-                                singleProgress:$('#addsingleProgress').val(),
-                                workHours:$('#addworkHours').val(),
-                                assisMan:$('#addassisMan').val()
+                                summaryId: summaryId,
+                                content: $('#addcontent').val(),
+                                singleProgress: $('#addsingleProgress').val(),
+                                workHours: $('#addworkHours').val(),
+                                assisMan: $('#addassisMan').val()
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -372,97 +407,97 @@
                     },
                     success: function (data) {
                         var json = data.data
-                        var progress=1;
+                        var progress = 1;
                         for (i in json) {
                             //百分号转小数进行乘积
-                            var progress1=json[i].singleProgress.replace("%","")/100;
-                            progress=progress*progress1;
+                            var progress1 = json[i].singleProgress.replace("%", "") / 100;
+                            progress = progress * progress1;
                             //小数转百分数
-                            if(i==json.length-1) {
+                            if (i == json.length - 1) {
                                 var number = Number(progress * 100).toFixed(1);
-                                var flag='';
-                                if(number>90){
-                                    flag='(赞)'
-                                }else if(number>60){
-                                    flag='(一般)'
-                                }else {
-                                    flag='(叹)'
+                                var flag = '';
+                                if (number > 90) {
+                                    flag = '(赞)'
+                                } else if (number > 60) {
+                                    flag = '(一般)'
+                                } else {
+                                    flag = '(叹)'
                                 }
-                                $('.progress'+'_'+id).html(number+"%"+flag)
+                                $('.progress' + '_' + id).html(number + "%" + flag)
                             }
                             var str = $('<tr>');
-                            str.append($('<td>').css('width','250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("id",json[i].id).attr("summaryId",json[i].summaryId).attr("content",json[i].content).attr("singleProgress",json[i].singleProgress).attr("workHours",json[i].workHours).attr("assisMan",json[i].assisMan)
-                                                   .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right','5px');
-                            var upd = $('<button>').attr("id",json[i].id).attr("summaryId",json[i].summaryId).attr("content",json[i].content).attr("singleProgress",json[i].singleProgress).attr("workHours",json[i].workHours).attr("assisMan",json[i].assisMan)
-                                                   .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right','5px');
-                            var del = $('<button>').attr("id",json[i].id).addClass('btn btn-xs delsummary').html('删');
+                            var look = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
+                                .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right', '5px');
+                            var upd = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
+                                .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delsummary').html('删');
                             str.append(look).append(upd).append(del)
                             str.append(td);
                             $(".addtel" + '_' + id).append(str);
                         }
 
-                    //查看详情 周小结
-                    $('.looksummary').click(function () {
-                        $("#content").val($(this).attr('content'))
-                        $("#singleProgress").val($(this).attr('singleProgress'))
-                        $("#workHours").val($(this).attr('workHours'))
-                        $("#assisMan").val($(this).attr('assisMan'))
-                    })
+                        //查看详情 周小结
+                        $('.looksummary').click(function () {
+                            $("#content").val($(this).attr('content'))
+                            $("#singleProgress").val($(this).attr('singleProgress'))
+                            $("#workHours").val($(this).attr('workHours'))
+                            $("#assisMan").val($(this).attr('assisMan'))
+                        })
 
 
-                    //修改 周小结
-                    $('.updsummary').click(function () {
-                        var id=$(this).attr('id')
-                        var summaryId=$(this).attr('summaryId')
-                        $("#updcontent").val($(this).attr('content'))
-                        $("#updsingleProgress").val($(this).attr('singleProgress'))
-                        $("#updworkHours").val($(this).attr('workHours'))
-                        $("#updassisMan").val($(this).attr('assisMan'))
+                        //修改 周小结
+                        $('.updsummary').click(function () {
+                            var id = $(this).attr('id')
+                            var summaryId = $(this).attr('summaryId')
+                            $("#updcontent").val($(this).attr('content'))
+                            $("#updsingleProgress").val($(this).attr('singleProgress'))
+                            $("#updworkHours").val($(this).attr('workHours'))
+                            $("#updassisMan").val($(this).attr('assisMan'))
 
-                        $("#updSummary").click(function () {
-                            var content=$("#updcontent").val()
-                            var singleProgress=$("#updsingleProgress").val()
-                            var workHours=$("#updworkHours").val()
-                            var assisMan=$("#updassisMan").val()
-                            layer.confirm('确认要修改吗？', function (index) {
-                                $.ajax({
-                                    url: '/updateSummary',
-                                    dataType: 'json',
-                                    data: {
-                                        id: id,
-                                        summaryId: summaryId,
-                                        content: content,
-                                        singleProgress: singleProgress,
-                                        workHours: workHours,
-                                        assisMan: assisMan
-                                    },
-                                    success: function (data) {
-                                        if (data.code == "200") {
-                                            setTimeout(function wlh() {
-                                                window.location.href = "/weekly"
-                                            }, 500)
-                                            layer.msg('已修改!', {
-                                                icon: 1,
-                                                time: 1000
-                                            });
-                                        } else {
-                                            layer.msg(data.result, {
-                                                icon: 1,
-                                                time: 1000
-                                            });
+                            $("#updSummary").click(function () {
+                                var content = $("#updcontent").val()
+                                var singleProgress = $("#updsingleProgress").val()
+                                var workHours = $("#updworkHours").val()
+                                var assisMan = $("#updassisMan").val()
+                                layer.confirm('确认要修改吗？', function (index) {
+                                    $.ajax({
+                                        url: '/updateSummary',
+                                        dataType: 'json',
+                                        data: {
+                                            id: id,
+                                            summaryId: summaryId,
+                                            content: content,
+                                            singleProgress: singleProgress,
+                                            workHours: workHours,
+                                            assisMan: assisMan
+                                        },
+                                        success: function (data) {
+                                            if (data.code == "200") {
+                                                setTimeout(function wlh() {
+                                                    window.location.href = "/weekly"
+                                                }, 500)
+                                                layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            } else {
+                                                layer.msg(data.result, {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }
                                         }
-                                    }
+                                    })
                                 })
                             })
                         })
-                    })
 
                         //删除  一周小结
                         $('.delsummary').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -495,7 +530,7 @@
                     }
                 })
 
-          }
+            }
         }
 
         //检查事件 过程 结果 的输入是否为空
@@ -522,33 +557,36 @@
                 inittable()
             }
         }
-        
+
         function prompt(obj) {
-            var prompt=obj.value
-            if(prompt=='100%'){
+            var prompt = obj.value
+            if (prompt == '100%') {
                 $("#span1").html("老板,加薪")
                 $("#span2").html("老板,加薪")
-            }else if(prompt=='90%'){
+            } else if (prompt == '90%') {
                 $("#span1").html("为山九仞")
                 $("#span2").html("为山九仞")
-            }else{
+            } else {
                 $("#span1").html("够长才够强")
                 $("#span2").html("够长才够强")
             }
             setTimeout(function () {
                 $("#span1").html("")
                 $("#span2").html("")
-            },4000)
+            }, 4000)
         }
     </script>
 </head>
 
 <body onkeydown="onkeydownfun()">
-<input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始日期" /> —
-<input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
-<input id="userid" placeholder="请输入用户ID" />
-<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
-<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+<input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input"
+       placeholder="请选择开始日期"/> —
+<input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期"/>
+<input id="userid" placeholder="请输入用户ID"/>
+<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
+</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
+</button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a href="/table">日报</a>
 <div>
@@ -580,7 +618,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">新增</h4>
             </div>
             <div class="modal-body">
@@ -589,9 +628,11 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control" placeholder="请选择开始时间" />
+                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control"
+                                   placeholder="请选择开始时间"/>
                             <div>—</div>
-                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control" placeholder="请选择结束时间" />
+                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control"
+                                   placeholder="请选择结束时间"/>
                         </td>
                     </tr>
                     <tr>
@@ -639,7 +680,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">修改</h4>
             </div>
             <div class="modal-body">
@@ -648,9 +690,11 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="sTime" name="user_date" style="width:130px" class="layui-input" placeholder="请选择开始时间" />
+                            <input type="text" id="sTime" name="user_date" style="width:130px" class="layui-input"
+                                   placeholder="请选择开始时间"/>
                             <div>—</div>
-                            <input type="text" id="eTime" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束时间" />
+                            <input type="text" id="eTime" name="user_date" style="width:130px" class="layui-input"
+                                   placeholder="请选择结束时间"/>
                         </td>
                     </tr>
                     <tr>
@@ -695,11 +739,13 @@
 </div>
 
 <!--一周小结 -->
-<div class="modal fade" id="setModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结新增</h4>
             </div>
             <div class="modal-body">
@@ -714,19 +760,19 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <select  class="form-control" id="addsingleProgress" onchange="prompt(this)">
-                                    <option value="0%">--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择该小结的进度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--</option>
-                                    <option value="10%">=&nbsp;&nbsp;10%&nbsp;&nbsp;</option>
-                                    <option value="20%">===&nbsp;&nbsp;20%&nbsp;&nbsp;</option>
-                                    <option value="30%">======&nbsp;&nbsp;30%&nbsp;&nbsp;</option>
-                                    <option value="40%">========&nbsp;&nbsp;40%&nbsp;&nbsp;</option>
-                                    <option value="50%">===========&nbsp;&nbsp;50%&nbsp;&nbsp;</option>
-                                    <option value="60%">===============&nbsp;&nbsp;60%&nbsp;&nbsp;</option>
-                                    <option value="70%">=================&nbsp;&nbsp;70%&nbsp;&nbsp;</option>
-                                    <option value="80%">===================&nbsp;&nbsp;80%&nbsp;&nbsp;</option>
-                                    <option value="90%">=====================&nbsp;&nbsp;90%&nbsp;&nbsp;</option>
-                                    <option value="100%">=======================&nbsp;&nbsp;100%&nbsp;&nbsp;</option>
-                                </select>
+                            <select class="form-control" id="addsingleProgress" onchange="prompt(this)">
+                                <option value="0%">--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择该小结的进度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--</option>
+                                <option value="10%">=&nbsp;&nbsp;10%&nbsp;&nbsp;</option>
+                                <option value="20%">===&nbsp;&nbsp;20%&nbsp;&nbsp;</option>
+                                <option value="30%">======&nbsp;&nbsp;30%&nbsp;&nbsp;</option>
+                                <option value="40%">========&nbsp;&nbsp;40%&nbsp;&nbsp;</option>
+                                <option value="50%">===========&nbsp;&nbsp;50%&nbsp;&nbsp;</option>
+                                <option value="60%">===============&nbsp;&nbsp;60%&nbsp;&nbsp;</option>
+                                <option value="70%">=================&nbsp;&nbsp;70%&nbsp;&nbsp;</option>
+                                <option value="80%">===================&nbsp;&nbsp;80%&nbsp;&nbsp;</option>
+                                <option value="90%">=====================&nbsp;&nbsp;90%&nbsp;&nbsp;</option>
+                                <option value="100%">=======================&nbsp;&nbsp;100%&nbsp;&nbsp;</option>
+                            </select>
                             </select>
                         </td>
                         <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
@@ -756,11 +802,13 @@
 </div>
 
 <!--一周小结  详情 -->
-<div class="modal fade" id="setModal3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结详情</h4>
             </div>
             <div class="modal-body">
@@ -797,11 +845,13 @@
     </div>
 </div>
 <!--一周小结  修改 -->
-<div class="modal fade" id="setModal4" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal4" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结修改</h4>
             </div>
             <div class="modal-body">
@@ -810,13 +860,13 @@
                     <tr>
                         <td style="width:12%;">内容:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updcontent" ></textarea>
+                            <textarea class="form-control" id="updcontent"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <select  class="form-control" id="updsingleProgress" onchange="prompt(this)">
+                            <select class="form-control" id="updsingleProgress" onchange="prompt(this)">
                                 <option value="0%">--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择该小结的进度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--</option>
                                 <option value="10%">=&nbsp;&nbsp;10%&nbsp;&nbsp;</option>
                                 <option value="20%">===&nbsp;&nbsp;20%&nbsp;&nbsp;</option>
@@ -836,13 +886,13 @@
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updworkHours" ></input>
+                            <input class="form-control" id="updworkHours"></input>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">协助人:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updassisMan" ></textarea>
+                            <textarea class="form-control" id="updassisMan"></textarea>
                         </td>
                     </tr>
                     </tbody>
