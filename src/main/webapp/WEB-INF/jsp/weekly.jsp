@@ -550,6 +550,7 @@
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <a href="/table">日报</a>
 <div>
     <table class="table table-bordered" id="table-bordered">
