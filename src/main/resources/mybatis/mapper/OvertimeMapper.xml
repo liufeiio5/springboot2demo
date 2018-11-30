@@ -18,4 +18,71 @@
     </resultMap>
 
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
+
+    <insert id="addOverTimeRecord" useGeneratedKeys="true" keyProperty="overtime.id" parameterType="com.zftx.mcdaily.bean.Overtime">
+        <if test="overtime != null">
+            insert into overtime
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="overtime.date != null and overtime.date != '' ">
+                    date,
+                </if>
+                <if test="overtime.startTime != null and overtime.startTime != ''">
+                    start_time,
+                </if>
+                <if test="overtime.duration != null and overtime.duration != ''">
+                    duration,
+                </if>
+                <if test="overtime.worker != null and overtime.worker != ''">
+                    worker,
+                </if>
+                <if test="overtime.cause != null and overtime.cause != ''">
+                    cause,
+                </if>
+                <if test="overtime.matter != null and overtime.matter != ''">
+                    matter,
+                </if>
+                <if test="overtime.schedule != null and overtime.schedule != '' ">
+                    overtime.schedule,
+                </if>
+                <if test="overtime.result != null and overtime.result != ''">
+                    result,
+                </if>
+                <if test="overtime.remark != null and overtime.remark != ''">
+                    remark,
+                </if>
+            </trim>
+            <trim prefix="values(" suffix=")" suffixOverrides=",">
+                <if test="overtime != null">
+                    <if test="overtime.date != null and overtime.date != '' ">
+                        #{overtime.date},
+                    </if>
+                    <if test="overtime.startTime != null and overtime.startTime != ''">
+                        #{overtime.startTime},
+                    </if>
+                    <if test="overtime.duration != null and overtime.duration != ''">
+                        #{overtime.duration},
+                    </if>
+                    <if test="overtime.worker != null and overtime.worker != ''">
+                        #{overtime.worker},
+                    </if>
+                    <if test="overtime.cause != null and overtime.cause != ''">
+                        #{overtime.cause},
+                    </if>
+                    <if test="overtime.matter != null and overtime.matter != ''">
+                        #{overtime.matter},
+                    </if>
+                    <if test="overtime.schedule != null and overtime.schedule != '' ">
+                        #{overtime.schedule},
+                    </if>
+                    <if test="overtime.result != null and overtime.result != ''">
+                        #{overtime.result},
+                    </if>
+                    <if test="overtime.remark != null and overtime.remark != ''">
+                        #{overtime.remark},
+                    </if>
+                </if>
+            </trim>
+        </if>
+    </insert>
+
 </mapper>
