@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Controller
 @Slf4j
-public class OverTimeController {
+public class OvertimeController {
 
     @Autowired
     private OvertimeService overtimeService;
