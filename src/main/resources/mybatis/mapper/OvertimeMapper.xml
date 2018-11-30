@@ -18,4 +18,14 @@
     </resultMap>
 
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
+
+    <delete id="delOvertime" parameterType="com.zftx.mcdaily.bean.Overtime">
+          delete from overtime
+          <where>
+              <if test="overtime.id!=null">
+                  id=#{overtime.id}
+              </if>
+          </where>
+    </delete>
+
 </mapper>

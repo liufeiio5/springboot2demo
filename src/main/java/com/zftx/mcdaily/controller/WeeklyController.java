@@ -49,12 +49,12 @@ public class WeeklyController {
             weekly.setSdate(weekly.getSdate()+"00");
         }
         if(weekly.getEdate().length()==6){
-            weekly.setEdate(weekly.getEdate()+"31");
+            weekly.setEdate(weekly.getEdate()+"06");
         }
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
-        if(list !=null &&list.size()>0)
-            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
+        if(list != null && list.size() > 0)
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName() : "");
         else {
             return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "");
         }
@@ -75,7 +75,6 @@ public class WeeklyController {
             if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
                 weekly.setUserId(user.getId());
             }
-
             String str=weeklyService.addWeekly(weekly);
             if("success".equals(str)) {
                 return R.ok("添加成功");

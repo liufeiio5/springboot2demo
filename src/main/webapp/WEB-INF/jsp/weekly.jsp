@@ -111,12 +111,12 @@
                     }
                     var autonumber = year + "-" + month + "-" + day;
                     $("#eDate").val(autonumber);
-
                     //第几周
                     var start = $("#sDate").val();
                     var start = $("#sDate").val();
                     var day = start.slice(8, 10);
                     var day = parseInt(day);
+                    var month = start.slice(5, 7);
                     var weekly;
                     if (day < 7) {
                         weekly = 1
@@ -211,9 +211,9 @@
                 url: 'getWeekly',
                 dataType: 'json',
                 data: {
-                    sdate: startDate,
-                    edate: endDate,
-                    userId: userId
+                    'sdate': startDate,
+                    'edate': endDate,
+                    'userId': userId
                 },
                 success: function (data) {
                     var json = data.data
