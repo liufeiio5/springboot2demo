@@ -544,6 +544,10 @@
             if (event.keyCode == 13)
                 inittable()
         }
+
+        function overtime() {
+            window.location.href="/overtime"
+        }
     </script>
 </head>
 <body onkeydown="onkeydownfun()">
@@ -555,6 +559,8 @@
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
+</button>
+<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录
 </button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a href="/weekly">周报</a>

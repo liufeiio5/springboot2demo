@@ -23,6 +23,11 @@ public class OvertimeController {
     @Autowired
     private OvertimeService overtimeService;
 
+    @RequestMapping(value = "/overtime")
+    public String overtime(){
+        return "overtime";
+    }
+
     @ResponseBody
     @RequestMapping(value = "delOvertime")
     public R delOvertime(Overtime overtime){
