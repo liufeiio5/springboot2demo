@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.SummaryMapper">
+    <resultMap id="summary" type="com.zftx.mcdaily.bean.Summary">
+        <id column="id" property="id"/>
+        <id column="summary_id" property="summaryId"/>
+        <result column="content" property="content"/>
+        <result column="single_progress" property="singleProgress"/>
+        <result column="work_hours" property="workHours"/>
+        <result column="assis_man" property="assisMan"/>
+    </resultMap>
+
+    <!--查询 周小结-->
+    <select id="getSummary" resultType="com.zftx.mcdaily.bean.Summary">
+        select * from summary
+        <if test="summary != null">
+            <where>
+                <if test="summary.id != null">
+                    id=#{summary.id}
+                </if>
+                <if test="summary.summaryId != null">
+                    and summary_id=#{summary.summaryId}
+                </if>
+                <if test="summary.content != null">
+                    and content=#{summary.content}
+                </if>
+                <if test="summary.singleProgress != null">
+                    and single_progress=#{summary.singleProgress}
+                </if>
+                <if test="summary.workHours != null">
+                    and work_hours=#{summary.workHours}
+                </if>
+                <if test="summary.assisMan != null">
+                    and assis_man=#{summary.assisMan}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加 周小结-->
+    <insert id="addSummary" keyProperty="summary.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Summary">
+        INSERT INTO summary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="summary !=null">
+                <if test="summary.summaryId!=null">
+                    summary_id,
+                </if>
+                <if test="summary.content!=null">
+                    content,
+                </if>
+                <if test="summary.singleProgress!=null">
+                    single_progress,
+                </if>
+                <if test="summary.workHours!=null">
+                    work_hours,
+                </if>
+                <if test="summary.assisMan!=null">
+                    assis_man,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="summary !=null">
+                <if test="summary.summaryId!=null">
+                    #{summary.summaryId},
+                </if>
+                <if test="summary.content!=null">
+                    #{summary.content},
+                </if>
+                <if test="summary.singleProgress!=null">
+                    #{summary.singleProgress},
+                </if>
+                <if test="summary.workHours!=null ">
+                    #{summary.workHours},
+                </if>
+                <if test="summary.assisMan!=null ">
+                    #{summary.assisMan},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 周小结-->
+    <update id="updateSummary" parameterType="com.zftx.mcdaily.bean.Summary">
+        UPDATE summary
+        <set>
+            <if test="summary.summaryId!=null">
+                summary_id=#{summary.summaryId},
+            </if>
+            <if test="summary.content!=null">
+                content=#{summary.content},
+            </if>
+            <if test="summary.singleProgress!=null ">
+                single_progress=#{summary.singleProgress},
+            </if>
+            <if test="summary.workHours!=null">
+                work_hours=#{summary.workHours},
+            </if>
+            <if test="summary.assisMan!=null">
+                assis_man=#{summary.assisMan},
+            </if>
+        </set>
+        <where>
+            <if test="summary.id!=null and summary.id!=0">
+                id=#{summary.id}
+            </if>
+            <if test="summary.summaryId!=null">
+                and summary_id=#{summary.summaryId}
+            </if>
+        </where>
+    </update>
+
+
+    <!--实际删除 周结表-->
+    <delete id="deleteSummary" parameterType="com.zftx.mcdaily.bean.Summary">
+       delete from summary  where id=#{summary.id}
+    </delete>
+</mapper>

@@ -29,63 +29,65 @@
             initline($('#type').val(), $('#surface').val())
             initpoint($('#type').val(), $('#surface').val(), $('#line').val())
 
-            $('#add').click(function () {
-                checkAddInput();
-                var type = $('#type').val();
-                var surface = $('#surface').val();
-                var line = $('#line').val();
-                var point = $('#point').val();
-                var eventName = $("#event").val();
-                var process = $("#process").val();
-                var result = $("#result").val();
-                var method = $("#method").val();
-                var remarks = $("#remarks").val();
-                var typeName = $('#addtype').val();
-                var surfaceName = $('#addsurface').val();
-                var lineName = $('#addline').val();
-                var pointName = $('#addpoint').val();
-                var selectDate = $('#selectDate').val().replace('-', '').replace('-', '');
-                $.ajax({
-                    url: "addDaily",
-                    dataType: 'json',
-                    data: {
-                        type: type,
-                        surface: surface,
-                        line: line,
-                        point: point,
-                        eventName: eventName,
-                        process: process,
-                        result: result,
-                        method: method,
-                        remarks: remarks,
-                        typeName: typeName,
-                        surfaceName: surfaceName,
-                        lineName: lineName,
-                        pointName: pointName,
-                        selectDate: selectDate
-                    },
-                    success: function (data)   {
-                        if (data.code == 200) {
-                            $("#event").val('');
-                            $("#process").val('');
-                            $("#result").val('');
-                            $("#method").val('');
-                            $("#remarks").val('');
-                            layer.msg('添加成功!', {
-                                icon: 1,
-                                time: 1000
-                            });
-                            setTimeout(function wlh() {
-                                window.location.href = "/table"
-                            }, 500)
-                        } else if (data.message = "不能提前创建日报") {
-                            layer.msg("不能提前创建日报，您这样，欺天当劈");
-                        } else {
-                            layer.msg("添加失败");
-                        }
-                    }
-                });
-            })
+
+                $('#add').click(function (){
+                    checkAddInput();
+                    var type = $('#type').val();
+                    var surface = $('#surface').val();
+                    var line = $('#line').val();
+                    var point = $('#point').val();
+                    var eventName=$("#event").val();
+                    var process=$("#process").val();
+                    var result=$("#result").val();
+                    var method=$("#method").val();
+                    var remarks=$("#remarks").val();
+                    var typeName = $('#addtype').val();
+                    var surfaceName = $('#addsurface').val();
+                    var lineName = $('#addline').val();
+                    var pointName = $('#addpoint').val();
+                    var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
+                        $.ajax({
+                            url:"addDaily",
+                            dataType:'json',
+                            data:{
+                                type:type,
+                                surface:surface,
+                                line:line,
+                                point:point,
+                                eventName:eventName,
+                                process:process,
+                                result:result,
+                                method:method,
+                                remarks:remarks,
+                                typeName:typeName,
+                                surfaceName:surfaceName,
+                                lineName:lineName,
+                                pointName:pointName,
+								selectDate:selectDate
+                            },
+                            success :function (data)
+                            {
+                                if(data.code==200){
+                                    $("#event").val('');
+                                    $("#process").val('');
+                                    $("#result").val('');
+                                    $("#method").val('');
+                                    $("#remarks").val('');
+                                    layer.msg('添加成功!', {
+                                        icon: 1,
+                                        time:1000
+                                    });
+                                    setTimeout(function wlh() {
+                                        window.location.href = "/table"
+                                    },500)
+                                }else if(data.message="不能提前创建日报"){
+                                    layer.msg("不能提前创建日报，您这样，欺天当劈");
+                                }else {
+                                    layer.msg("添加失败");
+                                }
+                            }
+                        });
+                })
 
             $('#type').next().bind('click', function () {
                 $('#addtype').val('')
@@ -114,6 +116,8 @@
             $('#query').click(function () {
                 inittable()
             })
+            $('#query').click(function () { inittable() })
+
         })
 
         function inittable() {
@@ -485,6 +489,7 @@
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<a href="/weekly">周报</a>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead>

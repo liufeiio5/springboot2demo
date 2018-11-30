@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.WeeklyMapper">
+    <resultMap id="weekly" type="com.zftx.mcdaily.bean.Weekly">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="week" property="week"/>
+        <result column="summary_id" property="summaryId"/>
+        <result column="progress" property="progress"/>
+        <result column="difficulty" property="difficulty"/>
+        <result column="programme" property="programme"/>
+        <result column="suggest" property="suggest"/>
+        <result column="remark" property="remark"/>
+        <result column="sdate" property="sdate"/>
+        <result column="edate" property="edate"/>
+    </resultMap>
+
+    <!--查询-->
+    <select id="getWeekly" resultType="java.util.HashMap">
+          select w.*,u.full_name as fullName from weekly w
+          join user u on w.user_id= u.id
+          <if test="weekly != null">
+              <where>
+                  <if test="weekly.id != null">
+                      w.id=#{weekly.id}
+                  </if>
+                  <if test="weekly.userId != null">
+                      and w.user_id=#{weekly.userId}
+                  </if>
+                  <if test="weekly.week != null">
+                      and w.week=#{weekly.week}
+                  </if>
+                  <if test="weekly.summaryId != null">
+                      and w.summaryId=#{weekly.summaryId}
+                  </if>
+                  <if test="weekly.progress != null">
+                      and w.progress=#{weekly.progress}
+                  </if>
+                  <if test="weekly.difficulty != null">
+                      and w.difficulty=#{weekly.difficulty}
+                  </if>
+                  <if test="weekly.programme != null">
+                      and w.programme=#{weekly.programme}
+                  </if>
+                  <if test="weekly.suggest != null">
+                      and w.suggest=#{weekly.suggest}
+                  </if>
+                  <if test="weekly.remark != null">
+                      and w.remark=#{weekly.remark}
+                  </if>
+                  <if test="weekly.sdate!= '' and weekly.sdate != null and weekly.edate != '' and weekly.edate != null">
+                      and w.sdate between #{weekly.sdate} and #{weekly.edate}
+                  </if>
+                  <if test="weekly.sdate!= '' and weekly.sdate != null and weekly.edate != '' and weekly.edate != null">
+                      and w.edate between #{weekly.sdate} and #{weekly.edate}
+                  </if>
+              </where>
+          </if>
+    </select>
+
+    <!--添加 周报-->
+    <insert id="addWeekly" keyProperty="weekly.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Weekly">
+        INSERT INTO weekly
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="weekly !=null">
+                <if test="weekly.userId!=null">
+                    user_id,
+                </if>
+                <if test="weekly.week!=null">
+                    week,
+                </if>
+                <if test="weekly.summaryId!=null">
+                    summary_id,
+                </if>
+                <if test="weekly.summaryId==null">
+                    summary_id,
+                </if>
+                <if test="weekly.progress!=null">
+                    progress,
+                </if>
+                <if test="weekly.difficulty!=null">
+                    difficulty,
+                </if>
+                <if test="weekly.programme!=null">
+                    programme,
+                </if>
+                <if test="weekly.suggest!=null">
+                    suggest,
+                </if>
+                <if test="weekly.remark!=null">
+                    remark,
+                </if>
+                <if test="weekly.sdate!=null">
+                    sdate,
+                </if>
+                <if test="weekly.edate!=null">
+                    edate,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="weekly !=null">
+                <if test="weekly.userId!=null">
+                    #{weekly.userId},
+                </if>
+                <if test="weekly.week!=null">
+                    #{weekly.week},
+                </if>
+                <if test="weekly.summaryId!=null">
+                    #{weekly.summaryId},
+                </if>
+                <if test="weekly.summaryId==null">
+                  (SELECT CASE  WHEN MAX(w.summary_id) IS NULL THEN '1' ELSE MAX(w.summary_id)+1 END FROM weekly w),
+                </if>
+                <if test="weekly.progress!=null">
+                    #{weekly.progress},
+                </if>
+                <if test="weekly.difficulty!=null ">
+                    #{weekly.difficulty},
+                </if>
+                <if test="weekly.programme!=null ">
+                    #{weekly.programme},
+                </if>
+                <if test="weekly.suggest!=null ">
+                    #{weekly.suggest},
+                </if>
+                <if test="weekly.remark!=null ">
+                    #{weekly.remark},
+                </if>
+                <if test="weekly.sdate!=null ">
+                    #{weekly.sdate},
+                </if>
+                <if test="weekly.edate!=null ">
+                    #{weekly.edate},
+                </if>
+            </if>
+        </trim>
+    </insert>
+    <!--                /*(SELECT CASE WHEN MAX(s.summary_id) IS NULL THEN '1' ELSE MAX(s.summary_id)+1 END FROM summary s),*/-->
+    <update id="updateWeekly" parameterType="com.zftx.mcdaily.bean.Weekly">
+        UPDATE weekly
+        <set>
+            <if test="weekly.userId!=null">
+                user_id=#{weekly.userId},
+            </if>
+            <if test="weekly.week!=null ">
+                week=#{weekly.week},
+            </if>
+            <if test="weekly.summaryId!=null ">
+                summary_id=#{weekly.summaryId},
+            </if>
+           <if test="weekly.progress!=null">
+               progress=#{weekly.progress},
+            </if>
+           <if test="weekly.difficulty!=null">
+               difficulty=#{weekly.difficulty},
+            </if>
+           <if test="weekly.programme!=null">
+               programme=#{weekly.programme},
+            </if>
+            <if test="weekly.suggest!=null">
+                suggest=#{weekly.suggest},
+            </if>
+            <if test="weekly.remark!=null">
+                remark=#{weekly.remark},
+            </if>
+            <if test="weekly.sdate!=null">
+                sdate=#{weekly.sdate},
+            </if>
+            <if test="weekly.edate!=null">
+                edate=#{weekly.edate},
+            </if>
+        </set>
+        <where>
+            <if test="weekly.id!=null and weekly.id!=0">
+                 id=#{weekly.id}
+            </if>
+        </where>
+    </update>
+
+
+    <!--实际删除 综合表-->
+    <delete id="deleteWeekly" parameterType="com.zftx.mcdaily.bean.Weekly">
+       delete from weekly  where
+       id=#{weekly.id}
+    </delete>
+</mapper>
