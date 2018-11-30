@@ -494,7 +494,6 @@
                         })
                     }
                 })
-
           }
         }
 
@@ -598,6 +597,12 @@
                         <td style="width:12%;">周:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="week"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">一周小结:</td>
+                        <td>
+                           <button data-toggle="modal" data-target="#setModal2">+</button>
                         </td>
                     </tr>
                     <tr>
