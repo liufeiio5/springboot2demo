@@ -38,6 +38,9 @@
                 <if test="overtime.startTime != null and overtime.startTime != ''">
                     start_time,
                 </if>
+                <if test="overtime.endTime != null and overtime.endTime != ''">
+                    end_time,
+                </if>
                 <if test="overtime.duration != null and overtime.duration != ''">
                     duration,
                 </if>
@@ -67,6 +70,9 @@
                     </if>
                     <if test="overtime.startTime != null and overtime.startTime != ''">
                         #{overtime.startTime},
+                    </if>
+                    <if test="overtime.endTime != null and overtime.endTime != ''">
+                        #{overtime.endTime},
                     </if>
                     <if test="overtime.duration != null and overtime.duration != ''">
                         #{overtime.duration},

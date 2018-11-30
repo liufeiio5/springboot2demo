@@ -18,7 +18,7 @@ public class Overtime
     String date;  //加班日期，格式（年月日）
     String startTime;  //开始时间，格式（时：分）
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
-    Date endTime; //结束时间，格式（年-月-日空格时:分:秒）
+    String endTime; //结束时间，格式（年-月-日空格时:分:秒）
     Integer duration; //时长
     Integer worker;   //加班人编号
     String cause;  //事由

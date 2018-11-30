@@ -18,12 +18,61 @@
                 elem: '#startDate'
             });
             laydate.render({
-                elem: '#endDate'
+                elem: '#endTime',
+                type: 'datetime'
             });
             laydate.render({
                 elem: '#selectDate'
             });
+
+            $('#addOvertime').click(function () {
+                alert("666")
+                var date = $("#selectDate").val().replace('-', '').replace('-', '');
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                var duration = $("#duration").val();
+                var cause = $("#cause").val();
+                var matter = $("#matter").val();
+                var schedule = $("#schedule").val();
+                var result = $("#result").val();
+                var remark = $("#remark").val();
+
+                //添加加班记录
+                    $.ajax({
+                        url: "/addOvertimeRecord",
+                        dataType: "json",
+                        data: {
+                            date:date,
+                            startTime: startTime,
+                            endtime: endTime,
+                            duration: duration,
+                            cause: cause,
+                            matter: matter,
+                            schedule: schedule,
+                            result: result,
+                            remark: remark
+                        },
+                        success: function (data) {
+                            layer.msg(111111111111111111)
+                            if (data.code == 200) {
+
+                                layer.msg("添加成功")
+                                console.log(9999999999999999999999999999999)
+                                window.location.href = "/overtime"
+                            } else {
+                                console.log(5555555555555555)
+                                window.location.href = "/overtime"
+                                layer.msg("添加失败");
+                            }
+                        }
+                    });
+            })
         })
+
+
+
+
+
 
         function dailyRecord() {
             window.location.href="/table";
@@ -32,7 +81,7 @@
     </script>
 
 </head>
-<body onkeydown="onkeydownfun()">
+<body>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始日期" /> —
 <input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input id="userid" placeholder="请输入用户ID" />
@@ -87,21 +136,21 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="selectDate" name="date" style="width:130px" class="layui-input form-control" placeholder="请选择开始时间" />
+                            <input type="text" id="selectDate" name="" style="width:130px" class="layui-input form-control" placeholder="请选择开始时间" />
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">开始时间 :
                         </td>
                         <td style="width:60%;">
-                            <input type="text" class="form-control" id="startTime">
+                            <input type="text" placeholder="--开始时间比如：18:30 这样的格式填写--" class="form-control" id="startTime">
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">结束时间 :
                         </td>
-                        <td style="width:60%;">
-                            <input type="text" class="form-control" id="endTime">
+                        <td>
+                            <input type="text" id="endTime" name="" style="width:200px" class="layui-input form-control" placeholder="请选择开始时间" />
                         </td>
                     </tr>
                     <tr>
@@ -149,7 +198,7 @@
                 </table>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
-                    <button id="add" class="btn btn-primary">提交</button>
+                    <button id="addOvertime" class="btn btn-primary" >提交</button>
                 </div>
             </div>
         </div>

@@ -4,8 +4,6 @@ import com.zftx.mcdaily.bean.Overtime;
 import com.zftx.mcdaily.service.OvertimeService;
 import com.zftx.mcdaily.util.R;
 import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.service.OvertimeService;
-import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 @Controller
 @Slf4j
@@ -50,13 +50,9 @@ public class OvertimeController {
      */
     @RequestMapping(value = "/addOvertimeRecord")
     @ResponseBody
-    public R addOvertimeRecord(HttpSession session,Overtime overtime){
+    public R addOvertimeRecord(HttpSession session,Overtime overtime,String endtime){
         User user = (User) session.getAttribute("user");
-        overtime.setWorker(user.getId());
-        SimpleDateFormat dateFormatDate = new SimpleDateFormat("yyyyMMdd");//格式化日期：20181130
-        SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH:mm");//格式化时间点：14：56
-        overtime.setDate(dateFormatDate.format(new Date()))
-                .setStartTime(dateFormatTime.format(new Date()));
+        overtime.setWorker(user.getId()).setEndTime(endtime);
         Integer result = overtimeService.addOverTimeRecord(overtime);
         if(result>0){
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## message:添加成功"+" 参数："+overtime);
@@ -65,6 +61,5 @@ public class OvertimeController {
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## message:添加失败"+" 参数："+overtime);
             return R.error("添加失败");
         }
-
     }
 }
