@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OvertimeMapper
 {
+    /**
+     * 实际删除
+     * @param overtime
+     * @return
+     */
+    public Integer delOvertime(@Param("overtime") Overtime overtime);
 
     /**
      * 添加加班记录

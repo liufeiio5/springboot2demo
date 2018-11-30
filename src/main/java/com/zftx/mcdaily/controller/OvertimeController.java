@@ -1,6 +1,8 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Overtime;
+import com.zftx.mcdaily.service.OvertimeService;
+import com.zftx.mcdaily.util.R;
 import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.OvertimeService;
 import com.zftx.mcdaily.util.R;
@@ -20,6 +22,21 @@ public class OvertimeController {
 
     @Autowired
     private OvertimeService overtimeService;
+
+    @ResponseBody
+    @RequestMapping(value = "delOvertime")
+    public R delOvertime(Overtime overtime){
+        if(overtime.getId()!=null && overtime.getId()!=0){
+            String result=overtimeService.delOvertime(overtime);
+            if("success".equals(result)){
+                return R.ok("删除成功!!");
+            }else{
+                return R.error("删除失败!!");
+            }
+        }else{
+            return R.error("参数错误!!");
+        }
+    }
 
     /**
      * 添加加班记录
