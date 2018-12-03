@@ -52,7 +52,18 @@ public class OvertimeController {
     @ResponseBody
     public R addOvertimeRecord(HttpSession session,Overtime overtime,String endtime){
         User user = (User) session.getAttribute("user");
-        overtime.setWorker(user.getId()).setEndTime(endtime);
+
+        Date endTime=null;
+        //字符串转换为Date类型，要做异常捕捉，转换有可能失败或者前端传过来的格式有错误
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+             endTime =  simpleDateFormat.parse(endtime);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        overtime.setWorker(user.getId()).setEndTime(endTime);
         Integer result = overtimeService.addOverTimeRecord(overtime);
         if(result>0){
             log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## message:添加成功"+" 参数："+overtime);
@@ -62,4 +73,5 @@ public class OvertimeController {
             return R.error("添加失败");
         }
     }
+
 }

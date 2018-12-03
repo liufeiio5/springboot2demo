@@ -38,7 +38,7 @@
                 <if test="overtime.startTime != null and overtime.startTime != ''">
                     start_time,
                 </if>
-                <if test="overtime.endTime != null and overtime.endTime != ''">
+                <if test="overtime.endTime != null ">
                     end_time,
                 </if>
                 <if test="overtime.duration != null and overtime.duration != ''">
@@ -65,13 +65,13 @@
             </trim>
             <trim prefix="values(" suffix=")" suffixOverrides=",">
                 <if test="overtime != null">
-                    <if test="overtime.date != null and overtime.date != '' ">
+                    <if test="overtime.date != null">
                         #{overtime.date},
                     </if>
-                    <if test="overtime.startTime != null and overtime.startTime != ''">
+                    <if test="overtime.startTime != null ">
                         #{overtime.startTime},
                     </if>
-                    <if test="overtime.endTime != null and overtime.endTime != ''">
+                    <if test="overtime.endTime != null">
                         #{overtime.endTime},
                     </if>
                     <if test="overtime.duration != null and overtime.duration != ''">
@@ -99,5 +99,4 @@
             </trim>
         </if>
     </insert>
-
 </mapper>

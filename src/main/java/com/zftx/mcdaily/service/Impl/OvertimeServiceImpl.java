@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @Slf4j
 public class OvertimeServiceImpl implements OvertimeService
@@ -40,4 +41,5 @@ public class OvertimeServiceImpl implements OvertimeService
         Integer result = overtimeMapper.addOverTimeRecord(overtime);
         return result;
     }
+
 }

@@ -4,6 +4,7 @@ import com.zftx.mcdaily.bean.Overtime;
 
 import org.apache.ibatis.annotations.Param;
 
+
 public interface OvertimeService
 {
 
@@ -20,4 +21,5 @@ public interface OvertimeService
      * @return
      */
     public Integer addOverTimeRecord(@Param("overtime") Overtime overtime);
+
 }

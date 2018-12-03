@@ -4,6 +4,7 @@ import com.zftx.mcdaily.bean.Overtime;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public interface OvertimeMapper
 {
@@ -20,4 +21,5 @@ public interface OvertimeMapper
      * @return
      */
     public Integer addOverTimeRecord(@Param("overtime") Overtime overtime);
+
 }
