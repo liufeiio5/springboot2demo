@@ -24,7 +24,7 @@ public class TypeController {
     public R getType(HttpSession session, Type type){
         User user = (User) session.getAttribute("user");
         List<Type> typeList = typeService.getType(type.setCreateUser(user.getId()));
-        if(typeList.size()>0&&typeList != null){
+        if(typeList.size() >0 && typeList != null){
             return R.ok("数据获取成功").put("data",typeList);
         }else {
             return R.error("获取数据失败");

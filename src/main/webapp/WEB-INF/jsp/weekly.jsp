@@ -118,12 +118,12 @@
                     }
                     var autonumber = year + "-" + month + "-" + day;
                     $("#eDate").val(autonumber);
-
                     //第几周
                     var start = $("#sDate").val();
                     var start = $("#sDate").val();
                     var day = start.slice(8, 10);
                     var day = parseInt(day);
+                    var month = start.slice(5, 7);
                     var weekly;
                     if (day < 7) {
                         weekly = 1
@@ -175,6 +175,9 @@
             })
 
             laydate.render({
+                elem: '#eDate'
+            });
+            laydate.render({
                 elem: '#sTime',
             });
             laydate.render({
@@ -182,7 +185,7 @@
             });
             //初始化
             inittable();
-
+            assisman();
             //查询
             $("#query").click(function () {
                 inittable()
@@ -244,22 +247,20 @@
                 },
                 success: function (data) {
                     var json = data.data
-                    console.info(data)
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报');
-                    console.info(json)
                     for (i in json) {
-                        var tr = $('<tr>');
-                        tr.append($('<td>').html(json[i].id))
-                        tr.append($('<td>').html(json[i].fullName))
-                        tr.append($('<td>').html(json[i].sdate))
-                        tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week).addClass("weekbtn").attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id
                         var suggestId = json[i].suggest_id
                         var remarkId=json[i].remark_id
                         var id = json[i].id
+                        var tr = $('<tr>');
+                        tr.append($('<td>').html(json[i].id))
+                        tr.append($('<td>').html(json[i].fullName))
+                        tr.append($('<td>').html(json[i].sdate))
+                        tr.append($('<td>').html(json[i].edate))
+                        tr.append($('<td>').html(json[i].week).css("color","blue").css("cursor","pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId',json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width','100%').addClass('addSmmarytel' + '_' + id)))
                         summary(id, summaryId)
                         tr.append($('<td>').addClass('progress'+'_' + id))
@@ -279,12 +280,43 @@
                     }
                     //第几周 跳转 日报
                     $('.weekbtn').click(function () {
-                        var userId= $(this).attr('userId')
                         var startDate= $(this).attr('sdate')
                         var endDate= $(this).attr('edate')
-                        alert(startDate)
-                        alert(endDate)
-                        window.location.href="/table?startDate="+startDate+"&endDate="+endDate+"&userId="+userId;
+                        var userId=$(this).attr('userId')
+                        $("#tbodys").empty();
+                        $.ajax({
+                            type: 'get',
+                            url: '/getDaily',
+                            dataType: 'json',
+                            data:{
+                                'startDate': startDate,
+                                'endDate': endDate,
+                                'userId': userId
+                            },
+                            success:function (data) {
+                                for (var i in data.data) {
+                                    var tr = $('<tr>');
+                                    if (typeof (data.data[i].id) != 'undefined') {
+                                        tr.append($('<td>').html(data.data[i].id))
+                                        tr.append($('<td>').html(data.data[i].fullName))
+                                        tr.append($('<td>').html(data.data[i].date))
+                                        tr.append($('<td>').html(data.data[i].time))
+                                        tr.append($('<td>').html(data.data[i].typeName))
+                                        tr.append($('<td>').html(data.data[i].surfaceName))
+                                        tr.append($('<td>').html(data.data[i].lineName))
+                                        tr.append($('<td>').html(data.data[i].pointName))
+                                        tr.append($('<td>').html(data.data[i].event))
+                                        tr.append($('<td>').html(data.data[i].process))
+                                        tr.append($('<td>').html(data.data[i].result))
+                                        tr.append($('<td>').html(data.data[i].method))
+                                        tr.append($('<td>').html(data.data[i].remark))
+                                        var td = $('<td>');
+                                        tr.append(td);
+                                        $("#tbodys").append(tr);
+                                    }
+                                }
+                            }
+                        })
                     })
 
                     //删除
@@ -384,7 +416,9 @@
                     })
                     //提交  添加周小结
                     $("#addSummary").click(function () {
+                        assisman();
                         var summaryId=$("#midleValueId").val()
+                        var workHours=$('#addworkHours').val()+$('#addworkHoursUnit').val()
                         $.ajax({
                             url: "/addSummary",
                             dataType: 'json',
@@ -392,7 +426,7 @@
                                 summaryId:summaryId,
                                 content:$('#addcontent').val(),
                                 singleProgress:$('#addsingleProgress').val(),
-                                workHours:$('#addworkHours').val(),
+                                workHours:workHours,
                                 assisMan:$('#addassisMan').val()
                             },
                             success: function(data) {
@@ -407,6 +441,7 @@
                                 } else {
                                     layer.msg("添加失败");
                                 }
+
                             }
                         });
                     })
@@ -423,7 +458,6 @@
                             dataType: 'json',
                             data: {
                                 difficultyId:difficultyId,
-                                difficultyTitle:$('#addDifficutyTitle').val(),
                                 difficultyContent:$('#addDifficutyContent').val()
                             },
                             success: function(data) {
@@ -453,7 +487,6 @@
                             dataType: 'json',
                             data: {
                                 programmeId:programmeId,
-                                programmeTitle:$('#addProgrammeTitle').val(),
                                 programmeContent:$('#addProgrammeContent').val()
                             },
                             success: function(data) {
@@ -483,7 +516,6 @@
                             dataType: 'json',
                             data: {
                                 suggestId:suggestId,
-                                suggestTitle:$('#addSuggestTitle').val(),
                                 suggestContent:$('#addSuggestContent').val()
                             },
                             success: function(data) {
@@ -513,7 +545,6 @@
                             dataType: 'json',
                             data: {
                                 remarkId:remarkId,
-                                remarkTitle:$('#addRemarkTitle').val(),
                                 remarkContent:$('#addRemarkContent').val()
                             },
                             success: function(data) {
@@ -546,12 +577,12 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].difficultyTitle))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].difficultyContent))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("difficultyTitle",json[i].difficultyTitle).attr("difficultyContent",json[i].difficultyContent)
+                            var look = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("difficultyContent",json[i].difficultyContent)
                                 .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('查').css('margin-right','5px');
-                            var upd = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("content",json[i].content).attr("difficultyTitle",json[i].difficultyTitle).attr("difficultyContent",json[i].difficultyContent)
+                            var upd = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("content",json[i].content).attr("difficultyContent",json[i].difficultyContent)
                                 .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('改').css('margin-right','5px');
                             var del = $('<button>').attr("id",json[i].id).addClass('btn btn-xs delDifficulty').html('删');
                             str.append(look)
@@ -562,18 +593,15 @@
                         }
                         //查看详情 周困难
                         $('.lookDifficulty').click(function () {
-                            $("#lookdifficultyTitle").val($(this).attr('difficultyTitle'))
                             $("#lookdifficultyContent").val($(this).attr('difficultyContent'))
                         })
                         //修改 周困难
                         $('.updDifficulty').click(function () {
                             var id=$(this).attr('id')
                             var difficultyId=$(this).attr('difficultyId')
-                            $("#updDifficultyTitle").val($(this).attr('difficultyTitle'))
                             $("#updDifficultyContent").val($(this).attr('difficultyContent'))
                             //提交
                             $("#updDifficulty").click(function () {
-                                var difficultyTitle=$("#updDifficultyTitle").val()
                                 var difficultyContent=$("#updDifficultyContent").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
@@ -582,7 +610,6 @@
                                         data: {
                                             id: id,
                                             difficultyId: difficultyId,
-                                            difficultyTitle: difficultyTitle,
                                             difficultyContent: difficultyContent
                                         },
                                         success: function (data) {
@@ -653,12 +680,12 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].programmeTitle))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].programmeContent))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("programmeId", programmeId).attr("programmeTitle", json[i].programmeTitle).attr("programmeContent", json[i].programmeContent)
+                            var look = $('<button>').attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs lookProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme2').html('查').css('margin-right', '5px');
-                            var upd = $('<button>').attr("id", json[i].id).attr("programmeId", programmeId).attr("programmeTitle", json[i].programmeTitle).attr("programmeContent", json[i].programmeContent)
+                            var upd = $('<button>').attr("id", json[i].id).attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs updProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delProgramme').html('删');
                             str.append(look)
@@ -669,18 +696,15 @@
                         }
                         //查看详情 周 方案
                         $('.lookProgramme').click(function () {
-                            $("#lookProgrammeTitle").val($(this).attr('programmeTitle'))
                             $("#lookProgrammeContent").val($(this).attr('programmeContent'))
                         })
                         //修改 周 方案
                         $('.updProgramme').click(function () {
                             var id = $(this).attr('id')
                             var programmeId = $(this).attr('programmeId')
-                            $("#updProgrammeTitle").val($(this).attr('programmeTitle'))
                             $("#updProgrammeContent").val($(this).attr('programmeContent'))
                             //提交
                             $("#updProgramme").click(function () {
-                                var programmeTitle = $("#updProgrammeTitle").val()
                                 var programmeContent = $("#updProgrammeContent").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
@@ -689,7 +713,6 @@
                                         data: {
                                             id: id,
                                             programmeId: programmeId,
-                                            programmeTitle: programmeTitle,
                                             programmeContent: programmeContent
                                         },
                                         success: function (data) {
@@ -760,12 +783,12 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].suggestTitle))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].suggestContent))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("suggestId", suggestId).attr("suggestTitle", json[i].suggestTitle).attr("suggestContent", json[i].suggestContent)
+                            var look = $('<button>').attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs lookSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest2').html('查').css('margin-right', '5px');
-                            var upd = $('<button>').attr("id", json[i].id).attr("suggestId", suggestId).attr("suggestTitle", json[i].suggestTitle).attr("suggestContent", json[i].suggestContent)
+                            var upd = $('<button>').attr("id", json[i].id).attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs updSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delSuggest').html('删');
                             str.append(look)
@@ -776,18 +799,15 @@
                         }
                         //查看详情 周 建议
                         $('.lookSuggest').click(function () {
-                            $("#lookSuggestTitle").val($(this).attr('suggestTitle'))
                             $("#lookSuggestContent").val($(this).attr('suggestContent'))
                         })
                         //修改 周 建议
                         $('.updSuggest').click(function () {
                             var id = $(this).attr('id')
                             var suggestId = $(this).attr('suggestId')
-                            $("#updSuggestTitle").val($(this).attr('suggestTitle'))
                             $("#updSuggestContent").val($(this).attr('suggestContent'))
                             //提交
                             $("#updSuggest").click(function () {
-                                var suggestTitle = $("#updSuggestTitle").val()
                                 var suggestContent = $("#updSuggestContent").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
@@ -796,7 +816,6 @@
                                         data: {
                                             id: id,
                                             suggestId: suggestId,
-                                            suggestTitle: suggestTitle,
                                             suggestContent: suggestContent
                                         },
                                         success: function (data) {
@@ -865,15 +884,14 @@
                     },
                     success: function (data) {
                         var json = data.data
-                        console.info(json)
                         for (i in json) {
                             var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].remarkTitle))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].remarkContent))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("remarkId", remarkId).attr("remarkTitle", json[i].remarkTitle).attr("remarkContent", json[i].remarkContent)
+                            var look = $('<button>').attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('查').css('margin-right', '5px');
-                            var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkTitle", json[i].remarkTitle).attr("remarkContent", json[i].remarkContent)
+                            var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                    .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delRemark').html('删');
                             str.append(look)
@@ -884,18 +902,15 @@
                         }
                         //查看详情 周 备注
                         $('.lookRemark').click(function () {
-                            $("#lookRemarkTitle").val($(this).attr('remarkTitle'))
                             $("#lookRemarkContent").val($(this).attr('remarkContent'))
                         })
                         //修改 周 备注
                         $('.updRemark').click(function () {
                             var id = $(this).attr('id')
                             var remarkId = $(this).attr('remarkId')
-                            $("#updRemarkTitle").val($(this).attr('remarkTitle'))
                             $("#updRemarkContent").val($(this).attr('remarkContent'))
                             //提交
                             $("#updRemark").click(function () {
-                                var remarkTitle = $("#updRemarkTitle").val()
                                 var remarkContent = $("#updRemarkContent").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
@@ -904,7 +919,6 @@
                                         data: {
                                             id: id,
                                             remarkId: remarkId,
-                                            remarkTitle: remarkTitle,
                                             remarkContent: remarkContent
                                         },
                                         success: function (data) {
@@ -1012,12 +1026,12 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            $("#updassisMan").val($(this).attr('assisMan'))
-
+                            $("#updassisMan").val($(this).attr('assisMan'));
+                            assisman()
                             $("#updSummary").click(function () {
                                 var content=$("#updcontent").val()
                                 var singleProgress=$("#updsingleProgress").val()
-                                var workHours=$("#updworkHours").val()
+                                var workHours=$('#updworkHours').val().substr(0,$('#updworkHours').val().length-1)+$("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length-1)
                                 var assisMan=$("#updassisMan").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
@@ -1108,12 +1122,6 @@
             }
         }
 
-        function onkeydownfun() {
-            if (event.keyCode == 13) {
-                inittable()
-            }
-        }
-
         //年
         $(function year(){
             $("#weeklyYear").html("")
@@ -1142,10 +1150,28 @@
             }
         })
 
+        //周小结  协助人下拉
+        function assisman(){
+            $("#updassisMan").html("")
+            $("#addassisMan").html("")
+            $.ajax({
+                url: '/getUser',
+                dataType: 'json',
+                success: function (data) {
+                    var str;
+                    var json=data.data
+                    for(var i in json){
+                            str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                            $("#addassisMan").append(str)
+                            $("#updassisMan").append(str)
+                    }
+                }
+            })
+        }
     </script>
 </head>
 
-<body onkeydown="onkeydownfun()">
+<body >
 <select id="weeklyYear" style="margin-left: 10px;">
     <option value="">-- 请选择年份 --</option>
 </select>
@@ -1246,11 +1272,21 @@
                         <td style="width:60%;">
                             <input class="form-control" id="addworkHours"></input>
                         </td>
+                        <td>
+                            <select id="addworkHoursUnit">
+                                <option value="分">m(分)</option>
+                                <option value="时">h(时)</option>
+                                <option value="天">d(天)</option>
+                                <option value="周">w(周)</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">协助人:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="addassisMan"></textarea>
+                            <select id="addassisMan">
+                                <option value="">--请选择协助人--</option>
+                            </select>
                         </td>
                     </tr>
                     </tbody>
@@ -1335,11 +1371,21 @@
                         <td style="width:60%;">
                             <input class="form-control" id="updworkHours" ></input>
                         </td>
+                        <td>
+                            <select id="updworkHoursUnit">
+                                <option value="分">m(分)</option>
+                                <option value="时">h(时)</option>
+                                <option value="天">d(天)</option>
+                                <option value="周">w(周)</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">协助人:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updassisMan" ></textarea>
+                            <select id="updassisMan">
+                                <option value="">--请选择协助人--</option>
+                            </select>
                         </td>
                     </tr>
                     </tbody>
@@ -1364,12 +1410,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">困难点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="addDifficutyTitle"></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体困难:</td>
                         <td style="width:60%;">
@@ -1399,12 +1439,6 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">困难点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="lookdifficultyTitle" readonly></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width:12%;">具体困难:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="lookdifficultyContent" readonly></textarea>
@@ -1427,12 +1461,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">困难点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="updDifficultyTitle" ></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体困难:</td>
                         <td style="width:60%;">
@@ -1460,12 +1488,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">方案点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="addProgrammeTitle"></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
@@ -1495,12 +1517,6 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">方案点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="lookProgrammeTitle"></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="lookProgrammeContent"></textarea>
@@ -1526,12 +1542,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">方案点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="updProgrammeTitle" ></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
@@ -1559,12 +1569,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">建议点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="addSuggestTitle"></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
@@ -1594,12 +1598,6 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">建议点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="lookSuggestTitle"></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="lookSuggestContent"></textarea>
@@ -1625,12 +1623,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">建议点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="updSuggestTitle" ></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
@@ -1658,12 +1650,6 @@
             <div class="modal-body">
                 <table>
                     <tbody>
-                    <tr>
-                        <td style="width:12%;">备注点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="addRemarkTitle"></input>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
@@ -1693,12 +1679,6 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">备注点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="lookRemarkTitle"></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="lookRemarkContent"></textarea>
@@ -1725,12 +1705,6 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">备注点:</td>
-                        <td style="width:60%;">
-                            <input class="form-control" id="updRemarkTitle" ></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="updRemarkContent" ></textarea>
@@ -1745,6 +1719,41 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 1050px">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <table class="table table-bordered" id="table-bordereds">
+                        <thead>
+                        <tr>
+                            <th width="75px">编号</th>
+                            <th width="75px">发布人</th>
+                            <th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
+                            <th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
+                            <th width="50px">类型</th>
+                            <th width="50px">&nbsp;&nbsp;面</th>
+                            <th width="75px"><span>线</span></th>
+                            <th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
+                            <th width="150px" style="text-align: center">事件</th>
+                            <th width="150px" style="text-align: center">过程</th>
+                            <th width="150px" style="text-align: center">结果</th>
+                            <th width="150px" style="text-align: center">解决方案</th>
+                            <th width="150px" style="text-align: center">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodys">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 </body>
 

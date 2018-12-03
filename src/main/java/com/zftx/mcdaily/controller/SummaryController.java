@@ -38,12 +38,11 @@ public class SummaryController {
     /**
      * 查询 周小结
      * @param summary
-     * @param session
      * @return
      */
     @RequestMapping("/getSummary")
     @ResponseBody
-    public R getSummary(Summary summary, HttpSession session){
+    public R getSummary(Summary summary){
         List<Summary> list = summaryService.getSummary(summary);
         if(list !=null &&list.size()>0)
             return R.ok("数据获取成功").put("data",list);
