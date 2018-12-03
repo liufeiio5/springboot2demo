@@ -57,7 +57,7 @@ public class OvertimeController {
         //字符串转换为Date类型，要做异常捕捉，转换有可能失败或者前端传过来的格式有错误
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-             endTime =  simpleDateFormat.parse(endtime);
+             endTime =  simpleDateFormat.parse(endtime);//格式转换
 
         }catch (ParseException e){
             e.printStackTrace();
