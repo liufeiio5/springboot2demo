@@ -25,9 +25,9 @@ public class WeeklyController {
 
     @RequestMapping(value = "/weekly")
     public String table(HttpSession session){
-        /*if (session.getAttribute("user") == null) {
+        if (session.getAttribute("user") == null) {
             return "redirect:/login";
-        }*/
+        }
         return "weekly";
     }
 
@@ -39,23 +39,24 @@ public class WeeklyController {
      */
     @RequestMapping(value = "/getWeekly",method = RequestMethod.GET)
     @ResponseBody
-    public R getWeekly(Weekly weekly,HttpSession session){
+    public R getWeekly(Weekly weekly,HttpSession session,String year,String mouth){
         //获取用户信息
         User user = (User) session.getAttribute("user");
         if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
             weekly.setUserId(user.getId());
         }
-        if(weekly.getSdate().length()==6){
-            weekly.setSdate(weekly.getSdate()+"00");
-        }
-        if(weekly.getEdate().length()==6){
-            weekly.setEdate(weekly.getEdate()+"31");
+        if(year!="" && mouth!=""){
+           weekly.setSdate(year+""+mouth+"00");
+           weekly.setEdate(year+""+mouth+"31");
+        }else if(year!=""&& mouth==""){
+           weekly.setSdate(year+"0100");
+           weekly.setEdate(year+"1231");
         }
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
-        if(list !=null &&list.size()>0)
-            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
-        else {
+        if(list !=null &&list.size()>0) {
+            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "");
+        }else {
             return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "");
         }
     }

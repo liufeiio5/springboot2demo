@@ -18,4 +18,49 @@
     </resultMap>
 
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
+
+
+    <!--修改  加班记录-->
+    <update id="updateOvertime" parameterType="com.zftx.mcdaily.bean.Overtime">
+            UPDATE overtime
+            <set>
+                <if test="overtime.date!=null ">
+                    date=#{overtime.date},
+                </if>
+                <if test="overtime.startTime!=null ">
+                    start_time=#{overtime.startTime},
+                </if>
+                <if test="overtime.endTime!=null ">
+                    end_time=#{overtime.endTime},
+                </if>
+                <if test="overtime.duration!=null">
+                    duration=#{overtime.duration},
+                </if>
+                <if test="overtime.worker!=null">
+                    worker=#{overtime.worker},
+                </if>
+                <if test="overtime.cause!=null">
+                    cause=#{overtime.cause},
+                </if>
+                <if test="overtime.matter!=null">
+                    matter=#{overtime.matter},
+                </if>
+                <if test="overtime.schedule!=null">
+                    schedule=#{overtime.schedule},
+                </if>
+                <if test="overtime.result!=null">
+                    result=#{overtime.result},
+                </if>
+                <if test="overtime.remark!=null">
+                    remark=#{overtime.remark},
+                </if>
+            </set>
+            <where>
+                <if test="overtime.id!=null and overtime.id!=0">
+                    id=#{overtime.id}
+                </if>
+            </where>
+    </update>
+
+
 </mapper>

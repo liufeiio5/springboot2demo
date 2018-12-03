@@ -44,7 +44,6 @@ public class DailyRecordController {
         return "table";
     }
 
-
     /**
      * 查询日报
      * @param userId 用户id
@@ -54,8 +53,8 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/getDaily",method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session)
-    {
+    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session) {
+
         //登录用户
         User user = (User) session.getAttribute("user");
         if(user != null && user.getId() != null && userId == null)

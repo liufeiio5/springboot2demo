@@ -40,4 +40,6 @@ public interface SummaryMapper {
      * @return
      */
     public Integer updateSummary(@Param("summary") Summary summary);
+
+    public Integer deleteSummaryBySid(@Param("summaryId") Integer summaryId);
 }

@@ -40,4 +40,5 @@ public interface WeeklyMapper {
      * @return
      */
     public Integer updateWeekly(@Param("weekly") Weekly weekly);
+
 }
