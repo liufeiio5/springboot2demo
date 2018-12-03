@@ -124,6 +124,7 @@
                     }
                     var autonumber = year + "-" + month + "-" + day;
                     $("#eDate").val(autonumber);
+
                     //第几周
                     var start = $("#sDate").val();
                     var start = $("#sDate").val();
@@ -131,6 +132,7 @@
                     var day = parseInt(day);
                     var month = start.slice(5, 7);
                     var weekly;
+
                     if (day < 7) {
                         weekly = 1
                     } else {
@@ -139,7 +141,47 @@
                             weekly = weekly + 1;
                         }
                     }
+
                     $("#week").val("第" + parseInt(weekly) + "周");
+
+                    var date1 = new Date();
+                    alert(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
+
+                    var date2 = new Date(date1);
+                    date2.setDate(date1.getDate()+7);
+                    var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+
+                    var date3 = new Date(date2);
+                    date3.setDate(date2.getDate()+7);
+                    var times1 = date3.getFullYear()+"-"+(date3.getMonth()+1)+"-"+date3.getDate();
+
+                    var date4 = new Date(date3);
+                    date4.setDate(date3.getDate()+7);
+                    var times2 = date4.getFullYear()+"-"+(date4.getMonth()+1)+"-"+date4.getDate();
+
+                    var date5 = new Date(date4);
+                    date5.setDate(date4.getDate()+7);
+                    var times3 = date5.getFullYear()+"-"+(date5.getMonth()+1)+"-"+date5.getDate();
+
+                    if(parseInt(weekly)==1){
+                        $('#sDate').val(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
+                    }
+
+                    if(parseInt(weekly)==2){
+                        $('#sDate').val(times)
+                    }
+
+                    if(parseInt(weekly)==3){
+                        $('#sDate').val(times1)
+                    }
+
+                    if(parseInt(weekly)==4){
+                        $('#sDate').val(times2)
+                    }
+
+                    if(parseInt(weekly)==5){
+                        $('#sDate').val(times3)
+                    }
                 })
             })
 
@@ -238,7 +280,7 @@
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td id="juphp">').html(json[i].week))
+                        tr.append($('<td >').html(json[i].week).addClass("weekbtn").attr("sdate",json[i].sdate).attr("edate",json[i].edate))
                         var summaryId = json[i].summary_id
                         var id = json[i].id
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addtel' + '_' + id)))
@@ -257,26 +299,14 @@
                         $("#tbody").append(tr);
                     }
 
-                    $('#juphp').click(function () {
-                        var week = $(this).parent().parent().children().eq(1).text();
-                        alert(week)
-                        $.ajax({
-                            type: 'get',
-                            url: 'getWeekly',
-                            dataType: 'json',
-                            data:{
-                                'week': week
-                            },
-                            success: function (data) {
-                                if (data.data[i] != null) {
-                                    window.location.href = "/table"
-                                } else {
-                                    window.location.href = "/weekly"
-                                }
-                            }
-                        })
+                    //第几周 跳转 日报
+                    $('.weekbtn').click(function () {
+                        var startDate= $(this).attr('sdate')
+                        var endDate= $(this).attr('edate')
+                        alert(startDate)
+                        alert(endDate)
+                        window.location.href="/table?startDate="+startDate+"&endDate="+endDate+"&userId="+62;
                     })
-
 
                     //删除
                     $('.delbtn').click(function () {

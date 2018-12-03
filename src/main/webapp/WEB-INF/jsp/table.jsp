@@ -1,4 +1,6 @@
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,36 +182,6 @@
                         }
                     }
 
-                    function jum() {
-                        var id = $(this).parent().parent().children().eq(0).text()
-                        alert(id)
-                        $.ajax({
-                            type: 'get',
-                            url: 'getWeekly',
-                            data: {
-                                'id':id,
-                                'sdate': startDate,
-                                'edate': endDate,
-                            },
-                            dataType: "json",
-                            success: function (data) {
-                                var json = data.data;
-                                alert(json.week)
-                                for (var i in json) {
-                                    alert(json[i].week)
-                                    alert(json[i].sdate)
-                                    alert(json[i].sdate)
-                                    if(json[i].week=="1"){
-                                        $("#startDate").val(json[i].sdate);
-                                        $("#endDate").val(json[i].edate);
-                                    }
-                                }
-                            }
-                        })
-                    }
-                    window.onload = jum;
-
-
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
                         alert(id)
@@ -305,6 +277,48 @@
             })
         }
 
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]);
+            return null;
+        }
+
+        /**
+         *  页面跳转 传入参数
+         */
+        $(function () {
+            var str = GetQueryString("startDate");
+            if(str){
+                var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#startDate').val(date_str);
+            }
+
+
+            var strs = GetQueryString("endDate");
+            if(strs){
+                var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#endDate').val(date_strs);
+            }
+
+            $('#userid').val(GetQueryString("userId"))
+        })
+
+        // 两秒后模拟点击
+        setTimeout(function() {
+            // IE
+            if(document.all) {
+                document.getElementById("query").click();
+            }
+            // 其它浏览器
+            else {
+                var e = document.createEvent("MouseEvents");
+                e.initEvent("click", true, true);
+                document.getElementById("query").dispatchEvent(e);
+            }
+        }, 100);
+
         function inittype() {
             $('#type').html('');
             $.ajax({
@@ -390,6 +404,8 @@
                 }
             });
         }
+
+
 
         function initsurface(typeid) {
             $('#surface').html('');
