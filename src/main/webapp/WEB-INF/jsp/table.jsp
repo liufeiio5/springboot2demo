@@ -127,7 +127,8 @@
         {
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
+            if(r!=null)return  unescape(r[2]);
+            return null;
         }
 
         /**
@@ -135,15 +136,35 @@
          */
         $(function () {
             var str = GetQueryString("startDate");
-            var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
-            $('#startDate').val(date_str);
-
+            if(str){
+                var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#startDate').val(date_str);
+            }
             var strs = GetQueryString("endDate");
-            var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
-            $('#endDate').val(date_strs);
-
+            if(strs){
+                var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#endDate').val(date_strs);
+            }
             $('#userid').val(GetQueryString("userId"))
         })
+
+        // 一秒后模拟点击
+        setTimeout(function() {
+            // IE
+            if(document.all) {
+                document.getElementById("query").click();
+            }
+            // 其它浏览器
+            else {
+                var e = document.createEvent("MouseEvents");
+                e.initEvent("click", true, true);
+                document.getElementById("query").dispatchEvent(e);
+            }
+            $('#startDate').val("")
+            $('#endDate').val("")
+            $('#userid').val("")
+        }, 100);
+
         function inittable() {
             var startDate = $('#startDate').val().replace('-', '').replace('-', '');
             var endDate = $('#endDate').val().replace('-', '').replace('-', '');
@@ -607,7 +628,7 @@
 					<tr>
 						<td style="width:12%;">结果:</td>
 						<td style="width:60%;">
-							<textarea class="form-control" id="result"></textarea>;
+							<textarea class="form-control" id="result"></textarea>
 						</td>
 					</tr>
 					<tr>

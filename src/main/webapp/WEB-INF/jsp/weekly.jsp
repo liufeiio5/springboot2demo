@@ -110,6 +110,9 @@
                                 month = 1;
                         }
                     }
+                    if(day==00){
+                        day=1
+                    }
                     if(day<10&&day>0){
                         day='0'+day
                     }
@@ -131,6 +134,43 @@
                         }
                     }
                     $("#week").val("第" + parseInt(weekly) + "周");
+                    //新增的第一个日期框必须为星期一
+                    var date1 = new Date();
+                    var date2 = new Date(date1);
+                    date2.setDate(date1.getDate()+7);
+                    var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+
+                    var date3 = new Date(date2);
+                    date3.setDate(date2.getDate()+7);
+                    var times1 = date3.getFullYear()+"-"+(date3.getMonth()+1)+"-"+date3.getDate();
+
+                    var date4 = new Date(date3);
+                    date4.setDate(date3.getDate()+7);
+                    var times2 = date4.getFullYear()+"-"+(date4.getMonth()+1)+"-"+date4.getDate();
+
+                    var date5 = new Date(date4);
+                    date5.setDate(date4.getDate()+7);
+                    var times3 = date5.getFullYear()+"-"+(date5.getMonth()+1)+"-"+date5.getDate();
+
+                    if(parseInt(weekly)==1){
+                        $('#sDate').val(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
+                    }
+
+                    if(parseInt(weekly)==2){
+                        $('#sDate').val(times)
+                    }
+
+                    if(parseInt(weekly)==3){
+                        $('#sDate').val(times1)
+                    }
+
+                    if(parseInt(weekly)==4){
+                        $('#sDate').val(times2)
+                    }
+
+                    if(parseInt(weekly)==5){
+                        $('#sDate').val(times3)
+                    }
                 })
             })
 
@@ -231,7 +271,7 @@
                         suggest(id,suggestId)
                         tr.append($('<td>').append($('<button>').attr('remarkId',json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width','100%').addClass('weeklyRemark' + '_' + id)))
                         remark(id,remarkId);
-                        var del = $('<button>').attr("summaryId",json[i].summary_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                        var del = $('<button>').attr("summaryId",json[i].summary_id).attr("difficultyId",json[i].difficulty_id).attr("programmeId",json[i].programme_id).attr("suggestId",json[i].suggest_id).attr("remarkId",json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                         var td = $('<td>');
                         td.append(del);
                         tr.append(td);
@@ -251,6 +291,10 @@
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
                         summaryId=$(this).attr("summaryId")
+                        difficultyId=$(this).attr("difficultyId")
+                        programmeId=$(this).attr("programmeId")
+                        suggestId=$(this).attr("suggestId")
+                        remarkId=$(this).attr("remarkId")
                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                             title: '信息',
                             btn: ['朕意已决', '泥奏凯，朕再想一想']
@@ -260,7 +304,11 @@
                                 url: "/deleteWeekly",
                                 data: {
                                     id: id,
-                                    summaryId:summaryId
+                                    summaryId:summaryId,
+                                    difficultyId:difficultyId,
+                                    programmeId:programmeId,
+                                    suggestId:suggestId,
+                                    remarkId:remarkId
                                 },
                                 success: function (data) {
                                     if (data.code == "200") {
