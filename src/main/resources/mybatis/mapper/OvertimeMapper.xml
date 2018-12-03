@@ -6,7 +6,7 @@
     <resultMap id="overtime" type="com.zftx.mcdaily.bean.Overtime">
         <id column="id" property="id"/>
         <result column="date" property="date"/>
-        <result column="start_time" property="startTime  "/>
+        <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
         <result column="duration" property="duration"/>
         <result column="worker" property="worker"/>
@@ -19,6 +19,14 @@
 
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
 
+    <select id="getOvertime" resultType="java.util.HashMap">
+        select  t.id,t.date,t.start_time,t.end_time,t.duration,m.full_name,t.cause,t.matter,t.schedule,t.result,t.remark
+        from overtime t join user m on t.worker= m.id where t.worker=#{userId}
+        <if test="startTime != null and endTime != null">
+            and t.date between #{startTime} and #{endTime}
+        </if>
+        order by t.id desc
+    </select>
     <delete id="delOvertime" parameterType="com.zftx.mcdaily.bean.Overtime">
           delete from overtime
           <where>

@@ -8,13 +8,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -26,6 +31,27 @@ public class OvertimeController {
     @RequestMapping(value = "/overtime")
     public String overtime(){
         return "overtime";
+    }
+
+    @RequestMapping(value = "/getOvertime",method = RequestMethod.GET)
+    @ResponseBody
+    public R getOvertime(HttpSession session,Integer startTime,Integer endTime,Integer userId){
+        User user =(User)session.getAttribute("user");
+        if (user != null&& user.getId() != null && userId==null)
+            userId = user.getId();
+        ArrayList<HashMap<String,Object>> list = overtimeService.getOvertime(userId,null,null);
+        if(startTime!=null&&endTime!=null){
+            if(startTime>endTime){
+                return R.error("结束日期不能比开始日期早").put("fullName",user != null ? user.getFullName():"");
+            }else{
+             list = overtimeService.getOvertime(userId,startTime.toString(),endTime.toString());
+            }
+        }
+
+        if(list !=null &&list.size()>0)
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
+        else
+            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"");
     }
 
     @ResponseBody

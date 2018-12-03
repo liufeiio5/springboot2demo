@@ -25,6 +25,8 @@
                 elem: '#selectDate'
             });
 
+            query();
+
             $('#addOvertime').click(function () {
                 checkInput();
                 var date = $("#selectDate").val().replace('-', '').replace('-', '');
@@ -115,21 +117,74 @@
             window.location.href="/table";
         }
 
+        function query(){
+            $("#tbody").empty();
+            var startDate = $('#startDate').val().replace('-', '').replace('-', '');
+            var endDate = $('#endDate').val().replace('-', '').replace('-', '');
+            var userId = $('#userId').val();
+            if (startDate != '' && endDate != '') {
+                if (parseInt(startDate) > parseInt(endDate)) {
+                    layer.msg('结束日期不能比开始日期早')
+                    return;
+                }
+            }
+            if (startDate == '' && endDate != '') {
+                layer.msg('结束日期不为空时,开始日期也不能为空')
+                return;
+            }
+            $.ajax({
+                type: 'get',
+                url: '/getOvertime',
+                dataType: 'json',
+                data: {
+                    startTime:startDate,
+                    endTime:endDate,
+                    userId:userId
+                },
+                success: function (data) {
+                    for (var i in  data.data) {
+                        var tr = $('<tr>');
+                        if (typeof (data.data[i].id) != 'undefined') {
+                            tr.append($('<td>').html(data.data[i].id))
+                            tr.append($('<td>').html(data.data[i].date))
+                            tr.append($('<td>').html(data.data[i].start_time))
+                            tr.append($('<td>').html(data.data[i].end_time))
+                            tr.append($('<td>').html(data.data[i].duration))
+                            tr.append($('<td>').html(data.data[i].full_name))
+                            tr.append($('<td>').html(data.data[i].cause))
+                            tr.append($('<td>').html(data.data[i].matter))
+                            tr.append($('<td>').html(data.data[i].schedule))
+                            tr.append($('<td>').html(data.data[i].result))
+                            tr.append($('<td>').html(data.data[i].remark))
+                            var set = $('<button>').addClass('btn btn-warning updbtn').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                            var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                            var td = $('<td>');
+                            td.append(set);
+                            td.append(del);
+                            tr.append(td);
+                            $("#tbody").append(tr);
+                        }
+                    }
+                },
+            })
+        }
+
     </script>
 
 </head>
 <body>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始期" /> —
 <input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
-<input id="userid" placeholder="请输入用户ID" />
-<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
-<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增加班记录</button>
-<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;返回日报</button>
+<input id="userId" placeholder="请输入用户ID" />
+<button id="query" style="margin: 30px;" class="btn btn-primary" onclick="query()"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead>
         <tr>
+            <th width="50px">序号
             <th width="75px">日期
             </th>
             <th width="75px">开始时间
@@ -149,6 +204,7 @@
             <th width="120px">处理结果
             </th>
             <th width="120px">备注</th>
+            <th width="120px">操作</th>
         </tr>
         </thead>
         <tbody id="tbody">
