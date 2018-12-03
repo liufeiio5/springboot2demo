@@ -173,7 +173,7 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="selectDate" name="" style="width:200px" class="layui-input form-control" placeholder="--请选择开始时间--" />
+                            <input type="text" id="selectDate" name="" style="width:200px" class="layui-input form-control" placeholder="--请选择加班日期--" />
                         </td>
                     </tr>
                     <tr>
