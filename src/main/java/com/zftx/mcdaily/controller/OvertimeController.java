@@ -61,6 +61,7 @@ public class OvertimeController {
 
         }catch (ParseException e){
             e.printStackTrace();
+            return R.error("结束时间转换失败");
         }
 
         overtime.setWorker(user.getId()).setEndTime(endTime);

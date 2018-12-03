@@ -26,7 +26,7 @@
             });
 
             $('#addOvertime').click(function () {
-                alert("666")
+                checkInput();
                 var date = $("#selectDate").val().replace('-', '').replace('-', '');
                 var startTime = $("#startTime").val();
                 var endTime = $("#endTime").val();
@@ -53,14 +53,10 @@
                             remark: remark
                         },
                         success: function (data) {
-                            layer.msg(111111111111111111)
                             if (data.code == 200) {
-
                                 layer.msg("添加成功")
-                                console.log(9999999999999999999999999999999)
                                 window.location.href = "/overtime"
                             } else {
-                                console.log(5555555555555555)
                                 window.location.href = "/overtime"
                                 layer.msg("添加失败");
                             }
@@ -69,11 +65,52 @@
             })
         })
 
+        //输入框检查是否为空
+        function checkInput() {
+            var date = $("#selectDate").val();
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            var duration = $("#duration").val();
+            var cause = $("#cause").val();
+            var matter = $("#matter").val();
+            var schedule = $("#schedule").val();
+            var result = $("#result").val();
+            if(date==''||date==null){
+                alert("请选择加班日期！");
+                ajax.abort;
+            }
+            if(startTime==''||startTime==null){
+                alert("请填写加班开始时间！");
+                ajax.abort;
+            }
+            if(endTime==''||endTime==null){
+                alert("请选择加班结束时间！");
+                ajax.abort;
+            }
+            if(duration==''||duration==null){
+                alert("请填写加班时长！");
+                ajax.abort;
+            }
+            if(cause==''||cause==null){
+                alert("请填写加班事由！");
+                ajax.abort;
+            }
+            if(matter==''||matter==null){
+                alert("请填写加班原因！");
+                ajax.abort;
+            }
+            if(schedule==''||schedule==null){
+                alert("请填写进度！");
+                ajax.abort;
+            }
+            if(result==''||result==null){
+                alert("请填写加班结果！");
+                ajax.abort;
+            }
 
+        }
 
-
-
-
+        //返回日报界面
         function dailyRecord() {
             window.location.href="/table";
         }
@@ -82,12 +119,12 @@
 
 </head>
 <body>
-<input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始日期" /> —
+<input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始期" /> —
 <input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input id="userid" placeholder="请输入用户ID" />
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
-<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增加班记录</button>
+<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;返回日报</button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <div>
     <table class="table table-bordered" id="table-bordered">
@@ -136,7 +173,7 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="selectDate" name="" style="width:130px" class="layui-input form-control" placeholder="请选择开始时间" />
+                            <input type="text" id="selectDate" name="" style="width:200px" class="layui-input form-control" placeholder="--请选择开始时间--" />
                         </td>
                     </tr>
                     <tr>
@@ -150,7 +187,7 @@
                         <td style="width:12%;">结束时间 :
                         </td>
                         <td>
-                            <input type="text" id="endTime" name="" style="width:200px" class="layui-input form-control" placeholder="请选择开始时间" />
+                            <input type="text" id="endTime" name="" style="width:200px" class="layui-input form-control" placeholder="--请选择结束时间--" />
                         </td>
                     </tr>
                     <tr>
