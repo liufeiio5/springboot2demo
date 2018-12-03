@@ -81,7 +81,7 @@
                                         window.location.href = "/table"
                                     },500)
                                 }else if(data.message="不能提前创建日报"){
-                                    layer.msg("不能提前创建日报，您这样，欺天当劈");
+                                    layer.msg("不能提前创建日报");
                                 }else {
                                     layer.msg("添加失败");
                                 }
@@ -123,7 +123,27 @@
             $('#query').click(function () { inittable() })
 
         })
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
 
+        /**
+         *  页面跳转 传入参数
+         */
+        $(function () {
+            var str = GetQueryString("startDate");
+            var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+            $('#startDate').val(date_str);
+
+            var strs = GetQueryString("endDate");
+            var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+            $('#endDate').val(date_strs);
+
+            $('#userid').val(GetQueryString("userId"))
+        })
         function inittable() {
             var startDate = $('#startDate').val().replace('-', '').replace('-', '');
             var endDate = $('#endDate').val().replace('-', '').replace('-', '');

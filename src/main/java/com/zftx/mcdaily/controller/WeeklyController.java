@@ -55,9 +55,9 @@ public class WeeklyController {
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
         if(list !=null &&list.size()>0) {
-            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "");
+            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
         }else {
-            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "");
+            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
         }
     }
 
@@ -76,7 +76,13 @@ public class WeeklyController {
             if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
                 weekly.setUserId(user.getId());
             }
-
+            SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
+            //不能提前插入之后的周报
+            if(weekly.getEdate()!=null&& weekly.getEdate()!="") {
+                if (Integer.parseInt(weekly.getEdate()) > Integer.parseInt(dateFormat1.format(new Date()))) {
+                    return R.error("不能提前创建周报");
+                }
+            }
             String str=weeklyService.addWeekly(weekly);
             if("success".equals(str)) {
                 return R.ok("添加成功");

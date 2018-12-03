@@ -174,8 +174,8 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/weekly"
                             }, 500)
-                        } else if (data.message = "不能提前创建日报") {
-                            layer.msg("不能提前创建日报，您这样，欺天当劈");
+                        } else if (data.message = "不能提前创建周报") {
+                            layer.msg("不能提前创建周报");
                         } else {
                             layer.msg("添加失败");
                         }
@@ -204,6 +204,7 @@
                 },
                 success: function (data) {
                     var json = data.data
+                    console.info(data)
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报');
                     console.info(json)
                     for (i in json) {
@@ -212,7 +213,7 @@
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week).addClass("weekbtn").attr("sdate",json[i].sdate).attr("edate",json[i].edate))
+                        tr.append($('<td>').html(json[i].week).addClass("weekbtn").attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id
@@ -236,12 +237,15 @@
                         tr.append(td);
                         $("#tbody").append(tr);
                     }
-                   /* //第几周 跳转 日报
+                    //第几周 跳转 日报
                     $('.weekbtn').click(function () {
+                        var userId= $(this).attr('userId')
                         var startDate= $(this).attr('sdate')
                         var endDate= $(this).attr('edate')
-                        window.location.href="/getDaily?startDate"+startDate+'endDate'+endDate
-                    })*/
+                        alert(startDate)
+                        alert(endDate)
+                        window.location.href="/table?startDate="+startDate+"&endDate="+endDate+"&userId="+userId;
+                    })
 
                     //删除
                     $('.delbtn').click(function () {
@@ -1313,15 +1317,15 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">困难标题:</td>
+                        <td style="width:12%;">困难点:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="addDifficutyTitle"></textarea>
+                            <input class="form-control" id="addDifficutyTitle"></input>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">具体困难:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addDifficutyContent"></input>
+                            <textarea class="form-control" id="addDifficutyContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1409,15 +1413,15 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">方案标题:</td>
+                        <td style="width:12%;">方案点:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="addProgrammeTitle"></textarea>
+                            <input class="form-control" id="addProgrammeTitle"></input>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addProgrammeContent"></input>
+                            <textarea class="form-control" id="addProgrammeContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1443,7 +1447,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">方案标题:</td>
+                        <td style="width:12%;">方案点:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="lookProgrammeTitle"></input>
                         </td>
@@ -1508,7 +1512,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">建议标题:</td>
+                        <td style="width:12%;">建议点:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="addSuggestTitle"></input>
                         </td>
@@ -1542,7 +1546,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">建议标题:</td>
+                        <td style="width:12%;">建议点:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="lookSuggestTitle"></input>
                         </td>
@@ -1607,7 +1611,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">备注标题:</td>
+                        <td style="width:12%;">备注点:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="addRemarkTitle"></input>
                         </td>
@@ -1641,7 +1645,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:12%;">备注标题:</td>
+                        <td style="width:12%;">备注点:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="lookRemarkTitle"></input>
                         </td>
