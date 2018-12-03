@@ -8,6 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 @Slf4j
 public class OvertimeServiceImpl implements OvertimeService
@@ -16,6 +20,10 @@ public class OvertimeServiceImpl implements OvertimeService
     @Autowired
     private OvertimeMapper overtimeMapper;
 
+    @Override
+    public ArrayList<HashMap<String,Object>> getOvertime(Integer userId, String startTime, String endTime) {
+        return overtimeMapper.getOvertime(userId, startTime, endTime);
+    }
     /**
      * 实际删除
      * @param overtime
