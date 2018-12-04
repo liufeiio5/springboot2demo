@@ -197,4 +197,44 @@
        delete from weekly  where
        id=#{weekly.id}
     </delete>
+
+    <!--根据条件查询-->
+    <select id="getWeeklyByWhere" resultMap="weekly">
+        select * from weekly
+                <if test="weekly != null">
+                    <where>
+                        <if test="weekly.id != null">
+                            id=#{weekly.id}
+                        </if>
+                        <if test="weekly.userId != null">
+                            and user_id=#{weekly.userId}
+                        </if>
+                        <if test="weekly.week != null">
+                            and week=#{weekly.week}
+                        </if>
+                        <if test="weekly.summaryId != null">
+                            and summaryId=#{weekly.summaryId}
+                        </if>
+                        <if test="weekly.difficultyId != null">
+                            and difficulty_id=#{weekly.difficultyId}
+                        </if>
+                        <if test="weekly.programmeId != null">
+                            and programme_id=#{weekly.programmeId}
+                        </if>
+                        <if test="weekly.suggestId != null">
+                            and suggest_id=#{weekly.suggestId}
+                        </if>
+                        <if test="weekly.remarkId != null">
+                            and remark_id=#{weekly.remarkId}
+                        </if>
+                        <if test="weekly.sdate!= '' and weekly.sdate != null">
+                            and sdate =#{weekly.sdate}
+                        </if>
+                        <if test="weekly.edate != '' and weekly.edate != null">
+                            and edate =#{weekly.edate}
+                        </if>
+                    </where>
+                </if>
+    </select>
+
 </mapper>

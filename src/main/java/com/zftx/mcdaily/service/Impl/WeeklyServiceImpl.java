@@ -48,12 +48,17 @@ public class WeeklyServiceImpl implements WeeklyService {
      * @return
      */
     public String addWeekly(@Param("weekly") Weekly weekly){
-        //先添加
-        int i=weeklyMapper.addWeekly(weekly);
-        if(i>0){
-            return "success";
+        List<Weekly> list=weeklyMapper.getWeeklyByWhere(new Weekly().setSdate(weekly.getSdate()));
+        if(list.size()>0){
+            return "repeat";
         }else{
-            return "fails";
+            //先添加
+            int i=weeklyMapper.addWeekly(weekly);
+            if(i>0){
+                return "success";
+            }else{
+                return "fails";
+            }
         }
     }
 

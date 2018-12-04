@@ -41,4 +41,11 @@ public interface WeeklyMapper {
      */
     public Integer updateWeekly(@Param("weekly") Weekly weekly);
 
+    /**
+     * 根据日期条件 或其他条件查询
+     * @param weekly
+     * @return
+     */
+    public List<Weekly> getWeeklyByWhere(@Param("weekly") Weekly weekly);
+
 }

@@ -1,17 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title></title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/table.css" />
+    <link rel="stylesheet" href="/css/table.css"/>
+    <link rel="stylesheet" href="/css/chosen.css"/>
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/Date.js"></script>
+    <script type="text/javascript" src="/js/chosen.js"></script>
     <style>
         .asd {
             width: 150px;
@@ -59,8 +60,190 @@
     </style>
     <script>
         $(function() {
+            $("#addassisman").html("")
+            $("#updassisman").html("")
+            //周小结  协助人下拉
+                $.ajax({
+                    url: '/getUser',
+                    dataType: 'json',
+                    success: function (data) {
+                        var str;
+                        var json = data.data
+                        for (var i in json) {
+                            str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                            $("#addassisman").append(str)
+                            $("#updassisman").append(str)
+                        }
+                            $("#addassisman").trigger("liszt:updated");
+                            $("#updassisman").trigger("liszt:updated");
+                            $("#addassisman").chosen();
+                            $("#updassisman").chosen();
+                    }
+                })
 
             var mapss
+            laydate.render({
+                elem: '#startDate'
+                , type: 'month'
+
+            });
+            laydate.render({
+                elem: '#endDate'
+                , type: 'month'
+            });
+            laydate.render({
+                elem: '#sDate',
+                done: (function (value) {
+                    var start = $("#sDate").val();
+                    var year = start.slice(0, 4);
+                    var month = start.slice(5, 7);
+                    var day = start.slice(8, 10);
+                    var year = parseInt(year);
+                    var month = parseInt(month);
+                    var day = parseInt(day);
+
+                    var dd = new Date();
+                    var week = dd.getDay(); //获取时间的星期数
+                    var minus = week ? week - 1 : 6;
+                    dd.setDate(dd.getDate() - minus); //获取minus天前的日期
+                    var y = dd.getFullYear();
+                    var m = dd.getMonth() + 1; //获取月份
+                    var d = dd.getDate();
+                    var first = y + "-" + m + "-" + d;
+
+
+                    var ff = new Date();
+                    ff.setDate(dd.getDate() + 7); //获取minus天前的日期
+                    var y = ff.getFullYear();
+                    var m = ff.getMonth() + 1; //获取月份
+                    var d = ff.getDate();
+                    var two = y + "-" + m + "-" + d;
+
+
+                    var ee = new Date();
+                    ee.setDate(ff.getDate() + 7); //获取minus天前的日期
+                    var y = ee.getFullYear();
+                    var m = ee.getMonth() + 1; //获取月份
+                    var d = ee.getDate();
+                    var three = y + "-" + m + "-" + d;
+
+
+                    var gg = new Date();
+                    gg.setDate(ee.getDate() + 7); //获取minus天前的日期
+                    var y = gg.getFullYear();
+                    var m = gg.getMonth() + 1; //获取月份
+                    var d = gg.getDate();
+                    var four = y + "-" + m + "-" + d;
+
+
+                    var qq = new Date();
+                    qq.setDate(gg.getDate() + 7); //获取minus天前的日期
+                    var y = qq.getFullYear();
+                    var m = qq.getMonth() + 1; //获取月份
+                    var d = qq.getDate();
+                    var five = y + "-" + m + "-" + d;
+
+                    //第几周
+                    var start = $("#sDate").val();
+                    var start = $("#sDate").val();
+                    var day = start.slice(8, 10);
+                    var day = parseInt(day);
+                    var month = start.slice(5, 7);
+                    var weekly;
+
+                    var weekly;
+                    if (day < 7 + 3) {
+                        weekly = 1
+                    } else if (day < 10 + 7) {
+                        weekly = 2
+                    } else if (day < 10 + 14) {
+                        weekly = 3
+                    } else if (day < 10 + 21) {
+                        weekly = 4
+                    } else {
+                        weekly = day / 7;
+                        if (weekly != 0) {
+                            weekly = weekly + 1;
+                        }
+                    }
+
+                    if (parseInt(weekly) == 1) {
+                        $('#sDate').val(first)
+                    }
+
+                    if (parseInt(weekly) == 2) {
+                        $('#sDate').val(two)
+                    }
+
+                    if (parseInt(weekly) == 3) {
+                        $('#sDate').val(three)
+                    }
+
+                    if (parseInt(weekly) == 4) {
+                        $('#sDate').val(four)
+                    }
+
+                    var start = $("#sDate").val();
+                    var year = start.slice(0, 4);
+                    var month = start.slice(5, 7);
+                    var day = start.slice(8, 10);
+                    var year = parseInt(year);
+                    var month = parseInt(month);
+                    var day = parseInt(day);
+                    if (day < 26) {
+                        day = day + 4;
+                    } else {
+                        switch (month) {
+                            case 1:
+                            case 3:
+                            case 5:
+                            case 7:
+                            case 8:
+                            case 10:
+                                day = day + 4 - 31;
+                                month = month + 1;
+                                break;
+                            case 4:
+                            case 6:
+                            case 9:
+                            case 11:
+                                day = day + 4 - 30;
+                                month = month + 1;
+                                break;
+                            case 2:
+                                day = day + 4 - 29;
+                                month = month + 1;
+                                break;
+                            case 12:
+                                day = day + 4 - 31;
+                                year = year + 1;
+                                month = 1;
+                        }
+                    }
+                    var autonumber = year + "-" + month + "-" + day;
+                    $("#eDate").val(autonumber);
+
+                    //第几周
+                    var start = $("#sDate").val();
+                    var start = $("#sDate").val();
+                    var day = start.slice(8, 10);
+                    var day = parseInt(day);
+                    var month = start.slice(5, 7);
+                    var weekly;
+
+                    if (day < 7) {
+                        weekly = 1
+                    } else {
+                        weekly = day / 7;
+                        if (weekly != 0) {
+                            weekly = weekly + 1;
+                        }
+                    }
+
+                    $("#week").val("第" + parseInt(weekly) + "周");
+                })
+            })
+
             laydate.render({
                 elem: '#startDate'
                 ,type: 'year'
@@ -110,9 +293,6 @@
                                 month = 1;
                         }
                     }
-                    if(day==00){
-                        day=1
-                    }
                     if(day<10&&day>0){
                         day='0'+day
                     }
@@ -135,42 +315,55 @@
                     }
                     $("#week").val("第" + parseInt(weekly) + "周");
                     //新增的第一个日期框必须为星期一
-                    var date1 = new Date();
-                    var date2 = new Date(date1);
-                    date2.setDate(date1.getDate()+7);
-                    var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+                    var dd = new Date();
+                    var week = dd.getDay(); //获取时间的星期数
+                    var minus = week ? week - 1 : 6;
+                    dd.setDate(dd.getDate() - minus); //获取minus天前的日期
+                    var y = dd.getFullYear();
+                    var m = dd.getMonth() + 1; //获取月份
+                    var d = dd.getDate();
+                    var first = y + "-" + m + "-" + d;
+                    alert('first'+first)
 
-                    var date3 = new Date(date2);
-                    date3.setDate(date2.getDate()+7);
-                    var times1 = date3.getFullYear()+"-"+(date3.getMonth()+1)+"-"+date3.getDate();
 
-                    var date4 = new Date(date3);
-                    date4.setDate(date3.getDate()+7);
-                    var times2 = date4.getFullYear()+"-"+(date4.getMonth()+1)+"-"+date4.getDate();
 
-                    var date5 = new Date(date4);
-                    date5.setDate(date4.getDate()+7);
-                    var times3 = date5.getFullYear()+"-"+(date5.getMonth()+1)+"-"+date5.getDate();
+                    var ff=new Date();
+                    ff.setDate(dd.getDate() +7); //获取minus天前的日期
+                    var y = ff.getFullYear();
+                    var m = ff.getMonth() + 1; //获取月份
+                    var d = ff.getDate();
+                    var two = y + "-" + m + "-" + d;
+                    alert('two' + two)
 
-                    if(parseInt(weekly)==1){
-                        $('#sDate').val(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
-                    }
 
-                    if(parseInt(weekly)==2){
-                        $('#sDate').val(times)
-                    }
 
-                    if(parseInt(weekly)==3){
-                        $('#sDate').val(times1)
-                    }
+                    var ee=new Date();
+                    ee.setDate(ff.getDate() +7); //获取minus天前的日期
+                    var y = ee.getFullYear();
+                    var m = ee.getMonth() + 1; //获取月份
+                    var d = ee.getDate();
+                    var three = y + "-" + m + "-" + d;
+                    alert('three'+three)
 
-                    if(parseInt(weekly)==4){
-                        $('#sDate').val(times2)
-                    }
 
-                    if(parseInt(weekly)==5){
-                        $('#sDate').val(times3)
-                    }
+
+                    var gg=new Date();
+                    gg.setDate(ee.getDate() +7); //获取minus天前的日期
+                    var y = gg.getFullYear();
+                    var m = gg.getMonth() + 1; //获取月份
+                    var d = gg.getDate();
+                    var four = y + "-" + m + "-" + d;
+                    alert('four'+four)
+
+
+
+                    var qq=new Date();
+                    qq.setDate(gg.getDate() +7); //获取minus天前的日期
+                    var y = qq.getFullYear();
+                    var m = qq.getMonth() + 1; //获取月份
+                    var d = qq.getDate();
+                    var five = y + "-" + m + "-" + d;
+                    alert('five'+five)
                 })
             })
 
@@ -185,7 +378,7 @@
             });
             //初始化
             inittable();
-            assisman();
+
             //查询
             $("#query").click(function () {
                 inittable()
@@ -209,6 +402,7 @@
                         edate:edate,
                     },
                     success: function(data) {
+                        console.info(data.message)
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
                                 icon: 1,
@@ -217,9 +411,11 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/weekly"
                             }, 500)
-                        } else if (data.message = "不能提前创建周报") {
-                            layer.msg("不能提前创建周报");
-                        } else {
+                        } else if (data.message=="不能提前创建周报") {
+                            layer.msg("禁止提前创建周报");
+                        } else if(data.message=="重复添加"){
+                            layer.msg("禁止周报重复添加");
+                        }else{
                             layer.msg("添加失败");
                         }
                     }
@@ -260,7 +456,7 @@
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week).css("color","blue").css("cursor","pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
+                        tr.append($('<td>').html(json[i].week).attr("week",json[i].week).css("color","blue").css("cursor","pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId',json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width','100%').addClass('addSmmarytel' + '_' + id)))
                         summary(id, summaryId)
                         tr.append($('<td>').addClass('progress'+'_' + id))
@@ -283,6 +479,10 @@
                         var startDate= $(this).attr('sdate')
                         var endDate= $(this).attr('edate')
                         var userId=$(this).attr('userId')
+                        var year=startDate.slice(0,4)
+                        var mouth=startDate.slice(5,7)
+                        var week=$(this).attr('week')
+                        $("#weekspan").html(year+'年'+mouth+'月  '+'第'+week+'周');
                         $("#tbodys").empty();
                         $.ajax({
                             type: 'get',
@@ -310,8 +510,6 @@
                                         tr.append($('<td>').html(data.data[i].result))
                                         tr.append($('<td>').html(data.data[i].method))
                                         tr.append($('<td>').html(data.data[i].remark))
-                                        var td = $('<td>');
-                                        tr.append(td);
                                         $("#tbodys").append(tr);
                                     }
                                 }
@@ -362,63 +560,15 @@
                         });
                     })
 
-                    //修改
-                    $('.updbtn').click(function () {
-                        var id = $(this).parent().parent().children().eq(0).text()
-                        $("#uprogress").val($(this).parent().parent().children().eq(6).text())
-                        $("#udifficulty").val($(this).parent().parent().children().eq(7).text())
-                        $("#uprogramme").val($(this).parent().parent().children().eq(8).text())
-                        $("#usuggest").val($(this).parent().parent().children().eq(9).text())
-                        $("#uremark").val($(this).parent().parent().children().eq(10).text())
-                        $('#setUpd').click(function () {
-                            var uprogress = $("#uprogress").val()
-                            var udifficulty = $("#udifficulty").val()
-                            var uprogramme = $("#uprogramme").val()
-                            var usuggest = $("#usuggest").val()
-                            var uremark = $("#uremark").val()
-                            layer.confirm('确认要修改吗？', function (index) {
-                                $.ajax({
-                                    dataType: 'json',
-                                    type: "post",
-                                    url: "/updateWeekly",
-                                    data: {
-                                        id: id,
-                                        difficulty: udifficulty,
-                                        programme: uprogramme,
-                                        suggest: usuggest,
-                                        remark: uremark,
-                                        progress: uprogress
-                                    },
-                                    success: function (data) {
-                                        if (data.code == "200") {
-                                            setTimeout(function wlh() {
-                                                window.location.href = "/weekly"
-                                            }, 500)
-                                            layer.msg('已修改!', {
-                                                icon: 1,
-                                                time: 1000
-                                            });
-                                        } else {
-                                            layer.msg(data.result, {
-                                                icon: 1,
-                                                time: 1000
-                                            });
-                                        }
-                                    }
-                                });
-                            });
-                        })
-                    })
-
                     //给提交传值
                     $(".addSummary").click(function () {
                         $("#midleValueId").val($(this).attr('summaryId'))
                     })
                     //提交  添加周小结
                     $("#addSummary").click(function () {
-                        assisman();
                         var summaryId=$("#midleValueId").val()
                         var workHours=$('#addworkHours').val()+$('#addworkHoursUnit').val()
+                        var assisMan=$("#addassisman").val().toString();
                         $.ajax({
                             url: "/addSummary",
                             dataType: 'json',
@@ -427,7 +577,7 @@
                                 content:$('#addcontent').val(),
                                 singleProgress:$('#addsingleProgress').val(),
                                 workHours:workHours,
-                                assisMan:$('#addassisMan').val()
+                                assismans:assisMan
                             },
                             success: function(data) {
                                 if (data.message =="添加成功") {
@@ -595,8 +745,9 @@
                         $('.lookDifficulty').click(function () {
                             $("#lookdifficultyContent").val($(this).attr('difficultyContent'))
                         })
-                        //修改 周困难
+                        //修改 周 困难
                         $('.updDifficulty').click(function () {
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             var id=$(this).attr('id')
                             var difficultyId=$(this).attr('difficultyId')
                             $("#updDifficultyContent").val($(this).attr('difficultyContent'))
@@ -610,14 +761,21 @@
                                         data: {
                                             id: id,
                                             difficultyId: difficultyId,
-                                            difficultyContent: difficultyContent
+                                            difficultyContent: difficultyContent,
+                                            sdate:sdate
                                         },
                                         success: function (data) {
+                                            console.info(data)
                                             if (data.code == "200") {
                                                 setTimeout(function wlh() {
                                                     window.location.href = "/weekly"
                                                 }, 500)
                                                 layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }else if(data.message =="当前时间不在此周内，禁止修改"){
+                                                layer.msg('当前时间不在此周内，禁止修改!', {
                                                     icon: 1,
                                                     time: 1000
                                                 });
@@ -703,6 +861,7 @@
                             var id = $(this).attr('id')
                             var programmeId = $(this).attr('programmeId')
                             $("#updProgrammeContent").val($(this).attr('programmeContent'))
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updProgramme").click(function () {
                                 var programmeContent = $("#updProgrammeContent").val()
@@ -713,7 +872,8 @@
                                         data: {
                                             id: id,
                                             programmeId: programmeId,
-                                            programmeContent: programmeContent
+                                            programmeContent: programmeContent,
+                                            sdate:sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -724,7 +884,12 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else {
+                                            } else if(data.message =="当前时间不在此周内，禁止修改"){
+                                                layer.msg("当前时间不在此周内，禁止修改", {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }else {
                                                 layer.msg(data.result, {
                                                     icon: 1,
                                                     time: 1000
@@ -806,6 +971,7 @@
                             var id = $(this).attr('id')
                             var suggestId = $(this).attr('suggestId')
                             $("#updSuggestContent").val($(this).attr('suggestContent'))
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updSuggest").click(function () {
                                 var suggestContent = $("#updSuggestContent").val()
@@ -816,7 +982,8 @@
                                         data: {
                                             id: id,
                                             suggestId: suggestId,
-                                            suggestContent: suggestContent
+                                            suggestContent: suggestContent,
+                                            sdate:sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -824,6 +991,11 @@
                                                     window.location.href = "/weekly"
                                                 }, 500)
                                                 layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                                layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
                                                 });
@@ -909,6 +1081,7 @@
                             var id = $(this).attr('id')
                             var remarkId = $(this).attr('remarkId')
                             $("#updRemarkContent").val($(this).attr('remarkContent'))
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updRemark").click(function () {
                                 var remarkContent = $("#updRemarkContent").val()
@@ -919,7 +1092,8 @@
                                         data: {
                                             id: id,
                                             remarkId: remarkId,
-                                            remarkContent: remarkContent
+                                            remarkContent: remarkContent,
+                                            sdate:sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -927,6 +1101,11 @@
                                                     window.location.href = "/weekly"
                                                 }, 500)
                                                 layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                                layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
                                                 });
@@ -1016,7 +1195,8 @@
                             $("#content").val($(this).attr('content'))
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
-                            $("#assisMan").val($(this).attr('assisMan'))
+                            var assisman=$(this).attr('assisMan').toString()
+                            $("#assisMan").val(assisman.replace(',',' '))
                         })
 
                         //修改 周小结
@@ -1026,13 +1206,14 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            $("#updassisMan").val($(this).attr('assisMan'));
-                            assisman()
+                            alert($(this).attr('assisMan').replace(',',' '))
+                            $("#updassisman").val($(this).attr('assisMan').replace(',',' '));
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             $("#updSummary").click(function () {
                                 var content=$("#updcontent").val()
                                 var singleProgress=$("#updsingleProgress").val()
                                 var workHours=$('#updworkHours').val().substr(0,$('#updworkHours').val().length-1)+$("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length-1)
-                                var assisMan=$("#updassisMan").val()
+                                var assisMan=$(".qaddassisMan").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateSummary',
@@ -1043,7 +1224,8 @@
                                             content: content,
                                             singleProgress: singleProgress,
                                             workHours: workHours,
-                                            assisMan: assisMan
+                                            assisMan: assisMan,
+                                            sdate:sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -1051,6 +1233,11 @@
                                                     window.location.href = "/weekly"
                                                 }, 500)
                                                 layer.msg('已修改!', {
+                                                    icon: 1,
+                                                    time: 1000
+                                                });
+                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                                layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
                                                 });
@@ -1149,29 +1336,24 @@
                 $("#weeklyMouth").append(str1);
             }
         })
-
-        //周小结  协助人下拉
-        function assisman(){
-            $("#updassisMan").html("")
-            $("#addassisMan").html("")
-            $.ajax({
-                url: '/getUser',
-                dataType: 'json',
-                success: function (data) {
-                    var str;
-                    var json=data.data
-                    for(var i in json){
-                            str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
-                            $("#addassisMan").append(str)
-                            $("#updassisMan").append(str)
-                    }
-                }
-            })
+      /*  function Sevendate(sdate) {
+            var date1 = new Date();
+            var date2 = new Date(date1);
+            date2.setDate(date1.getDate()+6);
+            var month1=date2.getMonth() + 1
+            var month = month1< 10 ? "0" +month1 : month1;
+            var date3=date2.getDate() < 10 ? "0" +date2.getDate() : date2.getDate();
+            var times = date2.getFullYear()+""+month+""+date3;
+            alert(times)
+            return times;
         }
+*/
+
     </script>
 </head>
 
 <body >
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">周报</span></div>
 <select id="weeklyYear" style="margin-left: 10px;">
     <option value="">-- 请选择年份 --</option>
 </select>
@@ -1283,9 +1465,8 @@
                     </tr>
                     <tr>
                         <td style="width:12%;">协助人:</td>
-                        <td style="width:60%;">
-                            <select id="addassisMan">
-                                <option value="">--请选择协助人--</option>
+                        <td style="width:60%" >
+                            <select id="addassisman" data-placeholder="请选择协助人" multiple class="chzn-select">
                             </select>
                         </td>
                     </tr>
@@ -1383,8 +1564,7 @@
                     <tr>
                         <td style="width:12%;">协助人:</td>
                         <td style="width:60%;">
-                            <select id="updassisMan">
-                                <option value="">--请选择协助人--</option>
+                            <select id="updassisman" data-placeholder="请选择协助人" multiple class="chzn-select">
                             </select>
                         </td>
                     </tr>
@@ -1721,10 +1901,11 @@
     </div>
 </div>
 <div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" style="width: 1050px">
+    <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-body">
                 <div>
+                    <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>所有日报</font></b></div>
                     <table class="table table-bordered" id="table-bordereds">
                         <thead>
                         <tr>
@@ -1756,5 +1937,4 @@
     </div><!-- /.modal-dialog -->
 </div>
 </body>
-
 </html>

@@ -3,12 +3,17 @@ package com.zftx.mcdaily.controller;
 import com.zftx.mcdaily.bean.WeeklySuggest;
 import com.zftx.mcdaily.service.WeeklySuggestService;
 import com.zftx.mcdaily.util.R;
+import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,7 +68,18 @@ public class WeeklySuggestController {
      */
     @RequestMapping("/updateWeeklySuggest")
     @ResponseBody
-    public R updateWeeklySuggest(WeeklySuggest weeklySuggest){
+    public R updateWeeklySuggest(WeeklySuggest weeklySuggest,String sdate)throws ParseException{
+        if(sdate!=null && sdate!=""){
+            String sevenDate=getSevenDate(sdate);
+            //获取当前日期
+            String mouth= Tool.getMonth()< 10 ? "0" +Tool.getMonth() : Tool.getMonth()+"";
+            String day= Tool.getToday() < 10 ? "0" +Tool.getToday() : Tool.getToday()+"";
+            String nowDate=Tool.getYear()+""+mouth+day;
+            Integer nowDate2=Integer.parseInt(nowDate);
+            if(nowDate2>Integer.parseInt(sevenDate)){
+                return R.error("当前时间不在此周内，禁止修改");
+            }
+        }
         if(weeklySuggest!=null) {
             String str = weeklySuggestService.updateWeeklySuggest(weeklySuggest);
             if ("success".equals(str)) {
@@ -94,5 +110,28 @@ public class WeeklySuggestController {
         }else{
             return R.error("参数有误!");
         }
+    }
+
+    //第6天后日期
+    public String getSevenDate(String sdate)throws ParseException {
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = sdf.parse(sdate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        Date today = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus1 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus2 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus3 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus4 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus5 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus6 = c.getTime();
+        return  sdf.format(today_plus6);
     }
 }
