@@ -80,7 +80,7 @@ public class SummaryController {
      */
     @RequestMapping("/updateSummary")
     @ResponseBody
-    public R updateSummary(Summary summary,HttpSession session,String sdate)throws ParseException{
+    public R updateSummary(Summary summary,HttpSession session,String sdate,String assismans)throws ParseException{
         if(sdate!=null && sdate!=""){
             String sevenDate=getSevenDate(sdate);
             //获取当前日期
@@ -93,6 +93,7 @@ public class SummaryController {
             }
         }
         if(summary!=null) {
+            summary.setAssisMan(assismans);
             //获取用户信息
             User user = (User) session.getAttribute("user");
 

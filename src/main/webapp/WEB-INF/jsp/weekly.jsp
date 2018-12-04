@@ -80,7 +80,6 @@
                             $("#updassisman").chosen();
                     }
                 })
-
             var mapss
             laydate.render({
                 elem: '#startDate'
@@ -1071,6 +1070,8 @@
                             str.append(del)
                             str.append(td);
                             $(".weeklyRemark" + '_' + id).append(str);
+                            alert(str);
+
                         }
                         //查看详情 周 备注
                         $('.lookRemark').click(function () {
@@ -1198,7 +1199,12 @@
                             var assisman=$(this).attr('assisMan').toString()
                             $("#assisMan").val(assisman.replace(',',' '))
                         })
-
+                        function getUpdsummary(updassisman){
+                            str = '<option value="付强" selected="selected">'+ '付强'+'</option>';
+                            $("#updassisman").append(str)
+                            $("#updassisman").trigger("liszt:updated");
+                            $("#updassisman").chosen();
+                        }
                         //修改 周小结
                         $('.updsummary').click(function () {
                             var id=$(this).attr('id')
@@ -1206,14 +1212,16 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            alert($(this).attr('assisMan').replace(',',' '))
-                            $("#updassisman").val($(this).attr('assisMan').replace(',',' '));
+                            var assisMan=$(this).attr('assisMan').replace(',',' ');
+                            alert(assisMan)
+                            $("#updassisman").innerHTML=assisMan;
+                            console.log(1);
                             var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             $("#updSummary").click(function () {
                                 var content=$("#updcontent").val()
                                 var singleProgress=$("#updsingleProgress").val()
                                 var workHours=$('#updworkHours').val().substr(0,$('#updworkHours').val().length-1)+$("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length-1)
-                                var assisMan=$(".qaddassisMan").val()
+                                var assisman=$("#updassisman").val().toString()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateSummary',
@@ -1336,19 +1344,6 @@
                 $("#weeklyMouth").append(str1);
             }
         })
-      /*  function Sevendate(sdate) {
-            var date1 = new Date();
-            var date2 = new Date(date1);
-            date2.setDate(date1.getDate()+6);
-            var month1=date2.getMonth() + 1
-            var month = month1< 10 ? "0" +month1 : month1;
-            var date3=date2.getDate() < 10 ? "0" +date2.getDate() : date2.getDate();
-            var times = date2.getFullYear()+""+month+""+date3;
-            alert(times)
-            return times;
-        }
-*/
-
     </script>
 </head>
 
