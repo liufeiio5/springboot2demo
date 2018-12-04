@@ -92,6 +92,102 @@
                     var year = parseInt(year);
                     var month = parseInt(month);
                     var day = parseInt(day);
+
+                    var dd = new Date();
+                    var week = dd.getDay(); //获取时间的星期数
+                    var minus = week ? week - 1 : 6;
+                    dd.setDate(dd.getDate() - minus); //获取minus天前的日期
+                    var y = dd.getFullYear();
+                    var m = dd.getMonth() + 1; //获取月份
+                    var d = dd.getDate();
+                    var first = y + "-" + m + "-" + d;
+                    alert('first'+first)
+
+
+                    var ff=new Date();
+                    ff.setDate(dd.getDate() +7); //获取minus天前的日期
+                    var y = ff.getFullYear();
+                    var m = ff.getMonth() + 1; //获取月份
+                    var d = ff.getDate();
+                    var two = y + "-" + m + "-" + d;
+                    alert('two' + two)
+
+
+                    var ee=new Date();
+                    ee.setDate(ff.getDate() +7); //获取minus天前的日期
+                    var y = ee.getFullYear();
+                    var m = ee.getMonth() + 1; //获取月份
+                    var d = ee.getDate();
+                    var three = y + "-" + m + "-" + d;
+                    alert('three'+three)
+
+
+                    var gg=new Date();
+                    gg.setDate(ee.getDate() +7); //获取minus天前的日期
+                    var y = gg.getFullYear();
+                    var m = gg.getMonth() + 1; //获取月份
+                    var d = gg.getDate();
+                    var four = y + "-" + m + "-" + d;
+                    alert('four'+four)
+
+
+                    var qq=new Date();
+                    qq.setDate(gg.getDate() +7); //获取minus天前的日期
+                    var y = qq.getFullYear();
+                    var m = qq.getMonth() + 1; //获取月份
+                    var d = qq.getDate();
+                    var five = y + "-" + m + "-" + d;
+                    alert('five'+five)
+
+                    //第几周
+                    var start = $("#sDate").val();
+                    var start = $("#sDate").val();
+                    var day = start.slice(8, 10);
+                    var day = parseInt(day);
+                    var month = start.slice(5, 7);
+                    var weekly;
+
+                    var weekly;
+                    if (day < 7 + 3) {
+                        weekly = 1
+                    }else if(day < 10 + 7){
+                        weekly=2
+                    }else if(day < 10 + 14){
+                        weekly=3
+                    }else if(day < 10 + 21){
+                        weekly=4
+                    }else{
+                        weekly = day / 7;
+                        if (weekly != 0) {
+                            weekly = weekly + 1;
+                        }
+                    }
+
+                    alert('weekly:' + parseInt(weekly))
+
+                    if (parseInt(weekly) == 1) {
+                        $('#sDate').val(first)
+                    }
+
+                    if (parseInt(weekly) == 2) {
+                        $('#sDate').val(two)
+                    }
+
+                    if (parseInt(weekly) == 3) {
+                        $('#sDate').val(three)
+                    }
+
+                    if (parseInt(weekly) == 4) {
+                        $('#sDate').val(four)
+                    }
+
+                    var start = $("#sDate").val();
+                    var year = start.slice(0, 4);
+                    var month = start.slice(5, 7);
+                    var day = start.slice(8, 10);
+                    var year = parseInt(year);
+                    var month = parseInt(month);
+                    var day = parseInt(day);
                     if (day < 26) {
                         day = day + 4;
                     } else {
@@ -143,45 +239,6 @@
                     }
 
                     $("#week").val("第" + parseInt(weekly) + "周");
-
-                    var date1 = new Date();
-                    alert(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
-
-                    var date2 = new Date(date1);
-                    date2.setDate(date1.getDate()+7);
-                    var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
-
-                    var date3 = new Date(date2);
-                    date3.setDate(date2.getDate()+7);
-                    var times1 = date3.getFullYear()+"-"+(date3.getMonth()+1)+"-"+date3.getDate();
-
-                    var date4 = new Date(date3);
-                    date4.setDate(date3.getDate()+7);
-                    var times2 = date4.getFullYear()+"-"+(date4.getMonth()+1)+"-"+date4.getDate();
-
-                    var date5 = new Date(date4);
-                    date5.setDate(date4.getDate()+7);
-                    var times3 = date5.getFullYear()+"-"+(date5.getMonth()+1)+"-"+date5.getDate();
-
-                    if(parseInt(weekly)==1){
-                        $('#sDate').val(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
-                    }
-
-                    if(parseInt(weekly)==2){
-                        $('#sDate').val(times)
-                    }
-
-                    if(parseInt(weekly)==3){
-                        $('#sDate').val(times1)
-                    }
-
-                    if(parseInt(weekly)==4){
-                        $('#sDate').val(times2)
-                    }
-
-                    if(parseInt(weekly)==5){
-                        $('#sDate').val(times3)
-                    }
                 })
             })
 
@@ -273,14 +330,15 @@
                 success: function (data) {
                     var json = data.data
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报');
-                    console.info(json)
+                    console.info(data)
                     for (i in json) {
                         var tr = $('<tr>');
                         tr.append($('<td>').html(json[i].id))
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td >').html(json[i].week).addClass("weekbtn").attr("sdate",json[i].sdate).attr("edate",json[i].edate))
+                        /**/
+                        tr.append($('<td >').html(json[i].week).css('margin-right', '10px').css('color', 'blue').css('cursor', 'pointer').attr('data-toggle', 'modal').attr('data-target', '#setModa4').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         var summaryId = json[i].summary_id
                         var id = json[i].id
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addtel' + '_' + id)))
@@ -301,11 +359,43 @@
 
                     //第几周 跳转 日报
                     $('.weekbtn').click(function () {
-                        var startDate= $(this).attr('sdate')
-                        var endDate= $(this).attr('edate')
-                        alert(startDate)
-                        alert(endDate)
-                        window.location.href="/table?startDate="+startDate+"&endDate="+endDate+"&userId="+62;
+                        var startDate = $(this).attr('sdate')
+                        var endDate = $(this).attr('edate')
+                        var userId = $(this).attr('userId')
+                        $("#tbodys").empty();
+                        $.ajax({
+                            type: 'get',
+                            url: '/getDaily',
+                            dataType: 'json',
+                            data: {
+                                'startDate': startDate,
+                                'endDate': endDate,
+                                'userId': userId
+                            },
+                            success: function (data) {
+                                for (var i in data.data) {
+                                    var tr = $('<tr>');
+                                    if (typeof (data.data[i].id) != 'undefined') {
+                                        tr.append($('<td>').html(data.data[i].id))
+                                        tr.append($('<td>').html(data.data[i].fullName))
+                                        tr.append($('<td>').html(data.data[i].date))
+                                        tr.append($('<td>').html(data.data[i].time))
+                                        tr.append($('<td>').html(data.data[i].typeName))
+                                        tr.append($('<td>').html(data.data[i].surfaceName))
+                                        tr.append($('<td>').html(data.data[i].lineName))
+                                        tr.append($('<td>').html(data.data[i].pointName))
+                                        tr.append($('<td>').html(data.data[i].event))
+                                        tr.append($('<td>').html(data.data[i].process))
+                                        tr.append($('<td>').html(data.data[i].result))
+                                        tr.append($('<td>').html(data.data[i].method))
+                                        tr.append($('<td>').html(data.data[i].remark))
+                                        var td = $('<td>');
+                                        tr.append(td);
+                                        $("#tbodys").append(tr);
+                                    }
+                                }
+                            }
+                        })
                     })
 
                     //删除
@@ -934,6 +1024,42 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="setModa4" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 1050px">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <table class="table table-bordered" id="table-bordereds">
+                        <thead>
+                        <tr>
+                            <th width="75px">编号</th>
+                            <th width="75px">发布人</th>
+                            <th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
+                            <th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
+                            <th width="50px">类型</th>
+                            <th width="50px">&nbsp;&nbsp;面</th>
+                            <th width="75px"><span>线</span></th>
+                            <th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
+                            <th width="150px" style="text-align: center">事件</th>
+                            <th width="150px" style="text-align: center">过程</th>
+                            <th width="150px" style="text-align: center">结果</th>
+                            <th width="150px" style="text-align: center">解决方案</th>
+                            <th width="150px" style="text-align: center">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodys">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 
 </body>

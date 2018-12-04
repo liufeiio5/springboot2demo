@@ -31,6 +31,14 @@ public class WeeklyController {
         return "weekly";
     }
 
+    @RequestMapping(value = "/weeks")
+    public String weeks(HttpSession session){
+        /*if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }*/
+        return "weeks";
+    }
+
     /**
      * 查询 周报
      * @param weekly
@@ -54,9 +62,9 @@ public class WeeklyController {
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
         if(list != null && list.size() > 0)
-            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName() : "");
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
         else {
-            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "");
+            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
         }
     }
 
