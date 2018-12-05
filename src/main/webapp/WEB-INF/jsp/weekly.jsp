@@ -573,6 +573,7 @@
                         $('.lookDifficulty').click(function () {
                             $("#lookdifficultyContent").val($(this).attr('difficultyContent'))
                         })
+
                         //修改 周 困难
                         $('.updDifficulty').click(function () {
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
@@ -1469,7 +1470,7 @@
         </div>
     </div>
 </div>
-<!--一周困难 详情 -->
+<!-- 一周困难 详情 -->
 <div class="modal fade" id="setDifficulty2" data-backdrop="static" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
     <div class="modal-dialog">
