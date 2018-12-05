@@ -234,10 +234,10 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/weekly"
                             }, 500)
-                        } else if (data.message == "不能提前创建周报") {
-                            layer.msg("禁止提前创建周报");
+                        } else if (data.message == "不能提前创建月报") {
+                            layer.msg("禁止提前创建月报");
                         } else if (data.message == "重复添加") {
-                            layer.msg("禁止周报重复添加");
+                            layer.msg("禁止月报重复添加");
                         } else {
                             layer.msg("添加失败");
                         }
@@ -266,7 +266,7 @@
                 },
                 success: function (data) {
                     var json = data.data
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报');
+                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓月报');
                     for (i in json) {
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
@@ -1203,7 +1203,7 @@
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">周报</span></div>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">月报</span></div>
 <select id="weeklyYear" style="margin-left: 10px;">
     <option value="">-- 请选择年份 --</option>
 </select>

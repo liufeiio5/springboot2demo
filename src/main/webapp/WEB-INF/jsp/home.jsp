@@ -23,7 +23,7 @@
         </a>
       </li>
       <li>
-        <a  href="">
+        <a  href="/monthly">
           <input id='3' type='checkbox'>
           <label title="月报"><img src="/images/month.png"/></label>
         </a>

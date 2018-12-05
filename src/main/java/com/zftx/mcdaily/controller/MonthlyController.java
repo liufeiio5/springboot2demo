@@ -46,18 +46,18 @@ public class MonthlyController {
     @RequestMapping(value = "/getMonthly",method = RequestMethod.GET)
     @ResponseBody
     public R getWeekly(Monthly monthly, HttpSession session){
-      /*  //获取用户信息
+        //获取用户信息
         User user = (User) session.getAttribute("user");
-        if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
-            weekly.setUserId(user.getId());
-        }*/
+        if(user!=null && user.getId()!=null&&monthly.getUserId()==null){
+            monthly.setUserId(user.getId());
+        }
 
         ArrayList<HashMap<String, Object>> list =monthlyService.getMonthly(monthly);
 
         if(list !=null &&list.size()>0) {
-            return R.ok("数据获取成功").put("data", list);
+            return R.ok("数据获取成功").put("data", list).put("fullName",user.getFullName()).put("userId",monthly.getUserId());
         }else {
-            return R.error("数据获取失败");
+            return R.error("数据获取失败").put("fullName",user.getFullName()).put("userId",monthly.getUserId());
         }
     }
 
