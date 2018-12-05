@@ -1213,13 +1213,21 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
+                           /* alert($(this).attr('assisMan').replace(',',''))*/
+                            /*$("#updassisman").val($(this).attr('assisMan').replace(',',''))*/
+                            var updassiman=$(this).attr('assisMan').replace(',','')
+                            alert(updassiman)
+                            $('#updassisman').on('chosen:ready', function(e, updassiman) {
+                                $("#updassisman").val("true")//设置值
+                            });
+                            $('#updassisman').trigger('chosen:updated');//更新选项
 
 
-                            var assisMan=$(this).attr('assisMan').replace(',',' ');
+                           /* var assisMan=$(this).attr('assisMan').replace(',',' ');
                             //alert(assisMan)
                             $("#updassisman").innerHTML=assisMan;
                             console.log(1);
-
+*/
 
                             //提交
                             $("#updSummary").click(function () {
