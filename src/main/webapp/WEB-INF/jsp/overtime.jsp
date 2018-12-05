@@ -299,12 +299,13 @@
 
 </head>
 <body>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">加班记录</span></div>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始期" /> —
 <input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input id="userId" placeholder="请输入用户ID" />
 <button id="query" style="margin: 30px;" class="btn btn-primary" onclick="query()"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>
+<%--<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>--%>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
