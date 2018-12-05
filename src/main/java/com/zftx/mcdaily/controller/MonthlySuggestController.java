@@ -35,9 +35,9 @@ public class MonthlySuggestController {
         if(monthlySuggest!=null && monthlySuggest.getSuggestId()!=null){
             String result=monthlySuggestService.addmonthlySuggest(monthlySuggest);
             if("success".equals(result)){
-                return R.ok("新增成功");
+                return R.ok("添加成功");
             }else{
-                return R.error("新增失败");
+                return R.error("添加失败");
             }
         }else{
             return R.error("新增失败");

@@ -83,7 +83,7 @@ public class MonthlyRemarkController {
      * @param monthlyRemark
      * @return
      */
-    @RequestMapping( "/deletMonthlyRemark")
+    @RequestMapping( "/deleteMonthlyRemark")
     @ResponseBody
     public R deleteMonthlyRemark(MonthlyRemark monthlyRemark){
         if(monthlyRemark.getId()!=null&&monthlyRemark.getId()!=0) {

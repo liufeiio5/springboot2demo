@@ -49,11 +49,11 @@ public class MonthlySummaryController {
      * @param monthlySummary
      * @return
      */
-    @RequestMapping(value = "/addMonthlyummary")
+    @RequestMapping(value = "/addMonthlySummary")
     @ResponseBody
-    public R addMonthlyummary(MonthlySummary monthlySummary,String assismans){
+    public R addMonthlySummary(MonthlySummary monthlySummary,String assismans){
         if(monthlySummary!=null){
-            /*monthlySummary.setAssisMan(assismans);*/
+            monthlySummary.setAssisMan(assismans);
             String str=monthlySummaryService.addMonthlySummary(monthlySummary);
             if("success".equals(str)) {
                 return R.ok("添加成功");

@@ -174,7 +174,7 @@
                     $("#addassisman").chosen({
                         no_results_text:'未找到',
                     });
-                    $("#updassisman").chosen()({
+                    $("#updassisman").chosen({
                         no_results_text:'未找到',
                     });
                 }
@@ -573,7 +573,6 @@
                         $('.lookDifficulty').click(function () {
                             $("#lookdifficultyContent").val($(this).attr('difficultyContent'))
                         })
-
                         //修改 周 困难
                         $('.updDifficulty').click(function () {
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
@@ -1256,17 +1255,17 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control"
+                            <input type="text" id="addstartDate"  class="form-control date form_datetime"  name="user_date" style="width:130px"
                                    placeholder="请选择开始时间"/>
                             <div>—</div>
-                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control"
+                            <input type="text" id="addendDate" class="form-control date form_datetime" name="user_date" style="width:130px" class="form-control"
                                    placeholder="请选择结束时间"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">周:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="week"></input>
+                            <input class="form-control" id="addweek"></input>
                         </td>
                     </tr>
                     </tbody>
@@ -1470,7 +1469,7 @@
         </div>
     </div>
 </div>
-<!-- 一周困难 详情 -->
+<!--一周困难 详情 -->
 <div class="modal fade" id="setDifficulty2" data-backdrop="static" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
     <div class="modal-dialog">
