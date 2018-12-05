@@ -7,11 +7,13 @@
     <title></title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/table.css"/>
+    <link rel="stylesheet" href="/css/chosen.css"/>
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/Date.js"></script>
+    <script type="text/javascript" src="/js/chosen.js"></script>
     <style>
         .asd {
             width: 150px;
@@ -72,6 +74,54 @@
     </style>
     <script>
         $(function () {
+
+                var date1 = new Date('2018-12-31');
+                alert(date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate())
+
+                var date2 = new Date(date1);
+                date2.setDate(date1.getDate()+7);
+                var times = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+                alert('111111:'+times);
+
+
+
+            function fun_date(aa){
+                var date1 = new Date(),
+                time1=date1.getFullYear()+"-"+(date1.getMonth()+1)+"-"+date1.getDate();//time1表示当前时间
+                var date2 = new Date(date1);
+                date2.setDate(date1.getDate()+aa);
+                var time2 = date2.getFullYear()+"-"+(date2.getMonth()+1)+"-"+date2.getDate();
+                return time2;
+            }
+
+            alert('sssssssssssssssssssss'+fun_date(7))
+
+
+
+            //周小结  协助人下拉
+
+            $.ajax({
+                url: '/getUser',
+                dataType: 'json',
+                success: function (data) {
+                    var str;
+                    var sel;
+                    var json = data.data
+                    /*<select id="secGroupOwner" data-placeholder="请选择协助人" class="chzn-select" multiple+
+                            style="width: 300px; height: 13px; line-height: 16px; border-style: none;"></select>*/
+                    sel = "<select id='secGroupOwner' data-placeholder='请选择协助人' class='chzn-select' multiple style='width: 300px; height: 13px; line-height: 16px; border-style: none;'>" + '</select>';
+                    $('#tbs').append(sel);
+                    for (var i in json) {
+                        str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                        $("#secGroupOwner").append(str)
+                    }
+                    $("#secGroupOwner").trigger("liszt:updated");
+
+                    $("#secGroupOwner").chosen();
+                }
+            })
+
+
             var mapss
             laydate.render({
                 elem: '#startDate'
@@ -85,6 +135,7 @@
             laydate.render({
                 elem: '#sDate',
                 done: (function (value) {
+
                     var start = $("#sDate").val();
                     var year = start.slice(0, 4);
                     var month = start.slice(5, 7);
@@ -98,46 +149,46 @@
                     var minus = week ? week - 1 : 6;
                     dd.setDate(dd.getDate() - minus); //获取minus天前的日期
                     var y = dd.getFullYear();
-                    var m = dd.getMonth() + 1; //获取月份
+                    var m = dd.getMonth() + 1 -1 - 1; //获取月份
                     var d = dd.getDate();
                     var first = y + "-" + m + "-" + d;
-                    alert('first'+first)
+                    alert('first' + first)
 
 
-                    var ff=new Date();
-                    ff.setDate(dd.getDate() +7); //获取minus天前的日期
+                    var ff = new Date();
+                    ff.setDate(dd.getDate() + 7); //获取minus天前的日期
                     var y = ff.getFullYear();
-                    var m = ff.getMonth() + 1; //获取月份
+                    var m = ff.getMonth() + 1 -1 -1; //获取月份
                     var d = ff.getDate();
                     var two = y + "-" + m + "-" + d;
                     alert('two' + two)
 
 
-                    var ee=new Date();
-                    ee.setDate(ff.getDate() +7); //获取minus天前的日期
+                    var ee = new Date();
+                    ee.setDate(ff.getDate() + 7); //获取minus天前的日期
                     var y = ee.getFullYear();
-                    var m = ee.getMonth() + 1; //获取月份
+                    var m = ee.getMonth() + 1 -1 -1; //获取月份
                     var d = ee.getDate();
                     var three = y + "-" + m + "-" + d;
-                    alert('three'+three)
+                    alert('three' + three)
 
 
-                    var gg=new Date();
-                    gg.setDate(ee.getDate() +7); //获取minus天前的日期
+                    var gg = new Date();
+                    gg.setDate(ee.getDate() + 7); //获取minus天前的日期
                     var y = gg.getFullYear();
-                    var m = gg.getMonth() + 1; //获取月份
+                    var m = gg.getMonth() + 1 -1 -1; //获取月份
                     var d = gg.getDate();
                     var four = y + "-" + m + "-" + d;
-                    alert('four'+four)
+                    alert('four' + four)
 
 
-                    var qq=new Date();
-                    qq.setDate(gg.getDate() +7); //获取minus天前的日期
+                    var qq = new Date();
+                    qq.setDate(gg.getDate() + 7); //获取minus天前的日期
                     var y = qq.getFullYear();
-                    var m = qq.getMonth() + 1; //获取月份
+                    var m = qq.getMonth() + 1 - 1 -1; //获取月份
                     var d = qq.getDate();
                     var five = y + "-" + m + "-" + d;
-                    alert('five'+five)
+                    alert('five' + five)
 
                     //第几周
                     var start = $("#sDate").val();
@@ -150,13 +201,13 @@
                     var weekly;
                     if (day < 7 + 3) {
                         weekly = 1
-                    }else if(day < 10 + 7){
-                        weekly=2
-                    }else if(day < 10 + 14){
-                        weekly=3
-                    }else if(day < 10 + 21){
-                        weekly=4
-                    }else{
+                    } else if (day < 10 + 7) {
+                        weekly = 2
+                    } else if (day < 10 + 14) {
+                        weekly = 3
+                    } else if (day < 10 + 21) {
+                        weekly = 4
+                    } else {
                         weekly = day / 7;
                         if (weekly != 0) {
                             weekly = weekly + 1;
@@ -1062,6 +1113,11 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-</body>
+<div id="tbs">
 
+</div>
+
+
+</body>
 </html>
+

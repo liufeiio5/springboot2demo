@@ -165,6 +165,7 @@
                             $("#tbody").append(tr);
                         }
                     }
+
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
                         alert(id)

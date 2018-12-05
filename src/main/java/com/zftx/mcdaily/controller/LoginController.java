@@ -71,4 +71,15 @@ public class LoginController {
             return R.error("注册失败").put("result",result);
         }
     }
+
+    @RequestMapping("/getUser")
+    @ResponseBody
+    public R getUser() {
+        List<User> list = userService.getUser(new User());
+        if (list != null && list.size() > 0) {
+            return R.ok("数据获取成功").put("data", list);
+        } else {
+            return R.error("数据获取失败");
+        }
+    }
 }
