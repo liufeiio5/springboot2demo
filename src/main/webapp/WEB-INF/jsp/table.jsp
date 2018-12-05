@@ -608,7 +608,7 @@
 <button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录
 </button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
-<a href="/weekly">周报</a>
+<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead>
