@@ -125,7 +125,7 @@ public class WeeklyController {
     }
 
     /**
-     * 删除  日报
+     * 删除  周报
      * @param weekly
      * @return
      */
