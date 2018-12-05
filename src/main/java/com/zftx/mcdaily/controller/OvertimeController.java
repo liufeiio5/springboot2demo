@@ -110,19 +110,19 @@ public class OvertimeController {
     @RequestMapping("/updateOvertime")
     @ResponseBody
     public R updateOvertime(Overtime overtime,String endtime, HttpSession session){
-        Date endTime=null;
-        //字符串转换为Date类型，要做异常捕捉，转换有可能失败或者前端传过来的格式有错误
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            endTime =  simpleDateFormat.parse(endtime);//格式转换
-        }catch (ParseException e){
-            e.printStackTrace();
-            return R.error("结束时间转换失败");
-        }
-
-        overtime.setEndTime(endTime);
         if(overtime!=null){
+            Date endTime=null;
+            //字符串转换为Date类型，要做异常捕捉，转换有可能失败或者前端传过来的格式有错误
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                endTime =  simpleDateFormat.parse(endtime);//格式转换
 
+            }catch (ParseException e){
+                e.printStackTrace();
+                return R.error("结束时间转换失败");
+            }
+
+            overtime.setEndTime(endTime);
             String str=overtimeService.updateOvertime(overtime);
             if("success".equals(str)){
                 return R.ok("修改成功");

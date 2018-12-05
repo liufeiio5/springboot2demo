@@ -44,30 +44,30 @@
                 var remark = $("#remark").val();
 
                 //添加加班记录
-                    $.ajax({
-                        url: "/addOvertimeRecord",
-                        dataType: "json",
-                        data: {
-                            date:date,
-                            startTime: startTime,
-                            endtime: endTime,
-                            duration: duration,
-                            cause: cause,
-                            matter: matter,
-                            schedule: schedule,
-                            result: result,
-                            remark: remark
-                        },
-                        success: function (data) {
-                            if (data.code == 200) {
-                                layer.msg("添加成功")
-                                window.location.href = "/overtime"
-                            } else {
-                                window.location.href = "/overtime"
-                                layer.msg("添加失败");
-                            }
+                $.ajax({
+                    url: "/addOvertimeRecord",
+                    dataType: "json",
+                    data: {
+                        date:date,
+                        startTime: startTime,
+                        endtime: endTime,
+                        duration: duration,
+                        cause: cause,
+                        matter: matter,
+                        schedule: schedule,
+                        result: result,
+                        remark: remark
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg("添加成功")
+                            window.location.href = "/overtime"
+                        } else {
+                            window.location.href = "/overtime"
+                            layer.msg("添加失败");
                         }
-                    });
+                    }
+                });
             })
         })
 
@@ -82,38 +82,78 @@
             var schedule = $("#schedule").val();
             var result = $("#result").val();
             if(date==''||date==null){
-                alert("请选择加班日期！");
+                layer.msg("请选择加班日期！");
                 ajax.abort;
             }
             if(startTime==''||startTime==null){
-                alert("请填写加班开始时间！");
+                layer.msg("请填写加班开始时间！");
                 ajax.abort;
             }
             if(endTime==''||endTime==null){
-                alert("请选择加班结束时间！");
+                layer.msg("请选择加班结束时间！");
                 ajax.abort;
             }
             if(duration==''||duration==null){
-                alert("请填写加班时长！");
+                layer.msg("请填写加班时长！");
                 ajax.abort;
             }
             if(cause==''||cause==null){
-                alert("请填写加班事由！");
+                layer.msg("请填写加班事由！");
                 ajax.abort;
             }
             if(matter==''||matter==null){
-                alert("请填写加班原因！");
+                layer.msg("请填写加班原因！");
                 ajax.abort;
             }
             if(schedule==''||schedule==null){
-                alert("请填写进度！");
+                layer.msg("请填写进度！");
                 ajax.abort;
             }
             if(result==''||result==null){
-                alert("请填写加班结果！");
+                layer.msg("请填写加班结果！");
                 ajax.abort;
             }
 
+        }
+
+        //修改  输入框检查是否为空
+        function updcheckInput() {
+            var startTime=$("#updStartTime").val()
+            var duration= $("#updDuration").val()
+            var cause= $("#updCause").val()
+            var matter= $("#updMatter").val()
+            var schedule= $("#updSchedule").val()
+            var result= $("#updResult").val()
+            var remark= $("#updRemark").val()
+            var endTime = $("#updEndTime").val();
+            if(startTime==''||startTime==null){
+                layer.msg("请填写加班开始时间！");
+                ajax.abort;
+            }
+            if(endTime==''||endTime==null){
+                layer.msg("请选择加班结束时间！");
+                ajax.abort;
+            }
+            if(duration==''||duration==null){
+                layer.msg("请填写加班时长！");
+                ajax.abort;
+            }
+            if(cause==''||cause==null){
+                layer.msg("请填写加班事由！");
+                ajax.abort;
+            }
+            if(matter==''||matter==null){
+                layer.msg("请填写加班原因！");
+                ajax.abort;
+            }
+            if(schedule==''||schedule==null){
+                layer.msg("请填写进度！");
+                ajax.abort;
+            }
+            if(result==''||result==null){
+                layer.msg("请填写加班结果！");
+                ajax.abort;
+            }
         }
 
         //返回日报界面
@@ -146,7 +186,6 @@
                     userId:userId
                 },
                 success: function (data) {
-                    console.log(data)
                     for (var i in  data.data) {
                         var tr = $('<tr>');
                         if (typeof (data.data[i].id) != 'undefined') {
@@ -175,14 +214,16 @@
                         var id = $(this).parent().parent().children().eq(0).text()
                         $("#updStartTime").val($(this).parent().parent().children().eq(2).text())
                         $("#updEndTime").val($(this).parent().parent().children().eq(3).text())
-                        var endTime=$("#updEndTime").val()
                         $("#updDuration").val($(this).parent().parent().children().eq(4).text())
                         $("#updCause").val($(this).parent().parent().children().eq(6).text())
                         $("#updMatter").val($(this).parent().parent().children().eq(7).text())
                         $("#updSchedule").val($(this).parent().parent().children().eq(8).text())
                         $("#updResult").val($(this).parent().parent().children().eq(9).text())
                         $("#updRemark").val($(this).parent().parent().children().eq(10).text())
+                        //提交
                         $('#updOvertime').click(function () {
+                            updcheckInput()
+                            var endTime=$("#updEndTime").val()
                             layer.confirm('确认要修改吗？', function (index) {
                                 $.ajax({
                                     dataType: 'json',
@@ -190,8 +231,8 @@
                                     url: "/updateOvertime",
                                     data: {
                                         id: id,
+                                        endtime:endTime,
                                         startTime: $("#updStartTime").val(),
-                                        endTime: endTime,
                                         duration: $("#updDuration").val(),
                                         cause: $("#updCause").val(),
                                         matter: $("#updMatter").val(),
@@ -298,7 +339,7 @@
         </tbody>
     </table>
 </div>
-    </table>
+</table>
 </div>
 
 <!--新增加班记录 -->
