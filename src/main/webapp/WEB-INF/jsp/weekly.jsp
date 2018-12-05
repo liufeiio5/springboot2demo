@@ -17,69 +17,82 @@
         .asd {
             width: 150px;
         }
-        #table-bordered thead tr th{
+
+        #table-bordered thead tr th {
             text-align: center;
         }
-        #table-bordered thead tr th:nth-of-type(1){
+
+        #table-bordered thead tr th:nth-of-type(1) {
             width: 50px;
         }
-        #table-bordered thead tr th:nth-of-type(2){
+
+        #table-bordered thead tr th:nth-of-type(2) {
             width: 70px;
         }
-        #table-bordered thead tr th:nth-of-type(3){
+
+        #table-bordered thead tr th:nth-of-type(3) {
             width: 80px;
         }
-        #table-bordered thead tr th:nth-of-type(4){
+
+        #table-bordered thead tr th:nth-of-type(4) {
             width: 80px;
         }
-        #table-bordered thead tr th:nth-of-type(5){
+
+        #table-bordered thead tr th:nth-of-type(5) {
             width: 60px;
         }
-        #table-bordered thead tr th:nth-of-type(6){
+
+        #table-bordered thead tr th:nth-of-type(6) {
             max-width: 450px;
             min-width: 300px;
         }
-        #table-bordered thead tr th:nth-of-type(7){
+
+        #table-bordered thead tr th:nth-of-type(7) {
             width: 100px;
         }
-        #table-bordered thead tr th:nth-of-type(8){
+
+        #table-bordered thead tr th:nth-of-type(8) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(9){
+
+        #table-bordered thead tr th:nth-of-type(9) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(10){
+
+        #table-bordered thead tr th:nth-of-type(10) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(11){
+
+        #table-bordered thead tr th:nth-of-type(11) {
             width: 205px;
         }
-        #table-bordered thead tr th:nth-of-type(12){
+
+        #table-bordered thead tr th:nth-of-type(12) {
             width: 40px;
         }
     </style>
     <script>
-        $(function() {
+        $(function () {
             $("#addassisman").html("")
             $("#updassisman").html("")
             //周小结  协助人下拉
-                $.ajax({
-                    url: '/getUser',
-                    dataType: 'json',
-                    success: function (data) {
-                        var str;
-                        var json = data.data
-                        for (var i in json) {
-                            str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
-                            $("#addassisman").append(str)
-                            $("#updassisman").append(str)
-                        }
-                            $("#addassisman").trigger("liszt:updated");
-                            $("#updassisman").trigger("liszt:updated");
-                            $("#addassisman").chosen();
-                            $("#updassisman").chosen();
+            $.ajax({
+                url: '/getUser',
+                dataType: 'json',
+                success: function (data) {
+                    var str;
+                    var json = data.data
+                    for (var i in json) {
+                        str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                        $("#addassisman").append(str)
+                        $("#updassisman").append(str)
                     }
-                })
+                    $("#addassisman").trigger("liszt:updated");
+                    $("#updassisman").trigger("liszt:updated");
+                    $("#addassisman").chosen();
+                    $("#updassisman").chosen();
+                }
+            })
             var mapss
             laydate.render({
                 elem: '#startDate'
@@ -245,16 +258,16 @@
 
             laydate.render({
                 elem: '#startDate'
-                ,type: 'year'
+                , type: 'year'
 
             });
             laydate.render({
                 elem: '#endDate'
-                ,type: 'month'
+                , type: 'month'
             });
             laydate.render({
                 elem: '#sDate',
-                done: (function(value) {
+                done: (function (value) {
                     var start = $("#sDate").val();
                     var year = start.slice(0, 4);
                     var month = start.slice(5, 7);
@@ -292,8 +305,8 @@
                                 month = 1;
                         }
                     }
-                    if(day<10&&day>0){
-                        day='0'+day
+                    if (day < 10 && day > 0) {
+                        day = '0' + day
                     }
                     var autonumber = year + "-" + month + "-" + day;
                     $("#eDate").val(autonumber);
@@ -322,12 +335,11 @@
                     var m = dd.getMonth() + 1; //获取月份
                     var d = dd.getDate();
                     var first = y + "-" + m + "-" + d;
-                    alert('first'+first)
+                    alert('first' + first)
 
 
-
-                    var ff=new Date();
-                    ff.setDate(dd.getDate() +7); //获取minus天前的日期
+                    var ff = new Date();
+                    ff.setDate(dd.getDate() + 7); //获取minus天前的日期
                     var y = ff.getFullYear();
                     var m = ff.getMonth() + 1; //获取月份
                     var d = ff.getDate();
@@ -335,34 +347,31 @@
                     alert('two' + two)
 
 
-
-                    var ee=new Date();
-                    ee.setDate(ff.getDate() +7); //获取minus天前的日期
+                    var ee = new Date();
+                    ee.setDate(ff.getDate() + 7); //获取minus天前的日期
                     var y = ee.getFullYear();
                     var m = ee.getMonth() + 1; //获取月份
                     var d = ee.getDate();
                     var three = y + "-" + m + "-" + d;
-                    alert('three'+three)
+                    alert('three' + three)
 
 
-
-                    var gg=new Date();
-                    gg.setDate(ee.getDate() +7); //获取minus天前的日期
+                    var gg = new Date();
+                    gg.setDate(ee.getDate() + 7); //获取minus天前的日期
                     var y = gg.getFullYear();
                     var m = gg.getMonth() + 1; //获取月份
                     var d = gg.getDate();
                     var four = y + "-" + m + "-" + d;
-                    alert('four'+four)
+                    alert('four' + four)
 
 
-
-                    var qq=new Date();
-                    qq.setDate(gg.getDate() +7); //获取minus天前的日期
+                    var qq = new Date();
+                    qq.setDate(gg.getDate() + 7); //获取minus天前的日期
                     var y = qq.getFullYear();
                     var m = qq.getMonth() + 1; //获取月份
                     var d = qq.getDate();
                     var five = y + "-" + m + "-" + d;
-                    alert('five'+five)
+                    alert('five' + five)
                 })
             })
 
@@ -383,24 +392,24 @@
                 inittable()
             })
 
-            $("#sDate").click(function() {
+            $("#sDate").click(function () {
                 $("#eDate").val("");
                 $("#week").val("");
             })
 
-            $('#add').click(function() {
-                var sdate = $('#sDate').val().replace('-','').replace('-','');
-                var edate = $('#eDate').val().replace('-','').replace('-','');
-                var week = $('#week').val().replace('第','').replace('周','');
+            $('#add').click(function () {
+                var sdate = $('#sDate').val().replace('-', '').replace('-', '');
+                var edate = $('#eDate').val().replace('-', '').replace('-', '');
+                var week = $('#week').val().replace('第', '').replace('周', '');
                 $.ajax({
                     url: "/addWeekly",
                     dataType: 'json',
                     data: {
-                        week:week ,
-                        sdate:sdate,
-                        edate:edate,
+                        week: week,
+                        sdate: sdate,
+                        edate: edate,
                     },
-                    success: function(data) {
+                    success: function (data) {
                         console.info(data.message)
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
@@ -410,11 +419,11 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/weekly"
                             }, 500)
-                        } else if (data.message=="不能提前创建周报") {
+                        } else if (data.message == "不能提前创建周报") {
                             layer.msg("禁止提前创建周报");
-                        } else if(data.message=="重复添加"){
+                        } else if (data.message == "重复添加") {
                             layer.msg("禁止周报重复添加");
-                        }else{
+                        } else {
                             layer.msg("添加失败");
                         }
                     }
@@ -426,7 +435,7 @@
             $("#tbody").html("");
             var weeklyYear = $("#weeklyYear").val().replace('-', '').replace('-', '');
             var weeklyMouth = $("#weeklyMouth").val().replace('-', '').replace('-', '');
-            if(weeklyYear==''&&weeklyMouth!='') {
+            if (weeklyYear == '' && weeklyMouth != '') {
                 layer.msg('月份需与年份配对')
                 return false;
             }
@@ -448,26 +457,26 @@
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id
                         var suggestId = json[i].suggest_id
-                        var remarkId=json[i].remark_id
+                        var remarkId = json[i].remark_id
                         var id = json[i].id
                         var tr = $('<tr>');
                         tr.append($('<td>').html(json[i].id))
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week).attr("week",json[i].week).css("color","blue").css("cursor","pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate",json[i].sdate).attr("edate",json[i].edate).attr("userId",data.userId))
-                        tr.append($('<td>').append($('<button>').attr('summaryId',json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width','100%').addClass('addSmmarytel' + '_' + id)))
+                        tr.append($('<td>').html(json[i].week).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
+                        tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
                         summary(id, summaryId)
-                        tr.append($('<td>').addClass('progress'+'_' + id))
-                        tr.append($('<td>').append($('<button>').attr('difficultyId',json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width','100%').addClass('weeklydifficulty' + '_' + id)))
-                        difficulty(id,difficultyId)
-                        tr.append($('<td>').append($('<button>').attr('programmeId',json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width','100%').addClass('weeklyProgramme' + '_' + id)))
-                        programme(id,programmeId)
-                        tr.append($('<td>').append($('<button>').attr('suggestId',json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width','100%').addClass('weeklySuggest' + '_' + id)))
-                        suggest(id,suggestId)
-                        tr.append($('<td>').append($('<button>').attr('remarkId',json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width','100%').addClass('weeklyRemark' + '_' + id)))
-                        remark(id,remarkId);
-                        var del = $('<button>').attr("summaryId",json[i].summary_id).attr("difficultyId",json[i].difficulty_id).attr("programmeId",json[i].programme_id).attr("suggestId",json[i].suggest_id).attr("remarkId",json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                        tr.append($('<td>').addClass('progress' + '_' + id))
+                        tr.append($('<td>').append($('<button>').attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
+                        difficulty(id, difficultyId)
+                        tr.append($('<td>').append($('<button>').attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
+                        programme(id, programmeId)
+                        tr.append($('<td>').append($('<button>').attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
+                        suggest(id, suggestId)
+                        tr.append($('<td>').append($('<button>').attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyRemark' + '_' + id)))
+                        remark(id, remarkId);
+                        var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                         var td = $('<td>');
                         td.append(del);
                         tr.append(td);
@@ -475,24 +484,24 @@
                     }
                     //第几周 跳转 日报
                     $('.weekbtn').click(function () {
-                        var startDate= $(this).attr('sdate')
-                        var endDate= $(this).attr('edate')
-                        var userId=$(this).attr('userId')
-                        var year=startDate.slice(0,4)
-                        var mouth=startDate.slice(5,7)
-                        var week=$(this).attr('week')
-                        $("#weekspan").html(year+'年'+mouth+'月  '+'第'+week+'周');
+                        var startDate = $(this).attr('sdate')
+                        var endDate = $(this).attr('edate')
+                        var userId = $(this).attr('userId')
+                        var year = startDate.slice(0, 4)
+                        var mouth = startDate.slice(5, 7)
+                        var week = $(this).attr('week')
+                        $("#weekspan").html(year + '年' + mouth + '月  ' + '第' + week + '周');
                         $("#tbodys").empty();
                         $.ajax({
                             type: 'get',
                             url: '/getDaily',
                             dataType: 'json',
-                            data:{
+                            data: {
                                 'startDate': startDate,
                                 'endDate': endDate,
                                 'userId': userId
                             },
-                            success:function (data) {
+                            success: function (data) {
                                 for (var i in data.data) {
                                     var tr = $('<tr>');
                                     if (typeof (data.data[i].id) != 'undefined') {
@@ -519,11 +528,11 @@
                     //删除
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
-                        summaryId=$(this).attr("summaryId")
-                        difficultyId=$(this).attr("difficultyId")
-                        programmeId=$(this).attr("programmeId")
-                        suggestId=$(this).attr("suggestId")
-                        remarkId=$(this).attr("remarkId")
+                        summaryId = $(this).attr("summaryId")
+                        difficultyId = $(this).attr("difficultyId")
+                        programmeId = $(this).attr("programmeId")
+                        suggestId = $(this).attr("suggestId")
+                        remarkId = $(this).attr("remarkId")
                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                             title: '信息',
                             btn: ['朕意已决', '泥奏凯，朕再想一想']
@@ -533,11 +542,11 @@
                                 url: "/deleteWeekly",
                                 data: {
                                     id: id,
-                                    summaryId:summaryId,
-                                    difficultyId:difficultyId,
-                                    programmeId:programmeId,
-                                    suggestId:suggestId,
-                                    remarkId:remarkId
+                                    summaryId: summaryId,
+                                    difficultyId: difficultyId,
+                                    programmeId: programmeId,
+                                    suggestId: suggestId,
+                                    remarkId: remarkId
                                 },
                                 success: function (data) {
                                     if (data.code == "200") {
@@ -565,21 +574,21 @@
                     })
                     //提交  添加周小结
                     $("#addSummary").click(function () {
-                        var summaryId=$("#midleValueId").val()
-                        var workHours=$('#addworkHours').val()+$('#addworkHoursUnit').val()
-                        var assisMan=$("#addassisman").val().toString();
+                        var summaryId = $("#midleValueId").val()
+                        var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
+                        var assisMan = $("#addassisman").val().toString();
                         $.ajax({
                             url: "/addSummary",
                             dataType: 'json',
                             data: {
-                                summaryId:summaryId,
-                                content:$('#addcontent').val(),
-                                singleProgress:$('#addsingleProgress').val(),
-                                workHours:workHours,
-                                assismans:assisMan
+                                summaryId: summaryId,
+                                content: $('#addcontent').val(),
+                                singleProgress: $('#addsingleProgress').val(),
+                                workHours: workHours,
+                                assismans: assisMan
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -601,16 +610,16 @@
                     })
                     //提交  添加周 困难
                     $("#addDifficulty").click(function () {
-                        var difficultyId=$("#dmidleValueId").val()
+                        var difficultyId = $("#dmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyDifficulty",
                             dataType: 'json',
                             data: {
-                                difficultyId:difficultyId,
-                                difficultyContent:$('#addDifficutyContent').val()
+                                difficultyId: difficultyId,
+                                difficultyContent: $('#addDifficutyContent').val()
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -630,16 +639,16 @@
                     })
                     //提交 添加周 方案
                     $("#addProgramme").click(function () {
-                        var programmeId=$("#pmidleValueId").val()
+                        var programmeId = $("#pmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyProgramme",
                             dataType: 'json',
                             data: {
-                                programmeId:programmeId,
-                                programmeContent:$('#addProgrammeContent').val()
+                                programmeId: programmeId,
+                                programmeContent: $('#addProgrammeContent').val()
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -659,16 +668,16 @@
                     })
                     //提交 添加周 建议
                     $("#addSuggest").click(function () {
-                        var suggestId=$("#smidleValueId").val()
+                        var suggestId = $("#smidleValueId").val()
                         $.ajax({
                             url: "/addWeeklySuggest",
                             dataType: 'json',
                             data: {
-                                suggestId:suggestId,
-                                suggestContent:$('#addSuggestContent').val()
+                                suggestId: suggestId,
+                                suggestContent: $('#addSuggestContent').val()
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -688,16 +697,16 @@
                     })
                     //提交 添加周 备注
                     $("#addRemark").click(function () {
-                        var remarkId=$("#rmidleValueId").val()
+                        var remarkId = $("#rmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyRemark",
                             dataType: 'json',
                             data: {
-                                remarkId:remarkId,
-                                remarkContent:$('#addRemarkContent').val()
+                                remarkId: remarkId,
+                                remarkContent: $('#addRemarkContent').val()
                             },
-                            success: function(data) {
-                                if (data.message =="添加成功") {
+                            success: function (data) {
+                                if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
@@ -729,11 +738,11 @@
                             str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].difficultyContent))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("difficultyContent",json[i].difficultyContent)
-                                .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('查').css('margin-right','5px');
-                            var upd = $('<button>').attr("id",json[i].id).attr("difficultyId",difficultyId).attr("content",json[i].content).attr("difficultyContent",json[i].difficultyContent)
-                                .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('改').css('margin-right','5px');
-                            var del = $('<button>').attr("id",json[i].id).addClass('btn btn-xs delDifficulty').html('删');
+                            var look = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("difficultyContent", json[i].difficultyContent)
+                                .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('查').css('margin-right', '5px');
+                            var upd = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("content", json[i].content).attr("difficultyContent", json[i].difficultyContent)
+                                .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('改').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delDifficulty').html('删');
                             str.append(look)
                             str.append(upd)
                             str.append(del)
@@ -746,13 +755,13 @@
                         })
                         //修改 周 困难
                         $('.updDifficulty').click(function () {
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
-                            var id=$(this).attr('id')
-                            var difficultyId=$(this).attr('difficultyId')
+                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var id = $(this).attr('id')
+                            var difficultyId = $(this).attr('difficultyId')
                             $("#updDifficultyContent").val($(this).attr('difficultyContent'))
                             //提交
                             $("#updDifficulty").click(function () {
-                                var difficultyContent=$("#updDifficultyContent").val()
+                                var difficultyContent = $("#updDifficultyContent").val()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateWeeklyDifficulty',
@@ -761,7 +770,7 @@
                                             id: id,
                                             difficultyId: difficultyId,
                                             difficultyContent: difficultyContent,
-                                            sdate:sdate
+                                            sdate: sdate
                                         },
                                         success: function (data) {
                                             console.info(data)
@@ -773,7 +782,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            }else if(data.message =="当前时间不在此周内，禁止修改"){
+                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg('当前时间不在此周内，禁止修改!', {
                                                     icon: 1,
                                                     time: 1000
@@ -791,7 +800,7 @@
                         })
                         //删除  一周 困难
                         $('.delDifficulty').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -860,7 +869,7 @@
                             var id = $(this).attr('id')
                             var programmeId = $(this).attr('programmeId')
                             $("#updProgrammeContent").val($(this).attr('programmeContent'))
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updProgramme").click(function () {
                                 var programmeContent = $("#updProgrammeContent").val()
@@ -872,7 +881,7 @@
                                             id: id,
                                             programmeId: programmeId,
                                             programmeContent: programmeContent,
-                                            sdate:sdate
+                                            sdate: sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -883,12 +892,12 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if(data.message =="当前时间不在此周内，禁止修改"){
+                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            }else {
+                                            } else {
                                                 layer.msg(data.result, {
                                                     icon: 1,
                                                     time: 1000
@@ -901,7 +910,7 @@
                         })
                         //删除  一周 方案
                         $('.delProgramme').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -970,7 +979,7 @@
                             var id = $(this).attr('id')
                             var suggestId = $(this).attr('suggestId')
                             $("#updSuggestContent").val($(this).attr('suggestContent'))
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updSuggest").click(function () {
                                 var suggestContent = $("#updSuggestContent").val()
@@ -982,7 +991,7 @@
                                             id: id,
                                             suggestId: suggestId,
                                             suggestContent: suggestContent,
-                                            sdate:sdate
+                                            sdate: sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -993,7 +1002,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -1011,7 +1020,7 @@
                         })
                         //删除  一周 建议
                         $('.delSuggest').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -1063,14 +1072,13 @@
                             var look = $('<button>').attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
-                                   .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('改').css('margin-right', '5px');
+                                .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delRemark').html('删');
                             str.append(look)
                             str.append(upd)
                             str.append(del)
                             str.append(td);
                             $(".weeklyRemark" + '_' + id).append(str);
-                            alert(str);
 
                         }
                         //查看详情 周 备注
@@ -1082,7 +1090,7 @@
                             var id = $(this).attr('id')
                             var remarkId = $(this).attr('remarkId')
                             $("#updRemarkContent").val($(this).attr('remarkContent'))
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updRemark").click(function () {
                                 var remarkContent = $("#updRemarkContent").val()
@@ -1094,7 +1102,7 @@
                                             id: id,
                                             remarkId: remarkId,
                                             remarkContent: remarkContent,
-                                            sdate:sdate
+                                            sdate: sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -1105,7 +1113,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -1123,7 +1131,7 @@
                         })
                         //删除  一周 备注
                         $('.delRemark').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -1167,25 +1175,25 @@
                     },
                     success: function (data) {
                         var json = data.data
-                        var progress=1;
+                        var progress = 1;
                         for (i in json) {
                             //百分号转小数进行乘积
-                            var progress1=json[i].singleProgress.replace("%","")/100;
-                            progress=progress+progress1;
+                            var progress1 = json[i].singleProgress.replace("%", "") / 100;
+                            progress = progress + progress1;
                             //小数转百分数
-                            if(i==json.length-1) {
-                                var number = (Number(progress * 100).toFixed(1)-100)/json.length;
-                                $('.progress'+'_'+id).html(number+"%")
+                            if (i == json.length - 1) {
+                                var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
+                                $('.progress' + '_' + id).html(number + "%")
                             }
                             var str = $('<tr>');
-                            str.append($('<td>').css('width','250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
+                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
                             var td = $('</td>');
                             str.append($('<td>'))
-                            var look = $('<button>').attr("id",json[i].id).attr("summaryId",json[i].summaryId).attr("content",json[i].content).attr("singleProgress",json[i].singleProgress).attr("workHours",json[i].workHours).attr("assisMan",json[i].assisMan)
-                                .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right','5px');
-                            var upd = $('<button>').attr("id",json[i].id).attr("summaryId",json[i].summaryId).attr("content",json[i].content).attr("singleProgress",json[i].singleProgress).attr("workHours",json[i].workHours).attr("assisMan",json[i].assisMan)
-                                .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right','5px');
-                            var del = $('<button>').attr("id",json[i].id).addClass('btn btn-xs delsummary').html('删');
+                            var look = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
+                                .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right', '5px');
+                            var upd = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
+                                .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delsummary').html('删');
                             str.append(look).append(upd).append(del)
                             str.append(td);
                             $(".addSmmarytel" + '_' + id).append(str);
@@ -1196,32 +1204,61 @@
                             $("#content").val($(this).attr('content'))
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
-                            var assisman=$(this).attr('assisMan').toString()
-                            $("#assisMan").val(assisman.replace(',',' '))
+                            var assisman = $(this).attr('assisMan').toString();
+                            $("#assisMan").val(assisman.replace(',', ' '))
                         })
-                        function getUpdsummary(updassisman){
-                            str = '<option value="付强" selected="selected">'+ '付强'+'</option>';
+
+                        function getUpdsummary(updassisman) {
+                            str = '<option value="付强" selected="selected">' + '付强' + '</option>';
                             $("#updassisman").append(str)
                             $("#updassisman").trigger("liszt:updated");
                             $("#updassisman").chosen();
                         }
+
                         //修改 周小结
                         $('.updsummary').click(function () {
-                            var id=$(this).attr('id')
-                            var summaryId=$(this).attr('summaryId')
+                            var id = $(this).attr('id')
+                            var summaryId = $(this).attr('summaryId')
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            var assisMan=$(this).attr('assisMan').replace(',',' ');
-                            alert(assisMan)
-                            $("#updassisman").innerHTML=assisMan;
-                            console.log(1);
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var assisman = $(this).attr('assisMan').toString();
+                            $("#updassisman").chosen("destory").trigger("chosen:updated");
+                            if (!$.isEmptyObject(assisMan)) {
+
+                                //assisMan = $(this).attr('assisMan');
+                                chose_mult_set_ini('#updassisman',assisman);
+                                //初始化
+                                $("#updassisman").chosen();
+                                $("#updassisman").trigger("chosen:updated");
+                                //$(".chzn-select").chosen();
+
+                                console.log(assisMan);
+
+
+                            }
+                            console.log(assisMan);
+
+                            // 多选 select 数据初始化
+                            function chose_mult_set_ini(select, values) {
+                                //$(select).empty();
+                                //$(select).trigger("chosen:updated");
+                                var arr = values.split(',');
+                                var length = arr.length;
+                                var value = '';
+                                for (i = 0; i < length; i++) {
+                                    value = arr[i];
+                                    $(select + " option[value='" + value + "']").attr('selected', true);
+                                }
+                                $(select).trigger("chosen:updated");
+                            }
+
+                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             $("#updSummary").click(function () {
-                                var content=$("#updcontent").val()
-                                var singleProgress=$("#updsingleProgress").val()
-                                var workHours=$('#updworkHours').val().substr(0,$('#updworkHours').val().length-1)+$("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length-1)
-                                var assisman=$("#updassisman").val().toString()
+                                var content = $("#updcontent").val()
+                                var singleProgress = $("#updsingleProgress").val()
+                                var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                var assisman = $("#updassisman").val().toString()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateSummary',
@@ -1233,7 +1270,7 @@
                                             singleProgress: singleProgress,
                                             workHours: workHours,
                                             assisMan: assisMan,
-                                            sdate:sdate
+                                            sdate: sdate
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -1244,7 +1281,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            }else if(data.message=="当前时间不在此周内，禁止修改"){
+                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -1261,9 +1298,10 @@
                             })
                         })
 
+
                         //删除  一周小结
                         $('.delsummary').click(function () {
-                            var id=$(this).attr("id")
+                            var id = $(this).attr("id")
                             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                                 title: '信息',
                                 btn: ['朕意已决', '爱卿退下，朕且三思']
@@ -1318,27 +1356,27 @@
         }
 
         //年
-        $(function year(){
+        $(function year() {
             $("#weeklyYear").html("")
             //获取系统年份
             var myDate = new Date().getFullYear();
-            var str= '<option value="">-- 请选择年份--</option>';
+            var str = '<option value="">-- 请选择年份--</option>';
             $("#weeklyYear").append(str)
-            for(var i=0;i<=3;i++){
-                var str1 = '<option value="'+ (myDate-i)+'" >'+(myDate-i)+ '</option>';
+            for (var i = 0; i <= 3; i++) {
+                var str1 = '<option value="' + (myDate - i) + '" >' + (myDate - i) + '</option>';
                 $("#weeklyYear").append(str1);
             }
         })
 
         //月
-        $(function mouth(){
+        $(function mouth() {
             $("#weeklyMouth").html("")
-            var str= '<option value="">-- 请选择月份--</option>';
+            var str = '<option value="">-- 请选择月份--</option>';
             $("#weeklyMouth").append(str)
-            for(var i=1;i<=12;i++){
-                if(i<10) {
+            for (var i = 1; i <= 12; i++) {
+                if (i < 10) {
                     var str1 = '<option value="0' + i + '" >' + i + '月</option>';
-                }else{
+                } else {
                     var str1 = '<option value="' + i + '" >' + i + '月</option>';
                 }
                 $("#weeklyMouth").append(str1);
@@ -1347,7 +1385,7 @@
     </script>
 </head>
 
-<body >
+<body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">周报</span></div>
 <select id="weeklyYear" style="margin-left: 10px;">
     <option value="">-- 请选择年份 --</option>
@@ -1355,9 +1393,11 @@
 <select id="weeklyMouth" style="margin-left: 10px;">
     <option value="">-- 请选择月份 --</option>
 </select>
-<input id="userid" placeholder="请输入用户ID" />
-<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
-<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+<input id="userid" placeholder="请输入用户ID"/>
+<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
+</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
+</button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a href="/table">日报</a>
 <div>
@@ -1389,7 +1429,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">新增</h4>
             </div>
             <div class="modal-body">
@@ -1398,9 +1439,11 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control" placeholder="请选择开始时间" />
+                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control"
+                                   placeholder="请选择开始时间"/>
                             <div>—</div>
-                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control" placeholder="请选择结束时间" />
+                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control"
+                                   placeholder="请选择结束时间"/>
                         </td>
                     </tr>
                     <tr>
@@ -1421,11 +1464,13 @@
 </div>
 
 <!--一周小结 -->
-<div class="modal fade" id="setModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结新增</h4>
             </div>
             <div class="modal-body">
@@ -1460,7 +1505,7 @@
                     </tr>
                     <tr>
                         <td style="width:12%;">协助人:</td>
-                        <td style="width:60%" >
+                        <td style="width:60%">
                             <select id="addassisman" data-placeholder="请选择协助人" multiple class="chzn-select">
                             </select>
                         </td>
@@ -1478,11 +1523,13 @@
 </div>
 
 <!--一周小结  详情 -->
-<div class="modal fade" id="setModal3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结详情</h4>
             </div>
             <div class="modal-body">
@@ -1519,11 +1566,13 @@
     </div>
 </div>
 <!--一周小结  修改 -->
-<div class="modal fade" id="setModal4" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setModal4" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结修改</h4>
             </div>
             <div class="modal-body">
@@ -1532,7 +1581,7 @@
                     <tr>
                         <td style="width:12%;">内容:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updcontent" ></textarea>
+                            <textarea class="form-control" id="updcontent"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -1545,7 +1594,7 @@
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updworkHours" ></input>
+                            <input class="form-control" id="updworkHours"></input>
                         </td>
                         <td>
                             <select id="updworkHoursUnit">
@@ -1575,11 +1624,13 @@
 </div>
 
 <!--一周 困难 新增-->
-<div class="modal fade" id="setDifficulty1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setDifficulty1" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周困难 新增</h4>
             </div>
             <div class="modal-body">
@@ -1603,11 +1654,13 @@
     </div>
 </div>
 <!--一周困难 详情 -->
-<div class="modal fade" id="setDifficulty2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setDifficulty2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周小结详情</h4>
             </div>
             <div class="modal-body">
@@ -1626,11 +1679,13 @@
     </div>
 </div>
 <!--一周困难 修改 -->
-<div class="modal fade" id="setDifficulty3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setDifficulty3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周困难 修改</h4>
             </div>
             <div class="modal-body">
@@ -1639,7 +1694,7 @@
                     <tr>
                         <td style="width:12%;">具体困难:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updDifficultyContent" ></textarea>
+                            <textarea class="form-control" id="updDifficultyContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1653,11 +1708,13 @@
     </div>
 </div>
 <!--一周 方案 新增-->
-<div class="modal fade" id="setProgramme1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setProgramme1" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周方案 新增</h4>
             </div>
             <div class="modal-body">
@@ -1681,11 +1738,13 @@
     </div>
 </div>
 <!--一周 方案 详情-->
-<div class="modal fade" id="setProgramme2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setProgramme2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周方案 详情</h4>
             </div>
             <div class="modal-body">
@@ -1707,11 +1766,13 @@
     </div>
 </div>
 <!--一周 方案  修改 -->
-<div class="modal fade" id="setProgramme3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setProgramme3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周 方案 修改</h4>
             </div>
             <div class="modal-body">
@@ -1720,7 +1781,7 @@
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updProgrammeContent" ></textarea>
+                            <textarea class="form-control" id="updProgrammeContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1734,11 +1795,13 @@
     </div>
 </div>
 <!--一周 建议 新增-->
-<div class="modal fade" id="setSuggest1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setSuggest1" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周建议 新增</h4>
             </div>
             <div class="modal-body">
@@ -1762,11 +1825,13 @@
     </div>
 </div>
 <!--一周 建议 详情-->
-<div class="modal fade" id="setSuggest2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setSuggest2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周建议 详情</h4>
             </div>
             <div class="modal-body">
@@ -1788,11 +1853,13 @@
     </div>
 </div>
 <!--一周 建议  修改 -->
-<div class="modal fade" id="setSuggest3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setSuggest3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周 建议 修改</h4>
             </div>
             <div class="modal-body">
@@ -1801,7 +1868,7 @@
                     <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updSuggestContent" ></textarea>
+                            <textarea class="form-control" id="updSuggestContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1815,11 +1882,13 @@
     </div>
 </div>
 <!--一周 备注 新增-->
-<div class="modal fade" id="setRemark1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setRemark1" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周备注 新增</h4>
             </div>
             <div class="modal-body">
@@ -1843,11 +1912,13 @@
     </div>
 </div>
 <!--一周 备注 详情-->
-<div class="modal fade" id="setRemark2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setRemark2" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周备注 详情</h4>
             </div>
             <div class="modal-body">
@@ -1869,11 +1940,13 @@
     </div>
 </div>
 <!--一周 备注  修改 -->
-<div class="modal fade" id="setRemark3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="setRemark3" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">一周 备注 修改</h4>
             </div>
             <div class="modal-body">
@@ -1882,7 +1955,7 @@
                     <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="updRemarkContent" ></textarea>
+                            <textarea class="form-control" id="updRemarkContent"></textarea>
                         </td>
                     </tr>
                     </tbody>
