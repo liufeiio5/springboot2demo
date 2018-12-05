@@ -184,7 +184,6 @@
 
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
-                        alert(id)
                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                             title: '信息',
                             btn: ['朕意已决', '泥奏凯，朕再想一想']
@@ -585,16 +584,12 @@
             });
         }
 
-        function onkeydownfun() {
-            if (event.keyCode == 13)
-                inittable()
-        }
-
         function overtime() {
             window.location.href="/overtime"
         }
     </script>
 </head>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">日报</span></div>
 <body onkeydown="onkeydownfun()">
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input"
        placeholder="请选择开始日期"/>
@@ -605,10 +600,9 @@
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录
-</button>
+<%--<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录</button>--%>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
-<a href="/weekly">周报</a>
+<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead>
@@ -702,7 +696,7 @@
                     <tr>
                         <td style="width:12%;">结果:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="result"></textarea>;
+                            <textarea class="form-control" id="result"></textarea>
                         </td>
                     </tr>
                     <tr>

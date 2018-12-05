@@ -30,6 +30,19 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * 主页
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/home")
+    public String home(HttpSession session)
+    {
+        if (session.getAttribute("user") == null)
+            return "redirect:/login";
+        return "home";
+    }
+
 
 
 
@@ -76,10 +89,10 @@ public class LoginController {
     @ResponseBody
     public R getUser() {
         List<User> list = userService.getUser(new User());
-        if (list != null && list.size() > 0) {
-            return R.ok("数据获取成功").put("data", list);
-        } else {
-            return R.error("数据获取失败");
-        }
+            if (list != null && list.size() > 0) {
+                return R.ok("数据获取成功").put("data", list);
+            } else {
+                return R.error("数据获取失败");
+            }
     }
 }

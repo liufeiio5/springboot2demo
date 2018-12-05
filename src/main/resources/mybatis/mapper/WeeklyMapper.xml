@@ -8,11 +8,10 @@
         <result column="user_id" property="userId"/>
         <result column="week" property="week"/>
         <result column="summary_id" property="summaryId"/>
-        <result column="progress" property="progress"/>
-        <result column="difficulty" property="difficulty"/>
-        <result column="programme" property="programme"/>
-        <result column="suggest" property="suggest"/>
-        <result column="remark" property="remark"/>
+        <result column="difficulty_id" property="difficultyId"/>
+        <result column="programme_id" property="programmeId"/>
+        <result column="suggest_id" property="suggestId"/>
+        <result column="remark_id" property="remarkId"/>
         <result column="sdate" property="sdate"/>
         <result column="edate" property="edate"/>
     </resultMap>
@@ -35,20 +34,17 @@
                   <if test="weekly.summaryId != null">
                       and w.summaryId=#{weekly.summaryId}
                   </if>
-                  <if test="weekly.progress != null">
-                      and w.progress=#{weekly.progress}
+                  <if test="weekly.difficultyId != null">
+                      and w.difficulty_id=#{weekly.difficultyId}
                   </if>
-                  <if test="weekly.difficulty != null">
-                      and w.difficulty=#{weekly.difficulty}
+                  <if test="weekly.programmeId != null">
+                      and w.programme_id=#{weekly.programmeId}
                   </if>
-                  <if test="weekly.programme != null">
-                      and w.programme=#{weekly.programme}
+                  <if test="weekly.suggestId != null">
+                      and w.suggest_id=#{weekly.suggestId}
                   </if>
-                  <if test="weekly.suggest != null">
-                      and w.suggest=#{weekly.suggest}
-                  </if>
-                  <if test="weekly.remark != null">
-                      and w.remark=#{weekly.remark}
+                  <if test="weekly.remarkId != null">
+                      and w.remark_id=#{weekly.remarkId}
                   </if>
                   <if test="weekly.sdate!= '' and weekly.sdate != null and weekly.edate != '' and weekly.edate != null">
                       and w.sdate between #{weekly.sdate} and #{weekly.edate}
@@ -58,6 +54,7 @@
                   </if>
               </where>
           </if>
+        order by w.sdate desc
     </select>
 
     <!--添加 周报-->
@@ -77,20 +74,29 @@
                 <if test="weekly.summaryId==null">
                     summary_id,
                 </if>
-                <if test="weekly.progress!=null">
-                    progress,
+                <if test="weekly.difficultyId!=null">
+                    difficulty_id,
                 </if>
-                <if test="weekly.difficulty!=null">
-                    difficulty,
+                <if test="weekly.difficultyId==null">
+                    difficulty_id,
                 </if>
-                <if test="weekly.programme!=null">
-                    programme,
+                <if test="weekly.programmeId!=null">
+                    programme_id,
                 </if>
-                <if test="weekly.suggest!=null">
-                    suggest,
+                <if test="weekly.programmeId==null">
+                    programme_id,
                 </if>
-                <if test="weekly.remark!=null">
-                    remark,
+                <if test="weekly.suggestId!=null">
+                    suggest_id,
+                </if>
+                <if test="weekly.suggestId==null">
+                    suggest_id,
+                </if>
+                <if test="weekly.remarkId!=null">
+                    remark_id,
+                </if>
+                <if test="weekly.remarkId==null">
+                    remark_id,
                 </if>
                 <if test="weekly.sdate!=null">
                     sdate,
@@ -114,20 +120,29 @@
                 <if test="weekly.summaryId==null">
                   (SELECT CASE  WHEN MAX(w.summary_id) IS NULL THEN '1' ELSE MAX(w.summary_id)+1 END FROM weekly w),
                 </if>
-                <if test="weekly.progress!=null">
-                    #{weekly.progress},
+                <if test="weekly.difficultyId!=null">
+                    #{weekly.difficultyId},
                 </if>
-                <if test="weekly.difficulty!=null ">
-                    #{weekly.difficulty},
+                <if test="weekly.difficultyId==null">
+                   (SELECT CASE  WHEN MAX(w.difficulty_id) IS NULL THEN '1' ELSE MAX(w.difficulty_id)+1 END FROM weekly w),
                 </if>
-                <if test="weekly.programme!=null ">
-                    #{weekly.programme},
+                <if test="weekly.programmeId!=null">
+                    #{weekly.programmeId},
                 </if>
-                <if test="weekly.suggest!=null ">
-                    #{weekly.suggest},
+                <if test="weekly.programmeId==null">
+                    (SELECT CASE  WHEN MAX(w.programme_id) IS NULL THEN '1' ELSE MAX(w.programme_id)+1 END FROM weekly w),
                 </if>
-                <if test="weekly.remark!=null ">
-                    #{weekly.remark},
+                <if test="weekly.suggestId!=null">
+                    #{weekly.suggestId},
+                </if>
+                <if test="weekly.suggestId==null">
+                    (SELECT CASE  WHEN MAX(w.suggest_id) IS NULL THEN '1' ELSE MAX(w.suggest_id)+1 END FROM weekly w),
+                </if>
+                <if test="weekly.remarkId!=null">
+                    #{weekly.remarkId},
+                </if>
+                <if test="weekly.remarkId==null">
+                    (SELECT CASE  WHEN MAX(w.remark_id) IS NULL THEN '1' ELSE MAX(w.remark_id)+1 END FROM weekly w),
                 </if>
                 <if test="weekly.sdate!=null ">
                     #{weekly.sdate},
@@ -151,20 +166,17 @@
             <if test="weekly.summaryId!=null ">
                 summary_id=#{weekly.summaryId},
             </if>
-           <if test="weekly.progress!=null">
-               progress=#{weekly.progress},
+           <if test="weekly.difficultyId!=null">
+               difficulty_id=#{weekly.difficultyId},
             </if>
-           <if test="weekly.difficulty!=null">
-               difficulty=#{weekly.difficulty},
+           <if test="weekly.programmeId!=null">
+               programme_id=#{weekly.programmeId},
             </if>
-           <if test="weekly.programme!=null">
-               programme=#{weekly.programme},
+            <if test="weekly.suggestId!=null">
+                suggest_id=#{weekly.suggestId},
             </if>
-            <if test="weekly.suggest!=null">
-                suggest=#{weekly.suggest},
-            </if>
-            <if test="weekly.remark!=null">
-                remark=#{weekly.remark},
+            <if test="weekly.remarkId!=null">
+                remark_id=#{weekly.remarkId},
             </if>
             <if test="weekly.sdate!=null">
                 sdate=#{weekly.sdate},
@@ -186,4 +198,44 @@
        delete from weekly  where
        id=#{weekly.id}
     </delete>
+
+    <!--根据条件查询-->
+    <select id="getWeeklyByWhere" resultMap="weekly">
+        select * from weekly
+                <if test="weekly != null">
+                    <where>
+                        <if test="weekly.id != null">
+                            id=#{weekly.id}
+                        </if>
+                        <if test="weekly.userId != null">
+                            and user_id=#{weekly.userId}
+                        </if>
+                        <if test="weekly.week != null">
+                            and week=#{weekly.week}
+                        </if>
+                        <if test="weekly.summaryId != null">
+                            and summaryId=#{weekly.summaryId}
+                        </if>
+                        <if test="weekly.difficultyId != null">
+                            and difficulty_id=#{weekly.difficultyId}
+                        </if>
+                        <if test="weekly.programmeId != null">
+                            and programme_id=#{weekly.programmeId}
+                        </if>
+                        <if test="weekly.suggestId != null">
+                            and suggest_id=#{weekly.suggestId}
+                        </if>
+                        <if test="weekly.remarkId != null">
+                            and remark_id=#{weekly.remarkId}
+                        </if>
+                        <if test="weekly.sdate!= '' and weekly.sdate != null">
+                            and sdate =#{weekly.sdate}
+                        </if>
+                        <if test="weekly.edate != '' and weekly.edate != null">
+                            and edate =#{weekly.edate}
+                        </if>
+                    </where>
+                </if>
+    </select>
+
 </mapper>

@@ -32,4 +32,12 @@ public interface OvertimeService
      */
     public Integer addOverTimeRecord(@Param("overtime") Overtime overtime);
 
+
+    /**
+     * 修改 加班记录
+     * @param overtime
+     * @return
+     */
+    public String updateOvertime(Overtime overtime);
+
 }

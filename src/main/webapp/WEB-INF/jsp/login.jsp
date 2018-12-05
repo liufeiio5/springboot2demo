@@ -12,10 +12,6 @@
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <%--<style>--%>
-    <%--body{margin:0;padding:0;background:url(images/bg.jpg) no-repeat;}--%>
-    <%--.main_content{background:url(images/main_bg.png) repeat;}--%>
-    <%--</style>--%>
 </head>
 
 <body  onkeydown="keyLogin();">
@@ -159,7 +155,7 @@
             type: "GET",
             success: function (data) {
                 if (data.code == 200) {
-                    window.location.href = "/table"
+                    window.location.href = "/home"
                 } else {
                     layer.msg("登录失败")
                     window.location.href = "/login"
