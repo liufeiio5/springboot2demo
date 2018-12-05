@@ -20,7 +20,7 @@
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
 
     <select id="getOvertime" resultType="java.util.HashMap">
-        select  t.id,t.date,t.start_time,t.end_time,t.duration,m.full_name,t.cause,t.matter,t.schedule,t.result,t.remark
+        select  t.id,t.date,t.start_time,DATE_Format(t.end_time,'%Y-%m-%d %T') as end_time,t.duration,m.full_name,t.cause,t.matter,t.schedule,t.result,t.remark
         from overtime t join user m on t.worker= m.id where t.worker=#{userId}
         <if test="startTime != null and endTime != null">
             and t.date between #{startTime} and #{endTime}
@@ -107,4 +107,49 @@
             </trim>
         </if>
     </insert>
+
+
+    <!--修改  加班记录-->
+    <update id="updateOvertime" parameterType="com.zftx.mcdaily.bean.Overtime">
+            UPDATE overtime
+            <set>
+                <if test="overtime.date!=null ">
+                    date=#{overtime.date},
+                </if>
+                <if test="overtime.startTime!=null ">
+                    start_time=#{overtime.startTime},
+                </if>
+                <if test="overtime.endTime!=null ">
+                    end_time=#{overtime.endTime},
+                </if>
+                <if test="overtime.duration!=null">
+                    duration=#{overtime.duration},
+                </if>
+                <if test="overtime.worker!=null">
+                    worker=#{overtime.worker},
+                </if>
+                <if test="overtime.cause!=null">
+                    cause=#{overtime.cause},
+                </if>
+                <if test="overtime.matter!=null">
+                    matter=#{overtime.matter},
+                </if>
+                <if test="overtime.schedule!=null">
+                    schedule=#{overtime.schedule},
+                </if>
+                <if test="overtime.result!=null">
+                    result=#{overtime.result},
+                </if>
+                <if test="overtime.remark!=null">
+                    remark=#{overtime.remark},
+                </if>
+            </set>
+            <where>
+                <if test="overtime.id!=null and overtime.id!=0">
+                    id=#{overtime.id}
+                </if>
+            </where>
+    </update>
+
+
 </mapper>

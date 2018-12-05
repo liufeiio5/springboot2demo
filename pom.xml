@@ -6,7 +6,7 @@
     <groupId>com.zftx</groupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
@@ -152,12 +152,28 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.zftx.demo.DemoApplication</mainClass><!--这个要改成自己的入口类-->
+                    <mainClass>com.zftx.mcdaily.McdailyApplication</mainClass><!--这个要改成自己的入口类-->
                     <fork>true</fork>
                 </configuration>
                 <executions>

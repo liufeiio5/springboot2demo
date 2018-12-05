@@ -70,10 +70,10 @@ public class DailyRecordController {
             endDate = Integer.parseInt(Tool.getYear() + "" + Tool.getMonth() + "" + Tool.getToday() + "");
         }
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());
-        if (list != null && list.size() > 0)
-            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "");
+        if(list !=null &&list.size()>0)
+            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"").put("userId",userId);
         else
-            return R.error("获取数据失败").put("fullName", user != null ? user.getFullName() : "");
+            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"").put("userId",userId);
     }
 
     /**
@@ -269,15 +269,15 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/deleteDailyRecord", method = RequestMethod.POST)
     @ResponseBody
-    public R deleteDailyRecord(DailyRecord dailyRecord) {
-        if (dailyRecord.getId() != null && dailyRecord.getId() != 0) {
+    public R deleteDailyRecord(DailyRecord dailyRecord){
+        if(dailyRecord.getId()!=null&&dailyRecord.getId()!=0) {
             String str = dailyRecordService.deleteDailyRecord(dailyRecord);
             if ("success".equals(str)) {
                 return R.ok("删除成功");
             } else {
                 return R.error("删除失败");
             }
-        } else {
+        }else{
             return R.error("参数有误!");
         }
     }

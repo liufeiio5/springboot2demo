@@ -24,6 +24,10 @@
             laydate.render({
                 elem: '#selectDate'
             });
+            laydate.render({
+                elem: '#updEndTime',
+                type: 'datetime'
+            });
 
             query();
 
@@ -40,30 +44,30 @@
                 var remark = $("#remark").val();
 
                 //添加加班记录
-                    $.ajax({
-                        url: "/addOvertimeRecord",
-                        dataType: "json",
-                        data: {
-                            date:date,
-                            startTime: startTime,
-                            endtime: endTime,
-                            duration: duration,
-                            cause: cause,
-                            matter: matter,
-                            schedule: schedule,
-                            result: result,
-                            remark: remark
-                        },
-                        success: function (data) {
-                            if (data.code == 200) {
-                                layer.msg("添加成功")
-                                window.location.href = "/overtime"
-                            } else {
-                                window.location.href = "/overtime"
-                                layer.msg("添加失败");
-                            }
+                $.ajax({
+                    url: "/addOvertimeRecord",
+                    dataType: "json",
+                    data: {
+                        date:date,
+                        startTime: startTime,
+                        endtime: endTime,
+                        duration: duration,
+                        cause: cause,
+                        matter: matter,
+                        schedule: schedule,
+                        result: result,
+                        remark: remark
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg("添加成功")
+                            window.location.href = "/overtime"
+                        } else {
+                            window.location.href = "/overtime"
+                            layer.msg("添加失败");
                         }
-                    });
+                    }
+                });
             })
         })
 
@@ -78,38 +82,78 @@
             var schedule = $("#schedule").val();
             var result = $("#result").val();
             if(date==''||date==null){
-                alert("请选择加班日期！");
+                layer.msg("请选择加班日期！");
                 ajax.abort;
             }
             if(startTime==''||startTime==null){
-                alert("请填写加班开始时间！");
+                layer.msg("请填写加班开始时间！");
                 ajax.abort;
             }
             if(endTime==''||endTime==null){
-                alert("请选择加班结束时间！");
+                layer.msg("请选择加班结束时间！");
                 ajax.abort;
             }
             if(duration==''||duration==null){
-                alert("请填写加班时长！");
+                layer.msg("请填写加班时长！");
                 ajax.abort;
             }
             if(cause==''||cause==null){
-                alert("请填写加班事由！");
+                layer.msg("请填写加班事由！");
                 ajax.abort;
             }
             if(matter==''||matter==null){
-                alert("请填写加班原因！");
+                layer.msg("请填写加班原因！");
                 ajax.abort;
             }
             if(schedule==''||schedule==null){
-                alert("请填写进度！");
+                layer.msg("请填写进度！");
                 ajax.abort;
             }
             if(result==''||result==null){
-                alert("请填写加班结果！");
+                layer.msg("请填写加班结果！");
                 ajax.abort;
             }
 
+        }
+
+        //修改  输入框检查是否为空
+        function updcheckInput() {
+            var startTime=$("#updStartTime").val()
+            var duration= $("#updDuration").val()
+            var cause= $("#updCause").val()
+            var matter= $("#updMatter").val()
+            var schedule= $("#updSchedule").val()
+            var result= $("#updResult").val()
+            var remark= $("#updRemark").val()
+            var endTime = $("#updEndTime").val();
+            if(startTime==''||startTime==null){
+                layer.msg("请填写加班开始时间！");
+                ajax.abort;
+            }
+            if(endTime==''||endTime==null){
+                layer.msg("请选择加班结束时间！");
+                ajax.abort;
+            }
+            if(duration==''||duration==null){
+                layer.msg("请填写加班时长！");
+                ajax.abort;
+            }
+            if(cause==''||cause==null){
+                layer.msg("请填写加班事由！");
+                ajax.abort;
+            }
+            if(matter==''||matter==null){
+                layer.msg("请填写加班原因！");
+                ajax.abort;
+            }
+            if(schedule==''||schedule==null){
+                layer.msg("请填写进度！");
+                ajax.abort;
+            }
+            if(result==''||result==null){
+                layer.msg("请填写加班结果！");
+                ajax.abort;
+            }
         }
 
         //返回日报界面
@@ -156,16 +200,66 @@
                             tr.append($('<td>').html(data.data[i].schedule))
                             tr.append($('<td>').html(data.data[i].result))
                             tr.append($('<td>').html(data.data[i].remark))
-                            var set = $('<button>').addClass('btn btn-warning updbtn').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#setModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                            var upd = $('<button>').addClass('btn btn-warning updbtn').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
                             var del = $('<button>').addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                             var td = $('<td>');
-                            td.append(set);
+                            td.append(upd);
                             td.append(del);
                             tr.append(td);
                             $("#tbody").append(tr);
                         }
                     }
-
+                    //修改
+                    $('.updbtn').click(function () {
+                        var id = $(this).parent().parent().children().eq(0).text()
+                        $("#updStartTime").val($(this).parent().parent().children().eq(2).text())
+                        $("#updEndTime").val($(this).parent().parent().children().eq(3).text())
+                        $("#updDuration").val($(this).parent().parent().children().eq(4).text())
+                        $("#updCause").val($(this).parent().parent().children().eq(6).text())
+                        $("#updMatter").val($(this).parent().parent().children().eq(7).text())
+                        $("#updSchedule").val($(this).parent().parent().children().eq(8).text())
+                        $("#updResult").val($(this).parent().parent().children().eq(9).text())
+                        $("#updRemark").val($(this).parent().parent().children().eq(10).text())
+                        //提交
+                        $('#updOvertime').click(function () {
+                            updcheckInput()
+                            var endTime=$("#updEndTime").val()
+                            layer.confirm('确认要修改吗？', function (index) {
+                                $.ajax({
+                                    dataType: 'json',
+                                    type: "post",
+                                    url: "/updateOvertime",
+                                    data: {
+                                        id: id,
+                                        endtime:endTime,
+                                        startTime: $("#updStartTime").val(),
+                                        duration: $("#updDuration").val(),
+                                        cause: $("#updCause").val(),
+                                        matter: $("#updMatter").val(),
+                                        schedule: $("#updSchedule").val(),
+                                        result: $("#updResult").val(),
+                                        remark: $("#updRemark").val()
+                                    },
+                                    success: function (data) {
+                                        if (data.code == "200") {
+                                            setTimeout(function wlh() {
+                                                window.location.href = "/overtime"
+                                            }, 500)
+                                            layer.msg('已修改!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                        } else {
+                                            layer.msg(data.result, {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                        }
+                                    }
+                                });
+                            });
+                        })
+                    })
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
                         alert(id)
@@ -205,12 +299,13 @@
 
 </head>
 <body>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">加班记录</span></div>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择开始期" /> —
 <input type="text" id="endDate" name="user_date" style="width:130px" class="layui-input" placeholder="请选择结束日期" />
 <input id="userId" placeholder="请输入用户ID" />
 <button id="query" style="margin: 30px;" class="btn btn-primary" onclick="query()"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>
+<%--<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>--%>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
@@ -245,7 +340,7 @@
         </tbody>
     </table>
 </div>
-    </table>
+</table>
 </div>
 
 <!--新增加班记录 -->
@@ -331,6 +426,82 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+</div>
+<!--一周 备注  修改 -->
+<div class="modal fade" id="updModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">加班记录 修改</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td style="width:12%;">开始时间 :
+                        </td>
+                        <td style="width:60%;">
+                            <input type="text" placeholder="--开始时间比如：18:30 这样的格式填写--" class="form-control" id="updStartTime">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">结束时间 :
+                        </td>
+                        <td>
+                            <input type="text" id="updEndTime" name="" style="width:200px" class="layui-input form-control" placeholder="--请选择结束时间--" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">时长 :
+                        </td>
+                        <td style="width:60%;">
+                            <input type="text" class="form-control" id="updDuration">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">事由 :
+                        </td>
+                        <td style="width:60%;">
+                            <textarea class="form-control" id="updCause"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">事项 :
+                        </td>
+                        <td style="width:60%;">
+                            <textarea class="form-control" id="updMatter"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">处理进度 :
+                        </td>
+                        <td style="width:60%;">
+                            <textarea class="form-control" id="updSchedule"></textarea>;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">处理结果 :
+                        </td>
+                        <td style="width:60%;">
+                            <textarea class="form-control" id="updResult"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:12%;">备注:</td>
+                        <td style="width:60%;">
+                            <textarea class="form-control" id="updRemark"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                    <button id="updOvertime" class="btn btn-primary" >提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

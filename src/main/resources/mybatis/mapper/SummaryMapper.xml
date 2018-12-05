@@ -117,4 +117,10 @@
     <delete id="deleteSummary" parameterType="com.zftx.mcdaily.bean.Summary">
        delete from summary  where id=#{summary.id}
     </delete>
+
+
+    <!--根据summaryId删除 周结表-->
+    <delete id="deleteSummaryBySid" parameterType="java.lang.Integer">
+       delete from summary  where summary_id=#{summaryId}
+    </delete>
 </mapper>

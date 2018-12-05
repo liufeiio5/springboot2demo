@@ -50,4 +50,17 @@ public class OvertimeServiceImpl implements OvertimeService
         return result;
     }
 
+    /**
+     * 修改加班记录
+     * @param overtime
+     * @return
+     */
+    public String updateOvertime(Overtime overtime){
+        int i=overtimeMapper.updateOvertime(overtime);
+        if(i>0){
+           return "success";
+        }else{
+            return "fails";
+        }
+    }
 }
