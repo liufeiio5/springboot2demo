@@ -1222,20 +1222,17 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            var assisman = $(this).attr('assisMan').toString();
+                            var assisman = $(this).attr('assisMan')
                             $("#updassisman").chosen("destory").trigger("chosen:updated");
-                            if (!$.isEmptyObject(assisMan)) {
 
+                            if (!$.isEmptyObject(assisMan)) {
                                 //assisMan = $(this).attr('assisMan');
                                 chose_mult_set_ini('#updassisman',assisman);
                                 //初始化
                                 $("#updassisman").chosen();
                                 $("#updassisman").trigger("chosen:updated");
                                 //$(".chzn-select").chosen();
-
                                 console.log(assisMan);
-
-
                             }
                             console.log(assisMan);
 
@@ -1661,7 +1658,7 @@
             <div class="modal-header">
                 <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
                         class="sr-only">Close</span></button>
-                <h4 class="modal-title">一周小结详情</h4>
+                <h4 class="modal-title">一周困难详情</h4>
             </div>
             <div class="modal-body">
                 <table>
