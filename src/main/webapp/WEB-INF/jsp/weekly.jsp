@@ -576,6 +576,11 @@
                     $("#addSummary").click(function () {
                         var summaryId = $("#midleValueId").val()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
+                        var singleProgress=$('#addsingleProgress').val()
+                        if(parseInt(singleProgress)>100||parseFloat('100%') <= parseFloat(singleProgress)){
+                            layer.msg("您输入的进度指数不规范")
+                            ajax().abort()
+                        }
                         var assisMan = $("#addassisman").val().toString();
                         $.ajax({
                             url: "/addSummary",
@@ -583,7 +588,7 @@
                             data: {
                                 summaryId: summaryId,
                                 content: $('#addcontent').val(),
-                                singleProgress: $('#addsingleProgress').val(),
+                                singleProgress: singleProgress,
                                 workHours: workHours,
                                 assismans: assisMan
                             },
@@ -1183,7 +1188,7 @@
                             //小数转百分数
                             if (i == json.length - 1) {
                                 var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
-                                $('.progress' + '_' + id).html(number + "%")
+                                $('.progress' + '_' + id).html(number.toFixed(1) + "%")
                             }
                             var str = $('<tr>');
                             str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
@@ -1215,6 +1220,7 @@
                             $("#updassisman").chosen();
                         }
 
+
                         //修改 周小结
                         $('.updsummary').click(function () {
                             var id = $(this).attr('id')
@@ -1223,19 +1229,16 @@
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
                             var assisman = $(this).attr('assisMan')
-                            $("#updassisman").chosen("destory").trigger("chosen:updated");
 
-                            if (!$.isEmptyObject(assisMan)) {
+                            console.log(assisman)
+                            if (!$.isEmptyObject(assisman)) {
                                 //assisMan = $(this).attr('assisMan');
                                 chose_mult_set_ini('#updassisman',assisman);
                                 //初始化
                                 $("#updassisman").chosen();
                                 $("#updassisman").trigger("chosen:updated");
                                 //$(".chzn-select").chosen();
-                                console.log(assisMan);
                             }
-                            console.log(assisMan);
-
                             // 多选 select 数据初始化
                             function chose_mult_set_ini(select, values) {
                                 //$(select).empty();
@@ -1251,6 +1254,7 @@
                             }
 
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            //提交
                             $("#updSummary").click(function () {
                                 var content = $("#updcontent").val()
                                 var singleProgress = $("#updsingleProgress").val()
@@ -1266,7 +1270,7 @@
                                             content: content,
                                             singleProgress: singleProgress,
                                             workHours: workHours,
-                                            assisMan: assisMan,
+                                            assismans: assisman,
                                             sdate: sdate
                                         },
                                         success: function (data) {
