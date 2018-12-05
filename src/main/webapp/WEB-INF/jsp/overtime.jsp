@@ -181,14 +181,6 @@
                         $("#updSchedule").val($(this).parent().parent().children().eq(8).text())
                         $("#updResult").val($(this).parent().parent().children().eq(9).text())
                         $("#updRemark").val($(this).parent().parent().children().eq(10).text())
-                        alert($("#updStartTime").val())
-                        alert(endTime)
-                        alert($("#updDuration").val())
-                        alert($("#updCause").val())
-                        alert($("#updMatter").val())
-                        alert($("#updSchedule").val())
-                        alert($("#updResult").val())
-                        alert($("#updRemark").val())
                         $('#updOvertime').click(function () {
                             layer.confirm('确认要修改吗？', function (index) {
                                 $.ajax({
@@ -197,8 +189,6 @@
                                     url: "/updateOvertime",
                                     data: {
                                         id: id,
-                                        startTime: $("#updStartTime").val(),
-                                        endTime: endTime,
                                         duration: $("#updDuration").val(),
                                         cause: $("#updCause").val(),
                                         matter: $("#updMatter").val(),
