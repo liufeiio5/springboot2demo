@@ -54,6 +54,7 @@
                   </if>
               </where>
           </if>
+        order by w.sdate desc
     </select>
 
     <!--添加 周报-->
