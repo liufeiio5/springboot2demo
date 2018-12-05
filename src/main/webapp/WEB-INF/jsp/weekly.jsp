@@ -7,12 +7,16 @@
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/table.css"/>
     <link rel="stylesheet" href="/css/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/Date.js"></script>
     <script type="text/javascript" src="/js/chosen.js"></script>
+    <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <style>
         .asd {
             width: 150px;
@@ -71,8 +75,86 @@
             width: 40px;
         }
     </style>
-    <script>
+    <script >
         $(function () {
+            $('.form_datetime').datetimepicker({
+                bootcssVer: 3,
+                language:  'zh-CN',
+                minView: "month", //选择日期后，不会再跳转去选择时分秒
+                format: 'yyyy-mm-dd',
+                todayBtn: 1,
+                autoclose: 1,
+            });
+            $('#addstartDate').datetimepicker('setDaysOfWeekDisabled', [0, 2, 3, 4, 5, 6]);
+            $('#addstartDate').datetimepicker().on('changeDate',function(){
+                var start = $("#addstartDate").val();
+//			    alert(start)
+                var year = start.slice(0, 4);
+                var month = start.slice(5, 7);
+                var day = start.slice(8, 10);
+                var year = parseInt(year);
+                var month = parseInt(month);
+                var day = parseInt(day);
+//               console.log("年" + year + "月" + month + "日" + day);
+                if (day < 26) {
+                    day = day + 4;
+                } else {
+                    switch (month) {
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                            day = day + 4 - 31;
+                            month = month + 1;
+                            break;
+                        case 4:
+                        case 6:
+                        case 9:
+                        case 11:
+                            day = day + 4 - 30;
+                            month = month + 1;
+                            break;
+                        case 2:
+                            day = day + 4 - 29;
+                            month = month + 1;
+                            break;
+                        case 12:
+                            day = day + 4 - 31;
+                            year = year + 1;
+                            month = 1;
+                    }
+                }
+                //				console.log("年" + year + "月" + month + "日" + day);
+                mouth=month<10?'0'+month:month
+                day=day<10?'0'+day:day
+                var autonumber = year + "-" + mouth + "-" + day;
+                $("#addendDate").val(autonumber);
+
+                //第几周
+                var start = $("#addstartDate").val();
+                var start = $("#addstartDate").val();
+                var day = start.slice(8, 10);
+//              console.log(day)
+                var day = parseInt(day);
+                var weekly;
+                if (day < 7) {
+                    weekly = 1
+                } else {
+                    weekly = day / 7;
+                    if (weekly != 0) {
+                        weekly = weekly + 1;
+                    }
+                }
+                console.log(parseInt(weekly))
+                $("#addweek").val("第"+parseInt(weekly)+"周");
+            })
+            $("#addstartDate").click(function() {
+                $("#addendDate").val("");
+                $("#addweek").val("");
+            })
+
             $("#addassisman").html("")
             $("#updassisman").html("")
             //周小结  协助人下拉
@@ -103,277 +185,6 @@
                 elem: '#endDate'
                 , type: 'month'
             });
-            laydate.render({
-                elem: '#sDate',
-                done: (function (value) {
-                    var start = $("#sDate").val();
-                    var year = start.slice(0, 4);
-                    var month = start.slice(5, 7);
-                    var day = start.slice(8, 10);
-                    var year = parseInt(year);
-                    var month = parseInt(month);
-                    var day = parseInt(day);
-
-                    var dd = new Date();
-                    var week = dd.getDay(); //获取时间的星期数
-                    var minus = week ? week - 1 : 6;
-                    dd.setDate(dd.getDate() - minus); //获取minus天前的日期
-                    var y = dd.getFullYear();
-                    var m = dd.getMonth() - 1; //获取月份
-                    var d = dd.getDate();
-                    var first = y + "-" + m + "-" + d;
-
-
-                    var ff = new Date();
-                    ff.setDate(dd.getDate() + 7); //获取minus天前的日期
-                    var y = ff.getFullYear();
-                    var m = ff.getMonth() - 1; //获取月份
-                    var d = ff.getDate();
-                    var two = y + "-" + m + "-" + d;
-
-
-                    var ee = new Date();
-                    ee.setDate(ff.getDate() + 7); //获取minus天前的日期
-                    var y = ee.getFullYear();
-                    var m = ee.getMonth() - 1; //获取月份
-                    var d = ee.getDate();
-                    var three = y + "-" + m + "-" + d;
-
-
-                    var gg = new Date();
-                    gg.setDate(ee.getDate() + 7); //获取minus天前的日期
-                    var y = gg.getFullYear();
-                    var m = gg.getMonth() - 1; //获取月份
-                    var d = gg.getDate();
-                    var four = y + "-" + m + "-" + d;
-
-
-                    var qq = new Date();
-                    qq.setDate(gg.getDate() + 7); //获取minus天前的日期
-                    var y = qq.getFullYear();
-                    var m = qq.getMonth() - 1; //获取月份
-                    var d = qq.getDate();
-                    var five = y + "-" + m + "-" + d;
-
-                    //第几周
-                    var start = $("#sDate").val();
-                    var start = $("#sDate").val();
-                    var day = start.slice(8, 10);
-                    var day = parseInt(day);
-                    var month = start.slice(5, 7);
-                    var weekly;
-
-                    var weekly;
-                    if (day < 7 + 3) {
-                        weekly = 1
-                    } else if (day < 10 + 7) {
-                        weekly = 2
-                    } else if (day < 10 + 14) {
-                        weekly = 3
-                    } else if (day < 10 + 21) {
-                        weekly = 4
-                    } else {
-                        weekly = day / 7;
-                        if (weekly != 0) {
-                            weekly = weekly + 1;
-                        }
-                    }
-
-                    if (parseInt(weekly) == 1) {
-                        $('#sDate').val(first)
-                    }
-
-                    if (parseInt(weekly) == 2) {
-                        $('#sDate').val(two)
-                    }
-
-                    if (parseInt(weekly) == 3) {
-                        $('#sDate').val(three)
-                    }
-
-                    if (parseInt(weekly) == 4) {
-                        $('#sDate').val(four)
-                    }
-
-                    var start = $("#sDate").val();
-                    var year = start.slice(0, 4);
-                    var month = start.slice(5, 7);
-                    var day = start.slice(8, 10);
-                    var year = parseInt(year);
-                    var month = parseInt(month);
-                    var day = parseInt(day);
-                    if (day < 26) {
-                        day = day + 4;
-                    } else {
-                        switch (month) {
-                            case 1:
-                            case 3:
-                            case 5:
-                            case 7:
-                            case 8:
-                            case 10:
-                                day = day + 4 - 31;
-                                month = month + 1;
-                                break;
-                            case 4:
-                            case 6:
-                            case 9:
-                            case 11:
-                                day = day + 4 - 30;
-                                month = month + 1;
-                                break;
-                            case 2:
-                                day = day + 4 - 29;
-                                month = month + 1;
-                                break;
-                            case 12:
-                                day = day + 4 - 31;
-                                year = year + 1;
-                                month = 1;
-                        }
-                    }
-                    var autonumber = year + "-" + month + "-" + day;
-                    $("#eDate").val(autonumber);
-
-                    //第几周
-                    var start = $("#sDate").val();
-                    var start = $("#sDate").val();
-                    var day = start.slice(8, 10);
-                    var day = parseInt(day);
-                    var month = start.slice(5, 7);
-                    var weekly;
-
-                    if (day < 7) {
-                        weekly = 1
-                    } else {
-                        weekly = day / 7;
-                        if (weekly != 0) {
-                            weekly = weekly + 1;
-                        }
-                    }
-
-                    $("#week").val("第" + parseInt(weekly) + "周");
-                })
-            })
-
-            laydate.render({
-                elem: '#startDate'
-                , type: 'year'
-
-            });
-            laydate.render({
-                elem: '#endDate'
-                , type: 'month'
-            });
-            laydate.render({
-                elem: '#sDate',
-                done: (function (value) {
-                    var start = $("#sDate").val();
-                    var year = start.slice(0, 4);
-                    var month = start.slice(5, 7);
-                    var day = start.slice(8, 10);
-                    var year = parseInt(year);
-                    var month = parseInt(month);
-                    var day = parseInt(day);
-                    if (day < 26) {
-                        day = day + 4;
-                    } else {
-                        switch (month) {
-                            case 1:
-                            case 3:
-                            case 5:
-                            case 7:
-                            case 8:
-                            case 10:
-                                day = day + 4 - 31;
-                                month = month + 1;
-                                break;
-                            case 4:
-                            case 6:
-                            case 9:
-                            case 11:
-                                day = day + 4 - 30;
-                                month = month + 1;
-                                break;
-                            case 2:
-                                day = day + 4 - 29;
-                                month = month + 1;
-                                break;
-                            case 12:
-                                day = day + 4 - 31;
-                                year = year + 1;
-                                month = 1;
-                        }
-                    }
-                    if (day < 10 && day > 0) {
-                        day = '0' + day
-                    }
-                    var autonumber = year + "-" + month + "-" + day;
-                    $("#eDate").val(autonumber);
-                    //第几周
-                    var start = $("#sDate").val();
-                    var start = $("#sDate").val();
-                    var day = start.slice(8, 10);
-                    var day = parseInt(day);
-                    var month = start.slice(5, 7);
-                    var weekly;
-                    if (day < 7) {
-                        weekly = 1
-                    } else {
-                        weekly = day / 7;
-                        if (weekly != 0) {
-                            weekly = weekly + 1;
-                        }
-                    }
-                    $("#week").val("第" + parseInt(weekly) + "周");
-                    //新增的第一个日期框必须为星期一
-                    var dd = new Date();
-                    var week = dd.getDay(); //获取时间的星期数
-                    var minus = week ? week - 1 : 6;
-                    dd.setDate(dd.getDate() - minus); //获取minus天前的日期
-                    var y = dd.getFullYear();
-                    var m = dd.getMonth() + 1; //获取月份
-                    var d = dd.getDate();
-                    var first = y + "-" + m + "-" + d;
-                    alert('first' + first)
-
-
-                    var ff = new Date();
-                    ff.setDate(dd.getDate() + 7); //获取minus天前的日期
-                    var y = ff.getFullYear();
-                    var m = ff.getMonth() + 1; //获取月份
-                    var d = ff.getDate();
-                    var two = y + "-" + m + "-" + d;
-                    alert('two' + two)
-
-
-                    var ee = new Date();
-                    ee.setDate(ff.getDate() + 7); //获取minus天前的日期
-                    var y = ee.getFullYear();
-                    var m = ee.getMonth() + 1; //获取月份
-                    var d = ee.getDate();
-                    var three = y + "-" + m + "-" + d;
-                    alert('three' + three)
-
-
-                    var gg = new Date();
-                    gg.setDate(ee.getDate() + 7); //获取minus天前的日期
-                    var y = gg.getFullYear();
-                    var m = gg.getMonth() + 1; //获取月份
-                    var d = gg.getDate();
-                    var four = y + "-" + m + "-" + d;
-                    alert('four' + four)
-
-
-                    var qq = new Date();
-                    qq.setDate(gg.getDate() + 7); //获取minus天前的日期
-                    var y = qq.getFullYear();
-                    var m = qq.getMonth() + 1; //获取月份
-                    var d = qq.getDate();
-                    var five = y + "-" + m + "-" + d;
-                    alert('five' + five)
-                })
-            })
 
             laydate.render({
                 elem: '#eDate'
@@ -398,9 +209,9 @@
             })
 
             $('#add').click(function () {
-                var sdate = $('#sDate').val().replace('-', '').replace('-', '');
-                var edate = $('#eDate').val().replace('-', '').replace('-', '');
-                var week = $('#week').val().replace('第', '').replace('周', '');
+                var sdate = $('#addstartDate').val().replace('-', '').replace('-', '');
+                var edate = $('#addendDate').val().replace('-', '').replace('-', '');
+                var week = $('#addweek').val().replace('第', '').replace('周', '');
                 $.ajax({
                     url: "/addWeekly",
                     dataType: 'json',
@@ -1440,17 +1251,17 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="sDate" name="user_date" style="width:130px" class="form-control"
+                            <input type="text" id="addstartDate"  class="form-control date form_datetime"  name="user_date" style="width:130px"
                                    placeholder="请选择开始时间"/>
                             <div>—</div>
-                            <input type="text" id="eDate" name="user_date" style="width:130px" class="form-control"
+                            <input type="text" id="addendDate" class="form-control date form_datetime" name="user_date" style="width:130px" class="form-control"
                                    placeholder="请选择结束时间"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">周:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="week"></input>
+                            <input class="form-control" id="addweek"></input>
                         </td>
                     </tr>
                     </tbody>
