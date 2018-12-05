@@ -44,6 +44,11 @@ public class MonthlyProgrammeController {
         }
     }
 
+    /**
+     * 删除 月 方案
+     * @param monthlyProgramme
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/delmonthlyProgramme")
     public R delmonthlyProgramme(MonthlyProgramme monthlyProgramme){
@@ -59,6 +64,11 @@ public class MonthlyProgrammeController {
         }
     }
 
+    /**
+     * 修改 月 方案
+     * @param monthlyProgramme
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/updatemonthlyProgramme")
     public R updatemonthlyProgramme(MonthlyProgramme monthlyProgramme){
