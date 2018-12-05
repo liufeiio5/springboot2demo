@@ -9,7 +9,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class MonthlyDifficulty {
+
         private Integer id;
         private Integer difficultyId;
         private String difficultyContent;
+
 }
