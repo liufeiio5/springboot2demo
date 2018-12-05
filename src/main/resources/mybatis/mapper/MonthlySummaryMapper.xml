@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.MonthlySummaryMapper">
+    <resultMap id="monthlySummary" type="com.zftx.mcdaily.bean.MonthlySummary">
+        <id column="id" property="id"/>
+        <id column="summary_id" property="summaryId"/>
+        <result column="summary_content" property="summaryContent"/>
+        <result column="single_progress" property="singleProgress"/>
+        <result column="work_hours" property="workHours"/>
+        <result column="assis_man" property="assisMan"/>
+    </resultMap>
+
+    <!--查询 月小结-->
+    <select id="getMonthlySummary" resultType="com.zftx.mcdaily.bean.MonthlySummary">
+        select * from monthly_summary
+        <if test="monthlySummary != null">
+            <where>
+                <if test="monthlySummary.id != null">
+                    id=#{monthlySummary.id}
+                </if>
+                <if test="monthlySummary.summaryId != null">
+                    and summary_id=#{monthlySummary.summaryId}
+                </if>
+                <if test="monthlySummary.summaryContent != null">
+                    and summary_content=#{monthlySummary.summaryContent}
+                </if>
+                <if test="monthlySummary.singleProgress != null">
+                    and single_progress=#{monthlySummary.singleProgress}
+                </if>
+                <if test="monthlySummary.workHours != null">
+                    and work_hours=#{monthlySummary.workHours}
+                </if>
+                <if test="monthlySummary.assisMan != null">
+                    and assis_man=#{monthlySummary.assisMan}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加 月小结-->
+    <insert id="addMonthlySummary" keyProperty="monthlySummary.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlySummary">
+        INSERT INTO monthly_summary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="monthlySummary !=null">
+                <if test="monthlySummary.summaryId!=null">
+                    summary_id,
+                </if>
+                <if test="monthlySummary.summaryContent!=null">
+                    summary_content,
+                </if>
+                <if test="monthlySummary.singleProgress!=null">
+                    single_progress,
+                </if>
+                <if test="monthlySummary.workHours!=null">
+                    work_hours,
+                </if>
+                <if test="monthlySummary.assisMan!=null">
+                    assis_man,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="monthlySummary !=null">
+                <if test="monthlySummary.summaryId!=null">
+                    #{monthlySummary.summaryId},
+                </if>
+                <if test="monthlySummary.summaryContent!=null">
+                    #{monthlySummary.summaryContent},
+                </if>
+                <if test="monthlySummary.singleProgress!=null">
+                    #{monthlySummary.singleProgress},
+                </if>
+                <if test="monthlySummary.workHours!=null ">
+                    #{monthlySummary.workHours},
+                </if>
+                <if test="monthlySummary.assisMan!=null ">
+                    #{monthlySummary.assisMan},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 月小结-->
+    <update id="updateMonthlySummary" parameterType="com.zftx.mcdaily.bean.MonthlySummary">
+        UPDATE monthly_summary
+        <set>
+            <if test="monthlySummary.summaryId!=null">
+                summary_id=#{monthlySummary.summaryId},
+            </if>
+            <if test="monthlySummary.summaryContent!=null">
+                summary_content=#{monthlySummary.summaryContent},
+            </if>
+            <if test="monthlySummary.singleProgress!=null ">
+                single_progress=#{monthlySummary.singleProgress},
+            </if>
+            <if test="monthlySummary.workHours!=null">
+                work_hours=#{monthlySummary.workHours},
+            </if>
+            <if test="monthlySummary.assisMan!=null">
+                assis_man=#{monthlySummary.assisMan},
+            </if>
+        </set>
+        <where>
+            <if test="monthlySummary.id!=null and monthlySummary.id!=0">
+                id=#{monthlySummary.id}
+            </if>
+            <if test="monthlySummary.summaryId!=null">
+                and summary_id=#{monthlySummary.summaryId}
+            </if>
+        </where>
+    </update>
+
+
+    <!--实际删除 月结表-->
+    <delete id="deleteMonthlySummary" parameterType="com.zftx.mcdaily.bean.MonthlySummary">
+       delete from monthly_summary  where id=#{monthlySummary.id}
+    </delete>
+
+
+    <!--根据summaryId删除 月结表-->
+    <delete id="deleteMonthlySummaryBySid" parameterType="java.lang.Integer">
+       delete from monthly_summary  where summary_id=#{summaryId}
+    </delete>
+</mapper>

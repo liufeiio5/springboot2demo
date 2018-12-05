@@ -45,17 +45,6 @@ public class SummaryServiceImpl implements SummaryService {
     public String addSummary(@Param("summary") Summary summary){
         int i=summaryMapper.addSummary(summary);
         if(i>0){
-           /* //获取此summaryId所有的 进度百分比
-            List<Summary> list=getSummary(new Summary().setSummaryId(summary.getSummaryId()));
-            //总进度
-            Float progress1=1f;
-            for(Summary s:list){
-                progress1=progress1*(new Float(s.getSingleProgress().substring(0, s.getSingleProgress().indexOf("%"))))/100;
-                System.out.println("凄凄切切群群群群群群群"+progress1);
-            }
-            double progress2=(double)Math.round(progress1*100)/100;
-            Integer flag=weeklyMapper.addWeekly(new Weekly().setSummaryId(summary.getSummaryId()).setProgress((progress2*100)+"%"));*/
-
             return "success";
         }else{
             return "fails";

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.MonthlyDifficultyMapper">
+    <resultMap id="monthlyDifficulty" type="com.zftx.mcdaily.bean.MonthlyDifficulty">
+        <id column="id" property="id"/>
+        <id column="difficulty_id" property="difficultyId"/>
+        <result column="difficulty_content" property="difficultyContent"/>
+    </resultMap>
+
+    <!--查询 月小结-->
+    <select id="getMonthlyDifficulty" resultType="com.zftx.mcdaily.bean.MonthlyDifficulty">
+        select * from monthly_difficulty
+        <if test="monthlyDifficulty != null">
+            <where>
+                <if test="monthlyDifficulty.id != null">
+                    id=#{monthlyDifficulty.id}
+                </if>
+                <if test="monthlyDifficulty.difficultyId != null">
+                    and difficulty_id=#{monthlyDifficulty.difficultyId}
+                </if>
+                <if test="monthlyDifficulty.difficultyContent != null">
+                    and difficulty_content=#{monthlyDifficulty.difficultyContent}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加 月小结-->
+    <insert id="addMonthlyDifficulty" keyProperty="monthlyDifficulty.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
+        INSERT INTO monthly_difficulty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="monthlyDifficulty !=null">
+                <if test="monthlyDifficulty.difficultyId!=null">
+                    difficulty_id,
+                </if>
+                <if test="monthlyDifficulty.difficultyContent!=null">
+                    difficulty_content,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="monthlyDifficulty !=null">
+                <if test="monthlyDifficulty.difficultyId!=null">
+                    #{monthlyDifficulty.difficultyId},
+                </if>
+                <if test="monthlyDifficulty.difficultyContent!=null">
+                    #{monthlyDifficulty.difficultyContent},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 月小结-->
+    <update id="updateMonthlyDifficulty" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
+        UPDATE monthly_difficulty
+        <set>
+            <if test="monthlyDifficulty.difficultyId!=null">
+                difficulty_id=#{monthlyDifficulty.difficultyId},
+            </if>
+            <if test="monthlyDifficulty.difficultyContent!=null">
+                difficulty_content=#{monthlyDifficulty.difficultyContent},
+            </if>
+        </set>
+        <where>
+            <if test="monthlyDifficulty.id!=null and monthlyDifficulty.id!=0">
+                id=#{monthlyDifficulty.id}
+            </if>
+            <if test="monthlyDifficulty.difficultyId!=null">
+                and difficulty_id=#{monthlyDifficulty.difficultyId}
+            </if>
+        </where>
+    </update>
+
+
+    <!--实际删除 月结表-->
+    <delete id="deleteMonthlyDifficulty" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
+       delete from monthly_difficulty  where id=#{monthlyDifficulty.id}
+    </delete>
+
+
+    <!--根据difficultyId删除 月结表-->
+    <delete id="deleteMonthlyDifficultyBySid" parameterType="java.lang.Integer">
+       delete from monthly_difficulty  where difficulty_id=#{difficultyId}
+    </delete>
+</mapper>
