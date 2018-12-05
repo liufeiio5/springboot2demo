@@ -600,8 +600,7 @@
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录
-</button>
+<%--<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录</button>--%>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
