@@ -55,7 +55,7 @@ public class OvertimeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "delOvertime")
+    @RequestMapping(value = "/delOvertime")
     public R delOvertime(Overtime overtime){
         if(overtime.getId()!=null && overtime.getId()!=0){
             String result=overtimeService.delOvertime(overtime);

@@ -226,7 +226,37 @@
                             });
                         })
                     })
-
+                    $('.delbtn').click(function () {
+                        var id = $(this).parent().parent().children().eq(0).text()
+                        alert(id)
+                        layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
+                            title: '信息',
+                            btn: ['朕意已决', '泥奏凯，朕再想一想']
+                        }, function (index) {
+                            $.ajax({
+                                dataType: 'json',
+                                type: "post",
+                                url: "/delOvertime",
+                                data: {id: id},
+                                success: function (data) {
+                                    if (data.code == "200") {
+                                        layer.msg('已删除!', {
+                                            icon: 1,
+                                            time: 1000
+                                        });
+                                        setTimeout(function wlh() {
+                                            window.location.href = "/overtime"
+                                        }, 500)
+                                    } else {
+                                        layer.msg(data.result, {
+                                            icon: 1,
+                                            time: 1000
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    })
                 },
             })
         }
