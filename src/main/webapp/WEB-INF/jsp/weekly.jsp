@@ -1199,24 +1199,29 @@
                             var assisman=$(this).attr('assisMan').toString()
                             $("#assisMan").val(assisman.replace(',',' '))
                         })
-                        function getUpdsummary(updassisman){
+                        /*function getUpdsummary(updassisman){
                             str = '<option value="付强" selected="selected">'+ '付强'+'</option>';
                             $("#updassisman").append(str)
                             $("#updassisman").trigger("liszt:updated");
                             $("#updassisman").chosen();
-                        }
+                        }*/
                         //修改 周小结
                         $('.updsummary').click(function () {
                             var id=$(this).attr('id')
                             var summaryId=$(this).attr('summaryId')
+                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
+
+
                             var assisMan=$(this).attr('assisMan').replace(',',' ');
-                            alert(assisMan)
+                            //alert(assisMan)
                             $("#updassisman").innerHTML=assisMan;
                             console.log(1);
-                            var sdate=$(this).parent().parent().parent().parent().parent().children().eq(2).text()
+
+
+                            //提交
                             $("#updSummary").click(function () {
                                 var content=$("#updcontent").val()
                                 var singleProgress=$("#updsingleProgress").val()
