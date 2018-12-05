@@ -67,7 +67,7 @@ public class MonthlyController {
      * @param monthly
      * @return
      */
-    @RequestMapping( "/deleteMonthly")
+    @RequestMapping(value = "/deleteMonthly")
     @ResponseBody
     public R deleteMonthly(Monthly monthly){
         if(monthly.getId()!=null&&monthly.getId()!=0) {
@@ -76,6 +76,21 @@ public class MonthlyController {
                 return R.ok("删除成功");
             } else {
                 return R.error("删除失败");
+            }
+        }else{
+            return R.error("参数有误!");
+        }
+    }
+
+    @RequestMapping(value = "/addmonthly")
+    @ResponseBody
+    public R addmonthly(Monthly monthly){
+        if(monthly!=null){
+            String result=monthlyService.addmonthly(monthly);
+            if ("success".equals(result)) {
+                return R.ok("新增成功");
+            } else {
+                return R.error("新增失败");
             }
         }else{
             return R.error("参数有误!");

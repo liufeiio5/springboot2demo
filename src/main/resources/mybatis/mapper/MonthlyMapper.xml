@@ -53,6 +53,74 @@
         order by m.year,m.month desc
     </select>
 
+
+    <insert id="addmonthly" useGeneratedKeys="true" keyProperty="monthly.id" parameterType="com.zftx.mcdaily.bean.Monthly">
+        insert into monthly
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="monthly!=null">
+                <if test="monthly.id != null">
+                    id,
+                </if>
+                <if test="monthly.userId != null">
+                     user_id,
+                </if>
+                <if test="monthly.year != null">
+                    year,
+                </if>
+                <if test="monthly.month != null">
+                     month,
+                </if>
+                <if test="monthly.summaryId != null">
+                    summary_id,
+                </if>
+                <if test="monthly.difficultyId != null">
+                    difficulty_id,
+                </if>
+                <if test="monthly.programmeId != null">
+                     programme_id,
+                </if>
+                <if test="monthly.suggestId != null">
+                    suggest_id,
+                </if>
+                <if test="monthly.remarkId != null">
+                     remark_id,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="monthly!=null">
+                <if test="monthly.id != null">
+                    #{monthly.id},
+                </if>
+                <if test="monthly.userId != null">
+                    #{monthly.userId},
+                </if>
+                <if test="monthly.year != null">
+                    #{monthly.year},
+                </if>
+                <if test="monthly.month != null">
+                    #{monthly.month},
+                </if>
+                <if test="monthly.summaryId != null">
+                    #{monthly.summaryId},
+                </if>
+                <if test="monthly.difficultyId != null">
+                    #{monthly.difficultyId},
+                </if>
+                <if test="monthly.programmeId != null">
+                    #{monthly.programmeId},
+                </if>
+                <if test="monthly.suggestId != null">
+                    #{monthly.suggestId},
+                </if>
+                <if test="monthly.remarkId != null">
+                    #{monthly.remarkId},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+
 <!--
 
     &lt;!&ndash;添加 周报&ndash;&gt;

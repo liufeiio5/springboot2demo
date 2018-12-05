@@ -24,5 +24,12 @@ public interface MonthlyMapper {
          */
         public Integer deleteMonthly(@Param("monthly") Monthly monthly);
 
+        /**
+         * 新增月报
+         * @param monthly
+         * @return
+         */
+        public Integer addmonthly(@Param(value = "monthly")Monthly monthly);
+
 
 }
