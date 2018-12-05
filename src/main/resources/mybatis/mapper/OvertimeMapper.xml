@@ -20,7 +20,7 @@
     <sql id="overtimeAll">id,date,start_time,end_time,duration,worker,cause,matter,schedule,result,remark</sql>
 
     <select id="getOvertime" resultType="java.util.HashMap">
-        select  t.id,t.date,t.start_time,t.end_time,t.duration,m.full_name,t.cause,t.matter,t.schedule,t.result,t.remark
+        select  t.id,t.date,t.start_time,DATE_Format(t.end_time,'%y-%m-%d %T') as end_time,t.duration,m.full_name,t.cause,t.matter,t.schedule,t.result,t.remark
         from overtime t join user m on t.worker= m.id where t.worker=#{userId}
         <if test="startTime != null and endTime != null">
             and t.date between #{startTime} and #{endTime}
