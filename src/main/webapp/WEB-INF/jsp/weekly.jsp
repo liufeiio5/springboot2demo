@@ -1266,7 +1266,7 @@
                                             content: content,
                                             singleProgress: singleProgress,
                                             workHours: workHours,
-                                            assisMan: assisMan,
+                                            assisMan: assisman,
                                             sdate: sdate
                                         },
                                         success: function (data) {
@@ -1278,7 +1278,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此周内，禁止修改") {
+                                            }else if(data.message == "当前时间不在此周内，禁止修改") {
                                                 layer.msg("当前时间不在此周内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
