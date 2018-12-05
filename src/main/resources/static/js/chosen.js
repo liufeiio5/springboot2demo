@@ -533,7 +533,7 @@
       if (this.options.width != null) {
         return this.options.width;
       } else {
-        return this.form_field.offsetWidth + "80%";
+        return this.form_field.offsetWidth + "px";
       }
     };
 

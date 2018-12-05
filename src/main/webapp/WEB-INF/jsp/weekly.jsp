@@ -171,8 +171,12 @@
                     }
                     $("#addassisman").trigger("liszt:updated");
                     $("#updassisman").trigger("liszt:updated");
-                    $("#addassisman").chosen();
-                    $("#updassisman").chosen();
+                    $("#addassisman").chosen({
+                        no_results_text:'未找到',
+                    });
+                    $("#updassisman").chosen()({
+                        no_results_text:'未找到',
+                    });
                 }
             })
             var mapss
