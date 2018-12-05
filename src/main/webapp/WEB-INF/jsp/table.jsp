@@ -1,11 +1,13 @@
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title></title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/table.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/table.css"/>
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
@@ -29,65 +31,63 @@
             initline($('#type').val(), $('#surface').val())
             initpoint($('#type').val(), $('#surface').val(), $('#line').val())
 
-
-                $('#add').click(function (){
-                    checkAddInput();
-                    var type = $('#type').val();
-                    var surface = $('#surface').val();
-                    var line = $('#line').val();
-                    var point = $('#point').val();
-                    var eventName=$("#event").val();
-                    var process=$("#process").val();
-                    var result=$("#result").val();
-                    var method=$("#method").val();
-                    var remarks=$("#remarks").val();
-                    var typeName = $('#addtype').val();
-                    var surfaceName = $('#addsurface').val();
-                    var lineName = $('#addline').val();
-                    var pointName = $('#addpoint').val();
-                    var selectDate=  $('#selectDate').val().replace('-', '').replace('-', '');
-                        $.ajax({
-                            url:"addDaily",
-                            dataType:'json',
-                            data:{
-                                type:type,
-                                surface:surface,
-                                line:line,
-                                point:point,
-                                eventName:eventName,
-                                process:process,
-                                result:result,
-                                method:method,
-                                remarks:remarks,
-                                typeName:typeName,
-                                surfaceName:surfaceName,
-                                lineName:lineName,
-                                pointName:pointName,
-								selectDate:selectDate
-                            },
-                            success :function (data)
-                            {
-                                if(data.code==200){
-                                    $("#event").val('');
-                                    $("#process").val('');
-                                    $("#result").val('');
-                                    $("#method").val('');
-                                    $("#remarks").val('');
-                                    layer.msg('添加成功!', {
-                                        icon: 1,
-                                        time:1000
-                                    });
-                                    setTimeout(function wlh() {
-                                        window.location.href = "/table"
-                                    },500)
-                                }else if(data.message="不能提前创建日报"){
-                                    layer.msg("不能提前创建日报，您这样，欺天当劈");
-                                }else {
-                                    layer.msg("添加失败");
-                                }
-                            }
-                        });
-                })
+            $('#add').click(function () {
+                checkAddInput();
+                var type = $('#type').val();
+                var surface = $('#surface').val();
+                var line = $('#line').val();
+                var point = $('#point').val();
+                var eventName = $("#event").val();
+                var process = $("#process").val();
+                var result = $("#result").val();
+                var method = $("#method").val();
+                var remarks = $("#remarks").val();
+                var typeName = $('#addtype').val();
+                var surfaceName = $('#addsurface').val();
+                var lineName = $('#addline').val();
+                var pointName = $('#addpoint').val();
+                var selectDate = $('#selectDate').val().replace('-', '').replace('-', '');
+                $.ajax({
+                    url: "addDaily",
+                    dataType: 'json',
+                    data: {
+                        type: type,
+                        surface: surface,
+                        line: line,
+                        point: point,
+                        eventName: eventName,
+                        process: process,
+                        result: result,
+                        method: method,
+                        remarks: remarks,
+                        typeName: typeName,
+                        surfaceName: surfaceName,
+                        lineName: lineName,
+                        pointName: pointName,
+                        selectDate: selectDate
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $("#event").val('');
+                            $("#process").val('');
+                            $("#result").val('');
+                            $("#method").val('');
+                            $("#remarks").val('');
+                            layer.msg('添加成功!', {
+                                icon: 1,
+                                time: 1000
+                            });
+                            setTimeout(function wlh() {
+                                window.location.href = "/table"
+                            }, 500)
+                        } else if (data.message = "不能提前创建日报") {
+                            layer.msg("不能提前创建日报，您这样，欺天当劈");
+                        } else {
+                            layer.msg("添加失败");
+                        }
+                    }
+                });
+            })
 
             $('#type').next().bind('click', function () {
                 $('#addtype').val('')
@@ -116,7 +116,6 @@
             $('#query').click(function () {
                 inittable()
             })
-
         })
 
         function inittable() {
@@ -185,6 +184,7 @@
 
                     $('.delbtn').click(function () {
                         var id = $(this).parent().parent().children().eq(0).text()
+                        alert(id)
                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
                             title: '信息',
                             btn: ['朕意已决', '泥奏凯，朕再想一想']
@@ -277,6 +277,48 @@
             })
         }
 
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]);
+            return null;
+        }
+
+        /**
+         *  页面跳转 传入参数
+         */
+        $(function () {
+            var str = GetQueryString("startDate");
+            if(str){
+                var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#startDate').val(date_str);
+            }
+
+
+            var strs = GetQueryString("endDate");
+            if(strs){
+                var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
+                $('#endDate').val(date_strs);
+            }
+
+            $('#userid').val(GetQueryString("userId"))
+        })
+
+        // 两秒后模拟点击
+        setTimeout(function() {
+            // IE
+            if(document.all) {
+                document.getElementById("query").click();
+            }
+            // 其它浏览器
+            else {
+                var e = document.createEvent("MouseEvents");
+                e.initEvent("click", true, true);
+                document.getElementById("query").dispatchEvent(e);
+            }
+        }, 100);
+
         function inittype() {
             $('#type').html('');
             $.ajax({
@@ -311,7 +353,7 @@
             });
         }
 
-        function initline(typeid,surfaceid) {
+        function initline(typeid, surfaceid) {
             $('#line').html('');
             $.ajax({
                 type: "get",
@@ -346,6 +388,7 @@
                 }
             });
         }
+
         function inittype() {
             $('#type').html('');
             $.ajax({
@@ -361,6 +404,8 @@
                 }
             });
         }
+
+
 
         function initsurface(typeid) {
             $('#surface').html('');
