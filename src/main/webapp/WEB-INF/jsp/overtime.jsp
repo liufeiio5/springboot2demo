@@ -146,6 +146,7 @@
                     userId:userId
                 },
                 success: function (data) {
+                    console.log(data)
                     for (var i in  data.data) {
                         var tr = $('<tr>');
                         if (typeof (data.data[i].id) != 'undefined') {
@@ -188,7 +189,15 @@
                                     type: "post",
                                     url: "/updateOvertime",
                                     data: {
-                                        id: id
+                                        id: id,
+                                        startTime: $("#updStartTime").val(),
+                                        endTime: endTime,
+                                        duration: $("#updDuration").val(),
+                                        cause: $("#updCause").val(),
+                                        matter: $("#updMatter").val(),
+                                        schedule: $("#updSchedule").val(),
+                                        result: $("#updResult").val(),
+                                        remark: $("#updRemark").val()
                                     },
                                     success: function (data) {
                                         if (data.code == "200") {

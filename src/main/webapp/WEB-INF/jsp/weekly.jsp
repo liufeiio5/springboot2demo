@@ -119,7 +119,7 @@
                     var minus = week ? week - 1 : 6;
                     dd.setDate(dd.getDate() - minus); //获取minus天前的日期
                     var y = dd.getFullYear();
-                    var m = dd.getMonth() + 1; //获取月份
+                    var m = dd.getMonth() - 1; //获取月份
                     var d = dd.getDate();
                     var first = y + "-" + m + "-" + d;
 
@@ -127,7 +127,7 @@
                     var ff = new Date();
                     ff.setDate(dd.getDate() + 7); //获取minus天前的日期
                     var y = ff.getFullYear();
-                    var m = ff.getMonth() + 1; //获取月份
+                    var m = ff.getMonth() - 1; //获取月份
                     var d = ff.getDate();
                     var two = y + "-" + m + "-" + d;
 
@@ -135,7 +135,7 @@
                     var ee = new Date();
                     ee.setDate(ff.getDate() + 7); //获取minus天前的日期
                     var y = ee.getFullYear();
-                    var m = ee.getMonth() + 1; //获取月份
+                    var m = ee.getMonth() - 1; //获取月份
                     var d = ee.getDate();
                     var three = y + "-" + m + "-" + d;
 
@@ -143,7 +143,7 @@
                     var gg = new Date();
                     gg.setDate(ee.getDate() + 7); //获取minus天前的日期
                     var y = gg.getFullYear();
-                    var m = gg.getMonth() + 1; //获取月份
+                    var m = gg.getMonth() - 1; //获取月份
                     var d = gg.getDate();
                     var four = y + "-" + m + "-" + d;
 
@@ -151,7 +151,7 @@
                     var qq = new Date();
                     qq.setDate(gg.getDate() + 7); //获取minus天前的日期
                     var y = qq.getFullYear();
-                    var m = qq.getMonth() + 1; //获取月份
+                    var m = qq.getMonth() - 1; //获取月份
                     var d = qq.getDate();
                     var five = y + "-" + m + "-" + d;
 
@@ -1400,7 +1400,6 @@
 </button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-<a href="/table">日报</a>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead>
