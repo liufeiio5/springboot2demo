@@ -30,6 +30,19 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * 主页
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/home")
+    public String home(HttpSession session)
+    {
+        if (session.getAttribute("user") == null)
+            return "redirect:/login";
+        return "home";
+    }
+
 
 
 
