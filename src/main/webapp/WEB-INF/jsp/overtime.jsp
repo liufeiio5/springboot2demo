@@ -188,13 +188,7 @@
                                     type: "post",
                                     url: "/updateOvertime",
                                     data: {
-                                        id: id,
-                                        duration: $("#updDuration").val(),
-                                        cause: $("#updCause").val(),
-                                        matter: $("#updMatter").val(),
-                                        schedule: $("#updSchedule").val(),
-                                        result: $("#updResult").val(),
-                                        remark: $("#updRemark").val()
+                                        id: id
                                     },
                                     success: function (data) {
                                         if (data.code == "200") {
