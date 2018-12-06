@@ -244,7 +244,7 @@
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].year))
                         tr.append($('<td>').html(json[i].month))
-                        tr.append($('<td>').html(json[i].month).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
+                        tr.append($('<td>').html(json[i].month).attr("year", json[i].year).attr("month", json[i].month).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('monthbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
                         summary(id, summaryId)
                         tr.append($('<td>').addClass('progress' + '_' + id))
@@ -262,44 +262,127 @@
                         tr.append(td);
                         $("#tbody").append(tr);
                     }
+
                     //第几月 跳转 月报
-                    $('.weekbtn').click(function () {
-                        var startDate = $(this).attr('sdate')
-                        var endDate = $(this).attr('edate')
+                    $('.monthbtn').click(function () {
+                        var startDate = $(this).attr('year')
+                        var endDate = $(this).attr('month')
                         var userId = $(this).attr('userId')
-                        var year = startDate.slice(0, 4)
-                        var mouth = startDate.slice(5, 7)
-                        var week = $(this).attr('week')
-                        $("#weekspan").html(year + '年' + mouth + '月  ');
-                        $("#tbodys").empty();
+                        var year = startDate.slice(0, 6)
+                        var mouth = endDate.slice(0,6)
+                        $("#monthspan").html(year + '年' + mouth + '月 ');
+                        $("#tbodys").html("");
                         $.ajax({
+                            url: '/getWeekly',
                             type: 'get',
-                            url: '/getDaily',
                             dataType: 'json',
                             data: {
-                                'startDate': startDate,
-                                'endDate': endDate,
+                                'year': year ,
+                                'mouth': mouth,
                                 'userId': userId
                             },
                             success: function (data) {
-                                for (var i in data.data) {
+                                var json=data.data;
+                                for (var i in json) {
                                     var tr = $('<tr>');
-                                    if (typeof (data.data[i].id) != 'undefined') {
-                                        tr.append($('<td>').html(data.data[i].id))
-                                        tr.append($('<td>').html(data.data[i].fullName))
-                                        tr.append($('<td>').html(data.data[i].date))
-                                        tr.append($('<td>').html(data.data[i].time))
-                                        tr.append($('<td>').html(data.data[i].typeName))
-                                        tr.append($('<td>').html(data.data[i].surfaceName))
-                                        tr.append($('<td>').html(data.data[i].lineName))
-                                        tr.append($('<td>').html(data.data[i].pointName))
-                                        tr.append($('<td>').html(data.data[i].event))
-                                        tr.append($('<td>').html(data.data[i].process))
-                                        tr.append($('<td>').html(data.data[i].result))
-                                        tr.append($('<td>').html(data.data[i].method))
-                                        tr.append($('<td>').html(data.data[i].remark))
-                                        $("#tbodys").append(tr);
-                                    }
+                                    tr.append($('<td>').html(json[i].id))
+                                    tr.append($('<td>').html(json[i].fullName))
+                                    tr.append($('<td>').html(json[i].sdate))
+                                    tr.append($('<td>').html(json[i].edate))
+                                    tr.append($('<td>').html(json[i].week))
+                                    tr.append($('<td>').addClass("summary" + "_" + json[i].summary_id))
+                                    tr.append($('<td>').addClass("progress" + "_" + json[i].summary_id))
+                                    $.ajax({
+                                        url: '/getSummary',
+                                        dataType: 'json',
+                                        data: {
+                                            summaryId: json[i].summary_id
+                                        },
+                                        type:"get",
+                                        success: function (data) {
+                                            var json = data.data
+                                            var progress = 1;
+                                            for (i in json) {
+                                                var str = $('<tr>');
+                                                str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].content)).append($('</td>')).append($('</tr>'))
+                                                $(".summary"+'_'+json[i].summaryId).append(str)
+                                                //百分号转小数进行乘积
+                                                var progress1 = json[i].singleProgress.replace("%", "") / 100;
+                                                progress = progress + progress1;
+                                                //小数转百分数
+                                                if (i == json.length - 1) {
+                                                    var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
+                                                    $('.progress' + '_' + json[i].summaryId).html(number.toFixed(1) + "%")
+                                                }
+                                            }
+                                        }
+                                    })
+                                    tr.append($('<td>').addClass("difficulty" + "_" + json[i].difficulty_id))
+                                    $.ajax({
+                                        url: '/getWeeklyDifficulty',
+                                        dataType: 'json',
+                                        data: {
+                                            difficultyId: json[i].difficulty_id
+                                        },
+                                        type:"get",
+                                        success: function (data) {
+                                            var json = data.data;
+                                            for (i in json) {
+                                                var str = $('<tr>');
+                                                str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].difficultyContent)).append($('</td>')).append($('</tr>'))
+                                                $('.difficulty' + "_" + json[i].difficultyId).append(str)
+                                            }
+                                        }
+                                    })
+                                    tr.append($('<td>').addClass("programme" + "_" + json[i].programme_id))
+                                    $.ajax({
+                                        url: '../getWeeklyProgramme',
+                                        dataType: 'json',
+                                        data: {
+                                            programmeId: json[i].programme_id
+                                        },
+                                        success: function (data) {
+                                            var json = data.data
+                                            for (i in json) {
+                                                var str = $('<tr>');
+                                                str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].programmeContent)).append($('</td>')).append($('</tr>'))
+                                                $('.programme' + "_" + json[i].programmeId).append(str)
+                                            }
+                                        }
+                                    })
+                                    tr.append($('<td>').addClass("suggest" + "_" + json[i].suggest_id))
+                                    $.ajax({
+                                        url: '/getWeeklySuggest',
+                                        dataType: 'json',
+                                        data: {
+                                            suggestId: json[i].suggest_id
+                                        },
+                                        success: function (data) {
+                                            var json = data.data
+                                            for (i in json) {
+                                                var str = $('<tr>');
+                                                str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].suggestContent)).append($('</td>')).append($('</tr>'))
+                                                $('.suggest' + "_" + json[i].suggestId).append(str)
+                                            }
+                                        }
+                                    })
+                                    tr.append($('<td>').addClass("remark" + "_" + json[i].remark_id))
+                                    $.ajax({
+                                        url: '/getWeeklyRemark',
+                                        dataType: 'json',
+                                        data: {
+                                            remarkId: json[i].remark_id
+                                        },
+                                        success: function (data) {
+                                            var json = data.data
+                                            for (i in json) {
+                                                var str = $('<tr>');
+                                                str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].remarkContent)).append($('</td>')).append($('</tr>'))
+                                                $('.remark' + "_" + json[i].remarkId).append(str)
+                                            }
+                                        }
+                                    })
+                                    $("#tbodys").append(tr);
                                 }
                             }
                         })
@@ -1159,6 +1242,56 @@
             }
         }
 
+        //获取周报内容
+        function getWeekSummary(mid,summaryId) {
+            alert(mid)
+            $.ajax({
+                url: '/getSummary',
+                dataType: 'json',
+                data: {
+                    summaryId: summaryId
+                },
+                type:"get",
+                success: function (data) {
+                    var json = data.data
+                    var progress = 1;
+                    for (i in json) {
+                        var str = $('<tr>');
+                        str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content)).append($('</td>').append($('</tr>')))
+                        $(".weeklySummary" + '_' + mid).append(str);
+                        //百分号转小数进行乘积
+                        var progress1 = json[i].singleProgress.replace("%", "") / 100;
+                        progress = progress + progress1;
+                        //小数转百分数
+                        if (i == json.length - 1) {
+                            var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
+                            $('.weeklyProgress' + '_' + mid).html(number.toFixed(1) + "%")
+                        }
+                    }
+                }
+            })
+        }
+        function  getWeekDifficulty(mid,difficultyId) {
+            $.ajax({
+                url: '/getWeeklyDifficulty',
+                dataType: 'json',
+                data: {
+                    difficultyId: difficultyId
+                },
+                type:"get",
+                success: function (data) {
+                    var json = data.data;
+                    for (i in json) {
+                        var str = $('<tr>');
+                        str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].content))
+                        str.append($('</td>'));
+                        str.append($('</tr>'));
+                        $(".weeklyDifficulty" + '_' + mid).append(str);
+                    }
+                }
+            })
+        }
+
         //检查月小结 内容 进度 工时 的输入是否为空
         function checkAddInput() {
             var addcontent = $("#addcontent").val().trim();
@@ -1750,25 +1883,22 @@
 <div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
-            <div class="modal-body">
                 <div>
-                    <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>所有日报</font></b></div>
+                    <div align="center"><b><font size="16" color="red"><span id="monthspan"></span>所有周报</font></b></div>
                     <table class="table table-bordered" id="table-bordereds">
                         <thead>
                         <tr>
-                            <th width="75px">编号</th>
-                            <th width="75px">发布人</th>
-                            <th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
-                            <th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
-                            <th width="50px">类型</th>
-                            <th width="50px">&nbsp;&nbsp;面</th>
-                            <th width="75px"><span>线</span></th>
-                            <th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
-                            <th width="150px" style="text-align: center">事件</th>
-                            <th width="150px" style="text-align: center">过程</th>
-                            <th width="150px" style="text-align: center">结果</th>
-                            <th width="150px" style="text-align: center">解决方案</th>
-                            <th width="150px" style="text-align: center">备注</th>
+                            <th>序号</th>
+                            <th>发布人</th>
+                            <th>起始日期</th>
+                            <th>结束日期</th>
+                            <th>第几周</th>
+                            <th>一周小结</th>
+                            <th>总体进度</th>
+                            <th>遇上的困难</th>
+                            <th>解决方案</th>
+                            <th>建议</th>
+                            <th>备注</th>
                         </tr>
                         </thead>
                         <tbody id="tbodys">
@@ -1779,7 +1909,6 @@
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                 </div>
-            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>

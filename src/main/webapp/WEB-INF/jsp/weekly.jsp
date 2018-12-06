@@ -303,7 +303,7 @@
                         var endDate = $(this).attr('edate')
                         var userId = $(this).attr('userId')
                         var year = startDate.slice(0, 4)
-                        var mouth = startDate.slice(5, 7)
+                        var mouth = startDate.slice(4, 6)
                         var week = $(this).attr('week')
                         $("#weekspan").html(year + '年' + mouth + '月  ' + '第' + week + '周');
                         $("#tbodys").empty();
@@ -1829,7 +1829,6 @@
 <div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
-            <div class="modal-body">
                 <div>
                     <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>所有日报</font></b></div>
                     <table class="table table-bordered" id="table-bordereds">
@@ -1854,7 +1853,6 @@
 
                         </tbody>
                     </table>
-                </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                 </div>

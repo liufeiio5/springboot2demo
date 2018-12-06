@@ -46,12 +46,14 @@ public class WeeklyController {
         if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
             weekly.setUserId(user.getId());
         }
-        if(year!="" && mouth!=""){
-            weekly.setSdate(year+""+mouth+"00");
-            weekly.setEdate(year+""+(Integer.parseInt(mouth)+1)+"06");
-        }else if(year!=""&& mouth==""){
-            weekly.setSdate(year+"0100");
-            weekly.setEdate(year+"1231");
+        if(year!=null&&mouth!=null){
+            if(year!="" && mouth!=""){
+                weekly.setSdate(year+""+mouth+"00");
+                weekly.setEdate(year+""+(Integer.parseInt(mouth)+1)+"06");
+            }else if(year!=""&& mouth==""){
+                weekly.setSdate(year+"0100");
+                weekly.setEdate(year+"1231");
+            }
         }
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
