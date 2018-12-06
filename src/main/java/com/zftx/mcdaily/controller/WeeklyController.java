@@ -40,7 +40,7 @@ public class WeeklyController {
      */
     @RequestMapping(value = "/getWeekly",method = RequestMethod.GET)
     @ResponseBody
-    public R getWeekly(Weekly weekly,HttpSession session,String year,String mouth){
+    public R getWeekly(Weekly weekly,HttpSession session,String year,String mouth)throws ParseException{
         //获取用户信息
         User user = (User) session.getAttribute("user");
         if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
@@ -49,7 +49,7 @@ public class WeeklyController {
         if(year!=null&&mouth!=null){
             if(year!="" && mouth!=""){
                 weekly.setSdate(year+""+mouth+"00");
-                weekly.setEdate(year+""+(Integer.parseInt(mouth)+1)+"06");
+                weekly.setEdate(Tool.getSevenDate(year+""+mouth+"31"));
             }else if(year!=""&& mouth==""){
                 weekly.setSdate(year+"0100");
                 weekly.setEdate(year+"1231");

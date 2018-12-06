@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -142,5 +143,28 @@ public class Tool
         String day= getToday() < 10 ? "0" +getToday() :getToday()+"";
         String nowDate=getYear()+""+mouth+day;
         return nowDate;
+    }
+
+    //第6天后日期
+    public static String getSevenDate(String sdate)throws ParseException {
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = sdf.parse(sdate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        Date today = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus1 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus2 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus3 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus4 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus5 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus6 = c.getTime();
+        return  sdf.format(today_plus6);
     }
 }

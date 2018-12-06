@@ -70,8 +70,7 @@ public class WeeklyDifficultyController {
     @ResponseBody
     public R addDaily(WeeklyDifficulty weeklyDifficulty,String sdate)throws ParseException{
         if(sdate!=null && sdate!=""){
-            String sevenDate=getSevenDate(sdate);
-            Integer sdate2=Integer.parseInt(sdate);
+            String sevenDate=Tool.getSevenDate(sdate);
             Integer nowDate2=Integer.parseInt(Tool.getNowDate());
             if(nowDate2>Integer.parseInt(sevenDate)){
                 return R.error("当前时间不在此周内，禁止修改");
@@ -109,26 +108,4 @@ public class WeeklyDifficultyController {
         }
     }
 
-    //第6天后日期
-    public String getSevenDate(String sdate)throws ParseException {
-        String pattern = "yyyyMMdd";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        Date date = sdf.parse(sdate);
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        Date today = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus1 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus2 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus3 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus4 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus5 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus6 = c.getTime();
-        return  sdf.format(today_plus6);
-    }
 }
