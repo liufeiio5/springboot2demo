@@ -18,17 +18,9 @@ public class TestController {
         return "jsp/index2";
     }
 
-    @RequestMapping("/sync")
-    @ResponseBody
-    public synchronized String showSync(){
-        int i=0;
-        i++;
-        return "hahah"+i;
-
-    }
-
     @RequestMapping("thyme/index")
     public String thymeIndex(){
         return "html/index";
     }
+
 }
