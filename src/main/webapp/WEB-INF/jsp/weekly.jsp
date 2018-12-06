@@ -1093,15 +1093,30 @@
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
                             //提交
                             $("#updSummary").click(function () {
-                                var content = $("#updcontent").val()
-                                var singleProgress = $("#updsingleProgress").val()
+                                var content = $("#updcontent").val().trim()
+                                var singleProgress = $("#updsingleProgress").val().trim()
                                 var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                //校验
+                                if(content==null || content==''){
+                                    layer.msg("周结内容不能为空")
+                                    ajax().abort()
+                                }
+                                if(singleProgress==null || singleProgress==''){
+                                    layer.msg("进度不能为空")
+                                    ajax().abort()
+                                }
+                                if($('#updworkHours').val().trim()==null || $('#updworkHours').val().trim()==''){
+                                    layer.msg("工时不能为空")
+                                    ajax().abort()
+                                }
                                 if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                                     layer.msg("您输入的进度指数不规范")
                                     ajax().abort()
                                 }
-
-                                var assisman = $("#updassisman").val().toString()
+                                var assisman =''
+                                if($("#updassisman").val()!=null){
+                                    assisman = $("#updassisman").val().toString()
+                                }
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateSummary',

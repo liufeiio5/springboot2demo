@@ -74,7 +74,7 @@ public class MonthlyServiceImpl implements MonthlyService {
      */
     @Override
     public String addmonthly(Monthly monthly) {
-        ArrayList<HashMap<String, Object>> list=monthlyMapper.getMonthly(new Monthly().setYear(monthly.getYear()).setMonth(monthly.getMonth()));
+        ArrayList<HashMap<String, Object>> list=monthlyMapper.getMonthly(new Monthly().setYear(monthly.getYear()).setMonth(monthly.getMonth()).setUserId(monthly.getUserId()));
         if(list.size()>0){
             return "repeat";
         }else {

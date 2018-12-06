@@ -354,7 +354,7 @@
                     })
                     //提交  添加月小结
                     $("#addSummary").click(function () {
-                        var summaryId = $("#midleValueId").val()
+                        checkAddInput()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
                         if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
@@ -369,7 +369,7 @@
                             url: "/addMonthlySummary",
                             dataType: 'json',
                             data: {
-                                summaryId: summaryId,
+                                summaryId:  $("#midleValueId").val(),
                                 summaryContent: $('#addcontent').val(),
                                 singleProgress: singleProgress,
                                 workHours: workHours,
@@ -1018,8 +1018,8 @@
                             $("#content").val($(this).attr('content'))
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
-                            var assisman = $(this).attr('assisMan');
-                            $("#assisMan").val(assisman.replace(',', ' ').replace(',', ' '))
+                            var lookassisman = $(this).attr('assisMan');
+                            $("#assisMan").val(lookassisman.replace(',', ' ').replace(',', ' '))
                         })
 
                         //修改 月小结
@@ -1045,7 +1045,6 @@
                                 var arr = values.split(',');
                                 var length = arr.length;
                                 var value = '';
-                                console.log(length)
                                 for (i = 0; i < length; i++) {
                                     value = arr[i];
                                     $(select + " option[value='" + value + "']").attr('selected', true);
@@ -1053,18 +1052,32 @@
                                 $('#updassisman').trigger("chosen:updated");
                             }
 
-                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var month= $(this).parent().parent().parent().parent().parent().children().eq(3).text()
                             //提交
                             $("#updSummary").click(function () {
-                                var content = $("#updcontent").val()
-                                var singleProgress = $("#updsingleProgress").val()
-                                var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                var content = $("#updcontent").val().trim()
+                                var singleProgress = $("#updsingleProgress").val().trim()
+                                var workHours = $('#updworkHours').val().trim().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                //校验
+                                if(content==null || content==''){
+                                    layer.msg("月结内容不能为空")
+                                    ajax().abort()
+                                }
+                                if(singleProgress==null || singleProgress==''){
+                                    layer.msg("进度不能为空")
+                                    ajax().abort()
+                                }
                                 if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                                     layer.msg("您输入的进度指数不规范")
                                     ajax().abort()
                                 }
+                                if(workHours==null || workHours==''){
+                                    layer.msg("工时不能为空")
+                                    ajax().abort()
+                                }
 
-                                var assisMan
+                                var assisMan=''
                                 if($("#updassisman").val()!=null){
                                     assisMan = $("#updassisman").val().toString();
                                 }
@@ -1078,8 +1091,9 @@
                                             content: content,
                                             singleProgress: singleProgress,
                                             workHours: workHours,
-                                            assismans: assisman,
-                                            sdate: sdate
+                                            assismans: assisMan,
+                                            year: year,
+                                            month: month
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -1142,6 +1156,25 @@
                         })
                     }
                 })
+            }
+        }
+
+        //检查月小结 内容 进度 工时 的输入是否为空
+        function checkAddInput() {
+            var addcontent = $("#addcontent").val().trim();
+            var addsingleProgress = $("#addsingleProgress").val().trim();
+            var addworkHours = $("#addworkHours").val().trim();
+            if (addcontent == null || addcontent == '') {
+                layer.msg("内容不能为空！");
+                ajax().abort;
+            }
+            if (addsingleProgress == null || addsingleProgress == '') {
+                layer.msg("进度不能为空！");
+                ajax.abort;
+            }
+            if (addworkHours == null || addworkHours == '') {
+                layer.msg("工时不能为空!");
+                ajax.abort;
             }
         }
     </script>
