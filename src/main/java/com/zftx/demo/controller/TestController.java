@@ -13,8 +13,22 @@ public class TestController {
         return "hello world ";
     }
 
-    @RequestMapping("/index")
+    @RequestMapping("jsp/index")
     public String toIndex(){
-        return "index";
+        return "jsp/index2";
+    }
+
+    @RequestMapping("/sync")
+    @ResponseBody
+    public synchronized String showSync(){
+        int i=0;
+        i++;
+        return "hahah"+i;
+
+    }
+
+    @RequestMapping("thyme/index")
+    public String thymeIndex(){
+        return "html/index";
     }
 }

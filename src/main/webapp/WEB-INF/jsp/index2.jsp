@@ -11,6 +11,6 @@
     <title>欢迎页</title>
 </head>
 <body>
-<h2>Welcome to here!</h2>
+<h2>Welcome!</h2>
 </body>
 </html>

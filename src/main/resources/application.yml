@@ -32,11 +32,9 @@ spring:
         statement-close-after-log-enabled: false
         result-set-open-after-log-enabled: false
         result-set-close-after-log-enabled: false
-  mvc:
-    view:
-      #采用jsp模板引擎
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
+
+
+
 mybatis:
   # 指定全局配置文件位置
   config-location: classpath:mybatis/mybatis-config.xml
@@ -47,7 +45,7 @@ mybatis:
 #  - classpath:sql/employee.sql
 
 server:
-  port: 8899
+  port: 18999
 
   devtools:
     livereload:
