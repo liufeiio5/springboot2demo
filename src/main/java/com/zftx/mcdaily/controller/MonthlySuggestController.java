@@ -3,6 +3,7 @@ package com.zftx.mcdaily.controller;
 import com.zftx.mcdaily.bean.MonthlySuggest;
 import com.zftx.mcdaily.service.MonthlySuggestService;
 import com.zftx.mcdaily.util.R;
+import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,8 +62,12 @@ public class MonthlySuggestController {
 
     @ResponseBody
     @RequestMapping(value = "/updatemonthlySuggest")
-    public R updatemonthlySuggest(MonthlySuggest monthlySuggest){
+    public R updatemonthlySuggest(MonthlySuggest monthlySuggest,String year,String month){
         if(monthlySuggest!=null && monthlySuggest.getSuggestId()!=null){
+            month=Integer.parseInt(month)<10?'0'+month:month;
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+                return R.error("当前时间不在此月内,禁止修改");
+            }
             String result=monthlySuggestService.updatemonthlySuggest(monthlySuggest);
             if("success".equals(result)){
                 return R.ok("修改成功");

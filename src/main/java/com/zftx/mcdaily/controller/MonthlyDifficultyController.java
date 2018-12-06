@@ -3,6 +3,7 @@ package com.zftx.mcdaily.controller;
 import com.zftx.mcdaily.bean.MonthlyDifficulty;
 import com.zftx.mcdaily.service.MonthlyDifficultyService;
 import com.zftx.mcdaily.util.R;
+import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +69,12 @@ public class MonthlyDifficultyController {
      */
     @RequestMapping("/updateMonthlyDifficulty")
     @ResponseBody
-    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty){
+    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty,String year,String month){
         if(monthlyDifficulty!=null) {
+            month=Integer.parseInt(month)<10?'0'+month:month;
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+                return R.error("当前时间不在此月内,禁止修改");
+            }
             String str = monthlyDifficultyService.updateMonthlyDifficulty(monthlyDifficulty);
             if ("success".equals(str)) {
                 return R.ok("修改成功");
