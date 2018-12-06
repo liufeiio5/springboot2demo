@@ -42,21 +42,22 @@
             width: 80px;
         }
 
-        #table-bordered thead tr th:nth-of-type(4) {
-            width: 80px;
-        }
 
-        #table-bordered thead tr th:nth-of-type(5) {
+        #table-bordered thead tr th:nth-of-type(4) {
             width: 60px;
         }
 
-        #table-bordered thead tr th:nth-of-type(6) {
+        #table-bordered thead tr th:nth-of-type(5) {
             max-width: 450px;
             min-width: 300px;
         }
 
-        #table-bordered thead tr th:nth-of-type(7) {
+        #table-bordered thead tr th:nth-of-type(6) {
             width: 100px;
+        }
+
+        #table-bordered thead tr th:nth-of-type(7) {
+            width: 205px;
         }
 
         #table-bordered thead tr th:nth-of-type(8) {
@@ -72,10 +73,6 @@
         }
 
         #table-bordered thead tr th:nth-of-type(11) {
-            width: 205px;
-        }
-
-        #table-bordered thead tr th:nth-of-type(12) {
             width: 40px;
         }
     </style>
@@ -243,7 +240,6 @@
                         tr.append($('<td>').html(json[i].id))
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].year))
-                        tr.append($('<td>').html(json[i].month))
                         tr.append($('<td>').html(json[i].month).attr("year", json[i].year).attr("month", json[i].month).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('monthbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
                         summary(id, summaryId)
@@ -262,7 +258,9 @@
                         tr.append(td);
                         $("#tbody").append(tr);
                     }
-
+                    if (data.code != "200") {
+                        layer.msg('当前数据为空!');
+                    }
                     //第几月 跳转 月报
                     $('.monthbtn').click(function () {
                         var startDate = $(this).attr('year')
@@ -651,7 +649,8 @@
                         })
                         //修改 月 困难
                         $('.updDifficulty').click(function () {
-                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var month= $(this).parent().parent().parent().parent().parent().children().eq(3).text()
                             var id = $(this).attr('id')
                             var difficultyId = $(this).attr('difficultyId')
                             $("#updDifficultyContent").val($(this).attr('difficultyContent'))
@@ -666,7 +665,8 @@
                                             id: id,
                                             difficultyId: difficultyId,
                                             difficultyContent: difficultyContent,
-                                            sdate: sdate
+                                            year:year,
+                                            month:month
                                         },
                                         success: function (data) {
                                             console.info(data)
@@ -678,7 +678,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此月内，禁止修改") {
+                                            } else if (data.message == "当前时间不在此月内,禁止修改") {
                                                 layer.msg('当前时间不在此月内，禁止修改!', {
                                                     icon: 1,
                                                     time: 1000
@@ -765,7 +765,8 @@
                             var id = $(this).attr('id')
                             var programmeId = $(this).attr('programmeId')
                             $("#updProgrammeContent").val($(this).attr('programmeContent'))
-                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var month= $(this).parent().parent().parent().parent().parent().children().eq(3).text()
                             //提交
                             $("#updProgramme").click(function () {
                                 var programmeContent = $("#updProgrammeContent").val()
@@ -777,7 +778,8 @@
                                             id: id,
                                             programmeId: programmeId,
                                             programmeContent: programmeContent,
-                                            sdate: sdate
+                                            year:year,
+                                            month:month
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -788,7 +790,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此月内，禁止修改") {
+                                            } else if (data.message == "当前时间不在此月内,禁止修改") {
                                                 layer.msg("当前时间不在此月内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -875,7 +877,8 @@
                             var id = $(this).attr('id')
                             var suggestId = $(this).attr('suggestId')
                             $("#updSuggestContent").val($(this).attr('suggestContent'))
-                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var month= $(this).parent().parent().parent().parent().parent().children().eq(3).text()
                             //提交
                             $("#updSuggest").click(function () {
                                 var suggestContent = $("#updSuggestContent").val()
@@ -887,7 +890,8 @@
                                             id: id,
                                             suggestId: suggestId,
                                             suggestContent: suggestContent,
-                                            sdate: sdate
+                                            year:year,
+                                            month:month
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -898,7 +902,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此月内，禁止修改") {
+                                            } else if (data.message == "当前时间不在此月内,禁止修改") {
                                                 layer.msg("当前时间不在此月内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -986,7 +990,8 @@
                             var id = $(this).attr('id')
                             var remarkId = $(this).attr('remarkId')
                             $("#updRemarkContent").val($(this).attr('remarkContent'))
-                            var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
+                            var month= $(this).parent().parent().parent().parent().parent().children().eq(3).text()
                             //提交
                             $("#updRemark").click(function () {
                                 var remarkContent = $("#updRemarkContent").val()
@@ -998,7 +1003,8 @@
                                             id: id,
                                             remarkId: remarkId,
                                             remarkContent: remarkContent,
-                                            sdate: sdate
+                                            year:year,
+                                            month:month
                                         },
                                         success: function (data) {
                                             if (data.code == "200") {
@@ -1009,7 +1015,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此月内，禁止修改") {
+                                            } else if (data.message == "当前时间不在此月内,禁止修改") {
                                                 layer.msg("当前时间不在此月内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -1112,19 +1118,24 @@
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             $("#updworkHours").val($(this).attr('workHours'))
-                            var assisman = $(this).attr('assisMan')
-
-                                //assisMan = $(this).attr('assisMan');
+                            var assisman =''
+                            if($(this).attr('assisMan').toString()!=null){
+                                assisman=$(this).attr('assisMan').toString()
+                            }
                             $('.assisManItem').attr('selected', false);
                             $('#updassisman').trigger("chosen:updated");
                             if (!$.isEmptyObject(assisman)) {
-                                chose_mult_set_ini('#updassisman',assisman);
+                                //assisMan = $(this).attr('assisMan');
+                                chose_mult_set_ini('#updassisman', assisman);
                                 //初始化
                                 $("#updassisman").chosen();
+                                $("#updassisman").trigger("chosen:updated");
                                 //$(".chzn-select").chosen();
                             }
                             // 多选 select 数据初始化
                             function chose_mult_set_ini(select, values) {
+                                //$(select).empty();
+                                //$(select).trigger("chosen:updated");
                                 var arr = values.split(',');
                                 var length = arr.length;
                                 var value = '';
@@ -1132,7 +1143,7 @@
                                     value = arr[i];
                                     $(select + " option[value='" + value + "']").attr('selected', true);
                                 }
-                                $('#updassisman').trigger("chosen:updated");
+                                $(select).trigger("chosen:updated");
                             }
 
                             var year= $(this).parent().parent().parent().parent().parent().children().eq(2).text()
@@ -1187,7 +1198,7 @@
                                                     icon: 1,
                                                     time: 1000
                                                 });
-                                            } else if (data.message == "当前时间不在此月内，禁止修改") {
+                                            } else if (data.message == "当前时间不在此月内,禁止修改") {
                                                 layer.msg("当前时间不在此月内，禁止修改", {
                                                     icon: 1,
                                                     time: 1000
@@ -1332,7 +1343,6 @@
             <th>发布人</th>
             <th>年</th>
             <th>月</th>
-            <th>第几月</th>
             <th>月小结</th>
             <th>总体进度</th>
             <th>遇上的困难</th>

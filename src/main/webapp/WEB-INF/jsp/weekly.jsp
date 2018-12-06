@@ -297,6 +297,10 @@
                         tr.append(td);
                         $("#tbody").append(tr);
                     }
+                    if (data.code != "200") {
+                        layer.msg('当前数据为空!');
+                    }
+
                     //第几周 跳转 日报
                     $('.weekbtn').click(function () {
                         var startDate = $(this).attr('sdate')
@@ -1343,14 +1347,14 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="addsingleProgress">
+                            <input type="text" id="addsingleProgress" placeholder="  例如 : 30f或8h或3d或1w">
                         </td>
                         <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours"></input>
+                            <input class="form-control" id="addworkHours" placeholder="例如 : 55% 或 55"/>
                         </td>
                         <td>
                             <select id="addworkHoursUnit">

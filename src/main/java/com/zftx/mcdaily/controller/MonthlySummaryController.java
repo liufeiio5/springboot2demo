@@ -5,6 +5,7 @@ import com.zftx.mcdaily.bean.MonthlySummary;
 import com.zftx.mcdaily.service.MonthlyService;
 import com.zftx.mcdaily.service.MonthlySummaryService;
 import com.zftx.mcdaily.util.R;
+import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,8 +74,12 @@ public class MonthlySummaryController {
      */
     @RequestMapping("/updateMonthlySummary")
     @ResponseBody
-    public R updateMonthlySummary(MonthlySummary monthlySummary,HttpSession session,String assismans)throws ParseException {
+    public R updateMonthlySummary(MonthlySummary monthlySummary,HttpSession session,String assismans,String year,String month)throws ParseException {
         if(monthlySummary!=null) {
+            month=Integer.parseInt(month)<10?'0'+month:month;
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+                return R.error("当前时间不在此月内,禁止修改");
+            }
             monthlySummary.setAssisMan(assismans);
             String str = monthlySummaryService.updateMonthlySummary(monthlySummary);
             if ("success".equals(str)) {
