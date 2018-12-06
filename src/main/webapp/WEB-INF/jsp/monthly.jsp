@@ -399,13 +399,18 @@
                     })
                     //提交  添加月 困难
                     $("#addDifficulty").click(function () {
+                        var addDifficutyContent=$('#addDifficutyContent').val().trim()
+                        if(addDifficutyContent==null|| addDifficutyContent==''){
+                            layer.msg("困难内容不能为空!");
+                            ajax().abort()
+                        }
                         var difficultyId = $("#dmidleValueId").val()
                         $.ajax({
                             url: "/addMonthlyDifficulty",
                             dataType: 'json',
                             data: {
                                 difficultyId: difficultyId,
-                                difficultyContent: $('#addDifficutyContent').val()
+                                difficultyContent: addDifficutyContent
                             },
                             async:false,
                             success: function (data) {
@@ -429,13 +434,18 @@
                     })
                     //提交 添加月 方案
                     $("#addProgramme").click(function () {
+                        var addProgrammeContent=$('#addProgrammeContent').val().trim()
+                        if(addProgrammeContent==null||addProgrammeContent==''){
+                            layer.msg("方案内容不能为空!");
+                            ajax().abort()
+                        }
                         var programmeId = $("#pmidleValueId").val()
                         $.ajax({
                             url: "/addmonthlyProgramme",
                             dataType: 'json',
                             data: {
                                 programmeId: programmeId,
-                                programmeContent: $('#addProgrammeContent').val()
+                                programmeContent: addProgrammeContent
                             },
                             async:false,
                             success: function (data) {
@@ -459,13 +469,18 @@
                     })
                     //提交 添加月 建议
                     $("#addSuggest").click(function () {
+                        var addSuggestContent=$('#addSuggestContent').val().trim()
+                        if(addSuggestContent==null||addSuggestContent==''){
+                            layer.msg("建议内容不能为空!");
+                            ajax().abort()
+                        }
                         var suggestId = $("#smidleValueId").val()
                         $.ajax({
                             url: "/addmonthlySuggest",
                             dataType: 'json',
                             data: {
                                 suggestId: suggestId,
-                                suggestContent: $('#addSuggestContent').val()
+                                suggestContent: addSuggestContent
                             },
                             async:false,
                             success: function (data) {
@@ -489,13 +504,18 @@
                     })
                     //提交 添加月 备注
                     $("#addRemark").click(function () {
+                        var addRemarkContent=$('#addRemarkContent').val().trim()
+                        if(addRemarkContent==null||addRemarkContent==''){
+                            layer.msg("备注内容不能为空!");
+                            ajax().abort()
+                        }
                         var remarkId = $("#rmidleValueId").val()
                         $.ajax({
                             url: "/addMonthlyRemark",
                             dataType: 'json',
                             data: {
                                 remarkId: remarkId,
-                                remarkContent: $('#addRemarkContent').val()
+                                remarkContent: addRemarkContent
                             },
                             async:false,
                             success: function (data) {
@@ -1122,25 +1142,6 @@
                         })
                     }
                 })
-            }
-        }
-
-        //检查事件 过程 结果 的输入是否为空
-        function checkAddInput() {
-            var event = $("#event").val();
-            var process = $("#process").val();
-            var result = $("#result").val();
-            if (event == null || event == '') {
-                alert("事件不能为空！");
-                ajax().abort;
-            }
-            if (process == null || process == '') {
-                alert("过程不能为空！");
-                ajax.abort;
-            }
-            if (result == null || result == '') {
-                alert("结果不能为空!");
-                ajax.abort;
             }
         }
     </script>
