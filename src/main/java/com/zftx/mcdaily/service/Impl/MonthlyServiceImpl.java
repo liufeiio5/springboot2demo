@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -73,12 +74,17 @@ public class MonthlyServiceImpl implements MonthlyService {
      */
     @Override
     public String addmonthly(Monthly monthly) {
-        monthly.setCreateDate(Tool.getNowDate());
-        int i=monthlyMapper.addmonthly(monthly);
-        if(i>0){
-            return "success";
-        }else{
-            return "fails";
+        ArrayList<HashMap<String, Object>> list=monthlyMapper.getMonthly(new Monthly().setYear(monthly.getYear()).setMonth(monthly.getMonth()));
+        if(list.size()>0){
+            return "repeat";
+        }else {
+            monthly.setCreateDate(Tool.getNowDate());
+            int i = monthlyMapper.addmonthly(monthly);
+            if (i > 0) {
+                return "success";
+            } else {
+                return "fails";
+            }
         }
     }
 }

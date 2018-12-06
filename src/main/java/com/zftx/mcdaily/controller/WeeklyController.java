@@ -48,7 +48,7 @@ public class WeeklyController {
         }
         if(year!="" && mouth!=""){
             weekly.setSdate(year+""+mouth+"00");
-            weekly.setEdate(year+""+mouth+"31");
+            weekly.setEdate(year+""+(Integer.parseInt(mouth)+1)+"06");
         }else if(year!=""&& mouth==""){
             weekly.setSdate(year+"0100");
             weekly.setEdate(year+"1231");
@@ -144,15 +144,4 @@ public class WeeklyController {
         }
     }
 
-    public String date(String sdate)throws ParseException {
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        Date date = sdf.parse(sdate);
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        Date today_plus6 = c.getTime();
-        System.out.println("Today+6:\t" + sdf.format(today_plus6));
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        return  sdf.format(today_plus6);
-    }
 }

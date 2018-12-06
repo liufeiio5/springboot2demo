@@ -51,7 +51,6 @@ public class MonthlyController {
         if(user!=null && user.getId()!=null&&monthly.getUserId()==null){
             monthly.setUserId(user.getId());
         }
-
         ArrayList<HashMap<String, Object>> list =monthlyService.getMonthly(monthly);
 
         if(list !=null &&list.size()>0) {
@@ -84,13 +83,29 @@ public class MonthlyController {
 
     @RequestMapping(value = "/addmonthly")
     @ResponseBody
-    public R addmonthly(Monthly monthly){
+    public R addmonthly(Monthly monthly,HttpSession session){
         if(monthly!=null){
+            //获取用户信息
+            User user = (User) session.getAttribute("user");
+            if (user != null && user.getId() != null && monthly.getUserId() == null) {
+                monthly.setUserId(user.getId());
+            }
+            SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
+            //不能提前插入之后的周报
+            if (monthly.getYear()!=null && monthly.getMonth() != null) {
+                String mouth=monthly.getMonth()< 10 ? "0" +monthly.getMonth() : monthly.getMonth()+"";
+                if (Integer.parseInt(""+monthly.getYear()+mouth+'0'+'0')> Integer.parseInt(dateFormat1.format(new Date()))) {
+                    return R.error("禁止提前创建月报");
+                }
+            }
+
             String result=monthlyService.addmonthly(monthly);
             if ("success".equals(result)) {
-                return R.ok("新增成功");
-            } else {
-                return R.error("新增失败");
+                return R.ok("添加成功");
+            }else if("repeat".equals(result)){
+                return R.error("重复添加");
+            }else {
+                return R.error("添加失败");
             }
         }else{
             return R.error("参数有误!");

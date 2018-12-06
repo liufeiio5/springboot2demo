@@ -5,19 +5,23 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/table.css"/>
-    <link rel="stylesheet" href="/css/chosen.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.min.css" media="screen">
+    <link rel="stylesheet" href="css/table.css" />
+    <link rel="stylesheet" href="css/chosen.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
-    <script type="text/javascript" src="/js/Date.js"></script>
-    <script type="text/javascript" src="/js/chosen.js"></script>
-    <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/Date.js"></script>
+    <script type="text/javascript" src="js/chosen.js"></script>
+    <script src="js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <style>
+        .form-control {
+            display: inline-block;
+        }
+
         .asd {
             width: 150px;
         }
@@ -76,78 +80,45 @@
         }
     </style>
     <script >
-        $(function () {
-            $('.form_datetime').datetimepicker({
-                bootcssVer: 3,
-                language:  'zh-CN',
-                minView: "month", //选择日期后，不会再跳转去选择时分秒
-                format: 'yyyy-mm-dd',
+        $(function() {
+            //选择年月
+            $('#addMonthlyDate').datetimepicker({
+                language: 'zh-CN',
+                startView: 3,
+                minView: 3,
+                format: 'yyyy-mm',
                 todayBtn: 1,
                 autoclose: 1,
             });
-            $('#addstartDate').datetimepicker('setDaysOfWeekDisabled', [0, 2, 3, 4, 5, 6]);
-            $('#addstartDate').datetimepicker().on('changeDate',function(){
-                var start = $("#addstartDate").val();
-                var year = start.slice(0, 4);
-                var month = start.slice(5, 7);
-                var day = start.slice(8, 10);
-                var year = parseInt(year);
-                var month = parseInt(month);
-                var day = parseInt(day);
-                if (day < 26) {
-                    day = day + 4;
-                } else {
-                    switch (month) {
-                        case 1:
-                        case 3:
-                        case 5:
-                        case 7:
-                        case 8:
-                        case 10:
-                            day = day + 4 - 31;
-                            month = month + 1;
-                            break;
-                        case 4:
-                        case 6:
-                        case 9:
-                        case 11:
-                            day = day + 4 - 30;
-                            month = month + 1;
-                            break;
-                        case 2:
-                            day = day + 4 - 29;
-                            month = month + 1;
-                            break;
-                        case 12:
-                            day = day + 4 - 31;
-                            year = year + 1;
-                            month = 1;
-                    }
-                }
-                mouth=month<10?'0'+month:month
-                day=day<10?'0'+day:day
-                var autonumber = year + "-" + mouth + "-" + day;
-                $("#addendDate").val(autonumber);
 
-                //第几月
-                var start = $("#addstartDate").val();
-                var start = $("#addstartDate").val();
-                var day = start.slice(8, 10);
-                var day = parseInt(day);
-                var monthly;
-                if (day < 7) {
-                    monthly = 1
-                } else {
-                    monthly = day / 7;
-                    if (monthly != 0) {
-                        monthly = monthly + 1;
-                    }
-                }
-                $("#addweek").val("第"+parseInt(monthly)+"月");
-            })
-            $("#addstartDate").click(function() {
-                $("#addendDate").val("");
-                $("#addweek").val("");
+            //选择年份
+            $('#monthlyYear').datetimepicker({
+                //设置为中文，这里需添加中文的js
+                language: 'zh-CN',
+                //日期时间选择器打开之后首先看到的视图 选择后后面还有天、小时、分钟
+                // 0 "hour" 1 "day" 2 "month" 3 "year" 4 "dacade"
+                startView: 4,
+                // 选到哪一步日历就结束。
+                minView: 4,
+                //默认为"mm/dd/yyyy"  一般设置为"yyyy-mm-dd hh:ii"
+                format: 'yyyy',
+                //false则没有今天两个字，"linked"当天日期会被选中
+                todayBtn: false,
+                //就是选择年月日之后会自动关闭，一定要设置
+                autoclose: true,
+                //开始时间
+                startDate: new Date("2016"),
+                //结束时间
+                endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+            });
+            //选择月份
+            $('#monthlyMouth').datetimepicker({
+                language: 'zh-CN',
+                startView: 3,
+                minView: 3,
+                format: 'mm',
+                todayBtn: 1,
+                autoclose: 1,
             })
 
             $("#addassisman").html("")
@@ -208,14 +179,15 @@
             })
 
             $('#add').click(function () {
-                var sdate = $('#addstartDate').val().replace('-', '').replace('-', '');
-                var edate = $('#addendDate').val().replace('-', '').replace('-', '');
+                var year = $('#addMonthlyDate').val().substring(0,4)
+                var month = $('#addMonthlyDate').val().substring(5,7)
                 $.ajax({
-                    url: "/addMonthly",
+                    url: "/addmonthly",
                     dataType: 'json',
                     data: {
-                        sdate: sdate,
-                        edate: edate
+                        year: year,
+                        month: month,
+                        userId:58
                     },
                     async:false,
                     success: function (data) {
@@ -227,7 +199,7 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/monthly"
                             }, 500)
-                        } else if (data.message == "不能提前创建月报") {
+                        } else if (data.message == "禁止提前创建月报") {
                             layer.msg("禁止提前创建月报");
                         } else if (data.message == "重复添加") {
                             layer.msg("禁止月报重复添加");
@@ -241,8 +213,8 @@
 
         function inittable() {
             $("#tbody").html("");
-            var monthlyYear = $("#monthlyYear").val().replace('-', '').replace('-', '');
-            var monthlyMouth = $("#monthlyMouth").val().replace('-', '').replace('-', '');
+            var monthlyYear = $("#monthlyYear").val()
+            var monthlyMouth = $("#monthlyMouth").val()
             if (monthlyYear == '' && monthlyMouth != '') {
                 layer.msg('月份需与年份配对')
                 return false;
@@ -253,7 +225,9 @@
                 url: 'getMonthly',
                 dataType: 'json',
                 data: {
-                    userId: userId
+                    userId: userId,
+                    yaer:monthlyYear,
+                    month:monthlyMouth
                 },
                 success: function (data) {
                     var json = data.data
@@ -1020,11 +994,12 @@
 
                         //查看详情 月小结
                         $('.looksummary').click(function () {
+                            $("#assisMan").val('')
                             $("#content").val($(this).attr('content'))
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
-                            var assisman = $(this).attr('assisMan').toString();
-                            $("#assisMan").val(assisman.replace(',', ' '))
+                            var assisman = $(this).attr('assisMan');
+                            $("#assisMan").val(assisman.replace(',', ' ').replace(',', ' '))
                         })
 
                         //修改 月小结
@@ -1040,7 +1015,6 @@
                             $('.assisManItem').attr('selected', false);
                             $('#updassisman').trigger("chosen:updated");
                             if (!$.isEmptyObject(assisman)) {
-
                                 chose_mult_set_ini('#updassisman',assisman);
                                 //初始化
                                 $("#updassisman").chosen();
@@ -1048,8 +1022,6 @@
                             }
                             // 多选 select 数据初始化
                             function chose_mult_set_ini(select, values) {
-                                //$(select).empty();
-                                //$(select).trigger("chosen:updated");
                                 var arr = values.split(',');
                                 var length = arr.length;
                                 var value = '';
@@ -1072,7 +1044,10 @@
                                     ajax().abort()
                                 }
 
-                                var assisman = $("#updassisman").val().toString()
+                                var assisMan
+                                if($("#updassisman").val()!=null){
+                                    assisMan = $("#updassisman").val().toString();
+                                }
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
                                         url: '/updateMonthlySummary',
@@ -1168,45 +1143,13 @@
                 ajax.abort;
             }
         }
-
-        //年
-        $(function year() {
-            $("#monthlyYear").html("")
-            //获取系统年份
-            var myDate = new Date().getFullYear();
-            var str = '<option value="">-- 请选择年份--</option>';
-            $("#monthlyYear").append(str)
-            for (var i = 0; i <= 3; i++) {
-                var str1 = '<option value="' + (myDate - i) + '" >' + (myDate - i) + '</option>';
-                $("#monthlyYear").append(str1);
-            }
-        })
-
-        //月
-        $(function mouth() {
-            $("#monthlyMouth").html("")
-            var str = '<option value="">-- 请选择月份--</option>';
-            $("#monthlyMouth").append(str)
-            for (var i = 1; i <= 12; i++) {
-                if (i < 10) {
-                    var str1 = '<option value="0' + i + '" >' + i + '月</option>';
-                } else {
-                    var str1 = '<option value="' + i + '" >' + i + '月</option>';
-                }
-                $("#monthlyMouth").append(str1);
-            }
-        })
     </script>
 </head>
 
 <body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">月报</span></div>
-<select id="monthlyYear" style="margin-left: 10px;">
-    <option value="">-- 请选择年份 --</option>
-</select>
-<select id="monthlyMouth" style="margin-left: 10px;">
-    <option value="">-- 请选择月份 --</option>
-</select>
+<input type="text" id="monthlyYear" class="form-control date" name="user_date" style="width:130px" style="margin-left: 10px;" placeholder="请选择年份" />
+<input type="text" id="monthlyMouth" class="form-control date" name="user_date" style="width:130px" style="margin-left: 10px;" placeholder="请选择月份" />
 <input id="userid" placeholder="请输入用户ID"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
 </button>
@@ -1253,11 +1196,7 @@
                     <tr>
                         <td style="width:12%;">日期:</td>
                         <td>
-                            <input type="text" id="addstartDate"  class="form-control date form_datetime"  name="user_date" style="width:130px"
-                                   placeholder="请选择开始时间"/>
-                            <div>—</div>
-                            <input type="text" id="addendDate" class="form-control date form_datetime" name="user_date" style="width:130px" class="form-control"
-                                   placeholder="请选择结束时间"/>
+                            <input type="text" id="addMonthlyDate" class="form-control date" name="user_date" style="width:130px" placeholder="请选择时间" />
                         </td>
                     </tr>
                     </tbody>
@@ -1270,7 +1209,6 @@
         </div>
     </div>
 </div>
-
 <!--一月小结 -->
 <div class="modal fade" id="setModal2" data-backdrop="static" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
@@ -1293,14 +1231,13 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="addsingleProgress">
+                            <input type="text" id="addsingleProgress" placeholder="  例如: 55%" />
                         </td>
-                        <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours"></input>
+                            <input class="form-control" id="addworkHours" placeholder="例如: 30m或8h或3d或1w"/>
                         </td>
                         <td>
                             <select id="addworkHoursUnit">

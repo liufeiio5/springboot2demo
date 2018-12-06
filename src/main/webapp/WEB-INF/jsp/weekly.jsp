@@ -396,7 +396,10 @@
                             layer.msg("您输入的进度指数不规范")
                             ajax().abort()
                         }
-                        var assisMan = $("#addassisman").val().toString();
+                        var assisMan
+                        if($("#addassisman").val()!=null){
+                           assisMan = $("#addassisman").val().toString();
+                        }
                         $.ajax({
                             url: "/addSummary",
                             dataType: 'json',
@@ -1021,10 +1024,11 @@
 
                         //查看详情 周小结
                         $('.looksummary').click(function () {
+                            $("#assisMan").val('')
                             $("#content").val($(this).attr('content'))
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
-                            var assisman = $(this).attr('assisMan').toString();
+                            var assisman = $(this).attr('assisMan');
                             $("#assisMan").val(assisman.replace(',', ' '))
                         })
 
