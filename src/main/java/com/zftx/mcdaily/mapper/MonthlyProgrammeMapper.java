@@ -38,4 +38,6 @@ public interface MonthlyProgrammeMapper {
     public Integer updatemonthlyProgramme(@Param("monthlyProgramme") MonthlyProgramme monthlyProgramme);
 
 
+    public Integer deleteMonthlyProgrammeByPid(@Param("programmeId") Integer programmeId);
+
 }

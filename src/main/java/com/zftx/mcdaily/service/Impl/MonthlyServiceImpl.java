@@ -1,12 +1,14 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.Monthly;
-import com.zftx.mcdaily.mapper.MonthlyMapper;
+import com.zftx.mcdaily.mapper.*;
 import com.zftx.mcdaily.service.MonthlyService;
+import com.zftx.mcdaily.util.Tool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,7 +18,16 @@ public class MonthlyServiceImpl implements MonthlyService {
 
     @Autowired
     private MonthlyMapper monthlyMapper;
-
+    @Autowired
+    private MonthlySummaryMapper monthlySummaryMapper;
+    @Autowired
+    private MonthlyDifficultyMapper monthlyDifficultyMapper;
+    @Autowired
+    private MonthlyProgrammeMapper monthlyProgrammeMapper;
+    @Autowired
+    private MonthlySuggestMapper monthlySuggestMapper;
+    @Autowired
+    private MonthlyRemarkMapper monthlyRemarkMapper;
 
     /**
      * 查询 月报
@@ -39,6 +50,16 @@ public class MonthlyServiceImpl implements MonthlyService {
     public String deleteMonthly(Monthly monthly){
         int i=monthlyMapper.deleteMonthly(monthly);
         if(i>0){
+            //同时清删月小结
+            monthlySummaryMapper.deleteMonthlySummaryBySid(monthly.getSummaryId());
+            //同时清除月困难
+            monthlyDifficultyMapper.deleteMonthlyDifficultyBySid(monthly.getDifficultyId());
+            //同时清除月方案
+            monthlyProgrammeMapper.deleteMonthlyProgrammeByPid(monthly.getProgrammeId());
+            //同时清除月建议
+            monthlySuggestMapper.deleteMonthlySuggestBySid(monthly.getSuggestId());
+            //同时清除月备注
+            monthlyRemarkMapper.deleteMonthlyRemarkByRid(monthly.getRemarkId());
             return "success";
         }else{
             return "fails";
@@ -52,6 +73,7 @@ public class MonthlyServiceImpl implements MonthlyService {
      */
     @Override
     public String addmonthly(Monthly monthly) {
+        monthly.setCreateDate(Tool.getNowDate());
         int i=monthlyMapper.addmonthly(monthly);
         if(i>0){
             return "success";

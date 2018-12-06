@@ -60,11 +60,7 @@
 
     <delete id="delmonthlySuggest" parameterType="com.zftx.mcdaily.bean.MonthlySuggest">
       delete from monthly_suggest
-      <where>
-          <if test="monthlySuggest.id!=null">
-              id=#{monthlySuggest.id}
-          </if>
-      </where>
+      where  id=#{monthlySuggest.id}
     </delete>
 
     <update id="updatemonthlySuggest" parameterType="com.zftx.mcdaily.bean.MonthlySuggest">
@@ -85,4 +81,10 @@
             </if>
         </where>
     </update>
+
+    <!--根据deleteMonthlySuggestBySid删-->
+    <delete id="deleteMonthlySuggestBySid" parameterType="java.lang.Integer">
+      delete from monthly_suggest
+      where  suggest_id=#{suggestId}
+    </delete>
 </mapper>

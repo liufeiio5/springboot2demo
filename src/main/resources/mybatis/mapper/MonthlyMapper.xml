@@ -13,6 +13,7 @@
         <result column="programme_id" property="programmeId"/>
         <result column="suggest_id" property="suggestId"/>
         <result column="remark_id" property="remarkId"/>
+        <result column="create_date" property="createDate"/>
     </resultMap>
 
     <!--查询-->
@@ -100,6 +101,9 @@
                 <if test="monthly.remarkId==null">
                     remark_id,
                 </if>
+                <if test="monthly.createDate!=null">
+                    create_date,
+                </if>
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -145,6 +149,9 @@
                 </if>
                 <if test="monthly.remarkId==null">
                     (SELECT CASE  WHEN MAX(m.remark_id) IS NULL THEN '1' ELSE MAX(m.remark_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.createDate!=null">
+                    #{monthly.createDate},
                 </if>
             </if>
         </trim>

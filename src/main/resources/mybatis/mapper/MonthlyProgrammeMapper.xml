@@ -60,11 +60,7 @@
 
     <delete id="delmonthlyProgramme" parameterType="com.zftx.mcdaily.bean.MonthlyProgramme">
         delete from monthly_programme
-        <where>
-            <if test="monthlyProgramme.id!=null">
-                id=#{monthlyProgramme.id}
-            </if>
-        </where>
+        where  id=#{monthlyProgramme.id}
     </delete>
 
     <update id="updatemonthlyProgramme" parameterType="com.zftx.mcdaily.bean.MonthlyProgramme">
@@ -83,4 +79,9 @@
             </if>
         </where>
     </update>
+
+    <!--根据programmeId删除 月 方案-->
+    <delete id="deleteMonthlyProgrammeByPid" parameterType="java.lang.Integer">
+       delete from monthly_programme  where programme_id=#{programmeId}
+    </delete>
 </mapper>

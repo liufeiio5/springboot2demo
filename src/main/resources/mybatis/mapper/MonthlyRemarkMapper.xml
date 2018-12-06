@@ -81,7 +81,7 @@
 
 
     <!--根据remarkId删除 月 备注-->
-    <delete id="deleteMonthlyRemarkBySid" parameterType="java.lang.Integer">
+    <delete id="deleteMonthlyRemarkByRid" parameterType="java.lang.Integer">
        delete from monthly_remark  where remark_id=#{remarkId}
     </delete>
 </mapper>

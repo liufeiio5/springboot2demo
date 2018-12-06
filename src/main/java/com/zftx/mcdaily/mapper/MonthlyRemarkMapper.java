@@ -39,5 +39,5 @@ public interface MonthlyRemarkMapper {
      */
     public Integer updateMonthlyRemark(@Param("monthlyRemark") MonthlyRemark monthlyRemark);
 
-    public Integer deleteMonthlyRemarkBySid(@Param("remarkId") Integer remarkId);
+    public Integer deleteMonthlyRemarkByRid(@Param("remarkId") Integer remarkId);
 }

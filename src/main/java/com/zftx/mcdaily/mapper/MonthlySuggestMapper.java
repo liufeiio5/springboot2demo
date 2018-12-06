@@ -41,5 +41,5 @@ public interface MonthlySuggestMapper {
      */
     public Integer updatemonthlySuggest(@Param("monthlySuggest") MonthlySuggest monthlySuggest);
 
-
+    public Integer deleteMonthlySuggestBySid(@Param("suggestId")Integer suggestId);
 }

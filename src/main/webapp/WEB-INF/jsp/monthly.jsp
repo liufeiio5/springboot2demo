@@ -160,7 +160,7 @@
                     var str;
                     var json = data.data
                     for (var i in json) {
-                        str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                        str = '<option class="assisManItem" value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
                         $("#addassisman").append(str)
                         $("#updassisman").append(str)
                     }
@@ -217,6 +217,7 @@
                         sdate: sdate,
                         edate: edate
                     },
+                    async:false,
                     success: function (data) {
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
@@ -382,11 +383,14 @@
                         var summaryId = $("#midleValueId").val()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
-                        if(parseInt(singleProgress)>100||parseFloat('100%') <= parseFloat(singleProgress)){
+                        if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                             layer.msg("您输入的进度指数不规范")
                             ajax().abort()
                         }
-                        var assisMan = $("#addassisman").val().toString();
+                        var assisMan='';
+                        if($("#addassisman").val()!=null){
+                            var assisMan = $("#addassisman").val().toString();
+                        }
                         $.ajax({
                             url: "/addMonthlySummary",
                             dataType: 'json',
@@ -397,6 +401,7 @@
                                 workHours: workHours,
                                 assismans: assisMan
                             },
+                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -428,6 +433,7 @@
                                 difficultyId: difficultyId,
                                 difficultyContent: $('#addDifficutyContent').val()
                             },
+                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -457,6 +463,7 @@
                                 programmeId: programmeId,
                                 programmeContent: $('#addProgrammeContent').val()
                             },
+                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -486,6 +493,7 @@
                                 suggestId: suggestId,
                                 suggestContent: $('#addSuggestContent').val()
                             },
+                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -515,6 +523,7 @@
                                 remarkId: remarkId,
                                 remarkContent: $('#addRemarkContent').val()
                             },
+                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -1018,14 +1027,6 @@
                             $("#assisMan").val(assisman.replace(',', ' '))
                         })
 
-                        function getUpdsummary(updassisman) {
-                            str = '<option value="付强" selected="selected">' + '付强' + '</option>';
-                            $("#updassisman").append(str)
-                            $("#updassisman").trigger("liszt:updated");
-                            $("#updassisman").chosen();
-                        }
-
-
                         //修改 月小结
                         $('.updsummary').click(function () {
                             var id = $(this).attr('id')
@@ -1035,13 +1036,14 @@
                             $("#updworkHours").val($(this).attr('workHours'))
                             var assisman = $(this).attr('assisMan')
 
-                            console.log(assisman)
-                            if (!$.isEmptyObject(assisman)) {
                                 //assisMan = $(this).attr('assisMan');
+                            $('.assisManItem').attr('selected', false);
+                            $('#updassisman').trigger("chosen:updated");
+                            if (!$.isEmptyObject(assisman)) {
+
                                 chose_mult_set_ini('#updassisman',assisman);
                                 //初始化
                                 $("#updassisman").chosen();
-                                $("#updassisman").trigger("chosen:updated");
                                 //$(".chzn-select").chosen();
                             }
                             // 多选 select 数据初始化
@@ -1051,11 +1053,12 @@
                                 var arr = values.split(',');
                                 var length = arr.length;
                                 var value = '';
+                                console.log(length)
                                 for (i = 0; i < length; i++) {
                                     value = arr[i];
                                     $(select + " option[value='" + value + "']").attr('selected', true);
                                 }
-                                $(select).trigger("chosen:updated");
+                                $('#updassisman').trigger("chosen:updated");
                             }
 
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
@@ -1064,10 +1067,15 @@
                                 var content = $("#updcontent").val()
                                 var singleProgress = $("#updsingleProgress").val()
                                 var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
+                                    layer.msg("您输入的进度指数不规范")
+                                    ajax().abort()
+                                }
+
                                 var assisman = $("#updassisman").val().toString()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({
-                                        url: '/updateSummary',
+                                        url: '/updateMonthlySummary',
                                         dataType: 'json',
                                         data: {
                                             id: id,

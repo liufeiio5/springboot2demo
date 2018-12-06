@@ -18,4 +18,5 @@ public class Monthly {
         private Integer programmeId;
         private Integer suggestId;
         private Integer remarkId;
+        private String createDate;
 }

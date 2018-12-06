@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,4 +102,20 @@ public class MonthlyDifficultyController {
         }
     }
 
+    //第6天后日期
+    public String getSevenDate(String sdate)throws ParseException {
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = sdf.parse(sdate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        Date today = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus1 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus2 = c.getTime();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date today_plus3 = c.getTime();
+        return  sdf.format(today_plus3);
+    }
 }

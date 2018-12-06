@@ -75,6 +75,7 @@ public class MonthlySummaryController {
     @ResponseBody
     public R updateMonthlySummary(MonthlySummary monthlySummary,HttpSession session,String assismans)throws ParseException {
         if(monthlySummary!=null) {
+            monthlySummary.setAssisMan(assismans);
             String str = monthlySummaryService.updateMonthlySummary(monthlySummary);
             if ("success".equals(str)) {
                 return R.ok("修改成功");

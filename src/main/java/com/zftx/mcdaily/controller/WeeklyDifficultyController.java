@@ -72,11 +72,7 @@ public class WeeklyDifficultyController {
         if(sdate!=null && sdate!=""){
             String sevenDate=getSevenDate(sdate);
             Integer sdate2=Integer.parseInt(sdate);
-            //获取当前日期
-            String mouth=Tool.getMonth()< 10 ? "0" +Tool.getMonth() : Tool.getMonth()+"";
-            String day= Tool.getToday() < 10 ? "0" +Tool.getToday() : Tool.getToday()+"";
-            String nowDate=Tool.getYear()+""+mouth+day;
-            Integer nowDate2=Integer.parseInt(nowDate);
+            Integer nowDate2=Integer.parseInt(Tool.getNowDate());
             if(nowDate2>Integer.parseInt(sevenDate)){
                 return R.error("当前时间不在此周内，禁止修改");
             }

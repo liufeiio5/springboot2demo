@@ -1028,14 +1028,6 @@
                             $("#assisMan").val(assisman.replace(',', ' '))
                         })
 
-                        function getUpdsummary(updassisman) {
-                            str = '<option value="付强" selected="selected">' + '付强' + '</option>';
-                            $("#updassisman").append(str)
-                            $("#updassisman").trigger("liszt:updated");
-                            $("#updassisman").chosen();
-                        }
-
-
                         //修改 周小结
                         $('.updsummary').click(function () {
                             var id = $(this).attr('id')
@@ -1074,6 +1066,11 @@
                                 var content = $("#updcontent").val()
                                 var singleProgress = $("#updsingleProgress").val()
                                 var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
+                                    layer.msg("您输入的进度指数不规范")
+                                    ajax().abort()
+                                }
+
                                 var assisman = $("#updassisman").val().toString()
                                 layer.confirm('确认要修改吗？', function (index) {
                                     $.ajax({

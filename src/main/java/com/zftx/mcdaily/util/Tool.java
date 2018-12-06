@@ -132,4 +132,15 @@ public class Tool
         String regex = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
         return email.matches(regex);
     }
+
+    /**
+     * 获取当前日期（yyyymmdd）
+     * @return
+     */
+    public static  String getNowDate(){
+        String mouth=getMonth()< 10 ? "0" +getMonth() : getMonth()+"";
+        String day= getToday() < 10 ? "0" +getToday() :getToday()+"";
+        String nowDate=getYear()+""+mouth+day;
+        return nowDate;
+    }
 }
