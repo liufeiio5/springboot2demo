@@ -263,12 +263,10 @@
                     }
                     //第几月 跳转 月报
                     $('.monthbtn').click(function () {
-                        var startDate = $(this).attr('year')
-                        var endDate = $(this).attr('month')
+                        var year = $(this).attr('year')
+                        var month = $(this).attr('month')<10?'0'+$(this).attr('month'):$(this).attr('month')
                         var userId = $(this).attr('userId')
-                        var year = startDate.slice(0, 6)
-                        var mouth = endDate.slice(0,6)
-                        $("#monthspan").html(year + '年' + mouth + '月 ');
+                        $("#monthspan").html(year + '年' + month + '月 ');
                         $("#tbodys").html("");
                         $.ajax({
                             url: '/getWeekly',
@@ -276,7 +274,7 @@
                             dataType: 'json',
                             data: {
                                 'year': year ,
-                                'mouth': mouth,
+                                'mouth': month,
                                 'userId': userId
                             },
                             success: function (data) {

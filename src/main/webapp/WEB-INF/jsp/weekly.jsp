@@ -552,6 +552,7 @@
                     })
                     //给提交传值 备注
                     $(".addRemark").click(function () {
+                        $("#addRemarkContent").val("")
                         $("#addRemark").attr('remarkId',$(this).attr('remarkId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交 添加周 备注

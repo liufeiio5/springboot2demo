@@ -60,3 +60,6 @@ server:
     health:
       mail:
         enabled: false
+  servlet:
+    session:
+      timeout: 3000s
