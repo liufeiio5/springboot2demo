@@ -46,12 +46,16 @@ public class WeeklyRemarkController {
      * 添加 周  备注
      *
      * @param weeklyRemark
+     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addWeeklyRemark")
     @ResponseBody
-    public R addWeeklyRemark(WeeklyRemark weeklyRemark) {
+    public R addWeeklyRemark(WeeklyRemark weeklyRemark,String sdate)throws ParseException{
         if (weeklyRemark != null && weeklyRemark.getRemarkId() != null) {
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
+                return R.error("当前时间不在此周内,禁止添加");
+            }
             String str = weeklyRemarkService.addWeeklyRemark(weeklyRemark);
             if ("success".equals(str)) {
                 return R.ok("添加成功");

@@ -230,9 +230,6 @@
                     var json = data.data
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓月报');
                     for (var i in json) {
-                        if(i==6){
-                            return false;
-                        }
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id
@@ -434,7 +431,12 @@
 
                     //给提交传值
                     $(".addSummary").click(function () {
-                        $("#midleValueId").val($(this).attr('summaryId'))
+                        $("#addcontent").val("")
+                        $("#addsingleProgress").val("")
+                        $("#addworkHours").val("")
+                        var year= $(this).parent().parent().children().eq(2).text()
+                        var month= $(this).parent().parent().children().eq(3).text()
+                        $("#addSummary").attr("summaryId",$(this).attr("summaryId")).attr("year",year).attr("month",month)
                     })
                     //提交  添加月小结
                     $("#addSummary").click(function () {
@@ -449,15 +451,20 @@
                         if($("#addassisman").val()!=null){
                             var assisMan = $("#addassisman").val().toString();
                         }
+                        var year=$(this).attr("year")
+                        var month=$(this).attr("month")
+                        var summaryId=$(this).attr("summaryId")
                         $.ajax({
                             url: "/addMonthlySummary",
                             dataType: 'json',
                             data: {
-                                summaryId:  $("#midleValueId").val(),
+                                summaryId:  summaryId,
                                 summaryContent: $('#addcontent').val(),
                                 singleProgress: singleProgress,
                                 workHours: workHours,
-                                assismans: assisMan
+                                assismans: assisMan,
+                                year:year,
+                                month:month
                             },
                             async:false,
                             success: function (data) {
@@ -469,7 +476,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
-                                } else {
+                                } else if(data.message=="此月月末三天后,禁止添加") {
+                                    layer.msg("此月月末三天后,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
 
@@ -479,7 +488,10 @@
 
                     //给提交传值 困难
                     $(".addDifficulty").click(function () {
-                        $("#dmidleValueId").val($(this).attr('difficultyId'))
+                        $("#addDifficutyContent").val("")
+                        var year= $(this).parent().parent().children().eq(2).text()
+                        var month= $(this).parent().parent().children().eq(3).text()
+                        $("#addDifficulty").attr("difficultyId",$(this).attr("difficultyId")).attr("year",year).attr("month",month)
                     })
                     //提交  添加月 困难
                     $("#addDifficulty").click(function () {
@@ -488,13 +500,17 @@
                             layer.msg("困难内容不能为空!");
                             ajax().abort()
                         }
-                        var difficultyId = $("#dmidleValueId").val()
+                        var year = $(this).attr("year")
+                        var month = $(this).attr("month")
+                        var difficultyId = $(this).attr("difficultyId")
                         $.ajax({
                             url: "/addMonthlyDifficulty",
                             dataType: 'json',
                             data: {
                                 difficultyId: difficultyId,
-                                difficultyContent: addDifficutyContent
+                                difficultyContent: addDifficutyContent,
+                                year:year,
+                                month:month
                             },
                             async:false,
                             success: function (data) {
@@ -506,7 +522,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
-                                } else {
+                                } else if(data.message=="此月月末三天后,禁止添加") {
+                                    layer.msg("此月月末三天后,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }
@@ -514,7 +532,10 @@
                     })
                     //给提交传值 方案
                     $(".addProgramme").click(function () {
-                        $("#pmidleValueId").val($(this).attr('programmeId'))
+                        $("#addProgrammeContent").val("")
+                        var year= $(this).parent().parent().children().eq(2).text()
+                        var month= $(this).parent().parent().children().eq(3).text()
+                        $("#addProgramme").attr("programmeId",$(this).attr("programmeId")).attr("year",year).attr("month",month)
                     })
                     //提交 添加月 方案
                     $("#addProgramme").click(function () {
@@ -523,13 +544,17 @@
                             layer.msg("方案内容不能为空!");
                             ajax().abort()
                         }
-                        var programmeId = $("#pmidleValueId").val()
+                        var year = $(this).attr("year")
+                        var month = $(this).attr("month")
+                        var programmeId = $(this).attr("programmeId")
                         $.ajax({
                             url: "/addmonthlyProgramme",
                             dataType: 'json',
                             data: {
                                 programmeId: programmeId,
-                                programmeContent: addProgrammeContent
+                                programmeContent: addProgrammeContent,
+                                year:year,
+                                month:month
                             },
                             async:false,
                             success: function (data) {
@@ -541,6 +566,8 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
+                                }else if(data.message=="此月月末三天后,禁止添加") {
+                                    layer.msg("此月月末三天后,禁止添加");
                                 } else {
                                     layer.msg("添加失败");
                                 }
@@ -549,7 +576,10 @@
                     })
                     //给提交传值 建议
                     $(".addSuggest").click(function () {
-                        $("#smidleValueId").val($(this).attr('suggestId'))
+                        $("#addSuggestContent").val("")
+                        var year= $(this).parent().parent().children().eq(2).text()
+                        var month= $(this).parent().parent().children().eq(3).text()
+                        $("#addSuggest").attr("suggestId",$(this).attr('suggestId')).attr("year",year).attr("month",month)
                     })
                     //提交 添加月 建议
                     $("#addSuggest").click(function () {
@@ -558,13 +588,17 @@
                             layer.msg("建议内容不能为空!");
                             ajax().abort()
                         }
-                        var suggestId = $("#smidleValueId").val()
+                        var year=$(this).attr('year')
+                        var month=$(this).attr('month')
+                        var suggestId =$(this).attr('suggestId')
                         $.ajax({
                             url: "/addmonthlySuggest",
                             dataType: 'json',
                             data: {
                                 suggestId: suggestId,
-                                suggestContent: addSuggestContent
+                                suggestContent: addSuggestContent,
+                                year:year,
+                                month:month
                             },
                             async:false,
                             success: function (data) {
@@ -576,7 +610,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
-                                } else {
+                                }else if(data.message=="此月月末三天后,禁止添加") {
+                                    layer.msg("此月月末三天后,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }
@@ -584,7 +620,10 @@
                     })
                     //给提交传值 备注
                     $(".addRemark").click(function () {
-                        $("#rmidleValueId").val($(this).attr('remarkId'))
+                        $("#addRemarkContent").val("")
+                        var year= $(this).parent().parent().children().eq(2).text()
+                        var month= $(this).parent().parent().children().eq(3).text()
+                        $("#addRemark").attr("remarkId",$(this).attr('remarkId')).attr("year",year).attr("month",month)
                     })
                     //提交 添加月 备注
                     $("#addRemark").click(function () {
@@ -593,15 +632,18 @@
                             layer.msg("备注内容不能为空!");
                             ajax().abort()
                         }
-                        var remarkId = $("#rmidleValueId").val()
+                        var remarkId = $(this).attr("remarkId")
+                        var year = $(this).attr("year")
+                        var month = $(this).attr("month")
                         $.ajax({
                             url: "/addMonthlyRemark",
                             dataType: 'json',
                             data: {
                                 remarkId: remarkId,
-                                remarkContent: addRemarkContent
+                                remarkContent: addRemarkContent,
+                                year:year,
+                                month:month
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -611,7 +653,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
-                                } else {
+                                } else if(data.message=="此月月末三天后,禁止添加") {
+                                    layer.msg("此月月末三天后,禁止添加");
+                                }else{
                                     layer.msg("添加失败");
                                 }
                             }
@@ -1438,7 +1482,6 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <input type="text" id="midleValueId" style="display: none">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addSummary" class="btn btn-primary">提交</button>
                 </div>
@@ -1570,7 +1613,6 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <input type="text" id="dmidleValueId" style="display: none">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addDifficulty" class="btn btn-primary">提交</button>
                 </div>
@@ -1654,7 +1696,6 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <input type="text" id="pmidleValueId" style="display: none">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addProgramme" class="btn btn-primary">提交</button>
                 </div>
@@ -1741,7 +1782,6 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <input type="text" id="smidleValueId" style="display: none">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addSuggest" class="btn btn-primary">提交</button>
                 </div>
@@ -1828,7 +1868,6 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <input type="text" id="rmidleValueId" style="display: none">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addRemark" class="btn btn-primary">提交</button>
                 </div>

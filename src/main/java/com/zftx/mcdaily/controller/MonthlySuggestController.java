@@ -33,8 +33,13 @@ public class MonthlySuggestController {
 
     @RequestMapping(value = "/addmonthlySuggest")
     @ResponseBody
-    public R addmonthlySuggest(MonthlySuggest monthlySuggest){
+    public R addmonthlySuggest(MonthlySuggest monthlySuggest,String year,String month)throws ParseException{
         if(monthlySuggest!=null && monthlySuggest.getSuggestId()!=null){
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("此月月末三天后,禁止添加");
+                }
+            }
             String result=monthlySuggestService.addmonthlySuggest(monthlySuggest);
             if("success".equals(result)){
                 return R.ok("添加成功");
@@ -65,8 +70,10 @@ public class MonthlySuggestController {
     @RequestMapping(value = "/updatemonthlySuggest")
     public R updatemonthlySuggest(MonthlySuggest monthlySuggest,String year,String month)throws ParseException {
         if(monthlySuggest!=null && monthlySuggest.getSuggestId()!=null){
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
-                return R.error("当前时间不在此月内,禁止修改");
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("当前时间不在此月内,禁止修改");
+                }
             }
             String result=monthlySuggestService.updatemonthlySuggest(monthlySuggest);
             if("success".equals(result)){

@@ -280,16 +280,16 @@
                         tr.append($('<td>').html(json[i].sdate))
                         tr.append($('<td>').html(json[i].edate))
                         tr.append($('<td>').html(json[i].week).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
-                        tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
-                        summary(id, summaryId)
+                        tr.append($('<td>').append($('<button>').attr('sdate',json[i].sdate).attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
                         tr.append($('<td>').addClass('progress' + '_' + id))
-                        tr.append($('<td>').append($('<button>').attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyRemark' + '_' + id)))
+                        summary(id, summaryId)
                         difficulty(id, difficultyId)
-                        tr.append($('<td>').append($('<button>').attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
                         programme(id, programmeId)
-                        tr.append($('<td>').append($('<button>').attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
                         suggest(id, suggestId)
-                        tr.append($('<td>').append($('<button>').attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyRemark' + '_' + id)))
                         remark(id, remarkId);
                         var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                         var td = $('<td>');
@@ -389,12 +389,14 @@
 
                     //给提交传值
                     $(".addSummary").click(function () {
-                        $("#midleValueId").val($(this).attr('summaryId'))
+                        $("#addcontent").val("")
+                        $("#addworkHours").val("")
+                        $("#addsingleProgress").val("")
+                        $("#addSummary").attr('summaryId',$(this).attr('summaryId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交  添加周小结
                     $("#addSummary").click(function () {
                         checkAddInput()
-                        var summaryId = $("#midleValueId").val()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
                         if(parseInt(singleProgress)>100||parseFloat('100%') <= parseFloat(singleProgress)){
@@ -409,11 +411,12 @@
                             url: "/addSummary",
                             dataType: 'json',
                             data: {
-                                summaryId: summaryId,
+                                summaryId: $(this).attr("summaryId"),
                                 content: $('#addcontent').val(),
                                 singleProgress: singleProgress,
                                 workHours: workHours,
-                                assismans: assisMan
+                                assismans: assisMan,
+                                sdate:$(this).attr("sdate")
                             },
                             async:false,
                             success: function (data) {
@@ -425,7 +428,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
-                                } else {
+                                } else if(data.message == "当前时间不在此周内,禁止添加") {
+                                    layer.msg("当前时间不在此周内,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
 
@@ -435,7 +440,8 @@
 
                     //给提交传值 困难
                     $(".addDifficulty").click(function () {
-                        $("#dmidleValueId").val($(this).attr('difficultyId'))
+                        $("#addDifficutyContent").val("")
+                        $("#addDifficulty").attr("difficultyId",$(this).attr("difficultyId")).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交  添加周 困难
                     $("#addDifficulty").click(function () {
@@ -444,15 +450,14 @@
                             layer.msg("困难内容不能为空!");
                             ajax().abort()
                         }
-                        var difficultyId = $("#dmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyDifficulty",
                             dataType: 'json',
                             data: {
-                                difficultyId: difficultyId,
-                                difficultyContent: addDifficutyContent
+                                difficultyId: $(this).attr("difficultyId"),
+                                difficultyContent: addDifficutyContent,
+                                sdate:$(this).attr('sdate')
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -462,6 +467,8 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
+                                }else if(data.message == "当前时间不在此周内,禁止添加"){
+                                    layer.msg("当前时间不在此周内,禁止添加");
                                 } else {
                                     layer.msg("添加失败");
                                 }
@@ -470,7 +477,8 @@
                     })
                     //给提交传值 方案
                     $(".addProgramme").click(function () {
-                        $("#pmidleValueId").val($(this).attr('programmeId'))
+                        $("#addProgrammeContent").val("")
+                        $("#addProgramme").attr("sdate",$(this).attr('sdate')).attr("programmeId",$(this).attr('programmeId'))
                     })
                     //提交 添加周 方案
                     $("#addProgramme").click(function () {
@@ -479,15 +487,14 @@
                             layer.msg("方案内容不能为空!");
                             ajax().abort()
                         }
-                        var programmeId = $("#pmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyProgramme",
                             dataType: 'json',
                             data: {
-                                programmeId: programmeId,
-                                programmeContent:addProgrammeContent
+                                programmeId: $(this).attr("programmeId"),
+                                programmeContent:addProgrammeContent,
+                                sdate:$(this).attr('sdate')
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -497,7 +504,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
-                                } else {
+                                }else if(data.message == "当前时间不在此周内,禁止添加"){
+                                    layer.msg("当前时间不在此周内,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }
@@ -505,7 +514,8 @@
                     })
                     //给提交传值 建议
                     $(".addSuggest").click(function () {
-                        $("#smidleValueId").val($(this).attr('suggestId'))
+                        $("#addSuggestContent").val("")
+                        $("#addSuggest").attr("suggestId",$(this).attr('suggestId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交 添加周 建议
                     $("#addSuggest").click(function () {
@@ -514,13 +524,13 @@
                             layer.msg("建议内容不能为空!");
                             ajax().abort()
                         }
-                        var suggestId = $("#smidleValueId").val()
                         $.ajax({
                             url: "/addWeeklySuggest",
                             dataType: 'json',
                             data: {
-                                suggestId: suggestId,
-                                suggestContent: addSuggestContent
+                                suggestId: $(this).attr('suggestId'),
+                                suggestContent: addSuggestContent,
+                                sdate:$(this).attr('sdate')
                             },
                             async:false,
                             success: function (data) {
@@ -532,7 +542,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
-                                } else {
+                                }else if(data.message == "当前时间不在此周内,禁止添加"){
+                                    layer.msg("当前时间不在此周内,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }
@@ -540,7 +552,7 @@
                     })
                     //给提交传值 备注
                     $(".addRemark").click(function () {
-                        $("#rmidleValueId").val($(this).attr('remarkId'))
+                        $("#addRemark").attr('remarkId',$(this).attr('remarkId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交 添加周 备注
                     $("#addRemark").click(function () {
@@ -549,13 +561,13 @@
                             layer.msg("备注内容不能为空!");
                             ajax().abort()
                         }
-                        var remarkId = $("#rmidleValueId").val()
                         $.ajax({
                             url: "/addWeeklyRemark",
                             dataType: 'json',
                             data: {
-                                remarkId: remarkId,
-                                remarkContent: addRemarkContent
+                                remarkId: $(this).attr('remarkId'),
+                                remarkContent: addRemarkContent,
+                                sdate:$(this).attr('sdate')
                             },
                             async:false,
                             success: function (data) {
@@ -567,7 +579,9 @@
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
-                                } else {
+                                }else if(data.message == "当前时间不在此周内,禁止添加"){
+                                    layer.msg("当前时间不在此周内,禁止添加");
+                                }else {
                                     layer.msg("添加失败");
                                 }
                             }

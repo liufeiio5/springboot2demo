@@ -44,12 +44,16 @@ public class WeeklyDifficultyController {
     /**
      * 添加 周 困难
      * @param weeklyDifficulty
+     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addWeeklyDifficulty")
     @ResponseBody
-    public R addWeekly(WeeklyDifficulty weeklyDifficulty){
+    public R addWeekly(WeeklyDifficulty weeklyDifficulty,String sdate)throws ParseException{
         if(weeklyDifficulty!=null&&weeklyDifficulty.getDifficultyId()!=null){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
+                return R.error("当前时间不在此周内,禁止添加");
+            }
             String str=weeklyDifficultyService.addWeeklyDifficulty(weeklyDifficulty);
             if("success".equals(str)) {
                 return R.ok("添加成功");
@@ -64,6 +68,7 @@ public class WeeklyDifficultyController {
     /**
      * 修改 周 困难
      * @param weeklyDifficulty
+     * @param sdate
      * @return
      */
     @RequestMapping("/updateWeeklyDifficulty")

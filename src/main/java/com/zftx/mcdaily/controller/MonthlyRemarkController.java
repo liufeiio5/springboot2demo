@@ -42,12 +42,19 @@ public class MonthlyRemarkController {
     /**
      * 添加 月 备注
      * @param monthlyRemark
+     * @param year
+     * @param month
      * @return
      */
-    @RequestMapping(value = "/addMonthlyRemark")
+    @RequestMapping("/addMonthlyRemark")
     @ResponseBody
-    public R addMonthlyRemark(MonthlyRemark monthlyRemark){
+    public R addMonthlyRemark(MonthlyRemark monthlyRemark,String year,String month)throws ParseException{
         if(monthlyRemark!=null){
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("此月月末三天后,禁止添加");
+                }
+            }
             String str=monthlyRemarkService.addMonthlyRemark(monthlyRemark);
             if("success".equals(str)) {
                 return R.ok("添加成功");
@@ -62,14 +69,18 @@ public class MonthlyRemarkController {
     /**
      * 修改 月 备注
      * @param monthlyRemark
+     * @param year
+     * @param month
      * @return
      */
-    @RequestMapping("/updateMonthlyRemark")
+    @RequestMapping("/updateMonthlyRemark" )
     @ResponseBody
     public R updateMonthlyRemark(MonthlyRemark monthlyRemark,String year,String month)throws ParseException {
         if(monthlyRemark!=null) {
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
-                return R.error("当前时间不在此月内,禁止修改");
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("当前时间不在此月内,禁止修改");
+                }
             }
             String str = monthlyRemarkService.updateMonthlyRemark(monthlyRemark);
             if ("success".equals(str)) {

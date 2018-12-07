@@ -45,18 +45,25 @@ public class SummaryController {
     /**
      * 添加 周小结
      * @param summary
+     * @param assismans
+     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addSummary")
     @ResponseBody
-    public R addSummary(Summary summary,String assismans){
+    public R addSummary(Summary summary,String assismans,String sdate)throws ParseException{
         if(summary!=null){
+            if(sdate!=null&&sdate!=""){
+                if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
+                    return R.error("当前时间不在此周内,禁止添加");
+                }
+            }
             summary.setAssisMan(assismans);
             String str=summaryService.addSummary(summary);
             if("success".equals(str)) {
                 return R.ok("添加成功");
             }else{
-                return R.ok("添加失败");
+                return R.error("添加失败");
             }
         }else{
             return R.error("参数有误");
@@ -67,11 +74,13 @@ public class SummaryController {
      * 修改 周小结
      * @param summary
      * @param session
+     * @param assismans
+     * @param sdate
      * @return
      */
     @RequestMapping("/updateSummary")
     @ResponseBody
-    public R updateSummary(Summary summary,HttpSession session,String sdate,String assismans)throws ParseException{
+    public R updateSummary(Summary summary,HttpSession session,String assismans,String sdate)throws ParseException{
         if(sdate!=null && sdate!=""){
             if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
                 return R.error("当前时间不在此周内，禁止修改");

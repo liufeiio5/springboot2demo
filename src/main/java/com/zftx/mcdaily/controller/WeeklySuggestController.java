@@ -44,12 +44,16 @@ public class WeeklySuggestController {
     /**
      * 添加 周  建议
      * @param weeklySuggest
+     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addWeeklySuggest")
     @ResponseBody
-    public R addWeeklySuggest(WeeklySuggest weeklySuggest){
+    public R addWeeklySuggest(WeeklySuggest weeklySuggest,String sdate)throws ParseException{
         if(weeklySuggest!=null&&weeklySuggest.getSuggestId()!=null){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
+                return R.error("当前时间不在此周内,禁止添加");
+            }
             String str=weeklySuggestService.addWeeklySuggest(weeklySuggest);
             if("success".equals(str)) {
                 return R.ok("添加成功");
@@ -64,6 +68,7 @@ public class WeeklySuggestController {
     /**
      * 修改 周  建议
      * @param weeklySuggest
+     * @param sdate
      * @return
      */
     @RequestMapping("/updateWeeklySuggest")

@@ -52,8 +52,13 @@ public class MonthlySummaryController {
      */
     @RequestMapping(value = "/addMonthlySummary")
     @ResponseBody
-    public R addMonthlySummary(MonthlySummary monthlySummary,String assismans){
+    public R addMonthlySummary(MonthlySummary monthlySummary,String assismans,String year,String month)throws ParseException{
         if(monthlySummary!=null){
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("此月月末三天后,禁止添加");
+                }
+            }
             monthlySummary.setAssisMan(assismans);
             String str=monthlySummaryService.addMonthlySummary(monthlySummary);
             if("success".equals(str)) {
@@ -76,8 +81,10 @@ public class MonthlySummaryController {
     @ResponseBody
     public R updateMonthlySummary(MonthlySummary monthlySummary,HttpSession session,String assismans,String year,String month)throws ParseException {
         if(monthlySummary!=null) {
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
-                return R.error("当前时间不在此月内,禁止修改");
+            if(year!=null&&month!=null) {
+                if (Integer.parseInt(Tool.getNowDate()) > Integer.parseInt(Tool.getFutureDate(("" + year + Tool.getmm(month) + "31"), 3))) {
+                    return R.error("当前时间不在此月内,禁止修改");
+                }
             }
             monthlySummary.setAssisMan(assismans);
             String str = monthlySummaryService.updateMonthlySummary(monthlySummary);
