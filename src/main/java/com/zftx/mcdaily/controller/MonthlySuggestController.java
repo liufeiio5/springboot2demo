@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -62,10 +63,9 @@ public class MonthlySuggestController {
 
     @ResponseBody
     @RequestMapping(value = "/updatemonthlySuggest")
-    public R updatemonthlySuggest(MonthlySuggest monthlySuggest,String year,String month){
+    public R updatemonthlySuggest(MonthlySuggest monthlySuggest,String year,String month)throws ParseException {
         if(monthlySuggest!=null && monthlySuggest.getSuggestId()!=null){
-            month=Integer.parseInt(month)<10?'0'+month:month;
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
                 return R.error("当前时间不在此月内,禁止修改");
             }
             String result=monthlySuggestService.updatemonthlySuggest(monthlySuggest);

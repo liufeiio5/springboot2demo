@@ -70,9 +70,7 @@ public class WeeklyProgrammeController {
     @ResponseBody
     public R updateWeeklyProgramme(WeeklyProgramme weeklyProgramme,String sdate)throws ParseException{
         if(sdate!=null && sdate!=""){
-            String sevenDate=Tool.getSevenDate(sdate);
-            //获取当前日期
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(sevenDate)){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
                 return R.error("当前时间不在此周内，禁止修改");
             }
         }

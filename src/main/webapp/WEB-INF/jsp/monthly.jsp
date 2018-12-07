@@ -229,7 +229,7 @@
                 success: function (data) {
                     var json = data.data
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓月报');
-                    for (i in json) {
+                    for (var i in json) {
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id
@@ -237,22 +237,22 @@
                         var remarkId = json[i].remark_id
                         var id = json[i].id
                         var tr = $('<tr>');
-                        tr.append($('<td>').html(json[i].id))
+                        tr.append($('<td>').html(eval(i+"")+1))
                         tr.append($('<td>').html(json[i].fullName))
                         tr.append($('<td>').html(json[i].year))
                         tr.append($('<td>').html(json[i].month).attr("year", json[i].year).attr("month", json[i].month).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('monthbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
-                        summary(id, summaryId)
                         tr.append($('<td>').addClass('progress' + '_' + id))
                         tr.append($('<td>').append($('<button>').attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('monthlydifficulty' + '_' + id)))
-                        difficulty(id, difficultyId)
                         tr.append($('<td>').append($('<button>').attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('monthlyProgramme' + '_' + id)))
-                        programme(id, programmeId)
                         tr.append($('<td>').append($('<button>').attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('monthlySuggest' + '_' + id)))
-                        suggest(id, suggestId)
                         tr.append($('<td>').append($('<button>').attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('monthlyRemark' + '_' + id)))
+                        var del = $('<button>').attr("mid",json[i].id).attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                        summary(id, summaryId)
+                        difficulty(id, difficultyId)
+                        programme(id, programmeId)
+                        suggest(id, suggestId)
                         remark(id, remarkId);
-                        var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
                         var td = $('<td>');
                         td.append(del);
                         tr.append(td);
@@ -388,7 +388,7 @@
 
                     //删除
                     $('.delbtn').click(function () {
-                        var id = $(this).parent().parent().children().eq(0).text()
+                        var id = $(this).attr("mid")
                         summaryId = $(this).attr("summaryId")
                         difficultyId = $(this).attr("difficultyId")
                         programmeId = $(this).attr("programmeId")

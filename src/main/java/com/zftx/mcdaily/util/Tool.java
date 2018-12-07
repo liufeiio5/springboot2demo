@@ -145,44 +145,61 @@ public class Tool
         return nowDate;
     }
 
-    //第6天后日期
-    public static String getSevenDate(String sdate)throws ParseException {
+    /**
+     * 第N天后日期
+     * @param sdate
+     * @param i
+     * @return
+     * @throws ParseException
+     */
+    public static String getFutureDate(String sdate,int i)throws ParseException {
         String pattern = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Date date = sdf.parse(sdate);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         Date today = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus1 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus2 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus3 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus4 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus5 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus6 = c.getTime();
-        return  sdf.format(today_plus6);
+        c.add(Calendar.DAY_OF_YEAR, i);
+        Date today_plus = c.getTime();
+        return  sdf.format(today_plus);
     }
-    //第4天后日期
-    public static String getFourDate(String sdate)throws ParseException {
+
+    /**
+     * 第N天前日期
+     * @param sdate
+     * @param i
+     * @return
+     * @throws ParseException
+     */
+    public static String getOldDate(String sdate,int i)throws ParseException {
         String pattern = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Date date = sdf.parse(sdate);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         Date today = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus1 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus2 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus3 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus4 = c.getTime();
-        return  sdf.format(today_plus4);
+        c.add(Calendar.DAY_OF_YEAR, -i);
+        Date today_plus = c.getTime();
+        return  sdf.format(today_plus);
+    }
+
+    /**
+     * 月 mm
+     * @param month
+     * @return
+     */
+    public static String getmm(String month){
+        month=Integer.parseInt(month)<10?'0'+month:month;
+        return month;
+    }
+
+    /**
+     * 日 dd
+     * @param day
+     * @return
+     */
+    public static String getdd(String day){
+        day=Integer.parseInt(day)<10?'0'+day:day;
+        return day;
     }
 }

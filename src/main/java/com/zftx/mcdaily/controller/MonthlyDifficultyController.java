@@ -69,10 +69,9 @@ public class MonthlyDifficultyController {
      */
     @RequestMapping("/updateMonthlyDifficulty")
     @ResponseBody
-    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty,String year,String month){
+    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty,String year,String month)throws ParseException{
         if(monthlyDifficulty!=null) {
-            month=Integer.parseInt(month)<10?'0'+month:month;
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
                 return R.error("当前时间不在此月内,禁止修改");
             }
             String str = monthlyDifficultyService.updateMonthlyDifficulty(monthlyDifficulty);
@@ -105,22 +104,5 @@ public class MonthlyDifficultyController {
         }else{
             return R.error("参数有误!");
         }
-    }
-
-    //第6天后日期
-    public String getSevenDate(String sdate)throws ParseException {
-        String pattern = "yyyyMMdd";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        Date date = sdf.parse(sdate);
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        Date today = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus1 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus2 = c.getTime();
-        c.add(Calendar.DAY_OF_YEAR, 1);
-        Date today_plus3 = c.getTime();
-        return  sdf.format(today_plus3);
     }
 }

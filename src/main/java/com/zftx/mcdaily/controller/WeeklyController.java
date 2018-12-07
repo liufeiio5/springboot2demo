@@ -49,7 +49,7 @@ public class WeeklyController {
         if(year!=null&&mouth!=null){
             if(year!="" && mouth!=""){
                 weekly.setSdate(year+""+mouth+"00");
-                weekly.setEdate(Tool.getFourDate(year+""+mouth+"31"));
+                weekly.setEdate(Tool.getFutureDate((year+""+mouth+"31"),4));
             }else if(year!=""&& mouth==""){
                 weekly.setSdate(year+"0100");
                 weekly.setEdate(year+"1231");

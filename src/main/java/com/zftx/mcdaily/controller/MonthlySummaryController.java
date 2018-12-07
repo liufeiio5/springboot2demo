@@ -76,8 +76,7 @@ public class MonthlySummaryController {
     @ResponseBody
     public R updateMonthlySummary(MonthlySummary monthlySummary,HttpSession session,String assismans,String year,String month)throws ParseException {
         if(monthlySummary!=null) {
-            month=Integer.parseInt(month)<10?'0'+month:month;
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
                 return R.error("当前时间不在此月内,禁止修改");
             }
             monthlySummary.setAssisMan(assismans);

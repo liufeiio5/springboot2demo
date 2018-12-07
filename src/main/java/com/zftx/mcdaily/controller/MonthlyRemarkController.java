@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -65,11 +66,9 @@ public class MonthlyRemarkController {
      */
     @RequestMapping("/updateMonthlyRemark")
     @ResponseBody
-    public R updateMonthlyRemark(MonthlyRemark monthlyRemark,String year,String month){
-        System.out.println("嘻嘻嘻嘻嘻嘻嘻嘻寻寻寻寻寻寻"+Integer.parseInt(Tool.getNowDate()));
+    public R updateMonthlyRemark(MonthlyRemark monthlyRemark,String year,String month)throws ParseException {
         if(monthlyRemark!=null) {
-            month=Integer.parseInt(month)<10?'0'+month:month;
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(""+year+month+"31")){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
                 return R.error("当前时间不在此月内,禁止修改");
             }
             String str = monthlyRemarkService.updateMonthlyRemark(monthlyRemark);

@@ -70,9 +70,7 @@ public class WeeklyDifficultyController {
     @ResponseBody
     public R addDaily(WeeklyDifficulty weeklyDifficulty,String sdate)throws ParseException{
         if(sdate!=null && sdate!=""){
-            String sevenDate=Tool.getSevenDate(sdate);
-            Integer nowDate2=Integer.parseInt(Tool.getNowDate());
-            if(nowDate2>Integer.parseInt(sevenDate)){
+            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
                 return R.error("当前时间不在此周内，禁止修改");
             }
         }
