@@ -33,7 +33,7 @@
 
    <!-- 添加 周 备注-->
     <insert id="addWeeklyRemark" keyProperty="weeklyRemark.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklyRemark">
-        INSERT INTO weekly_remark
+        INSERT ignore INTO weekly_remark
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="weeklyRemark !=null">
                 <if test="weeklyRemark.remarkId!=null">

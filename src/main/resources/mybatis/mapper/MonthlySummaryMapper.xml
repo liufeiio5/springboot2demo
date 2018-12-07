@@ -41,7 +41,7 @@
 
     <!--添加 月小结-->
     <insert id="addMonthlySummary" keyProperty="monthlySummary.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlySummary">
-        INSERT INTO monthly_summary
+        INSERT ignore INTO monthly_summary
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="monthlySummary !=null">
                 <if test="monthlySummary.summaryId!=null">

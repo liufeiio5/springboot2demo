@@ -29,7 +29,7 @@
 
     <!--添加 月备注-->
     <insert id="addMonthlyRemark" keyProperty="monthlyRemark.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlyRemark">
-        INSERT INTO monthly_remark
+        INSERT ignore INTO monthly_remark
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="monthlyRemark !=null">
                 <if test="monthlyRemark.remarkId!=null">

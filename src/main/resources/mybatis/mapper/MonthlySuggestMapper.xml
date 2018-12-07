@@ -29,7 +29,7 @@
     </select>
 
     <insert id="addmonthlySuggest" useGeneratedKeys="true" keyProperty="monthlySuggest.id" parameterType="com.zftx.mcdaily.bean.MonthlySuggest">
-        insert into monthly_suggest
+        insert ignore into monthly_suggest
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="monthlySuggest!=null">
                 <if test="monthlySuggest.id!=null">

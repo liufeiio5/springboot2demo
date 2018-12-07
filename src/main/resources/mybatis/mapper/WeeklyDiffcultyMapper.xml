@@ -33,7 +33,7 @@
 
    <!-- 添加 周报 困难-->
     <insert id="addWeeklyDifficulty" keyProperty="weeklyDifficulty.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklyDifficulty">
-        INSERT INTO weekly_difficulty
+        INSERT ignore INTO weekly_difficulty
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="weeklyDifficulty !=null">
                 <if test="weeklyDifficulty.difficultyId!=null">

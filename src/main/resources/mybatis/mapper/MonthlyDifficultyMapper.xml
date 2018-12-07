@@ -9,7 +9,7 @@
         <result column="difficulty_content" property="difficultyContent"/>
     </resultMap>
 
-    <!--查询 月小结-->
+    <!--查询 月困难-->
     <select id="getMonthlyDifficulty" resultType="com.zftx.mcdaily.bean.MonthlyDifficulty">
         select * from monthly_difficulty
         <if test="monthlyDifficulty != null">
@@ -27,9 +27,9 @@
         </if>
     </select>
 
-    <!--添加 月小结-->
+    <!--添加 月困难-->
     <insert id="addMonthlyDifficulty" keyProperty="monthlyDifficulty.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
-        INSERT INTO monthly_difficulty
+        INSERT ignore INTO monthly_difficulty
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="monthlyDifficulty !=null">
                 <if test="monthlyDifficulty.difficultyId!=null">
@@ -52,7 +52,7 @@
         </trim>
     </insert>
 
-    <!--修改 月小结-->
+    <!--修改 月困难-->
     <update id="updateMonthlyDifficulty" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
         UPDATE monthly_difficulty
         <set>
@@ -74,13 +74,13 @@
     </update>
 
 
-    <!--实际删除 月结表-->
+    <!--实际删除 月困难表-->
     <delete id="deleteMonthlyDifficulty" parameterType="com.zftx.mcdaily.bean.MonthlyDifficulty">
        delete from monthly_difficulty  where id=#{monthlyDifficulty.id}
     </delete>
 
 
-    <!--根据difficultyId删除 月结表-->
+    <!--根据difficultyId删除 月困难表-->
     <delete id="deleteMonthlyDifficultyBySid" parameterType="java.lang.Integer">
        delete from monthly_difficulty  where difficulty_id=#{difficultyId}
     </delete>

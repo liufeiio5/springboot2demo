@@ -59,7 +59,7 @@
 
     <!--添加 周报-->
     <insert id="addWeekly" keyProperty="weekly.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Weekly">
-        INSERT INTO weekly
+        INSERT ignore INTO weekly
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="weekly !=null">
                 <if test="weekly.userId!=null">

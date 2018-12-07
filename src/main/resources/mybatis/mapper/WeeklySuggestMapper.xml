@@ -33,7 +33,7 @@
 
    <!-- 添加 周报 建议-->
     <insert id="addWeeklySuggest" keyProperty="weeklySuggest.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklySuggest">
-        INSERT INTO weekly_suggest
+        INSERT ignore INTO weekly_suggest
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="weeklySuggest !=null">
                 <if test="weeklySuggest.suggestId!=null">

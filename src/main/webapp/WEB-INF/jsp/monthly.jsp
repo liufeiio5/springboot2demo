@@ -223,13 +223,16 @@
                 dataType: 'json',
                 data: {
                     userId: userId,
-                    yaer:monthlyYear,
+                    year:monthlyYear,
                     month:monthlyMouth
                 },
                 success: function (data) {
                     var json = data.data
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓月报');
                     for (var i in json) {
+                        if(i==6){
+                            return false;
+                        }
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
                         var programmeId = json[i].programme_id

@@ -51,12 +51,12 @@
                   </if>
               </where>
           </if>
-        order by m.year,m.month desc
+        order by m.year desc,m.month desc
     </select>
 
 
     <insert id="addmonthly" useGeneratedKeys="true" keyProperty="monthly.id" parameterType="com.zftx.mcdaily.bean.Monthly">
-        insert into monthly
+        insert ignore into monthly
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="monthly!=null">
                 <if test="monthly.id != null">

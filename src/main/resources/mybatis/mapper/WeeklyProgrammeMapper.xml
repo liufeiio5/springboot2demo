@@ -33,7 +33,7 @@
 
    <!-- 添加 周报 解决方案-->
     <insert id="addWeeklyProgramme" keyProperty="weeklyProgramme.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklyProgramme">
-        INSERT INTO weekly_programme
+        INSERT ignore INTO weekly_programme
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="weeklyProgramme !=null">
                 <if test="weeklyProgramme.programmeId!=null">
