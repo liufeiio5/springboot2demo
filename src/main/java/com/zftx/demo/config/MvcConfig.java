@@ -20,7 +20,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /**这个是外部静态资源文件路径*/
+        //这个是外部静态资源文件路径*//**//**//**//*
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
     }

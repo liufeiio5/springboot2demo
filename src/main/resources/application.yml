@@ -45,7 +45,7 @@ mybatis:
 #  - classpath:sql/employee.sql
 
 server:
-  port: 18999
+  port: 20000
 
   devtools:
     livereload:
