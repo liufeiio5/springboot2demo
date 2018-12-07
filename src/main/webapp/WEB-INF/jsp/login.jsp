@@ -154,11 +154,12 @@
             dataType: "json",
             type: "GET",
             success: function (data) {
-                if (data.code == 200) {
+                if (data.code==200) {
                     window.location.href = "/home"
-                } else {
-                    layer.msg("登录失败")
-                    window.location.href = "/login"
+                } else if(data.message=="密码错误!"){
+                    layer.msg("密码错误!")
+                }else{
+                    layer.msg("账号不存在!")
                 }
             }
         })

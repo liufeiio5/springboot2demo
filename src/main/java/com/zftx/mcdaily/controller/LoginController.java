@@ -56,14 +56,18 @@ public class LoginController {
     public R login(HttpSession session, User user, Model model){
         session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
-        List<User> list = userService.getUser(user);
-        model.addAttribute("user",list.get(0));
+        String pwd=user.getPassword();
+        List<User> list = userService.getUser(user.setPassword(null));
         if (list != null && list.size() > 0) {
-            log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录成功");
-            return R.ok().put("message", "登录成功");
+            if(pwd.equals(list.get(0).getPassword())) {
+                model.addAttribute("user",list.get(0));
+                log.info(this.getClass() + " || " + Thread.currentThread().getStackTrace()[1].getMethodName() + " ## " + "参数：" + user + " message:登录成功");
+                return R.ok().put("message", "登录成功!");
+            }else{
+                return R.error().put("message", "密码错误!");
+            }
         } else {
-            log.info(this.getClass()+" || "+Thread.currentThread().getStackTrace()[1].getMethodName()+" ## "+"参数："+user+" message:登录失败");
-            return R.error().put("message", "登录失败");
+            return R.error().put("message", "账号不存在!");
         }
     }
 
