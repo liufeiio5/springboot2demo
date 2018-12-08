@@ -395,7 +395,7 @@
                         $("#addSummary").attr('summaryId',$(this).attr('summaryId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交  添加周小结
-                    $("#addSummary").click(function () {
+                    $("#addSummary").unbind('click').click(function () {
                         checkAddInput()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
@@ -444,7 +444,7 @@
                         $("#addDifficulty").attr("difficultyId",$(this).attr("difficultyId")).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交  添加周 困难
-                    $("#addDifficulty").click(function () {
+                    $("#addDifficulty").unbind('click').click(function () {
                         var addDifficutyContent=$('#addDifficutyContent').val().trim()
                         if(addDifficutyContent==null||addDifficutyContent==''){
                             layer.msg("困难内容不能为空!");
@@ -481,7 +481,7 @@
                         $("#addProgramme").attr("sdate",$(this).attr('sdate')).attr("programmeId",$(this).attr('programmeId'))
                     })
                     //提交 添加周 方案
-                    $("#addProgramme").click(function () {
+                    $("#addProgramme").unbind('click').click(function () {
                         var addProgrammeContent=$('#addProgrammeContent').val().trim()
                         if(addProgrammeContent==null||addProgrammeContent==''){
                             layer.msg("方案内容不能为空!");
@@ -518,7 +518,7 @@
                         $("#addSuggest").attr("suggestId",$(this).attr('suggestId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交 添加周 建议
-                    $("#addSuggest").click(function () {
+                    $("#addSuggest").unbind('click').click(function () {
                         var addSuggestContent=$('#addSuggestContent').val().trim()
                         if(addSuggestContent==null||addSuggestContent==''){
                             layer.msg("建议内容不能为空!");
@@ -556,7 +556,7 @@
                         $("#addRemark").attr('remarkId',$(this).attr('remarkId')).attr("sdate",$(this).attr('sdate'))
                     })
                     //提交 添加周 备注
-                    $("#addRemark").click(function () {
+                    $("#addRemark").unbind('click').click(function () {
                         var addRemarkContent=$('#addRemarkContent').val().trim()
                         if(addRemarkContent==null||addRemarkContent==''){
                             layer.msg("备注内容不能为空!");
