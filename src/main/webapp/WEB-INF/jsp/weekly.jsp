@@ -165,7 +165,7 @@
                     var str;
                     var json = data.data
                     for (var i in json) {
-                        str = '<option value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
+                        str = '<option class="assisManItem" value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
                         $("#addassisman").append(str)
                         $("#updassisman").append(str)
                     }
@@ -1086,27 +1086,17 @@
                             $("#updworkHours").val($(this).attr('workHours'))
                             var assisman = $(this).attr('assisMan')
 
-                            console.log(assisman)
+                            $('.assisManItem').prop('selected', false).trigger("chosen:updated");
                             if (!$.isEmptyObject(assisman)) {
-                                //assisMan = $(this).attr('assisMan');
-                                chose_mult_set_ini('#updassisman',assisman);
-                                //初始化
-                                $("#updassisman").chosen();
-                                $("#updassisman").trigger("chosen:updated");
-                                //$(".chzn-select").chosen();
-                            }
-                            // 多选 select 数据初始化
-                            function chose_mult_set_ini(select, values) {
-                                //$(select).empty();
-                                //$(select).trigger("chosen:updated");
-                                var arr = values.split(',');
+                                var arr = assisman.split(',');
                                 var length = arr.length;
                                 var value = '';
                                 for (i = 0; i < length; i++) {
                                     value = arr[i];
-                                    $(select + " option[value='" + value + "']").attr('selected', true);
+                                    $("#updassisman" + " option[value='" + value + "']").prop('selected', true);
                                 }
-                                $(select).trigger("chosen:updated");
+                                $("#updassisman").chosen();
+                                $("#updassisman").trigger("chosen:updated");
                             }
 
                             var sdate = $(this).parent().parent().parent().parent().parent().children().eq(2).text()
