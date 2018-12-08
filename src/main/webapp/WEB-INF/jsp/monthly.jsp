@@ -493,7 +493,6 @@
                     })
                     //提交  添加月 困难
                     $("#addDifficulty").unbind('click').click(function () {
-                        alert(11)
                         var addDifficutyContent=$('#addDifficutyContent').val().trim()
                         if(addDifficutyContent==null|| addDifficutyContent==''){
                             layer.msg("困难内容不能为空!");
@@ -1301,7 +1300,6 @@
 
         //获取周报内容
         function getWeekSummary(mid,summaryId) {
-            alert(mid)
             $.ajax({
                 url: '/getSummary',
                 dataType: 'json',
