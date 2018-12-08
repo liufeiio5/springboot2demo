@@ -46,6 +46,11 @@ public class WeeklyController {
         if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
             weekly.setUserId(user.getId());
         }
+        //限制为近一月的周报
+        if(weekly.getSdate()==null&&weekly.getEdate()==null){
+            weekly.setSdate(Tool.getFutureDate(Tool.getNowDate(),-31));
+            weekly.setEdate(Tool.getNowDate());
+        }
         if(year!=null&&mouth!=null){
             if(year!="" && mouth!=""){
                 weekly.setSdate(year+""+mouth+"00");

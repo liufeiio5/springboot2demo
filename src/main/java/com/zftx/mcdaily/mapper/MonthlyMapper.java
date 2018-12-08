@@ -14,7 +14,7 @@ public interface MonthlyMapper {
          * @param monthly
          * @return
          */
-        public ArrayList<HashMap<String, Object>> getMonthly(@Param("monthly") Monthly monthly);
+        public ArrayList<HashMap<String, Object>> getMonthly(@Param("monthly") Monthly monthly,@Param("halfyearY")Integer halfyearY,@Param("halfyearM")Integer halfyearM);
 
 
         /**

@@ -94,7 +94,7 @@ public class MonthlyController {
             //不能提前插入之后的周报
             if (monthly.getYear()!=null && monthly.getMonth() != null) {
                 String mouth=monthly.getMonth()< 10 ? "0" +monthly.getMonth() : monthly.getMonth()+"";
-                if (Integer.parseInt(""+monthly.getYear()+mouth+'0'+'0')> Integer.parseInt(dateFormat1.format(new Date()))) {
+                if (Integer.parseInt(""+monthly.getYear()+mouth+"00")> Integer.parseInt(dateFormat1.format(new Date()))) {
                     return R.error("禁止提前创建月报");
                 }
             }

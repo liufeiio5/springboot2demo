@@ -266,7 +266,7 @@
                 },
                 success: function (data) {
                     var json = data.data
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报');
+                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓周报')
                     for (i in json) {
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
@@ -1212,7 +1212,6 @@
                 })
             }
         }
-
         //检查周小结 内容 进度 工时 的输入是否为空
         function checkAddInput() {
             var addcontent = $("#addcontent").val().trim();

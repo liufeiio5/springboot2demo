@@ -31,8 +31,14 @@
                   <if test="monthly.year != null">
                       and m.year=#{monthly.year}
                   </if>
+                  <if test="monthly.year == null and halfyearY!=null">
+                      and m.year>=#{halfyearY}
+                  </if>
                   <if test="monthly.month != null">
                       and m.month=#{monthly.month}
+                  </if>
+                  <if test="monthly.month == null and halfyearM!=null">
+                      and m.month>=#{halfyearM}
                   </if>
                   <if test="monthly.summaryId != null">
                       and m.summaryId=#{monthly.summaryId}
