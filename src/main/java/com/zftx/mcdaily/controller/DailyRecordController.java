@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,7 +54,7 @@ public class DailyRecordController {
      */
     @RequestMapping(value = "/getDaily", method = RequestMethod.GET)
     @ResponseBody
-    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session) {
+    public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session)throws ParseException{
         //登录用户
         User user = (User) session.getAttribute("user");
         if (user != null && user.getId() != null && userId == null)
@@ -62,14 +63,8 @@ public class DailyRecordController {
             if (startDate > endDate)
                 return R.error("结束日期不能比开始日期早").put("fullName", user != null ? user.getFullName() : "");
         if (startDate == null && endDate == null) {
-            //日历
-            Calendar calendar = Calendar.getInstance();
-            //当前系统时间的  前七天
-            calendar.add(Calendar.DATE, -7);
-            String month=(calendar.get(Calendar.MONTH) + 1)<10?"0"+(calendar.get(Calendar.MONTH) + 1):(calendar.get(Calendar.MONTH) + 1)+"";
-            String day=(calendar.get(Calendar.DAY_OF_MONTH))<10?"0"+(calendar.get(Calendar.DAY_OF_MONTH)):(calendar.get(Calendar.DAY_OF_MONTH))+"";
-            startDate = Integer.parseInt(calendar.get(Calendar.YEAR)+month+day);
-            endDate = Integer.parseInt(Tool.getYear() + "" + Tool.getMonth() + "" + Tool.getToday() + "");
+            startDate = Integer.parseInt(Tool.getOldDate(Tool.getNowDate(),7));
+            endDate = Integer.parseInt(Tool.getNowDate());
         }
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());
         if(list !=null &&list.size()>0)
