@@ -19,10 +19,10 @@
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <script >
         $(function() {
-            laydate.render({elem: '#dutyRecoredDate'});
-            laydate.render({elem: '#addDate'});
+            laydate.render({elem: '#dutyRecoredDate',format: 'yyyyMMdd'});
+            laydate.render({elem: '#addDate',format: 'yyyyMMdd'});
 
-            //月小结  协助人下拉
+            //值班人员 下拉
             $("#addempName").html("")
             $("#updempName").html("")
             $.ajax({
@@ -31,12 +31,12 @@
                 success: function (data) {
                     var str;
                     var json = data.data
-                    console.log(json)
                     for (var i in json) {
                         str = '<option class="assisManItem" value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
                         $("#addempName").append(str)
                         $("#updempName").append(str)
                     }
+
                     $("#addempName").trigger("liszt:updated");
                     $("#updempName").trigger("liszt:updated");
                     $("#addempName").chosen({
@@ -60,16 +60,16 @@
             $('#addDutyRecord').unbind('click').click(function () {
                 checkAddInput()
                 var recordId=$("#addDate").val().replace(/\-/g, '')
+                var empName=$("#addempName").val().toString()
                 $.ajax({
                     url: "/addDutyRecord",
                     dataType: 'json',
                     data: {
                         recordId:recordId,
-                        empName: $("#addempName").val(),
+                        empName:empName,
                         customerServiceName:$("#addcustomerServiceName").val(),
                         jiraId:$("#addjiraId").val()
                     },
-                    async:false,
                     success: function (data) {
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
@@ -133,11 +133,20 @@
                     $(".updbtn").unbind('click').click(function () {
                         var id=$(this).attr("id");
                         $("#updrecordId").val($(this).attr("recordId"));
-                        $("#updempName").val($(this).attr("empName"));
+                        var empName=$(this).attr("empName");
                         $("#updcustomerServiceName").val($(this).attr("customerServiceName"));
                         $("#updjiraId").val($(this).attr("jiraId"));
+
+                        $('.assisManItem').prop('selected', false).trigger("chosen:updated");
+                        if (!$.isEmptyObject(empName)) {
+                            $("#updempName" + " option[value='" + empName + "']").prop('selected', true);
+                            $("#updempName").chosen();
+                            $("#updempName").trigger("chosen:updated");
+                        }
+
                         //提交
                         $("#updDutyRecord").unbind('click').click(function () {
+                            checkUpdInput()
                             layer.confirm('确认要修改吗？', function (index) {
                                 $.ajax({
                                     url: '/updateDutyRecord',
@@ -145,7 +154,7 @@
                                     data: {
                                         id: id,
                                         remarkId: $("#updrecordId").val(),
-                                        empName: $("#updempName").val(),
+                                        empName: $("#updempName").val().toString(),
                                         customerServiceName:$("#updcustomerServiceName").val(),
                                         jiraId:$("#updjiraId").val()
                                     },
@@ -177,14 +186,32 @@
                 }
             })
         }
-
+        //校验
+        function checkUpdInput() {
+            if ($("#updempName").val()== null || $("#updempName").val()== '') {
+                layer.msg("值班人员不能为空！");
+                ajax().abort;
+            }
+            if ($("#updcustomerServiceName").val().trim()== null || $("#updcustomerServiceName").val().trim() == '') {
+                layer.msg("客服人员不能为空!");
+                ajax.abort;
+            }
+            if ($("#updjiraId").val().trim()== null || $("#updjiraId").val().trim() == '') {
+                layer.msg("jira编号不能为空!");
+                ajax.abort;
+            }
+        }
         //校验
         function checkAddInput() {
             if ($("#addDate").val().trim() == null || $("#addDate").val().trim() == '') {
                 layer.msg("日期不能为空！");
                 ajax().abort;
             }
-            if ($("#addempName").val().trim()== null || $("#addempName").val().trim() == '') {
+            if($("#addDate").val().trim().length!=8){
+                layer.msg("格式不规范,日期或值班Id只能为8位数字")
+                ajax().abort;
+            }
+            if ($("#addempName").val()== null ||$("#addempName").val()=="") {
                 layer.msg("值班人员不能为空！");
                 ajax.abort;
             }
@@ -202,7 +229,7 @@
 
 <body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span></div>
-<input type="text" id="dutyRecoredDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或Id"/>
+<input type="text" id="dutyRecoredDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
@@ -212,7 +239,7 @@
     <table class="table table-bordered" id="table-bordered">
         <thead>
         <tr>
-            <th>id</th>
+            <th>值班 Id</th>
             <th>值班人员</th>
             <th>客服人员</th>
             <th>jira编号</th>
@@ -292,7 +319,7 @@
                     <tr>
                         <td style="width:12%;">值班人员:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="lookempName" readonly></input>
+                            <input class="form-control" id="lookempName"  readonly></input>
                         </td>
                     </tr>
                     <tr>

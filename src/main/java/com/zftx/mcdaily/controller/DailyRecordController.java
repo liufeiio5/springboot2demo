@@ -66,7 +66,9 @@ public class DailyRecordController {
             Calendar calendar = Calendar.getInstance();
             //当前系统时间的  前七天
             calendar.add(Calendar.DATE, -7);
-            startDate = Integer.parseInt(calendar.get(Calendar.YEAR) + "" + (calendar.get(Calendar.MONTH) + 1) + "" + calendar.get(Calendar.DAY_OF_MONTH) + "");
+            String month=(calendar.get(Calendar.MONTH) + 1)<10?"0"+(calendar.get(Calendar.MONTH) + 1):(calendar.get(Calendar.MONTH) + 1)+"";
+            String day=(calendar.get(Calendar.DAY_OF_MONTH))<10?"0"+(calendar.get(Calendar.DAY_OF_MONTH)):(calendar.get(Calendar.DAY_OF_MONTH))+"";
+            startDate = Integer.parseInt(calendar.get(Calendar.YEAR)+month+day);
             endDate = Integer.parseInt(Tool.getYear() + "" + Tool.getMonth() + "" + Tool.getToday() + "");
         }
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());

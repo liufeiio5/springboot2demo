@@ -59,16 +59,12 @@ public class DutyRecordController {
      */
     @RequestMapping(value = "/addDutyRecord")
     @ResponseBody
-    public R addWeekly(DutyRecord dutyRecord,HttpSession session){
+    public R addWeekly(DutyRecord dutyRecord,HttpSession session,String empName){
 
         if(dutyRecord!=null) {
-           /* SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
-            //不能提前插入之后的值班记录
-            if (weekly.getEdate() != null && weekly.getEdate() != "") {
-                if (Integer.parseInt(weekly.getEdate()) > Integer.parseInt(dateFormat1.format(new Date()))) {
-                    return R.error("不能提前创建周报");
-                }
-            }*/
+            if(empName!=null){
+               dutyRecord.setEmpName(empName);
+            }
             String str = dutyRecordService.addDutyRecord(dutyRecord);
             if ("success".equals(str)) {
                 return R.ok("添加成功");

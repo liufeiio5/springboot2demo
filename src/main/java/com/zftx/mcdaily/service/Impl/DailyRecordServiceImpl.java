@@ -28,8 +28,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         return dailyRecordMapper.getDailyRecord(dailyRecord);
     }
 
-    public ArrayList<HashMap<String,Object>> getDailyRecord(Integer userId, String startDate, String endDate)
-    {
+    public ArrayList<HashMap<String,Object>> getDailyRecord(Integer userId, String startDate, String endDate) {
         return dailyRecordMapper.getDaily(userId,startDate,endDate);
     }
 

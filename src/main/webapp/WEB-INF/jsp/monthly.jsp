@@ -186,7 +186,6 @@
                         month: month,
                         userId:$(".monthbtn").attr("userId")
                     },
-                    async:false,
                     success: function (data) {
                         if (data.message == "添加成功") {
                             layer.msg('添加成功!', {
@@ -464,7 +463,6 @@
                                 year:year,
                                 month:month
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -510,7 +508,6 @@
                                 year:year,
                                 month:month
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -554,7 +551,6 @@
                                 year:year,
                                 month:month
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -598,7 +594,6 @@
                                 year:year,
                                 month:month
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
@@ -1217,7 +1212,7 @@
                                         data: {
                                             id: id,
                                             summaryId: summaryId,
-                                            content: content,
+                                            summaryContent: content,
                                             singleProgress: singleProgress,
                                             workHours: workHours,
                                             assismans: assisMan,
@@ -1442,7 +1437,7 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="addsingleProgress" placeholder="  例如: 55%" />
+                            <input class="form-control" id="addsingleProgress" placeholder="  例如: 55%" />
                         </td>
                     </tr>
                     <tr>
@@ -1541,7 +1536,7 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="updsingleProgress">
+                            <input class="form-control" id="updsingleProgress">
                         </td>
                         <td style="width:15%;text-align: center"><span id="span2" style="color:red"></span></td>
                     </tr>
