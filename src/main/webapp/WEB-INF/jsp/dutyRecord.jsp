@@ -23,26 +23,26 @@
             laydate.render({elem: '#addDate'});
 
             //月小结  协助人下拉
-            $("#addrecord").html("")
-            $("#updrecord").html("")
+            $("#addempName").html("")
+            $("#updempName").html("")
             $.ajax({
                 url: '/getUser',
                 dataType: 'json',
                 success: function (data) {
                     var str;
-                    console.log(json)
                     var json = data.data
+                    console.log(json)
                     for (var i in json) {
                         str = '<option class="assisManItem" value="' + json[i].fullName + '">' + json[i].fullName + '</option>';
-                        $("#addrecord").append(str)
-                        $("#updrecord").append(str)
+                        $("#addempName").append(str)
+                        $("#updempName").append(str)
                     }
-                    $("#addrecord").trigger("liszt:updated");
-                    $("#updrecord").trigger("liszt:updated");
-                    $("#addrecord").chosen({
+                    $("#addempName").trigger("liszt:updated");
+                    $("#updempName").trigger("liszt:updated");
+                    $("#addempName").chosen({
                         no_results_text:'未找到',
                     });
-                    $("#updrecord").chosen({
+                    $("#updempName").chosen({
                         no_results_text:'未找到',
                     });
                 }
