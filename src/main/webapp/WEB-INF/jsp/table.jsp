@@ -590,7 +590,7 @@
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">日报</span></div>
-<body onkeydown="onkeydownfun()">
+<body>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input"
        placeholder="请选择开始日期"/>
 —

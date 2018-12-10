@@ -184,7 +184,7 @@
                     data: {
                         year: year,
                         month: month,
-                        userId:58
+                        userId:$(".monthbtn").attr("userId")
                     },
                     async:false,
                     success: function (data) {
@@ -1462,8 +1462,7 @@
                     <tr>
                         <td style="width:12%;">协助人:</td>
                         <td style="width:60%">
-                            <select id="addassisman" data-placeholder="请选择协助人" multiple class="chzn-select">
-                            </select>
+                            <select id="addassisman" data-placeholder="请选择协助人" multiple class="chzn-select"></select>
                         </td>
                     </tr>
                     </tbody>

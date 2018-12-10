@@ -52,6 +52,12 @@
           <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
       </li>
+      <li>
+        <a  href="/dutyRecord">
+          <input id='8' type='checkbox'>
+          <label title="值班记录"></label>
+        </a>
+      </li>
     </ul>
     <button>米仓金服</button>
   </div>
