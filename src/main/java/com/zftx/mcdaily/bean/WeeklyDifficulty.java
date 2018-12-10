@@ -11,6 +11,5 @@ import lombok.experimental.Accessors;
 public class WeeklyDifficulty {
         private Integer id;
         private Integer difficultyId;
-        private String  difficultyTitle;
         private String  difficultyContent;
 }

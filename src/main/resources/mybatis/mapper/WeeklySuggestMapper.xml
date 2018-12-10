@@ -6,7 +6,6 @@
     <resultMap id="weeklySuggest" type="com.zftx.mcdaily.bean.WeeklySuggest">
         <id column="id" property="id"/>
         <result column="suggest_id" property="suggestId"/>
-        <result column="suggest_title" property="suggestTitle"/>
         <result column="suggest_content" property="suggestContent"/>
     </resultMap>
 
@@ -20,9 +19,6 @@
                 </if>
                 <if test="weeklySuggest.suggestId != null">
                     and suggest_id=#{weeklySuggest.suggestId}
-                </if>
-                <if test="weeklySuggest.suggestTitle != null">
-                    and suggest_title=#{weeklySuggest.suggestTitle}
                 </if>
                 <if test="weeklySuggest.suggestContent != null">
                     and suggest_content=#{weeklySuggest.suggestContent}
@@ -39,9 +35,6 @@
                 <if test="weeklySuggest.suggestId!=null">
                     suggest_id,
                 </if>
-                <if test="weeklySuggest.suggestTitle!=null">
-                    suggest_title,
-                </if>
                 <if test="weeklySuggest.suggestContent!=null">
                     suggest_content,
                 </if>
@@ -51,9 +44,6 @@
             <if test="weeklySuggest !=null">
                 <if test="weeklySuggest.suggestId!=null">
                     #{weeklySuggest.suggestId},
-                </if>
-                <if test="weeklySuggest.suggestTitle!=null">
-                    #{weeklySuggest.suggestTitle},
                 </if>
                 <if test="weeklySuggest.suggestContent!=null">
                     #{weeklySuggest.suggestContent},
@@ -68,9 +58,6 @@
         <set>
             <if test="weeklySuggest.suggestId!=null">
                 suggest_id=#{weeklySuggest.suggestId},
-            </if>
-            <if test="weeklySuggest.suggestTitle!=null">
-                suggest_title=#{weeklySuggest.suggestTitle},
             </if>
             <if test="weeklySuggest.suggestContent!=null ">
                 suggest_content=#{weeklySuggest.suggestContent},

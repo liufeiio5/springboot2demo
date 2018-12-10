@@ -11,6 +11,5 @@ import lombok.experimental.Accessors;
 public class WeeklyRemark {
         private Integer id;
         private Integer remarkId;       //备注Id
-        private String  remarkTitle;    //备注标题
         private String  remarkContent;  //备注内容
 }

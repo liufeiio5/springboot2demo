@@ -6,7 +6,6 @@
     <resultMap id="weeklyRemark" type="com.zftx.mcdaily.bean.WeeklyRemark">
         <id column="id" property="id"/>
         <result column="remark_id" property="remarkId"/>
-        <result column="remark_title" property="remarkTitle"/>
         <result column="remark_content" property="remarkContent"/>
     </resultMap>
 
@@ -20,9 +19,6 @@
                 </if>
                 <if test="weeklyRemark.remarkId != null">
                     and remark_id=#{weeklyRemark.remarkId}
-                </if>
-                <if test="weeklyRemark.remarkTitle != null">
-                    and remark_title=#{weeklyRemark.remarkTitle}
                 </if>
                 <if test="weeklyRemark.remarkContent != null">
                     and remark_content=#{weeklyRemark.remarkContent}
@@ -39,9 +35,6 @@
                 <if test="weeklyRemark.remarkId!=null">
                     remark_id,
                 </if>
-                <if test="weeklyRemark.remarkTitle!=null">
-                    remark_title,
-                </if>
                 <if test="weeklyRemark.remarkContent!=null">
                     remark_content,
                 </if>
@@ -51,9 +44,6 @@
             <if test="weeklyRemark !=null">
                 <if test="weeklyRemark.remarkId!=null">
                     #{weeklyRemark.remarkId},
-                </if>
-                <if test="weeklyRemark.remarkTitle!=null">
-                    #{weeklyRemark.remarkTitle},
                 </if>
                 <if test="weeklyRemark.remarkContent!=null">
                     #{weeklyRemark.remarkContent},
@@ -68,9 +58,6 @@
         <set>
             <if test="weeklyRemark.remarkId!=null">
                 remark_id=#{weeklyRemark.remarkId},
-            </if>
-            <if test="weeklyRemark.remarkTitle!=null">
-                remark_title=#{weeklyRemark.remarkTitle},
             </if>
             <if test="weeklyRemark.remarkContent!=null ">
                 remark_content=#{weeklyRemark.remarkContent},

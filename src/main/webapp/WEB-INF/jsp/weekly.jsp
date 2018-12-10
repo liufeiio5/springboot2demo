@@ -1074,7 +1074,7 @@
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
                             var assisman = $(this).attr('assisMan');
-                            $("#assisMan").val(assisman.replace(',', ' '))
+                            $("#assisMan").val(assisman.replace(/\,/g, ' '))
                         })
 
                         //修改 周小结

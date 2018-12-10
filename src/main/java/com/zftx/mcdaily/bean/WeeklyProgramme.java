@@ -11,6 +11,5 @@ import lombok.experimental.Accessors;
 public class WeeklyProgramme {
         private Integer id;
         private Integer programmeId;
-        private String  programmeTitle;
         private String  programmeContent;
 }

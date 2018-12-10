@@ -1153,7 +1153,7 @@
                             $("#singleProgress").val($(this).attr('singleProgress'))
                             $("#workHours").val($(this).attr('workHours'))
                             var lookassisman = $(this).attr('assisMan');
-                            $("#assisMan").val(lookassisman.replace(',', ' ').replace(',', ' '))
+                            $("#assisMan").val(lookassisman.replace(/\,/g, ' '))
                         })
 
                         //修改 月小结

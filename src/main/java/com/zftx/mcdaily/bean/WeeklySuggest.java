@@ -11,6 +11,5 @@ import lombok.experimental.Accessors;
 public class WeeklySuggest {
         private Integer id;
         private Integer suggestId;
-        private String  suggestTitle;
         private String  suggestContent;
 }

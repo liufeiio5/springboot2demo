@@ -6,7 +6,6 @@
     <resultMap id="weeklyDifficulty" type="com.zftx.mcdaily.bean.WeeklyDifficulty">
         <id column="id" property="id"/>
         <result column="difficulty_id" property="difficultyId"/>
-        <result column="difficulty_title" property="difficultyTitle"/>
         <result column="difficulty_content" property="difficultyContent"/>
     </resultMap>
 
@@ -20,9 +19,6 @@
                 </if>
                 <if test="weeklyDifficulty.difficultyId != null">
                     and difficulty_id=#{weeklyDifficulty.difficultyId}
-                </if>
-                <if test="weeklyDifficulty.difficultyTitle != null">
-                    and difficulty_title=#{weeklyDifficulty.difficultyTitle}
                 </if>
                 <if test="weeklyDifficulty.difficultyContent != null">
                     and difficulty_content=#{weeklyDifficulty.difficultyContent}
@@ -39,9 +35,6 @@
                 <if test="weeklyDifficulty.difficultyId!=null">
                     difficulty_id,
                 </if>
-                <if test="weeklyDifficulty.difficultyTitle!=null">
-                    difficulty_title,
-                </if>
                 <if test="weeklyDifficulty.difficultyContent!=null">
                     difficulty_content,
                 </if>
@@ -51,9 +44,6 @@
             <if test="weeklyDifficulty !=null">
                 <if test="weeklyDifficulty.difficultyId!=null">
                     #{weeklyDifficulty.difficultyId},
-                </if>
-                <if test="weeklyDifficulty.difficultyTitle!=null">
-                    #{weeklyDifficulty.difficultyTitle},
                 </if>
                 <if test="weeklyDifficulty.difficultyContent!=null">
                     #{weeklyDifficulty.difficultyContent},
@@ -68,9 +58,6 @@
         <set>
             <if test="weeklyDifficulty.difficultyId!=null">
                 difficulty_id=#{weeklyDifficulty.difficultyId},
-            </if>
-            <if test="weeklyDifficulty.difficultyTitle!=null">
-                difficulty_title=#{weeklyDifficulty.difficultyTitle},
             </if>
             <if test="weeklyDifficulty.difficultyContent!=null ">
                 difficulty_content=#{weeklyDifficulty.difficultyContent},
