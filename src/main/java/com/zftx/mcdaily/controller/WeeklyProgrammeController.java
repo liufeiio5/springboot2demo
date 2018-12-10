@@ -44,16 +44,12 @@ public class WeeklyProgrammeController {
     /**
      * 添加 周  解决方案
      * @param weeklyProgramme
-     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addWeeklyProgramme")
     @ResponseBody
-    public R addWeeklyProgramme(WeeklyProgramme weeklyProgramme,String sdate)throws ParseException{
+    public R addWeeklyProgramme(WeeklyProgramme weeklyProgramme)throws ParseException{
         if(weeklyProgramme!=null&&weeklyProgramme.getProgrammeId()!=null){
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
-                return R.error("当前时间不在此周内,禁止添加");
-            }
             String str=weeklyProgrammeService.addWeeklyProgramme(weeklyProgramme);
             if("success".equals(str)) {
                 return R.ok("添加成功");
@@ -68,17 +64,11 @@ public class WeeklyProgrammeController {
     /**
      * 修改 周  解决方案
      * @param weeklyProgramme
-     * @param sdate
      * @return
      */
     @RequestMapping("/updateWeeklyProgramme")
     @ResponseBody
-    public R updateWeeklyProgramme(WeeklyProgramme weeklyProgramme,String sdate)throws ParseException{
-        if(sdate!=null && sdate!=""){
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate(sdate,6))){
-                return R.error("当前时间不在此周内，禁止修改");
-            }
-        }
+    public R updateWeeklyProgramme(WeeklyProgramme weeklyProgramme)throws ParseException{
         if(weeklyProgramme!=null) {
             String str = weeklyProgrammeService.updateWeeklyProgramme(weeklyProgramme);
             if ("success".equals(str)) {

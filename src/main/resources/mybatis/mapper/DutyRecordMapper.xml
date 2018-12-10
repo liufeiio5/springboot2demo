@@ -5,7 +5,6 @@
 <mapper namespace="com.zftx.mcdaily.mapper.DutyRecordMapper">
     <resultMap id="dutyRecord" type="com.zftx.mcdaily.bean.DutyRecord">
         <id column="id" property="id"/>
-        <result column="recordId" property="recordId"/>
         <result column="emp_name" property="empName"/>
         <result column="customer_service_name" property="customerServiceName"/>
         <result column="jiraId" property="jiraId"/>
@@ -18,9 +17,6 @@
                   <if test="dutyRecord.id != null">
                       id=#{dutyRecord.id}
                   </if>
-                  <if test="dutyRecord.recordId != null">
-                      and recordId=#{dutyRecord.recordId}
-                  </if>
                   <if test="dutyRecord.empName != null">
                       and emp_name=#{dutyRecord.empName}
                   </if>
@@ -32,7 +28,7 @@
                   </if>
               </where>
           </if>
-          order by recordId desc
+          order by id desc
     </select>
 
 
@@ -40,8 +36,8 @@
         insert ignore into duty_record
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="dutyRecord!=null">
-                <if test="dutyRecord.recordId != null">
-                    recordId,
+                <if test="dutyRecord.id!=null">
+                    id,
                 </if>
                 <if test="dutyRecord.empName != null">
                     emp_name,
@@ -56,8 +52,8 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="dutyRecord!=null">
-                <if test="dutyRecord.recordId != null">
-                    #{dutyRecord.recordId},
+                <if test="dutyRecord.id!=null">
+                    #{dutyRecord.id},
                 </if>
                 <if test="dutyRecord.empName != null">
                     #{dutyRecord.empName},
@@ -75,9 +71,6 @@
     <update id="updateDutyRecord" parameterType="com.zftx.mcdaily.bean.DutyRecord">
         UPDATE duty_record
         <set>
-            <if test="dutyRecord.recordId!=null">
-                recordId=#{dutyRecord.recordId},
-            </if>
             <if test="dutyRecord.empName!=null and dutyRecord.empName !=''">
                 emp_name=#{dutyRecord.empName},
             </if>
@@ -89,8 +82,8 @@
             </if>
         </set>
         <where>
-            <if test="dutyRecord.id!=null and dutyRecord.id!=0">
-                 id=#{dutyRecord.id}
+            <if test="dutyRecord.id!=null">
+                id=#{dutyRecord.id}
             </if>
         </where>
     </update>

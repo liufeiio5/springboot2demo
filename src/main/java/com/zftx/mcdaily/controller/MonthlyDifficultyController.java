@@ -69,11 +69,8 @@ public class MonthlyDifficultyController {
      */
     @RequestMapping("/updateMonthlyDifficulty")
     @ResponseBody
-    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty,String year,String month)throws ParseException{
+    public R updateMonthlyDifficulty(MonthlyDifficulty monthlyDifficulty)throws ParseException{
         if(monthlyDifficulty!=null) {
-            if(Integer.parseInt(Tool.getNowDate())>Integer.parseInt(Tool.getFutureDate((""+year+Tool.getmm(month)+"31"),3))){
-                return R.error("当前时间不在此月内,禁止修改");
-            }
             String str = monthlyDifficultyService.updateMonthlyDifficulty(monthlyDifficulty);
             if ("success".equals(str)) {
                 return R.ok("修改成功");

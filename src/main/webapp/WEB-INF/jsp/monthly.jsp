@@ -1192,13 +1192,21 @@
                                     layer.msg("进度不能为空")
                                     ajax().abort()
                                 }
+                                if (isNaN(parseInt(singleProgress))) {
+                                    layer.msg("您输入的进度指数不规范,请重新输入!");
+                                    ajax.abort;
+                                }
                                 if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
-                                    layer.msg("您输入的进度指数不规范")
+                                    layer.msg("您输入的进度指数不规范,请重新输入!")
                                     ajax().abort()
                                 }
                                 if(workHours==null || workHours==''){
                                     layer.msg("工时不能为空")
                                     ajax().abort()
+                                }
+                                if (isNaN(parseInt(workHours))) {
+                                    layer.msg("您输入的工时不规范,请重新输入!");
+                                    ajax.abort;
                                 }
 
                                 var assisMan=''
@@ -1332,7 +1340,7 @@
             })
         }
 
-        //检查月小结 内容 进度 工时 的输入是否为空
+        //检查月小结 内容 进度 工时 的输入是否为空 是否规范
         function checkAddInput() {
             var addcontent = $("#addcontent").val().trim();
             var addsingleProgress = $("#addsingleProgress").val().trim();
@@ -1343,6 +1351,10 @@
             }
             if (addsingleProgress == null || addsingleProgress == '') {
                 layer.msg("进度不能为空！");
+                ajax.abort;
+            }
+            if (isNaN(parseInt(addsingleProgress))) {
+                layer.msg("进度输入不规范,请按提示来!");
                 ajax.abort;
             }
             if (addworkHours == null || addworkHours == '') {

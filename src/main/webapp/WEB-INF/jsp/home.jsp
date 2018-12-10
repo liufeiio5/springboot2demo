@@ -29,33 +29,33 @@
         </a>
       </li>
       <li>
-        <a  href="/overtime">
+        <a  href="/dutyRecord">
           <input id='4' type='checkbox'>
+          <label title="值班记录"><img src="/images/zb.jpg" /></label>
+        </a>
+      </li>
+      <li>
+        <a  href="/overtime">
+          <input id='5' type='checkbox'>
           <label title="加班记录"><img src="/images/overtime.png"/></label>
         </a>
       </li>
       <li>
         <a  href="http://192.168.1.62:8090" target="_blank">
-          <input id='5' type='checkbox'>
+          <input id='6' type='checkbox'>
           <label title="Confluence"><img src="/images/confluence.png"	/> </label>
         </a>
       </li>
       <li>
         <a  href="http://192.168.1.73:8080" target="_blank">
-          <input id='6' type='checkbox'>
+          <input id='7' type='checkbox'>
           <label title="Jira"><img src="/images/jira.png"	/> </label>
         </a>
       </li>
       <li>
         <a  href="http://192.168.1.70:8888" target="_blank">
-          <input id='7' type='checkbox'>
-          <label title="gitlab"><img src="/images/gitlab.png" /></label>
-        </a>
-      </li>
-      <li>
-        <a  href="/dutyRecord">
           <input id='8' type='checkbox'>
-          <label title="值班记录"></label>
+          <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
       </li>
     </ul>

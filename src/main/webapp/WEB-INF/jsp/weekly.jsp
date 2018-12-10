@@ -129,6 +129,10 @@
                 //				console.log("年" + year + "月" + month + "日" + day);
                 mouth=month<10?'0'+month:month
                 day=day<10?'0'+day:day
+                if(day=="00"){
+                    day="30"
+                    mouth=parseInt(mouth)-1
+                }
                 var autonumber = year + "-" + mouth + "-" + day;
                 $("#addendDate").val(autonumber);
 
@@ -292,9 +296,7 @@
                         suggest(id, suggestId)
                         remark(id, remarkId);
                         var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
-                        var td = $('<td>');
-                        td.append(del);
-                        tr.append(td);
+                        tr.append($('</tr>'));
                         $("#tbody").append(tr);
                     }
                     if (data.code != "200") {
@@ -1083,7 +1085,8 @@
                             var summaryId = $(this).attr('summaryId')
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
-                            $("#updworkHours").val($(this).attr('workHours'))
+                            var workHours=$(this).attr('workHours')
+                            $("#updworkHours").val(workHours.substr(0, workHours.length - 1))
                             var assisman = $(this).attr('assisMan')
 
                             $('.assisManItem').prop('selected', false).trigger("chosen:updated");
@@ -1104,7 +1107,7 @@
                             $("#updSummary").click(function () {
                                 var content = $("#updcontent").val().trim()
                                 var singleProgress = $("#updsingleProgress").val().trim()
-                                var workHours = $('#updworkHours').val().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                var workHours = $('#updworkHours').val()+$("#updworkHoursUnit").val()
                                 //校验
                                 if(content==null || content==''){
                                     layer.msg("周结内容不能为空")
@@ -1114,9 +1117,17 @@
                                     layer.msg("进度不能为空")
                                     ajax().abort()
                                 }
+                                if (isNaN(parseInt(singleProgress))) {
+                                    layer.msg("您输入的进度指数不规范,请重新输入!");
+                                    ajax.abort;
+                                }
                                 if($('#updworkHours').val().trim()==null || $('#updworkHours').val().trim()==''){
                                     layer.msg("工时不能为空")
                                     ajax().abort()
+                                }
+                                if (isNaN(parseInt($('#updworkHours').val().trim()))) {
+                                    layer.msg("您输入的工时不规范,请重新输入!");
+                                    ajax.abort;
                                 }
                                 if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                                     layer.msg("您输入的进度指数不规范")
@@ -1211,6 +1222,10 @@
                 layer.msg("内容不能为空！");
                 ajax().abort;
             }
+            if (isNaN(parseInt(addsingleProgress))) {
+                layer.msg("进度输入不规范,请按提示来!");
+                ajax.abort;
+            }
             if (addsingleProgress == null || addsingleProgress == '') {
                 layer.msg("进度不能为空！");
                 ajax.abort;
@@ -1281,7 +1296,6 @@
             <th>解决方案</th>
             <th>建议</th>
             <th>备注</th>
-            <th>操作</th>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -1351,21 +1365,21 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="addsingleProgress" placeholder="  例如 : 30f或8h或3d或1w">
+                            <input type="text" id="addsingleProgress" placeholder="  例如 :55% 或 55 ">
                         </td>
                         <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours" placeholder="例如 : 55% 或 55"/>
+                            <input class="form-control" id="addworkHours" placeholder="默认为m(分)"/>
                         </td>
                         <td>
                             <select id="addworkHoursUnit">
-                                <option value="分">m(分)</option>
-                                <option value="时">h(时)</option>
-                                <option value="天">d(天)</option>
-                                <option value="周">w(周)</option>
+                                <option value="m">m(分)</option>
+                                <option value="h">h(时)</option>
+                                <option value="d">d(天)</option>
+                                <option value="w">w(周)</option>
                             </select>
                         </td>
                     </tr>
@@ -1453,21 +1467,21 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="updsingleProgress">
+                            <input type="text" id="updsingleProgress" placeholder="  例如 :55% 或 55 ">
                         </td>
                         <td style="width:15%;text-align: center"><span id="span2" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updworkHours"></input>
+                            <input class="form-control" id="updworkHours" placeholder="默认为m(分)"></input>
                         </td>
                         <td>
                             <select id="updworkHoursUnit">
-                                <option value="分">m(分)</option>
-                                <option value="时">h(时)</option>
-                                <option value="天">d(天)</option>
-                                <option value="周">w(周)</option>
+                                <option value="m">m(分)</option>
+                                <option value="h">h(时)</option>
+                                <option value="d">d(天)</option>
+                                <option value="w">w(周)</option>
                             </select>
                         </td>
                     </tr>

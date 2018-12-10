@@ -59,13 +59,16 @@
             //添加值班记录
             $('#addDutyRecord').unbind('click').click(function () {
                 checkAddInput()
-                var recordId=$("#addDate").val().replace(/\-/g, '')
-                var empName=$("#addempName").val().toString()
+                var id=$("#addDate").val().replace(/\-/g, '')
+                var empName;
+                if($("#addempName").val()!=null){
+                    empName=$("#addempName").val().toString().replace(/\,/g," ")
+                }
                 $.ajax({
                     url: "/addDutyRecord",
                     dataType: 'json',
                     data: {
-                        recordId:recordId,
+                        id:id,
                         empName:empName,
                         customerServiceName:$("#addcustomerServiceName").val(),
                         jiraId:$("#addjiraId").val()
@@ -98,7 +101,7 @@
                 url: 'getDutyRecord',
                 dataType: 'json',
                 data: {
-                    recordId:recordId
+                    id:recordId
                 },
                 success: function (data) {
                     $("#tbody").html("");
@@ -106,13 +109,13 @@
                     $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓 值班记录');
                     for (var i in json) {
                         var tr = $('<tr>');
-                        tr.append($('<td>').html(json[i].recordId))
+                        tr.append($('<td>').html(json[i].id))
                         tr.append($('<td>').html(json[i].empName))
                         tr.append($('<td>').html(json[i].customerServiceName))
                         tr.append($('<td>').html(json[i].jiraId))
-                        var look = $('<button>').attr("recordId", json[i].recordId).attr("empName", json[i].empName).attr("customerServiceName", json[i].customerServiceName).attr("jiraId", json[i].jiraId)
+                        var look = $('<button>').attr("id", json[i].id).attr("empName", json[i].empName).attr("customerServiceName", json[i].customerServiceName).attr("jiraId", json[i].jiraId)
                             .addClass('btn btn-info lookDutyRecord').attr('data-toggle', 'modal').attr('data-target', '#lookModal').css('margin-right', '10px').html('<i class="glyphicon glyphicon-asterisk"></i>');
-                        var upd = $('<button>').attr("id", json[i].id).attr("recordId", json[i].recordId).attr("empName", json[i].empName).attr("customerServiceName", json[i].customerServiceName).attr("jiraId", json[i].jiraId)
+                        var upd = $('<button>').attr("id", json[i].id).attr("empName", json[i].empName).attr("customerServiceName", json[i].customerServiceName).attr("jiraId", json[i].jiraId)
                             .addClass('btn btn-warning updbtn').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
                         var td = $('<td>');
                         td.append(look).append(upd);
@@ -124,7 +127,7 @@
                     }
                     //详情
                     $(".lookDutyRecord").unbind('click').click(function () {
-                        $("#lookrecordId").val($(this).attr("recordId"));
+                        $("#lookrecordId").val($(this).attr("id"));
                         $("#lookempName").val($(this).attr("empName"));
                         $("#lookcustomerServiceName").val($(this).attr("customerServiceName"));
                         $("#lookjiraId").val($(this).attr("jiraId"));
@@ -132,16 +135,26 @@
                     //修改
                     $(".updbtn").unbind('click').click(function () {
                         var id=$(this).attr("id");
-                        $("#updrecordId").val($(this).attr("recordId"));
+                        $("#updrecordId").val(id);
                         var empName=$(this).attr("empName");
                         $("#updcustomerServiceName").val($(this).attr("customerServiceName"));
                         $("#updjiraId").val($(this).attr("jiraId"));
 
                         $('.assisManItem').prop('selected', false).trigger("chosen:updated");
                         if (!$.isEmptyObject(empName)) {
-                            $("#updempName" + " option[value='" + empName + "']").prop('selected', true);
-                            $("#updempName").chosen();
-                            $("#updempName").trigger("chosen:updated");
+                            if(empName.indexOf(" ") == -1){
+                                $("#updempName" + " option[value='" + empName + "']").prop('selected', true);
+                            }else {
+                                var arr = empName.split(" ");
+                                var length = arr.length;
+                                var value = "";
+                                for (i = 0; i < length; i++) {
+                                    value = arr[i];
+                                    $("#updempName" + " option[value='" + value + "']").prop('selected', true);
+                                }
+                            }
+                                $("#updempName").chosen();
+                                $("#updempName").trigger("chosen:updated");
                         }
 
                         //提交
@@ -153,8 +166,7 @@
                                     dataType: 'json',
                                     data: {
                                         id: id,
-                                        remarkId: $("#updrecordId").val(),
-                                        empName: $("#updempName").val().toString(),
+                                        empName: $("#updempName").val().toString().replace(/\,/g," "),
                                         customerServiceName:$("#updcustomerServiceName").val(),
                                         jiraId:$("#updjiraId").val()
                                     },

@@ -37,7 +37,7 @@ public class DutyRecordServiceImpl implements DutyRecordService {
      * @return
      */
     public String addDutyRecord(@Param("dutyRecord") DutyRecord dutyRecord){
-        List<DutyRecord> list=dutyRecordMapper.getDutyRecord(new DutyRecord().setRecordId(dutyRecord.getRecordId()));
+        List<DutyRecord> list=dutyRecordMapper.getDutyRecord(new DutyRecord().setId(dutyRecord.getId()));
         if(list.size()>0){
             return "repeat";
         }else{
