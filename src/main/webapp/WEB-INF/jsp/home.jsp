@@ -31,7 +31,7 @@
       <li>
         <a  href="/dutyRecord">
           <input id='4' type='checkbox'>
-          <label title="值班记录"><img src="/images/zb.jpg" /></label>
+          <label title="值班记录"><img src="/images/zb.png" /></label>
         </a>
       </li>
       <li>

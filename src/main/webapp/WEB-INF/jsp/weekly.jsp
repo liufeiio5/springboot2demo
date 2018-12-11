@@ -18,62 +18,76 @@
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <style>
+        table{
+            font-size: 13px;
+        }
         .asd {
             width: 150px;
+            padding-top: 6px;
         }
-
+        .dsa{
+            vertical-align: top;
+            padding-top: 6px;
+        }
         #table-bordered thead tr th {
             text-align: center;
         }
 
         #table-bordered thead tr th:nth-of-type(1) {
-            width: 50px;
+            max-width: 46px;
+            min-width: 46px;
         }
 
         #table-bordered thead tr th:nth-of-type(2) {
-            width: 70px;
+            max-width: 70px;
+            min-width: 70px;
         }
 
         #table-bordered thead tr th:nth-of-type(3) {
-            width: 80px;
+            max-width: 70px;
+            min-width: 70px;
         }
 
         #table-bordered thead tr th:nth-of-type(4) {
-            width: 80px;
+            max-width: 70px;
+            min-width: 70px;
         }
 
         #table-bordered thead tr th:nth-of-type(5) {
-            width: 60px;
+            max-width: 60px;
+            min-width: 60px;
         }
 
         #table-bordered thead tr th:nth-of-type(6) {
-            max-width: 450px;
-            min-width: 300px;
+            max-width: 370px;
+            min-width: 370px;
         }
 
         #table-bordered thead tr th:nth-of-type(7) {
-            width: 100px;
+            max-width: 60px;
+            min-width: 60px;
         }
 
         #table-bordered thead tr th:nth-of-type(8) {
-            width: 205px;
+            max-width: 290px;
+            min-width: 290px;
         }
 
         #table-bordered thead tr th:nth-of-type(9) {
-            width: 205px;
+            max-width: 290px;
+            min-width: 290px;
         }
 
         #table-bordered thead tr th:nth-of-type(10) {
-            width: 205px;
+            max-width: 290px;
+            min-width: 290px;
         }
 
         #table-bordered thead tr th:nth-of-type(11) {
-            width: 205px;
+            max-width: 290px;
+            min-width: 290px;
         }
 
-        #table-bordered thead tr th:nth-of-type(12) {
-            width: 40px;
-        }
     </style>
     <script >
         $(function () {
@@ -279,13 +293,13 @@
                         var remarkId = json[i].remark_id
                         var id = json[i].id
                         var tr = $('<tr>');
-                        tr.append($('<td>').html(json[i].id))
-                        tr.append($('<td>').html(json[i].fullName))
-                        tr.append($('<td>').html(json[i].sdate))
-                        tr.append($('<td>').html(json[i].edate))
-                        tr.append($('<td>').html(json[i].week).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].id))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].fullName))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].sdate))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].edate))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].week).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         tr.append($('<td>').append($('<button>').attr('sdate',json[i].sdate).attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
-                        tr.append($('<td>').addClass('progress' + '_' + id))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').addClass('progress' + '_' + id))
                         tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
                         tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
                         tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
@@ -295,7 +309,7 @@
                         programme(id, programmeId)
                         suggest(id, suggestId)
                         remark(id, remarkId);
-                        var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');
+                        /*var del = $('<button>').attr("summaryId", json[i].summary_id).attr("difficultyId", json[i].difficulty_id).attr("programmeId", json[i].programme_id).attr("suggestId", json[i].suggest_id).attr("remarkId", json[i].remark_id).addClass('btn btn-danger delbtn').html('<i class="glyphicon glyphicon-trash"></i>');*/
                         tr.append($('</tr>'));
                         $("#tbody").append(tr);
                     }
@@ -407,7 +421,7 @@
                         }
                         var assisMan
                         if($("#addassisman").val()!=null){
-                           assisMan = $("#addassisman").val().toString();
+                            assisMan = $("#addassisman").val().toString();
                         }
                         $.ajax({
                             url: "/addSummary",
@@ -604,18 +618,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].difficultyContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].difficultyContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("difficultyContent", json[i].difficultyContent)
                                 .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("content", json[i].content).attr("difficultyContent", json[i].difficultyContent)
                                 .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delDifficulty').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklydifficulty" + '_' + id).append(str);
                         }
@@ -715,18 +726,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].programmeContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].programmeContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs lookProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs updProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delProgramme').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklyProgramme" + '_' + id).append(str);
                         }
@@ -825,18 +833,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].suggestContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].suggestContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs lookSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs updSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delSuggest').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklySuggest" + '_' + id).append(str);
                         }
@@ -935,18 +940,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].remarkContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].remarkContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delRemark').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklyRemark" + '_' + id).append(str);
 
@@ -1055,16 +1057,15 @@
                                 var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
                                 $('.progress' + '_' + id).html(number.toFixed(1) + "%")
                             }
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '260px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
                                 .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
                                 .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delsummary').html('删');
-                            str.append(look).append(upd).append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".addSmmarytel" + '_' + id).append(str);
                         }
@@ -1118,7 +1119,7 @@
                                     ajax().abort()
                                 }
                                 var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
-                                if (r.test(singleProgress)) {
+                                if (r.test(singleProgress)||isNaN(singleProgress)) {
                                     layer.msg("您输入的进度指数不规范,请重新输入!");
                                     ajax.abort;
                                 }
@@ -1126,7 +1127,7 @@
                                     layer.msg("工时不能为空")
                                     ajax().abort()
                                 }
-                                if (r.test($('#updworkHours').val().trim())) {
+                                if (r.test($('#updworkHours').val().trim())||isNaN(($('#updworkHours').val().trim()))) {
                                     layer.msg("您输入的工时不规范,请重新输入!");
                                     ajax.abort;
                                 }
@@ -1223,12 +1224,12 @@
                 layer.msg("内容不能为空！");
                 ajax().abort;
             }
-            if (addsingleProgress == null || addsingleProgress == '') {
+            if (addsingleProgress== null || addsingleProgress == '') {
                 layer.msg("进度不能为空！");
                 ajax.abort;
             }
             var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
-            if (r.test(addsingleProgress)) {
+            if (r.test(addsingleProgress)||isNaN(addsingleProgress)) {
                 layer.msg("进度输入不规范,请按提示来!");
                 ajax.abort;
             }
@@ -1236,7 +1237,7 @@
                 layer.msg("工时不能为空!");
                 ajax.abort;
             }
-            if (r.test(addworkHours)) {
+            if (r.test(addworkHours)||isNaN(addworkHours)) {
                 layer.msg("工时输入不规范,请按提示来!");
                 ajax.abort;
             }
@@ -1274,13 +1275,13 @@
 
 <body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">周报</span></div>
-<select id="weeklyYear" style="margin-left: 10px;">
+<select id="weeklyYear" style="margin-left: 10px;height: 26px;border-radius: 4px;">
     <option value="">-- 请选择年份 --</option>
 </select>
-<select id="weeklyMouth" style="margin-left: 10px;">
+<select id="weeklyMouth" style="margin-left: 10px;height: 26px;border-radius: 4px;">
     <option value="">-- 请选择月份 --</option>
 </select>
-<input id="userid" placeholder="请输入用户ID"/>
+<input  style="width: 118px;border-radius: 4px;border: 1px solid #ccc;" id="userid" placeholder="请输入用户ID"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
@@ -1289,7 +1290,7 @@
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
-        <thead>
+        <thead style="background-color: #f4f4f4;">
         <tr>
             <th>序号</th>
             <th>发布人</th>
@@ -1297,8 +1298,8 @@
             <th>结束日期</th>
             <th>第几周</th>
             <th>一周小结</th>
-            <th>总体进度</th>
-            <th>遇上的困难</th>
+            <th>总进度</th>
+            <th>遇到的困难</th>
             <th>解决方案</th>
             <th>建议</th>
             <th>备注</th>
@@ -1327,7 +1328,7 @@
                         <td>
                             <input type="text" id="addstartDate"  class="form-control date form_datetime"  name="user_date" style="width:130px"
                                    placeholder="请选择开始时间"/>
-                            <div>—</div>
+                            <div style="padding-top: 8px">—</div>
                             <input type="text" id="addendDate" class="form-control date form_datetime" name="user_date" style="width:130px" class="form-control"
                                    placeholder="请选择结束时间"/>
                         </td>
@@ -1371,14 +1372,14 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addsingleProgress" placeholder="  例如 :55% 或 55 ">
+                            <input class="form-control" id="addsingleProgress" placeholder=" 请输入数字,例如:55(不能超过100)"/>
                         </td>
                         <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours" placeholder="默认为m(分)"/>
+                            <input class="form-control" id="addworkHours" placeholder=" 请输入数字,默认为m(分)"/>
                         </td>
                         <td>
                             <select id="addworkHoursUnit" class="form-control">
@@ -1473,14 +1474,14 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="updsingleProgress" placeholder="  例如 :55% 或 55 ">
+                            <input type="text" class="form-control" id="updsingleProgress" placeholder=" 请输入数字,例如:55(不能超过100)"/>
                         </td>
                         <td style="width:15%;text-align: center"><span id="span2" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updworkHours" placeholder="默认为m(分)"></input>
+                            <input class="form-control" id="updworkHours"  placeholder=" 请输入数字,默认为m(分)"/>
                         </td>
                         <td>
                             <select id="updworkHoursUnit" class="form-control">
@@ -1857,30 +1858,30 @@
 <div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
-                <div>
-                    <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>所有日报</font></b></div>
-                    <table class="table table-bordered" id="table-bordereds">
-                        <thead>
-                        <tr>
-                            <th width="75px">编号</th>
-                            <th width="75px">发布人</th>
-                            <th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
-                            <th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
-                            <th width="50px">类型</th>
-                            <th width="50px">&nbsp;&nbsp;面</th>
-                            <th width="75px"><span>线</span></th>
-                            <th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
-                            <th width="150px" style="text-align: center">事件</th>
-                            <th width="150px" style="text-align: center">过程</th>
-                            <th width="150px" style="text-align: center">结果</th>
-                            <th width="150px" style="text-align: center">解决方案</th>
-                            <th width="150px" style="text-align: center">备注</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbodys">
+            <div>
+                <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>所有日报</font></b></div>
+                <table class="table table-bordered" id="table-bordereds">
+                    <thead>
+                    <tr>
+                        <th width="75px">编号</th>
+                        <th width="75px">发布人</th>
+                        <th width="30px">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</th>
+                        <th width="30px">时&nbsp;&nbsp;间&nbsp;&nbsp;点</th>
+                        <th width="50px">类型</th>
+                        <th width="50px">&nbsp;&nbsp;面</th>
+                        <th width="75px"><span>线</span></th>
+                        <th width="75px">&nbsp;&nbsp;&nbsp;&nbsp;点</th>
+                        <th width="150px" style="text-align: center">事件</th>
+                        <th width="150px" style="text-align: center">过程</th>
+                        <th width="150px" style="text-align: center">结果</th>
+                        <th width="150px" style="text-align: center">解决方案</th>
+                        <th width="150px" style="text-align: center">备注</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodys">
 
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default">关闭</button>
                 </div>

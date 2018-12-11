@@ -21,7 +21,10 @@
         .form-control {
             display: inline-block;
         }
-
+        .dsa{
+            vertical-align: top;
+            padding-top: 6px;
+        }
         .asd {
             width: 150px;
         }
@@ -31,50 +34,55 @@
         }
 
         #table-bordered thead tr th:nth-of-type(1) {
-            width: 50px;
+            max-width: 50px;
+            min-width: 50px;
         }
 
         #table-bordered thead tr th:nth-of-type(2) {
-            width: 70px;
+            max-width: 75px;
+            min-width: 75px;
         }
 
         #table-bordered thead tr th:nth-of-type(3) {
-            width: 80px;
+            max-width: 50px;
+            min-width: 50px;
         }
 
-
         #table-bordered thead tr th:nth-of-type(4) {
-            width: 60px;
+            max-width: 40px;
+            min-width: 40px;
         }
 
         #table-bordered thead tr th:nth-of-type(5) {
-            max-width: 450px;
-            min-width: 300px;
+            max-width: 350px;
+            min-width: 350px;
         }
 
         #table-bordered thead tr th:nth-of-type(6) {
-            width: 100px;
+            max-width: 75px;
+            min-width: 75px;
         }
 
         #table-bordered thead tr th:nth-of-type(7) {
-            width: 205px;
+            max-width: 300px;
+            min-width: 300px;
         }
 
         #table-bordered thead tr th:nth-of-type(8) {
-            width: 205px;
+            max-width: 300px;
+            min-width: 300px;
         }
 
         #table-bordered thead tr th:nth-of-type(9) {
-            width: 205px;
+            max-width: 300px;
+            min-width: 300px;
         }
 
         #table-bordered thead tr th:nth-of-type(10) {
-            width: 205px;
+            max-width: 300px;
+            min-width: 300px;
         }
 
-        #table-bordered thead tr th:nth-of-type(11) {
-            width: 40px;
-        }
     </style>
     <script >
         $(function() {
@@ -236,12 +244,12 @@
                         var remarkId = json[i].remark_id
                         var id = json[i].id
                         var tr = $('<tr>');
-                        tr.append($('<td>').html(eval(i+"")+1))
-                        tr.append($('<td>').html(json[i].fullName))
-                        tr.append($('<td>').html(json[i].year))
-                        tr.append($('<td>').html(json[i].month).attr("year", json[i].year).attr("month", json[i].month).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('monthbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(eval(i+"")+1))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].fullName))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].year))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].month).attr("year", json[i].year).attr("month", json[i].month).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('monthbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
                         tr.append($('<td>').append($('<button>').attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
-                        tr.append($('<td>').addClass('progress' + '_' + id))
+                        tr.append($('<td>').css('vertical-align','middle').css('text-align','center').addClass('progress' + '_' + id))
                         tr.append($('<td>').append($('<button>').attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('monthlydifficulty' + '_' + id)))
                         tr.append($('<td>').append($('<button>').attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('monthlyProgramme' + '_' + id)))
                         tr.append($('<td>').append($('<button>').attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('monthlySuggest' + '_' + id)))
@@ -252,9 +260,8 @@
                         programme(id, programmeId)
                         suggest(id, suggestId)
                         remark(id, remarkId);
-                        var td = $('<td>');
-                        td.append(del);
-                        tr.append(td);
+                        /*  var td = $('<td>');
+                          tr.append(td);*/
                         $("#tbody").append(tr);
                     }
                     if (data.code != "200") {
@@ -384,47 +391,47 @@
                     })
 
                     //删除
-                    $('.delbtn').click(function () {
-                        var id = $(this).attr("mid")
-                        summaryId = $(this).attr("summaryId")
-                        difficultyId = $(this).attr("difficultyId")
-                        programmeId = $(this).attr("programmeId")
-                        suggestId = $(this).attr("suggestId")
-                        remarkId = $(this).attr("remarkId")
-                        layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
-                            title: '信息',
-                            btn: ['朕意已决', '泥奏凯，朕再想一想']
-                        }, function (index) {
-                            $.ajax({
-                                dataType: 'json',
-                                url: "/deleteMonthly",
-                                data: {
-                                    id: id,
-                                    summaryId: summaryId,
-                                    difficultyId: difficultyId,
-                                    programmeId: programmeId,
-                                    suggestId: suggestId,
-                                    remarkId: remarkId
-                                },
-                                success: function (data) {
-                                    if (data.code == "200") {
-                                        layer.msg('已删除!', {
-                                            icon: 1,
-                                            time: 1000
-                                        });
-                                        setTimeout(function wlh() {
-                                            window.location.href = "/monthly"
-                                        }, 500)
-                                    } else {
-                                        layer.msg(data.result, {
-                                            icon: 1,
-                                            time: 1000
-                                        });
-                                    }
-                                }
-                            });
-                        });
-                    })
+                    /* $('.delbtn').click(function () {
+                         var id = $(this).attr("mid")
+                         summaryId = $(this).attr("summaryId")
+                         difficultyId = $(this).attr("difficultyId")
+                         programmeId = $(this).attr("programmeId")
+                         suggestId = $(this).attr("suggestId")
+                         remarkId = $(this).attr("remarkId")
+                         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要删除吗？', {
+                             title: '信息',
+                             btn: ['朕意已决', '泥奏凯，朕再想一想']
+                         }, function (index) {
+                             $.ajax({
+                                 dataType: 'json',
+                                 url: "/deleteMonthly",
+                                 data: {
+                                     id: id,
+                                     summaryId: summaryId,
+                                     difficultyId: difficultyId,
+                                     programmeId: programmeId,
+                                     suggestId: suggestId,
+                                     remarkId: remarkId
+                                 },
+                                 success: function (data) {
+                                     if (data.code == "200") {
+                                         layer.msg('已删除!', {
+                                             icon: 1,
+                                             time: 1000
+                                         });
+                                         setTimeout(function wlh() {
+                                             window.location.href = "/monthly"
+                                         }, 500)
+                                     } else {
+                                         layer.msg(data.result, {
+                                             icon: 1,
+                                             time: 1000
+                                         });
+                                     }
+                                 }
+                             });
+                         });
+                     })*/
 
                     //给提交传值
                     $(".addSummary").click(function () {
@@ -668,18 +675,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].difficultyContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '190px').addClass('asd').html(json[i].difficultyContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("difficultyContent", json[i].difficultyContent)
                                 .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("content", json[i].content).attr("difficultyContent", json[i].difficultyContent)
                                 .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delDifficulty').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".monthlydifficulty" + '_' + id).append(str);
                         }
@@ -781,18 +785,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].programmeContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '190px').addClass('asd').html(json[i].programmeContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs lookProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
                                 .addClass('btn btn-xs updProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delProgramme').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".monthlyProgramme" + '_' + id).append(str);
                         }
@@ -893,18 +894,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].suggestContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '190px').addClass('asd').html(json[i].suggestContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs lookSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
                                 .addClass('btn btn-xs updSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delSuggest').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".monthlySuggest" + '_' + id).append(str);
                         }
@@ -1005,18 +1003,15 @@
                     success: function (data) {
                         var json = data.data
                         for (i in json) {
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(json[i].remarkContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '190px').addClass('asd').html(json[i].remarkContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
                                 .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delRemark').html('删');
-                            str.append(look)
-                            str.append(upd)
-                            str.append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".monthlyRemark" + '_' + id).append(str);
 
@@ -1127,16 +1122,15 @@
                                 var number = (Number(progress * 100).toFixed(1) - 100) / json.length;
                                 $('.progress' + '_' + id).html(number.toFixed(1) + "%")
                             }
-                            var str = $('<tr>');
-                            str.append($('<td>').css('width', '250px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].summaryContent))
-                            var td = $('</td>');
-                            str.append($('<td>'))
+                            var str = $('<tr>').css('border-top','1px dashed #ccc');
+                            str.append($('<td>').css('width', '290px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].summaryContent))
+                            var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].summaryContent).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
                                 .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('查').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].summaryContent).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
                                 .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('改').css('margin-right', '5px');
                             var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delsummary').html('删');
-                            str.append(look).append(upd).append(del)
+                            td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".addSmmarytel" + '_' + id).append(str);
                         }
@@ -1157,7 +1151,8 @@
                             var summaryId = $(this).attr('summaryId')
                             $("#updcontent").val($(this).attr('content'))
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
-                            $("#updworkHours").val($(this).attr('workHours'))
+                            var workHours=$(this).attr('workHours')
+                            $("#updworkHours").val(workHours.substr(0, workHours.length - 1))
                             var assisman =''
                             if($(this).attr('assisMan').toString()!=null){
                                 assisman=$(this).attr('assisMan').toString()
@@ -1182,31 +1177,32 @@
                             $("#updSummary").click(function () {
                                 var content = $("#updcontent").val().trim()
                                 var singleProgress = $("#updsingleProgress").val().trim()
-                                var workHours = $('#updworkHours').val().trim().substr(0, $('#updworkHours').val().length - 1) + $("#updworkHoursUnit").val().slice($('#addworkHoursUnit').val().length - 1)
+                                var workHours = $('#updworkHours').val()+$("#updworkHoursUnit").val()
                                 //校验
                                 if(content==null || content==''){
-                                    layer.msg("月结内容不能为空")
+                                    layer.msg("周结内容不能为空")
                                     ajax().abort()
                                 }
                                 if(singleProgress==null || singleProgress==''){
                                     layer.msg("进度不能为空")
                                     ajax().abort()
                                 }
-                                if (isNaN(parseInt(singleProgress))) {
+                                var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
+                                if (r.test(singleProgress)||isNaN(singleProgress)) {
                                     layer.msg("您输入的进度指数不规范,请重新输入!");
                                     ajax.abort;
                                 }
-                                if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
-                                    layer.msg("您输入的进度指数不规范,请重新输入!")
-                                    ajax().abort()
-                                }
-                                if(workHours==null || workHours==''){
+                                if($('#updworkHours').val().trim()==null || $('#updworkHours').val().trim()==''){
                                     layer.msg("工时不能为空")
                                     ajax().abort()
                                 }
-                                if (isNaN(parseInt(workHours))) {
+                                if (r.test($('#updworkHours').val().trim())||isNaN($('#updworkHours').val().trim())) {
                                     layer.msg("您输入的工时不规范,请重新输入!");
                                     ajax.abort;
+                                }
+                                if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
+                                    layer.msg("您输入的进度指数不规范")
+                                    ajax().abort()
                                 }
 
                                 var assisMan=''
@@ -1345,21 +1341,31 @@
             var addcontent = $("#addcontent").val().trim();
             var addsingleProgress = $("#addsingleProgress").val().trim();
             var addworkHours = $("#addworkHours").val().trim();
-            if (addcontent == null || addcontent == '') {
-                layer.msg("内容不能为空！");
-                ajax().abort;
+            //校验
+            if(content==null || content==''){
+                layer.msg("周结内容不能为空")
+                ajax().abort()
             }
-            if (addsingleProgress == null || addsingleProgress == '') {
-                layer.msg("进度不能为空！");
+            if(singleProgress==null || singleProgress==''){
+                layer.msg("进度不能为空")
+                ajax().abort()
+            }
+            var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
+            if (r.test(singleProgress)) {
+                layer.msg("您输入的进度指数不规范,请重新输入!");
                 ajax.abort;
             }
-            if (isNaN(parseInt(addsingleProgress))) {
-                layer.msg("进度输入不规范,请按提示来!");
+            if($('#addworkHours').val().trim()==null || $('#addworkHours').val().trim()==''){
+                layer.msg("工时不能为空")
+                ajax().abort()
+            }
+            if (r.test($('#addworkHours').val().trim())) {
+                layer.msg("您输入的工时不规范,请重新输入!");
                 ajax.abort;
             }
-            if (addworkHours == null || addworkHours == '') {
-                layer.msg("工时不能为空!");
-                ajax.abort;
+            if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
+                layer.msg("您输入的进度指数不规范")
+                ajax().abort()
             }
         }
     </script>
@@ -1367,8 +1373,8 @@
 
 <body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">月报</span></div>
-<input type="text" id="monthlyYear" class="form-control date" name="user_date" style="width:130px" style="margin-left: 10px;" placeholder="请选择年份" />
-<input type="text" id="monthlyMouth" class="form-control date" name="user_date" style="width:130px" style="margin-left: 10px;" placeholder="请选择月份" />
+<input type="text" id="monthlyYear"  name="user_date" style="width:130px;margin-left: 10px;"  placeholder="请选择年份" />
+<input type="text" id="monthlyMouth"  name="user_date" style="width:130px;margin-left: 10px;" placeholder="请选择月份" />
 <input id="userid" placeholder="请输入用户ID"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询
 </button>
@@ -1378,7 +1384,7 @@
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
-        <thead>
+        <thead style="background-color: #f4f4f4;">
         <tr>
             <th>序号</th>
             <th>发布人</th>
@@ -1390,7 +1396,6 @@
             <th>解决方案</th>
             <th>建议</th>
             <th>备注</th>
-            <th>操作</th>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -1449,15 +1454,15 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addsingleProgress" placeholder="  例如: 55%或55" />
+                            <input class="form-control" id="addsingleProgress" placeholder=" 请输入数字,例如:55(不能超过100)" />
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours" placeholder="默认为m(分)"/>
+                            <input class="form-control" id="addworkHours" placeholder="请输入数字,默认为m(分)"/>
                         </td>
-                        <td>
+                        <td style="width:15%;">
                             <select id="addworkHoursUnit" class="form-control">
                                 <option value="分">m(分)</option>
                                 <option value="时">h(时)</option>
@@ -1548,17 +1553,17 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updsingleProgress">
+                            <input class="form-control" id="updsingleProgress" placeholder=" 请输入数字,例如:55(不能超过100)"/>
                         </td>
                         <td style="width:15%;text-align: center"><span id="span2" style="color:red"></span></td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="updworkHours"></input>
+                            <input class="form-control" id="updworkHours" placeholder="请输入数字,默认为m(分)"/>`
                         </td>
                         <td>
-                            <select id="updworkHoursUnit">
+                            <select class="form-control" id="updworkHoursUnit" class="form-control">
                                 <option value="分">m(分)</option>
                                 <option value="时">h(时)</option>
                                 <option value="天">d(天)</option>
@@ -1928,32 +1933,32 @@
 <div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
-                <div>
-                    <div align="center"><b><font size="16" color="red"><span id="monthspan"></span>所有周报</font></b></div>
-                    <table class="table table-bordered" id="table-bordereds">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>发布人</th>
-                            <th>起始日期</th>
-                            <th>结束日期</th>
-                            <th>第几周</th>
-                            <th>一周小结</th>
-                            <th>总体进度</th>
-                            <th>遇上的困难</th>
-                            <th>解决方案</th>
-                            <th>建议</th>
-                            <th>备注</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbodys">
+            <div>
+                <div align="center"><b><font size="16" color="red"><span id="monthspan"></span>所有周报</font></b></div>
+                <table class="table table-bordered" id="table-bordereds">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>发布人</th>
+                        <th>起始日期</th>
+                        <th>结束日期</th>
+                        <th>第几周</th>
+                        <th>一周小结</th>
+                        <th>总体进度</th>
+                        <th>遇上的困难</th>
+                        <th>解决方案</th>
+                        <th>建议</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodys">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
-                </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default">关闭</button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
