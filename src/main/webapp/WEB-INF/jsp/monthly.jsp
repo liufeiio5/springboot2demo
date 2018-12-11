@@ -1458,7 +1458,7 @@
                             <input class="form-control" id="addworkHours" placeholder="例如: 30m或8h或3d或1w"/>
                         </td>
                         <td>
-                            <select id="addworkHoursUnit">
+                            <select id="addworkHoursUnit" class="form-control">
                                 <option value="分">m(分)</option>
                                 <option value="时">h(时)</option>
                                 <option value="天">d(天)</option>

@@ -7,7 +7,7 @@
         <id column="id" property="id"/>
         <result column="emp_name" property="empName"/>
         <result column="customer_service_name" property="customerServiceName"/>
-        <result column="jiraId" property="jiraId"/>
+        <result column="jira_code" property="jiraId"/>
     </resultMap>
 
     <select id="getDutyRecord" resultMap="dutyRecord">
@@ -24,7 +24,7 @@
                       and customer_service_name=#{dutyRecord.customerServiceName}
                   </if>
                   <if test="dutyRecord.jiraId != null">
-                      and jiraId=#{dutyRecord.jiraId}
+                      and jira_code=#{dutyRecord.jiraId}
                   </if>
               </where>
           </if>
@@ -46,7 +46,7 @@
                     customer_service_name,
                 </if>
                 <if test="dutyRecord.jiraId!=null">
-                    jiraId,
+                    jira_code,
                 </if>
             </if>
         </trim>
@@ -78,7 +78,7 @@
                 customer_service_name=#{dutyRecord.customerServiceName},
             </if>
             <if test="dutyRecord.jiraId!=null and dutyRecord.jiraId !=''">
-                jiraId=#{dutyRecord.jiraId},
+                jira_code=#{dutyRecord.jiraId},
             </if>
         </set>
         <where>

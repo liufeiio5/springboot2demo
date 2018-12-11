@@ -1365,7 +1365,7 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input type="text" id="addsingleProgress" placeholder="  例如 :55% 或 55 ">
+                            <input class="form-control" id="addsingleProgress" placeholder="  例如 :55% 或 55 ">
                         </td>
                         <td style="width:15%;text-align: center"><span id="span1" style="color:red"></span></td>
                     </tr>
@@ -1375,7 +1375,7 @@
                             <input class="form-control" id="addworkHours" placeholder="默认为m(分)"/>
                         </td>
                         <td>
-                            <select id="addworkHoursUnit">
+                            <select id="addworkHoursUnit" class="form-control">
                                 <option value="m">m(分)</option>
                                 <option value="h">h(时)</option>
                                 <option value="d">d(天)</option>
