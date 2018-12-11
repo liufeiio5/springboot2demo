@@ -57,7 +57,7 @@ public class LoginController {
         session.setAttribute("user",null);
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         String pwd=user.getPassword();
-        List<User> list = userService.getUser(user.setPassword(null));
+        List<User> list = userService.getUser(new User().setUserName(user.getUserName()));
         if (list != null && list.size() > 0) {
             if(pwd.equals(list.get(0).getPassword())) {
                 model.addAttribute("user",list.get(0));
@@ -81,7 +81,7 @@ public class LoginController {
     @ResponseBody
     public R registers(String userName,String password,String fullName,String email,String phone,String birthplace,String birthday,String position,String hobby,String motto){
         String result = userService.insertUser(new User().setPassword(MD5.md5(password,userName)).setUserName(userName).setFullName(fullName).setEmail(email).setPhone(phone).
-        setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
+                setBirthplace(birthplace).setBirthday(birthday).setPosition(position).setHobby(hobby).setMotto(motto));
         if(result.equals("success")){
             return  R.ok("注册成功").put("result",result);
         }else{
@@ -93,10 +93,10 @@ public class LoginController {
     @ResponseBody
     public R getUser() {
         List<User> list = userService.getUser(new User());
-            if (list != null && list.size() > 0) {
-                return R.ok("数据获取成功").put("data", list);
-            } else {
-                return R.error("数据获取失败");
-            }
+        if (list != null && list.size() > 0) {
+            return R.ok("数据获取成功").put("data", list);
+        } else {
+            return R.error("数据获取失败");
+        }
     }
 }
