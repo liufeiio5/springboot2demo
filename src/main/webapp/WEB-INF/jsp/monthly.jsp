@@ -1449,13 +1449,13 @@
                     <tr>
                         <td style="width:12%;">进度:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addsingleProgress" placeholder="  例如: 55%" />
+                            <input class="form-control" id="addsingleProgress" placeholder="  例如: 55%或55" />
                         </td>
                     </tr>
                     <tr>
                         <td style="width:12%;">工时:</td>
                         <td style="width:60%;">
-                            <input class="form-control" id="addworkHours" placeholder="例如: 30m或8h或3d或1w"/>
+                            <input class="form-control" id="addworkHours" placeholder="默认为m(分)"/>
                         </td>
                         <td>
                             <select id="addworkHoursUnit" class="form-control">

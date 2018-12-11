@@ -1,8 +1,7 @@
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -276,48 +275,6 @@
             })
         }
 
-        function GetQueryString(name)
-        {
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]);
-            return null;
-        }
-
-        /**
-         *  页面跳转 传入参数
-         */
-        $(function () {
-            var str = GetQueryString("startDate");
-            if(str){
-                var date_str = str.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
-                $('#startDate').val(date_str);
-            }
-
-
-            var strs = GetQueryString("endDate");
-            if(strs){
-                var date_strs = strs.replace(/(\d{4})(\d{2})(\d{2})/g,'$1-$2-$3');
-                $('#endDate').val(date_strs);
-            }
-
-            $('#userid').val(GetQueryString("userId"))
-        })
-
-        // 两秒后模拟点击
-        setTimeout(function() {
-            // IE
-            if(document.all) {
-                document.getElementById("query").click();
-            }
-            // 其它浏览器
-            else {
-                var e = document.createEvent("MouseEvents");
-                e.initEvent("click", true, true);
-                document.getElementById("query").dispatchEvent(e);
-            }
-        }, 100);
-
         function inittype() {
             $('#type').html('');
             $.ajax({
@@ -589,8 +546,8 @@
         }
     </script>
 </head>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">日报</span></div>
 <body>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">日报</span></div>
 <input type="text" id="startDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input"
        placeholder="请选择开始日期"/>
 —
