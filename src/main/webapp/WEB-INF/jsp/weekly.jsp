@@ -1117,7 +1117,8 @@
                                     layer.msg("进度不能为空")
                                     ajax().abort()
                                 }
-                                if (isNaN(parseInt(singleProgress))) {
+                                var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
+                                if (r.test(singleProgress)) {
                                     layer.msg("您输入的进度指数不规范,请重新输入!");
                                     ajax.abort;
                                 }
@@ -1125,7 +1126,7 @@
                                     layer.msg("工时不能为空")
                                     ajax().abort()
                                 }
-                                if (isNaN(parseInt($('#updworkHours').val().trim()))) {
+                                if (r.test($('#updworkHours').val().trim())) {
                                     layer.msg("您输入的工时不规范,请重新输入!");
                                     ajax.abort;
                                 }
@@ -1222,16 +1223,21 @@
                 layer.msg("内容不能为空！");
                 ajax().abort;
             }
-            if (isNaN(parseInt(addsingleProgress))) {
-                layer.msg("进度输入不规范,请按提示来!");
-                ajax.abort;
-            }
             if (addsingleProgress == null || addsingleProgress == '') {
                 layer.msg("进度不能为空！");
                 ajax.abort;
             }
+            var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
+            if (r.test(addsingleProgress)) {
+                layer.msg("进度输入不规范,请按提示来!");
+                ajax.abort;
+            }
             if (addworkHours == null || addworkHours == '') {
                 layer.msg("工时不能为空!");
+                ajax.abort;
+            }
+            if (r.test(addworkHours)) {
+                layer.msg("工时输入不规范,请按提示来!");
                 ajax.abort;
             }
         }
@@ -1477,7 +1483,7 @@
                             <input class="form-control" id="updworkHours" placeholder="默认为m(分)"></input>
                         </td>
                         <td>
-                            <select id="updworkHoursUnit">
+                            <select id="updworkHoursUnit" class="form-control">
                                 <option value="m">m(分)</option>
                                 <option value="h">h(时)</option>
                                 <option value="d">d(天)</option>
