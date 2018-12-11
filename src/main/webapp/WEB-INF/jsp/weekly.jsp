@@ -298,12 +298,12 @@
                         tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].sdate))
                         tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].edate))
                         tr.append($('<td>').css('vertical-align','middle').css('text-align','center').html(json[i].week).attr("week", json[i].week).css("color", "blue").css("cursor", "pointer").css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#getModal').addClass('weekbtn').attr("sdate", json[i].sdate).attr("edate", json[i].edate).attr("userId", data.userId))
-                        tr.append($('<td>').append($('<button>').attr('sdate',json[i].sdate).attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr('sdate',json[i].sdate).attr('summaryId', json[i].summary_id).addClass('addSummary btn btn-info btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setModal2').html('+')).append($('<table>').css('width', '100%').addClass('addSmmarytel' + '_' + id)))
                         tr.append($('<td>').css('vertical-align','middle').css('text-align','center').addClass('progress' + '_' + id))
-                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
-                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
-                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
-                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyRemark' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('difficultyId', json[i].difficulty_id).addClass('addDifficulty btn btn-info btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty1').html('+')).append($('<table>').css('width', '100%').addClass('weeklydifficulty' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('programmeId', json[i].programme_id).addClass('addProgramme btn btn-info btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setProgramme1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyProgramme' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('suggestId', json[i].suggest_id).addClass('addSuggest btn btn-info btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setSuggest1').html('+')).append($('<table>').css('width', '100%').addClass('weeklySuggest' + '_' + id)))
+                        tr.append($('<td>').append($('<button>').attr("sdate",json[i].sdate).attr('remarkId', json[i].remark_id).addClass('addRemark btn btn-info btn-xs').attr('data-toggle', 'modal').attr('data-target', '#setRemark1').html('+')).append($('<table>').css('width', '100%').addClass('weeklyRemark' + '_' + id)))
                         summary(id, summaryId)
                         difficulty(id, difficultyId)
                         programme(id, programmeId)
@@ -619,13 +619,13 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>').css('border-top','1px dashed #ccc');
-                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].difficultyContent))
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(eval(parseInt(i) + 1) + '、' +json[i].difficultyContent))
                             var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("difficultyContent", json[i].difficultyContent)
-                                .addClass('btn btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
+                                .addClass('btn btn-success btn-xs lookDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("difficultyId", difficultyId).attr("content", json[i].content).attr("difficultyContent", json[i].difficultyContent)
-                                .addClass('btn btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
-                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delDifficulty').html('<i class="glyphicon glyphicon-trash"></i>');
+                                .addClass('btn btn-warning btn-xs updDifficulty').attr('data-toggle', 'modal').attr('data-target', '#setDifficulty3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-danger btn-xs delDifficulty').html('<i class="glyphicon glyphicon-trash"></i>');
                             td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklydifficulty" + '_' + id).append(str);
@@ -727,13 +727,13 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>').css('border-top','1px dashed #ccc');
-                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].programmeContent))
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(eval(parseInt(i) + 1) + '、' +json[i].programmeContent))
                             var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
-                                .addClass('btn btn-xs lookProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
+                                .addClass('btn btn-success btn-xs lookProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("programmeId", programmeId).attr("programmeContent", json[i].programmeContent)
-                                .addClass('btn btn-xs updProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
-                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delProgramme').html('<i class="glyphicon glyphicon-trash"></i>');
+                                .addClass('btn btn-warning btn-xs updProgramme').attr('data-toggle', 'modal').attr('data-target', '#setProgramme3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-danger btn-xs delProgramme').html('<i class="glyphicon glyphicon-trash"></i>');
                             td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklyProgramme" + '_' + id).append(str);
@@ -834,13 +834,13 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>').css('border-top','1px dashed #ccc');
-                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].suggestContent))
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(eval(parseInt(i) + 1) + '、' +json[i].suggestContent))
                             var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
-                                .addClass('btn btn-xs lookSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
+                                .addClass('btn btn-success btn-xs lookSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("suggestId", suggestId).attr("suggestContent", json[i].suggestContent)
-                                .addClass('btn btn-xs updSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
-                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delSuggest').html('<i class="glyphicon glyphicon-trash"></i>');
+                                .addClass('btn btn-warning btn-xs updSuggest').attr('data-toggle', 'modal').attr('data-target', '#setSuggest3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-danger btn-xs delSuggest').html('<i class="glyphicon glyphicon-trash"></i>');
                             td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklySuggest" + '_' + id).append(str);
@@ -941,13 +941,13 @@
                         var json = data.data
                         for (i in json) {
                             var str = $('<tr>').css('border-top','1px dashed #ccc');
-                            str.append($('<td>').css('width', '180px').addClass('asd').html(json[i].remarkContent))
+                            str.append($('<td>').css('width', '180px').addClass('asd').html(eval(parseInt(i) + 1) + '、' +json[i].remarkContent))
                             var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
-                                .addClass('btn btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
+                                .addClass('btn btn-success btn-xs lookRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark2').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("remarkId", remarkId).attr("remarkContent", json[i].remarkContent)
-                                .addClass('btn btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
-                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delRemark').html('<i class="glyphicon glyphicon-trash"></i>');
+                                .addClass('btn btn-warning btn-xs updRemark').attr('data-toggle', 'modal').attr('data-target', '#setRemark3').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-danger btn-xs delRemark').html('<i class="glyphicon glyphicon-trash"></i>');
                             td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".weeklyRemark" + '_' + id).append(str);
@@ -1061,10 +1061,10 @@
                             str.append($('<td>').css('width', '260px').addClass('asd').html(eval(parseInt(i) + 1) + '、' + json[i].content))
                             var td = $('<td>').addClass('dsa');
                             var look = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
-                                .addClass('btn btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
+                                .addClass('btn btn-success btn-xs looksummary').attr('data-toggle', 'modal').attr('data-target', '#setModal3').html('<i class="glyphicon glyphicon-search"></i>').css('margin-right', '5px');
                             var upd = $('<button>').attr("id", json[i].id).attr("summaryId", json[i].summaryId).attr("content", json[i].content).attr("singleProgress", json[i].singleProgress).attr("workHours", json[i].workHours).attr("assisMan", json[i].assisMan)
-                                .addClass('btn btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
-                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-xs delsummary').html('<i class="glyphicon glyphicon-trash"></i>');
+                                .addClass('btn btn-warning btn-xs updsummary').attr('data-toggle', 'modal').attr('data-target', '#setModal4').html('<i class="glyphicon glyphicon-edit"></i>').css('margin-right', '5px');
+                            var del = $('<button>').attr("id", json[i].id).addClass('btn btn-danger btn-xs delsummary').html('<i class="glyphicon glyphicon-trash"></i>');
                             td.append(look).append(upd).append(del)
                             str.append(td);
                             $(".addSmmarytel" + '_' + id).append(str);
@@ -1074,7 +1074,7 @@
                         $('.looksummary').click(function () {
                             $("#assisMan").val('')
                             $("#content").val($(this).attr('content'))
-                            $("#singleProgress").val($(this).attr('singleProgress'))
+                            $("#singleProgress").val($(this).attr('singleProgress')+"%")
                             $("#workHours").val($(this).attr('workHours'))
                             var assisman = $(this).attr('assisMan');
                             $("#assisMan").val(assisman.replace(/\,/g, ' '))

@@ -562,7 +562,7 @@
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
-        <thead>
+        <thead style="background-color: #f4f4f4;">
         <tr>
             <th width="75px">编号</th>
             <th width="75px">发布人</th>

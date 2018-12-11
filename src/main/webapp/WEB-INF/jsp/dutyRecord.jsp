@@ -153,8 +153,8 @@
                                     $("#updempName" + " option[value='" + value + "']").prop('selected', true);
                                 }
                             }
-                                $("#updempName").chosen();
-                                $("#updempName").trigger("chosen:updated");
+                            $("#updempName").chosen();
+                            $("#updempName").trigger("chosen:updated");
                         }
 
                         //提交
@@ -249,7 +249,7 @@
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
-        <thead>
+        <thead style="background-color: #f4f4f4;">
         <tr>
             <th>值班 Id</th>
             <th>值班人员</th>
