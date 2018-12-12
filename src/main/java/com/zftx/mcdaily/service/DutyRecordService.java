@@ -8,7 +8,7 @@ import java.util.List;
 public interface DutyRecordService {
 
     /**
-     * 查询日报
+     * 查询 值班记录
      * @param dutyRecord
      * @param userId
      * @return
@@ -16,7 +16,7 @@ public interface DutyRecordService {
     public List<DutyRecord> getDutyRecord(@Param("dutyRecord")DutyRecord dutyRecord,@Param("userId")Integer userId);
 
     /**
-     * 添加日报
+     * 添加 值班记录
      * @param dutyRecordm
      * @return
      */
@@ -24,7 +24,7 @@ public interface DutyRecordService {
 
 
     /**
-     * 修改日报
+     * 修改 值班记录
      * @param dutyRecord
      * @return
      */

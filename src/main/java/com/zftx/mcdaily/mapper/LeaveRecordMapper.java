@@ -1,32 +1,33 @@
 package com.zftx.mcdaily.mapper;
 
-import com.zftx.mcdaily.bean.DutyRecord;
+import com.zftx.mcdaily.bean.LeaveRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 
 @Repository
 public interface LeaveRecordMapper {
 
     /**
      * 添加请假记录
-     * @param dutyRecord
+     * @param leaveRecord
      * @return
      */
-    public Integer addLeaveRecord(@Param("dutyRecord") DutyRecord dutyRecord);
+    public Integer addLeaveRecord(@Param("leaveRecord") LeaveRecord leaveRecord);
 
     /**
      * 查询请假记录
-     * @param dutyRecord
+     * @param leaveRecord
      * @return
      */
-    public List<DutyRecord> getLeaveRecord(@Param("dutyRecord") DutyRecord dutyRecord);
+    public ArrayList<Map<String,Object>> getLeaveRecord(@Param("leaveRecord") LeaveRecord leaveRecord,@Param("fullName")String fullName);
 
     /**
      * 修改请假记录
-     * @param dutyRecord
+     * @param leaveRecord
      * @return
      */
-    public Integer updateLeaveRecord(@Param("dutyRecord") DutyRecord dutyRecord);
+    public Integer updateLeaveRecord(@Param("leaveRecord")LeaveRecord leaveRecord,@Param("leaveFlag")Integer leaveFlag);
 }

@@ -25,11 +25,13 @@ public class DutyRecordController {
 
     @RequestMapping(value = "/dutyRecord")
     public String table(HttpSession session){
-       if (session.getAttribute("user") == null) {
+        if (session.getAttribute("user") == null) {
             return "redirect:/login";
         }
         return "dutyRecord";
     }
+
+
 
     /**
      * 查询 值班记录

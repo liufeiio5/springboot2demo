@@ -58,6 +58,12 @@
           <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
       </li>
+      <li>
+        <a  href="/leaveRecord" target="_blank">
+          <input id='9' type='checkbox'>
+          <label title="请假记录"><img src="" /></label>
+        </a>
+      </li>
     </ul>
     <button>米仓金服</button>
   </div>

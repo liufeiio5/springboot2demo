@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zftx.mcdaily.mapper.LeaveRecordMapper">
-    <resultMap id="leaveRecord" type="com.zftx.mcdaily.bean.LeaveRecored">
+    <resultMap id="leaveRecord" type="com.zftx.mcdaily.bean.LeaveRecord">
         <id column="id" property="id"/>
         <result column="leave_name" property="leaveName"/>
-        <result column="leave_reason" property="leaveReasen"/>
+        <result column="leave_reason" property="leaveReason"/>
         <result column="leave_duration" property="leaveDuration"/>
     </resultMap>
 
     <select id="getLeaveRecord" resultType="java.util.Map">
-          select * from t_ask_for_leave_record lr
+          select lr.id,lr.leave_name leaveName,lr.leave_reason leaveReason,lr.leave_duration leaveDuration,u.id userId,u.full_name fullName from t_ask_for_leave_record lr
           join user u on u.id=lr.leave_name
           <if test="leaveRecord != null">
               <where>
@@ -19,20 +19,23 @@
                       lr.id=#{leaveRecord.id}
                   </if>
                   <if test="leaveRecord.leaveName != null">
-                      and lr.leave_name like concat(#{leaveRecord.leaveName},'%')
+                      and lr.leave_name =#{leaveRecord.leaveName}
                   </if>
-                  <if test="leaveRecord.leaveReasen != null">
-                      and lr.leave_reason=#{leaveRecord.leaveReasen}
+                  <if test="leaveRecord.leaveReason != null">
+                      and lr.leave_reason=#{leaveRecord.leaveReason}
                   </if>
                   <if test="leaveRecord.leaveDuration != null">
                       and lr.leave_duration=#{leaveRecord.leaveDuration}
+                  </if>
+                  <if test="fullName!= null">
+                      and u.full_name=#{fullName}
                   </if>
               </where>
           </if>
           order by lr.id desc
     </select>
 
-    <insert id="addLeaveRecord" useGeneratedKeys="true" keyProperty="leaveRecord.id" parameterType="com.zftx.mcdaily.bean.LeaveRecored">
+    <insert id="addLeaveRecord" useGeneratedKeys="true" keyProperty="leaveRecord.id" parameterType="com.zftx.mcdaily.bean.LeaveRecord">
         insert ignore into t_ask_for_leave_record
         <trim prefix=" (" suffix=")" suffixOverrides=",">
             <if test="leaveRecord!=null">
@@ -42,7 +45,7 @@
                 <if test="leaveRecord.leaveName != null">
                     leave_name,
                 </if>
-                <if test="leaveRecord.leaveReasen != null">
+                <if test="leaveRecord.leaveReason != null">
                     leave_reason,
                 </if>
                 <if test="leaveRecord.leaveDuration!=null">
@@ -58,8 +61,8 @@
                 <if test="leaveRecord.leaveName != null">
                     #{leaveRecord.leaveName},
                 </if>
-                <if test="leaveRecord.leaveReasen != null">
-                    #{leaveRecord.leaveReasen},
+                <if test="leaveRecord.leaveReason != null">
+                    #{leaveRecord.leaveReason},
                 </if>
                 <if test="leaveRecord.leaveDuration!=null">
                     #{leaveRecord.leaveDuration},
@@ -68,22 +71,28 @@
         </trim>
     </insert>
 
-    <update id="updateLeaveRecord" parameterType="com.zftx.mcdaily.bean.LeaveRecored">
+    <update id="updateLeaveRecord" parameterType="com.zftx.mcdaily.bean.LeaveRecord">
         UPDATE t_ask_for_leave_record
         <set>
-            <if test="leaveRecord.leaveName!=null">
+            <if test="leaveFlag!=null">
+                leave_name=#{leaveFlag},
+            </if>
+            <if test="leaveRecord.leaveName!=null and leaveFlag==null">
                 leave_name=#{leaveRecord.leaveName},
             </if>
-            <if test="leaveRecord.leaveReasen!=null and leaveRecord.leaveReasen !=''">
-                leave_reason=#{leaveRecord.leaveReasen},
+            <if test="leaveRecord.leaveReason!=null">
+                leave_reason=#{leaveRecord.leaveReason},
             </if>
-            <if test="leaveRecord.leaveDuration!=null and leaveRecord.leaveDuration !=''">
+            <if test="leaveRecord.leaveDuration!=null and leaveRecord.leaveDuration!=''">
                 leave_duration=#{leaveRecord.leaveDuration},
             </if>
         </set>
         <where>
             <if test="leaveRecord.id!=null">
                 id=#{leaveRecord.id}
+            </if>
+            <if test="leaveFlag!=null">
+                and leave_name=#{leaveRecord.leaveName}
             </if>
         </where>
     </update>
