@@ -10,17 +10,17 @@ public interface DutyRecordService {
     /**
      * 查询日报
      * @param dutyRecord
+     * @param userId
      * @return
      */
-    public List<DutyRecord> getDutyRecord(@Param("dutyRecord")DutyRecord dutyRecord);
-
+    public List<DutyRecord> getDutyRecord(@Param("dutyRecord")DutyRecord dutyRecord,@Param("userId")Integer userId);
 
     /**
      * 添加日报
-     * @param dutyRecord
+     * @param dutyRecordm
      * @return
      */
-    public String addDutyRecord(@Param("dutyRecord") DutyRecord dutyRecord);
+    public String addDutyRecord(@Param("dutyRecord") DutyRecord dutyRecordm);
 
 
     /**

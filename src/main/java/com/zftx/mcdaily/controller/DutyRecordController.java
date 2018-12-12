@@ -34,16 +34,17 @@ public class DutyRecordController {
     /**
      * 查询 值班记录
      * @param dutyRecord
+     * @param userId
      * @param session
      * @return
      */
     @RequestMapping(value = "/getDutyRecord",method = RequestMethod.GET)
     @ResponseBody
-    public R getDutyRecord(DutyRecord dutyRecord, HttpSession session)throws ParseException{
+    public R getDutyRecord(DutyRecord dutyRecord,Integer userId, HttpSession session)throws ParseException{
        //获取用户信息
         User user = (User) session.getAttribute("user");
 
-        List<DutyRecord> list=dutyRecordService.getDutyRecord(dutyRecord);
+        List<DutyRecord> list=dutyRecordService.getDutyRecord(dutyRecord,userId);
 
         if(list !=null &&list.size()>0) {
             return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "").put("userId",user.getId());

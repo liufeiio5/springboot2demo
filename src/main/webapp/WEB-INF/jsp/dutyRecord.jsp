@@ -96,12 +96,20 @@
 
         function inittable() {
             var recordId=$("#dutyRecoredDate").val().replace(/\-/g, '')
+            var dutyRecoredNameOrId=$("#dutyRecoredNameOrId").val()
+            if(isNaN(dutyRecoredNameOrId)){
+                var empName=dutyRecoredNameOrId
+            }else{
+                var userId=dutyRecoredNameOrId
+            }
             $.ajax({
                 type: 'get',
                 url: 'getDutyRecord',
                 dataType: 'json',
                 data: {
-                    id:recordId
+                    id:recordId,
+                    userId:userId,
+                    empName:empName
                 },
                 success: function (data) {
                     $("#tbody").html("");
@@ -241,7 +249,8 @@
 
 <body>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span></div>
-<input type="text" id="dutyRecoredDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
+<input type="text" id="dutyRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
+<input  id="dutyRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>

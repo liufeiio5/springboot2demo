@@ -1,7 +1,9 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.DutyRecord;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.mapper.DutyRecordMapper;
+import com.zftx.mcdaily.mapper.UserMapper;
 import com.zftx.mcdaily.service.DutyRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
@@ -16,14 +18,26 @@ public class DutyRecordServiceImpl implements DutyRecordService {
 
     @Autowired
     private DutyRecordMapper dutyRecordMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 查询 值班记录
      * @param dutyRecord
      * @return
      */
-    public List<DutyRecord> getDutyRecord(@Param("dutyRecord") DutyRecord dutyRecord){
-        List<DutyRecord> list=dutyRecordMapper.getDutyRecord(dutyRecord);
+    public List<DutyRecord> getDutyRecord(@Param("dutyRecord") DutyRecord dutyRecord,Integer userId){
+        List<DutyRecord> list;
+        if(userId!=null){
+            List<User> ulist=userMapper.getUser(new User().setId(userId));
+            if(ulist.size()>0){
+                list=dutyRecordMapper.getDutyRecord(dutyRecord.setEmpName(ulist.get(0).getFullName()));
+            }else{
+                return null;
+            }
+        }else {
+            list = dutyRecordMapper.getDutyRecord(dutyRecord);
+        }
         if(list.size()>0){
             return list;
         }else{

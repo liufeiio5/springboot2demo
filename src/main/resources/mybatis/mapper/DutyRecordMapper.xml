@@ -18,7 +18,7 @@
                       id=#{dutyRecord.id}
                   </if>
                   <if test="dutyRecord.empName != null">
-                      and emp_name=#{dutyRecord.empName}
+                      and emp_name like concat('%',#{dutyRecord.empName},'%')
                   </if>
                   <if test="dutyRecord.customerServiceName != null">
                       and customer_service_name=#{dutyRecord.customerServiceName}
