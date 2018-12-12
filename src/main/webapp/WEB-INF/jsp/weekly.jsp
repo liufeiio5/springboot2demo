@@ -1088,6 +1088,9 @@
                             $("#updsingleProgress").val($(this).attr('singleProgress'))
                             var workHours=$(this).attr('workHours')
                             $("#updworkHours").val(workHours.substr(0, workHours.length - 1))
+                            //工时单位
+                            var unit=workHours.substr( workHours.length - 1,workHours.length);
+                            $("#updworkHoursUnit"+ " option[value='" + unit + "']").prop('selected', true);
                             var assisman = $(this).attr('assisMan')
 
                             $('.assisManItem').prop('selected', false).trigger("chosen:updated");
