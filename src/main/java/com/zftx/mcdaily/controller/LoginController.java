@@ -1,17 +1,22 @@
 package com.zftx.mcdaily.controller;
 
-import com.zftx.mcdaily.bean.*;
-import com.zftx.mcdaily.service.*;
+import com.zftx.mcdaily.bean.User;
+import com.zftx.mcdaily.service.UserService;
 import com.zftx.mcdaily.util.MD5;
 import com.zftx.mcdaily.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.List;
 
 @Controller
 @SessionAttributes(value={"user","try"})
@@ -43,7 +48,23 @@ public class LoginController {
         return "home";
     }
 
-
+    /**
+     * 去除session
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping("/killSession")
+    public String logout(HttpServletRequest request,HttpSession session) throws Exception {
+        System.out.println("嘻嘻嘻嘻嘻嘻嘻嘻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻寻");
+        Enumeration em = request.getSession().getAttributeNames();
+        while (em.hasMoreElements()) {
+            request.getSession().removeAttribute(em.nextElement().toString());
+        }
+        session.removeAttribute("user");//根据参数清除对应的值
+        session.setAttribute("user",null);
+        return "login";
+    }
 
 
     /**
@@ -55,9 +76,10 @@ public class LoginController {
     @ResponseBody
     public R login(HttpSession session, User user, Model model){
         session.setAttribute("user",null);
+        System.out.println("嘻嘻嘻嘻嘻嘻嘻嘻寻寻寻寻寻寻寻寻寻寻寻寻"+session.getAttribute("user"));
         user.setPassword(MD5.md5(user.getPassword(), user.getUserName()));
         String pwd=user.getPassword();
-        List<User> list = userService.getUser(new User().setUserName(user.getUserName()));
+        List<User> list = userService.getUser(user.setPassword(null));
         if (list != null && list.size() > 0) {
             if(pwd.equals(list.get(0).getPassword())) {
                 model.addAttribute("user",list.get(0));

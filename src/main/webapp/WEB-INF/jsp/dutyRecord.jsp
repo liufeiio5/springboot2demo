@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -244,11 +245,23 @@
                 ajax.abort;
             }
         }
+
+       /* function loginOut() {
+            layer.alert("你确定要退出登陆吗？");
+            window.location.href = "/killSession"
+        }*/
+
+
+        function loginOut(){
+            if(confirm("确定要退出吗？")){
+                window.location.href="/WEB-INF/jsp/loginoff.jsp";
+            }
+        }
     </script>
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span></div>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span><span style="color: blue" onclick="loginOut()">[退出]</span></div>
 <input type="text" id="dutyRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <input  id="dutyRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>

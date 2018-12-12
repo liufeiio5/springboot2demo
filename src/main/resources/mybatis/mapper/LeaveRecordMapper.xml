@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.LeaveRecordMapper">
+    <resultMap id="leaveRecord" type="com.zftx.mcdaily.bean.LeaveRecored">
+        <id column="id" property="id"/>
+        <result column="leave_name" property="leaveName"/>
+        <result column="leave_reason" property="leaveReasen"/>
+        <result column="leave_duration" property="leaveDuration"/>
+    </resultMap>
+
+    <select id="getLeaveRecord" resultType="java.util.Map">
+          select * from t_ask_for_leave_record lr
+          join user u on u.id=lr.leave_name
+          <if test="leaveRecord != null">
+              <where>
+                  <if test="leaveRecord.id != null">
+                      lr.id=#{leaveRecord.id}
+                  </if>
+                  <if test="leaveRecord.leaveName != null">
+                      and lr.leave_name like concat(#{leaveRecord.leaveName},'%')
+                  </if>
+                  <if test="leaveRecord.leaveReasen != null">
+                      and lr.leave_reason=#{leaveRecord.leaveReasen}
+                  </if>
+                  <if test="leaveRecord.leaveDuration != null">
+                      and lr.leave_duration=#{leaveRecord.leaveDuration}
+                  </if>
+              </where>
+          </if>
+          order by lr.id desc
+    </select>
+
+    <insert id="addLeaveRecord" useGeneratedKeys="true" keyProperty="leaveRecord.id" parameterType="com.zftx.mcdaily.bean.LeaveRecored">
+        insert ignore into t_ask_for_leave_record
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="leaveRecord!=null">
+                <if test="leaveRecord.id!=null">
+                    id,
+                </if>
+                <if test="leaveRecord.leaveName != null">
+                    leave_name,
+                </if>
+                <if test="leaveRecord.leaveReasen != null">
+                    leave_reason,
+                </if>
+                <if test="leaveRecord.leaveDuration!=null">
+                    leave_duration,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="leaveRecord!=null">
+                <if test="leaveRecord.id!=null">
+                    #{leaveRecord.id},
+                </if>
+                <if test="leaveRecord.leaveName != null">
+                    #{leaveRecord.leaveName},
+                </if>
+                <if test="leaveRecord.leaveReasen != null">
+                    #{leaveRecord.leaveReasen},
+                </if>
+                <if test="leaveRecord.leaveDuration!=null">
+                    #{leaveRecord.leaveDuration},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateLeaveRecord" parameterType="com.zftx.mcdaily.bean.LeaveRecored">
+        UPDATE t_ask_for_leave_record
+        <set>
+            <if test="leaveRecord.leaveName!=null">
+                leave_name=#{leaveRecord.leaveName},
+            </if>
+            <if test="leaveRecord.leaveReasen!=null and leaveRecord.leaveReasen !=''">
+                leave_reason=#{leaveRecord.leaveReasen},
+            </if>
+            <if test="leaveRecord.leaveDuration!=null and leaveRecord.leaveDuration !=''">
+                leave_duration=#{leaveRecord.leaveDuration},
+            </if>
+        </set>
+        <where>
+            <if test="leaveRecord.id!=null">
+                id=#{leaveRecord.id}
+            </if>
+        </where>
+    </update>
+
+</mapper>
