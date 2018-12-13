@@ -192,7 +192,7 @@
                     data: {
                         year: year,
                         month: month,
-                        userId:$(".monthbtn").attr("userId")
+                        userId:${sessionUser.id}
                     },
                     success: function (data) {
                         if (data.message == "添加成功") {
@@ -235,7 +235,6 @@
                 },
                 success: function (data) {
                     var json = data.data
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓月报');
                     for (var i in json) {
                         var summaryId = json[i].summary_id
                         var difficultyId = json[i].difficulty_id
@@ -1384,7 +1383,7 @@
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 月报</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">

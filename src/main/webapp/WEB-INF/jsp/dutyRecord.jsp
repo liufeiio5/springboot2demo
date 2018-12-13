@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,13 +110,13 @@
                 dataType: 'json',
                 data: {
                     id:recordId,
-                    userId:userId,
+                    userId: userId,
                     empName:empName
                 },
                 success: function (data) {
                     $("#tbody").html("");
                     var json = data.data
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓 值班记录');
+
                     for (var i in json) {
                         var tr = $('<tr>');
                         tr.append($('<td>').html(json[i].id))
@@ -246,15 +247,9 @@
             }
         }
 
-       /* function loginOut() {
-            layer.alert("你确定要退出登陆吗？");
-            window.location.href = "/killSession"
-        }*/
-
-
         function loginOut(){
             if(confirm("确定要退出吗？")){
-                window.location.href="/WEB-INF/jsp/loginoff.jsp";
+                window.location.href="/logout";
             }
         }
     </script>
@@ -267,7 +262,7 @@
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 值班记录</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">

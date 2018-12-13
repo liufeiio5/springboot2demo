@@ -14,10 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.*;
 
 @Controller
 public class DailyRecordController {
@@ -56,7 +55,7 @@ public class DailyRecordController {
     @ResponseBody
     public R getDailyRecord(Integer userId, Integer startDate, Integer endDate, HttpSession session)throws ParseException{
         //登录用户
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         if (user != null && user.getId() != null && userId == null)
             userId = user.getId();
         if (startDate != null && endDate != null)
@@ -68,9 +67,9 @@ public class DailyRecordController {
         }
         ArrayList<HashMap<String, Object>> list = dailyRecordService.getDailyRecord(userId, startDate.toString(), endDate.toString());
         if(list !=null &&list.size()>0)
-            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"").put("userId",userId);
+            return R.ok("数据获取成功").put("data",list);
         else
-            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"").put("userId",userId);
+            return R.error("获取数据失败");
     }
 
     /**
@@ -97,7 +96,7 @@ public class DailyRecordController {
                       Integer point, String surfaceName, String lineName, String pointName, String eventName,
                       String process, String result, String method, String remarks, String selectDate) {
         //获取用户信息
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         //初始化查询条件
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//格式化时间
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
@@ -240,7 +239,7 @@ public class DailyRecordController {
     @ResponseBody
     public R addDaily(HttpSession session, Integer id, Integer typeId, Integer surfaceId, Integer lineId, Integer pointId, String eventName, String process, String result, String method, String remark, String time) {
         //获取用户信息
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         //初始化查询条件
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
         //修改日报统一记录表

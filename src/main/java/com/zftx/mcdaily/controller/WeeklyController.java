@@ -41,9 +41,8 @@ public class WeeklyController {
     @RequestMapping(value = "/getWeekly",method = RequestMethod.GET)
     @ResponseBody
     public R getWeekly(Weekly weekly,HttpSession session,String year,String mouth)throws ParseException{
-        //获取用户信息
-        User user = (User) session.getAttribute("user");
-        if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
+        if(weekly.getUserId()==null||weekly.getUserId()==0){
+            User user=(User) session.getAttribute("sessionUser");
             weekly.setUserId(user.getId());
         }
         //限制为近一月的周报
@@ -63,9 +62,9 @@ public class WeeklyController {
         ArrayList<HashMap<String, Object>> list = weeklyService.getWeekly(weekly);
 
         if(list !=null &&list.size()>0) {
-            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
+            return R.ok("数据获取成功").put("data", list);
         }else {
-            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "").put("userId",weekly.getUserId());
+            return R.error("数据获取失败");
         }
     }
 
@@ -79,11 +78,6 @@ public class WeeklyController {
     public R addWeekly(Weekly weekly,HttpSession session){
 
         if(weekly!=null) {
-            //获取用户信息
-            User user = (User) session.getAttribute("user");
-            if (user != null && user.getId() != null && weekly.getUserId() == null) {
-                weekly.setUserId(user.getId());
-            }
             SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMdd");//格式化日期
             //不能提前插入之后的周报
             if (weekly.getEdate() != null && weekly.getEdate() != "") {

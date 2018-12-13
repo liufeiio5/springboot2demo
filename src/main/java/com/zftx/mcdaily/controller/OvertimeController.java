@@ -1,9 +1,9 @@
 package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Overtime;
+import com.zftx.mcdaily.bean.User;
 import com.zftx.mcdaily.service.OvertimeService;
 import com.zftx.mcdaily.util.R;
-import com.zftx.mcdaily.bean.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -36,7 +33,7 @@ public class OvertimeController {
     @RequestMapping(value = "/getOvertime",method = RequestMethod.GET)
     @ResponseBody
     public R getOvertime(HttpSession session,Integer startTime,Integer endTime,Integer userId){
-        User user =(User)session.getAttribute("user");
+        User user =(User)session.getAttribute("sessionUser");
         if (user != null&& user.getId() != null && userId==null)
             userId = user.getId();
         ArrayList<HashMap<String,Object>> list = overtimeService.getOvertime(userId,null,null);
@@ -44,7 +41,7 @@ public class OvertimeController {
             if(startTime>endTime){
                 return R.error("结束日期不能比开始日期早").put("fullName",user != null ? user.getFullName():"");
             }else{
-             list = overtimeService.getOvertime(userId,startTime.toString(),endTime.toString());
+                list = overtimeService.getOvertime(userId,startTime.toString(),endTime.toString());
             }
         }
 
@@ -77,13 +74,13 @@ public class OvertimeController {
     @RequestMapping(value = "/addOvertimeRecord")
     @ResponseBody
     public R addOvertimeRecord(HttpSession session,Overtime overtime,String endtime){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
 
         Date endTime=null;
         //字符串转换为Date类型，要做异常捕捉，转换有可能失败或者前端传过来的格式有错误
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-             endTime =  simpleDateFormat.parse(endtime);//格式转换
+            endTime =  simpleDateFormat.parse(endtime);//格式转换
 
         }catch (ParseException e){
             e.printStackTrace();

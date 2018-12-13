@@ -80,7 +80,7 @@
                                 window.location.href = "/table"
                             }, 500)
                         } else if (data.message = "不能提前创建日报") {
-                            layer.msg("不能提前创建日报，您这样，欺天当劈");
+                            layer.msg("严禁提前创建日报");
                         } else {
                             layer.msg("添加失败");
                         }
@@ -154,7 +154,6 @@
                 dataType: 'json',
                 data: data,
                 success: function (data) {
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓日报');
                     for (var i in  data.data) {
                         var tr = $('<tr>');
                         if (typeof (data.data[i].id) != 'undefined') {
@@ -557,8 +556,7 @@
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<%--<button class="btn btn-danger" onclick="overtime()" ><i class="glyphicon glyphicon-plus"></i>&nbsp;加班记录</button>--%>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 日报</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">

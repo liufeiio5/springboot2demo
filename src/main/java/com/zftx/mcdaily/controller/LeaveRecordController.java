@@ -21,8 +21,8 @@ public class LeaveRecordController {
     private LeaveRecordService LeaveRecordService;
 
     @RequestMapping(value = "/leaveRecord")
-    public String leaveRecord(HttpSession session){
-        if (session.getAttribute("user") == null) {
+    public String table(HttpSession session){
+        if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
         }
         return "leaveRecord";
@@ -32,7 +32,6 @@ public class LeaveRecordController {
     @ResponseBody
     public R getLeaveRecord(HttpSession session, LeaveRecord leaveRecord,String fullName){
         User user= (User) session.getAttribute("user");
-
         ArrayList<Map<String,Object>> list=LeaveRecordService.getLeaveRecord(leaveRecord,fullName);
 
         if(list!=null && list.size()>0){

@@ -112,7 +112,6 @@
                     $("#tbody").html("");
                     console.log(data)
                     var json = data.data
-                    $('#username').html('欢迎 ' + '<font color="red">' + data.fullName + '</font>' + ' 登录米仓 请假记录');
                     for (var i in json) {
                         var tr = $('<tr>');
                         tr.append($('<td>').html(json[i].id))
@@ -206,6 +205,17 @@
                 }
             })
         }
+        //下拉改变时
+        function changeLeaveName(obj) {
+            var leaveName=obj.value;
+            console.log(leaveName)
+            $('.assisManItem').prop('selected', false).trigger("chosen:updated");
+            if (!$.isEmptyObject(leaveName)) {
+                $("#updLeaveName" + " option[value='" + leaveName + "']").prop('selected', true);
+                $("#updLeaveName").chosen();
+                $("#updLeaveName").trigger("chosen:updated");
+            }
+        }
         //校验
         function checkUpdInput() {
             if ($("#updLeaveName").val()== null || $("#updLeaveName").val()== '') {
@@ -259,7 +269,7 @@
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 请假记录</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
@@ -398,7 +408,7 @@
                     <tr>
                         <td style="width:15%">请假人员:</td>
                         <td style="width:60%;">
-                            <select id="updLeaveName" data-placeholder="请选择请假人员" multiple class="chzn-select"></select>
+                            <select id="updLeaveName" data-placeholder="请选择请假人员" multiple class="chzn-select" onchange="changeLeaveName(this)"></select>
                         </td>
                     </tr>
                     <tr>

@@ -43,15 +43,12 @@ public class DutyRecordController {
     @RequestMapping(value = "/getDutyRecord",method = RequestMethod.GET)
     @ResponseBody
     public R getDutyRecord(DutyRecord dutyRecord,Integer userId, HttpSession session)throws ParseException{
-       //获取用户信息
-        User user = (User) session.getAttribute("user");
-
         List<DutyRecord> list=dutyRecordService.getDutyRecord(dutyRecord,userId);
 
         if(list !=null &&list.size()>0) {
-            return R.ok("数据获取成功").put("data", list).put("fullName", user != null ? user.getFullName() : "").put("userId",user.getId());
+            return R.ok("数据获取成功").put("data", list);
         }else {
-            return R.error("数据获取失败").put("fullName", user != null ? user.getFullName() : "").put("userId",user.getId());
+            return R.error("数据获取失败");
         }
     }
 

@@ -2,9 +2,7 @@ package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Monthly;
 import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.bean.Weekly;
 import com.zftx.mcdaily.service.MonthlyService;
-import com.zftx.mcdaily.service.WeeklyService;
 import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -47,16 +43,16 @@ public class MonthlyController {
     @ResponseBody
     public R getWeekly(Monthly monthly, HttpSession session){
         //获取用户信息
-        User user = (User) session.getAttribute("user");
-        if(user!=null && user.getId()!=null&&monthly.getUserId()==null){
+        if(monthly.getUserId()==null||monthly.getUserId()==0){
+            User user=(User) session.getAttribute("sessionUser");
             monthly.setUserId(user.getId());
         }
         ArrayList<HashMap<String, Object>> list =monthlyService.getMonthly(monthly);
 
         if(list !=null &&list.size()>0) {
-            return R.ok("数据获取成功").put("data", list).put("fullName",user.getFullName()).put("userId",monthly.getUserId());
+            return R.ok("数据获取成功").put("data", list);
         }else {
-            return R.error("数据获取失败").put("fullName",user.getFullName()).put("userId",monthly.getUserId());
+            return R.error("数据获取失败");
         }
     }
 

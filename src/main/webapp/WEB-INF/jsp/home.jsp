@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -41,27 +43,27 @@
         </a>
       </li>
       <li>
-        <a  href="http://192.168.1.62:8090" target="_blank">
+        <a  href="/leaveRecord">
           <input id='6' type='checkbox'>
+          <label title="请假记录"><img src=""/></label>
+        </a>
+      </li>
+      <li>
+        <a  href="http://192.168.1.62:8090" target="_blank">
+          <input id='7' type='checkbox'>
           <label title="Confluence"><img src="/images/confluence.png"	/> </label>
         </a>
       </li>
       <li>
         <a  href="http://192.168.1.73:8080" target="_blank">
-          <input id='7' type='checkbox'>
+          <input id='8' type='checkbox'>
           <label title="Jira"><img src="/images/jira.png"	/> </label>
         </a>
       </li>
       <li>
         <a  href="http://192.168.1.70:8888" target="_blank">
-          <input id='8' type='checkbox'>
-          <label title="gitlab"><img src="/images/gitlab.png" /></label>
-        </a>
-      </li>
-      <li>
-        <a  href="/leaveRecord" target="_blank">
           <input id='9' type='checkbox'>
-          <label title="请假记录"><img src="" /></label>
+          <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
       </li>
     </ul>
