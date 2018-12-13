@@ -37,15 +37,15 @@
         </a>
       </li>
       <li>
-        <a  href="/overtime">
+        <a  href="/leaveRecord">
           <input id='5' type='checkbox'>
-          <label title="加班记录"><img src="/images/overtime.png"/></label>
+          <label title="请假记录"><img src="/images/qj.png"/></label>
         </a>
       </li>
       <li>
-        <a  href="/leaveRecord">
+        <a  href="/overtime">
           <input id='6' type='checkbox'>
-          <label title="请假记录"><img src=""/></label>
+          <label title="加班记录"><img src="/images/overtime.png"/></label>
         </a>
       </li>
       <li>

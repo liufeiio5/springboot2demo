@@ -214,14 +214,6 @@
                 layer.msg("值班人员不能为空！");
                 ajax().abort;
             }
-            if ($("#updcustomerServiceName").val().trim()== null || $("#updcustomerServiceName").val().trim() == '') {
-                layer.msg("客服人员不能为空!");
-                ajax.abort;
-            }
-            if ($("#updjiraId").val().trim()== null || $("#updjiraId").val().trim() == '') {
-                layer.msg("jira编号不能为空!");
-                ajax.abort;
-            }
         }
         //校验
         function checkAddInput() {
@@ -235,14 +227,6 @@
             }
             if ($("#addempName").val()== null ||$("#addempName").val()=="") {
                 layer.msg("值班人员不能为空！");
-                ajax.abort;
-            }
-            if ($("#addcustomerServiceName").val().trim()== null || $("#addcustomerServiceName").val().trim() == '') {
-                layer.msg("客服人员不能为空!");
-                ajax.abort;
-            }
-            if ($("#addjiraId").val().trim()== null || $("#addjiraId").val().trim() == '') {
-                layer.msg("jira编号不能为空!");
                 ajax.abort;
             }
         }

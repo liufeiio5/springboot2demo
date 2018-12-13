@@ -1339,34 +1339,34 @@
             })
         }
 
-        //检查月小结 内容 进度 工时 的输入是否为空 是否规范
+        //校验月小结 内容 进度 工时 的输入是否为空 是否规范
         function checkAddInput() {
             var addcontent = $("#addcontent").val().trim();
             var addsingleProgress = $("#addsingleProgress").val().trim();
             var addworkHours = $("#addworkHours").val().trim();
             //校验
-            if(content==null || content==''){
+            if(addcontent==null || addcontent==''){
                 layer.msg("周结内容不能为空")
                 ajax().abort()
             }
-            if(singleProgress==null || singleProgress==''){
+            if(addsingleProgress==null || addsingleProgress==''){
                 layer.msg("进度不能为空")
                 ajax().abort()
             }
             var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
-            if (r.test(singleProgress)) {
+            if (r.test(addsingleProgress)||isNaN(addsingleProgress)) {
                 layer.msg("您输入的进度指数不规范,请重新输入!");
                 ajax.abort;
             }
-            if($('#addworkHours').val().trim()==null || $('#addworkHours').val().trim()==''){
+            if(addworkHours==null || addworkHours==''){
                 layer.msg("工时不能为空")
                 ajax().abort()
             }
-            if (r.test($('#addworkHours').val().trim())) {
+            if (r.test(addworkHours)||isNaN(addworkHours)) {
                 layer.msg("您输入的工时不规范,请重新输入!");
                 ajax.abort;
             }
-            if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
+            if(parseInt(addsingleProgress)>100||parseFloat('100%') < parseFloat(addsingleProgress)){
                 layer.msg("您输入的进度指数不规范")
                 ajax().abort()
             }
@@ -1720,7 +1720,7 @@
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookProgrammeContent"></textarea>
+                            <textarea class="form-control" id="lookProgrammeContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1806,7 +1806,7 @@
                     <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookSuggestContent"></textarea>
+                            <textarea class="form-control" id="lookSuggestContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1892,7 +1892,7 @@
                     <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookRemarkContent"></textarea>
+                            <textarea class="form-control" id="lookRemarkContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>

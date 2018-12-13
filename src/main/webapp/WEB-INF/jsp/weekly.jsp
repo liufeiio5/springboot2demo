@@ -1643,7 +1643,7 @@
                     <tr>
                         <td style="width:12%;">具体方案:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookProgrammeContent"></textarea>
+                            <textarea class="form-control" id="lookProgrammeContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1730,7 +1730,7 @@
                     <tr>
                         <td style="width:12%;">具体建议:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookSuggestContent"></textarea>
+                            <textarea class="form-control" id="lookSuggestContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -1817,7 +1817,7 @@
                     <tr>
                         <td style="width:12%;">具体备注:</td>
                         <td style="width:60%;">
-                            <textarea class="form-control" id="lookRemarkContent"></textarea>
+                            <textarea class="form-control" id="lookRemarkContent" readonly></textarea>
                         </td>
                     </tr>
                     </tbody>

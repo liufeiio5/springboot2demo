@@ -305,8 +305,7 @@
 <input id="userId" placeholder="请输入用户ID" />
 <button id="query" style="margin: 30px;" class="btn btn-primary" onclick="query()"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-<%--<button class="btn btn-danger" onclick="dailyRecord()"><i class="glyphicon glyphicon-plus"></i>&nbsp;日报</button>--%>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username"></span>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red"> ${sessionUser.fullName}</font> 登录米仓 周报</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
