@@ -1273,6 +1273,12 @@
                 $("#weeklyMouth").append(str1);
             }
         })
+
+        function loginOut(){
+            if(confirm("确定要退出吗？")){
+                window.location.href="/logout";
+            }
+        }
     </script>
 </head>
 

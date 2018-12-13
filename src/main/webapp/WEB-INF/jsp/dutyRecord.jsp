@@ -240,7 +240,7 @@
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span><span style="color: blue" onclick="loginOut()">[退出]</span></div>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span><span style="color: blue;" onclick="loginOut()"><img style="width: 30px;height: 30px;" src="/images/tc.png"></span></div>
 <input type="text" id="dutyRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <input  id="dutyRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>

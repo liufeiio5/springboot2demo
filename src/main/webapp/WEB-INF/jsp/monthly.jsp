@@ -1371,6 +1371,11 @@
                 ajax().abort()
             }
         }
+        function loginOut(){
+            if(confirm("确定要退出吗？")){
+                window.location.href="/logout";
+            }
+        }
     </script>
 </head>
 
