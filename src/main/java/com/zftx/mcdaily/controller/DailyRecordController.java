@@ -104,7 +104,7 @@ public class DailyRecordController {
         //不能提前插入第二天或之后的日报
         if (selectDate != null && selectDate != "") {
             if (Integer.parseInt(selectDate) > Integer.parseInt(dateFormat1.format(new Date()))) {
-                return R.error("不能提前创建日报");
+                return R.error("禁止提前创建日报");
             }
         }
 
@@ -206,7 +206,7 @@ public class DailyRecordController {
         }
 
         //插入到日报统一记录表
-        Integer dailyResult = dailyRecordService.addDailyRecord(dailyRecord
+        String dailyResult = dailyRecordService.addDailyRecord(dailyRecord
                 .setUserId(user.getId())
                 .setEvent(eventName)
                 .setProcess(process)
@@ -214,9 +214,11 @@ public class DailyRecordController {
                 .setMethod(method)
                 .setRemark(remarks)
                 .setTime(dateFormat.format(new Date())));
-        if (dailyResult > 0) {
+        if ("success".equals(dailyResult)) {
             return R.ok("添加成功").put("dailyResult", dailyResult);
-        } else {
+        } else if("repeat".equals(dailyResult)){
+            return R.error("重复添加");
+        }else{
             return R.error("添加失败");
         }
     }

@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.DailyRecord;
+import com.zftx.mcdaily.bean.DutyRecord;
 import com.zftx.mcdaily.mapper.DailyRecordMapper;
 import com.zftx.mcdaily.service.DailyRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +38,24 @@ public class DailyRecordServiceImpl implements DailyRecordService {
      * @param dailyRecord
      * @return
      */
-    public Integer addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
+    public String addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
                 append(Thread.currentThread().getStackTrace()[1].getMethodName()).append("&&参数：DailyRecord{},");
         log.info(info.toString(),dailyRecord.toString());
-        return dailyRecordMapper.addDailyRecord(dailyRecord);
+
+        List<DailyRecord> list=dailyRecordMapper.getDailyRecord(new DailyRecord().setDate(dailyRecord.getDate()));
+        if(list.size()>0){
+            return "repeat";
+        }else{
+            //先添加
+            Integer i=dailyRecordMapper.addDailyRecord(dailyRecord);
+            if(i>0){
+                return "success";
+            }else{
+                return "fails";
+            }
+        }
     }
 
     /**

@@ -31,7 +31,7 @@ public interface DailyRecordService {
      * @param dailyRecord
      * @return
      */
-    public Integer addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
+    public String addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord);
 
 
     /**

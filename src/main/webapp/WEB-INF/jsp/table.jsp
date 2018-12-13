@@ -66,6 +66,7 @@
                         selectDate: selectDate
                     },
                     success: function (data) {
+                        console.log(data)
                         if (data.code == 200) {
                             $("#event").val('');
                             $("#process").val('');
@@ -79,8 +80,10 @@
                             setTimeout(function wlh() {
                                 window.location.href = "/table"
                             }, 500)
-                        } else if (data.message = "不能提前创建日报") {
-                            layer.msg("严禁提前创建日报");
+                        }else if (data.message == "禁止提前创建日报") {
+                            layer.msg("禁止提前创建日报");
+                        } else if (data.message == "重复添加") {
+                            layer.msg("禁止日报重复添加");
                         } else {
                             layer.msg("添加失败");
                         }
