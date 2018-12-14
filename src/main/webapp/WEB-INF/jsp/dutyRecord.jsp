@@ -240,7 +240,7 @@
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span><span style="color: blue;" onclick="loginOut()"><img style="width: 30px;height: 30px;" src="/images/tc.png"></span></div>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">值班记录</span></div>
 <input type="text" id="dutyRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <input  id="dutyRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
@@ -248,6 +248,7 @@
 </button>
 <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 值班记录</span>
 <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
+<a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead style="background-color: #f4f4f4;">
