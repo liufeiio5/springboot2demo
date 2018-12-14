@@ -44,9 +44,8 @@ public class LoginController {
             return "redirect:/login";
         return "home";
     }
-
     /**
-     * logout
+     * 退出登录 注销
      * @param session
      * @return
      */

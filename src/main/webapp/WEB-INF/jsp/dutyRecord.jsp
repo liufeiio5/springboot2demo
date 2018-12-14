@@ -232,7 +232,7 @@
         }
 
         function loginOut(){
-            if(confirm("确定要退出吗？")){
+            if(confirm("确定要退出登录吗？")){
                 window.location.href="/logout";
             }
         }
