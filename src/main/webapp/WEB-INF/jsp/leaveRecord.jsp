@@ -26,6 +26,9 @@
             //请假人员 下拉
             $("#addLeaveName").html("")
             $("#updLeaveName").html("")
+            var strs='<option class="assisManItem" value="">'+"请选择"+'</option>'
+            $("#addLeaveName").append(strs)
+            $("#updLeaveName").append(strs)
             $.ajax({
                 url: '/getUser',
                 dataType: 'json',
@@ -205,17 +208,6 @@
                 }
             })
         }
-        //下拉改变时
-        function changeLeaveName(obj) {
-            var leaveName=obj.value;
-            console.log(leaveName)
-            $('.assisManItem').prop('selected', false).trigger("chosen:updated");
-            if (!$.isEmptyObject(leaveName)) {
-                $("#updLeaveName" + " option[value='" + leaveName + "']").prop('selected', true);
-                $("#updLeaveName").chosen();
-                $("#updLeaveName").trigger("chosen:updated");
-            }
-        }
         //校验
         function checkUpdInput() {
             if ($("#updLeaveName").val()== null || $("#updLeaveName").val()== '') {
@@ -315,7 +307,7 @@
                     <tr>
                         <td style="width:12%;">请假人员:</td>
                         <td style="width:60%;">
-                            <select id="addLeaveName" data-placeholder="请选择请假人员" multiple class="chzn-select"></select>
+                           <select id="addLeaveName" data-placeholder="请选择请假人员"  class="chosen-select" tabindex="-1"  style="display: none;"></select>
                         </td>
                     </tr>
                     <tr>
@@ -407,25 +399,25 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td style="width:15%;">请假Id:</td>
+                        <td style="width:12%;">请假Id:</td>
                         <td>
                             <input  id="updLeaveId"  class="form-control date form_datetime" readonly/>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:15%">请假人员:</td>
+                        <td style="width:12%">请假人员:</td>
                         <td style="width:60%;">
-                            <select id="updLeaveName" data-placeholder="请选择请假人员" multiple class="chzn-select" onchange="changeLeaveName(this)"></select>
+                            <select id="updLeaveName" data-placeholder="请选择请假人员"  class="chosen-select" tabindex="-1"  style="display: none;"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:15%;">请假原因:</td>
+                        <td style="width:12%;">请假原因:</td>
                         <td style="width:60%;">
                             <textarea class="form-control" id="updLeaveReason"></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width:15%;">请假时长:</td>
+                        <td style="width:12%;">请假时长:</td>
                         <td style="width:60%;">
                             <input class="form-control" id="updleaveDuration" placeholder="限定为数字"></input>
                         </td>

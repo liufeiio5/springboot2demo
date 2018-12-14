@@ -18,6 +18,9 @@
                 elem: '#startDate'
             });
             laydate.render({
+                elem: '#endDate'
+            });
+            laydate.render({
                 elem: '#endTime',
                 type: 'datetime'
             });

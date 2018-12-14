@@ -111,7 +111,7 @@
                 var day = parseInt(day);
 //               console.log("年" + year + "月" + month + "日" + day);
                 if (day < 26) {
-                    day = day + 4;
+                    day = day + 5;
                 } else {
                     switch (month) {
                         case 1:
@@ -120,22 +120,22 @@
                         case 7:
                         case 8:
                         case 10:
-                            day = day + 4 - 31;
+                            day = day + 5 - 31;
                             month = month + 1;
                             break;
                         case 4:
                         case 6:
                         case 9:
                         case 11:
-                            day = day + 4 - 30;
+                            day = day + 5 - 30;
                             month = month + 1;
                             break;
                         case 2:
-                            day = day + 4 - 29;
+                            day = day + 5 - 29;
                             month = month + 1;
                             break;
                         case 12:
-                            day = day + 4 - 31;
+                            day = day + 5 - 31;
                             year = year + 1;
                             month = 1;
                     }
@@ -143,10 +143,6 @@
                 //				console.log("年" + year + "月" + month + "日" + day);
                 mouth=month<10?'0'+month:month
                 day=day<10?'0'+day:day
-                if(day=="00"){
-                    day="30"
-                    mouth=parseInt(mouth)-1
-                }
                 var autonumber = year + "-" + mouth + "-" + day;
                 $("#addendDate").val(autonumber);
 

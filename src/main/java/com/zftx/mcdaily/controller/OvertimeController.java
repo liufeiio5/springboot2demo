@@ -26,30 +26,36 @@ public class OvertimeController {
     private OvertimeService overtimeService;
 
     @RequestMapping(value = "/overtime")
-    public String overtime(){
+    public String overtime() {
         return "overtime";
     }
 
-    @RequestMapping(value = "/getOvertime",method = RequestMethod.GET)
+    @RequestMapping(value = "/getOvertime", method = RequestMethod.GET)
     @ResponseBody
-    public R getOvertime(HttpSession session,Integer startTime,Integer endTime,Integer userId){
-        User user =(User)session.getAttribute("sessionUser");
-        if (user != null&& user.getId() != null && userId==null)
-            userId = user.getId();
-        ArrayList<HashMap<String,Object>> list = overtimeService.getOvertime(userId,null,null);
-        if(startTime!=null&&endTime!=null){
-            if(startTime>endTime){
-                return R.error("结束日期不能比开始日期早").put("fullName",user != null ? user.getFullName():"");
-            }else{
-                list = overtimeService.getOvertime(userId,startTime.toString(),endTime.toString());
-            }
+    public R getOvertime(HttpSession session, Integer startTime, Integer endTime, Integer userId) {
+        if(userId==null){
+            User user=(User)session.getAttribute("sessionUser");
+            userId=user.getId();
         }
-
-        if(list !=null &&list.size()>0)
-            return R.ok("数据获取成功").put("data",list).put("fullName",user != null ? user.getFullName():"");
-        else
-            return R.error("获取数据失败").put("fullName",user != null ? user.getFullName():"");
+        ArrayList<HashMap<String, Object>> list;
+        if (startTime != null && endTime != null) {
+            if (startTime > endTime) {
+                return R.error("结束日期不能比开始日期早");
+            } else {
+                list = overtimeService.getOvertime(userId, startTime.toString(), endTime.toString());
+            }
+        }else if(startTime != null &&endTime==null){
+            list = overtimeService.getOvertime(userId, startTime.toString(),null);
+        }else{
+            list = overtimeService.getOvertime(userId,null,null);
+        }
+            if (list != null && list.size() > 0) {
+                return R.ok("数据获取成功").put("data", list);
+            } else {
+                return R.error("获取数据失败");
+            }
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/delOvertime")
