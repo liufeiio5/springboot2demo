@@ -257,6 +257,20 @@
                 window.location.href="/logout";
             }
         }
+        function addClose() {
+            $("#addDate").val("")
+            $('.assisManItem').prop('selected', false).trigger("chosen:updated");
+            $("#addLeaveReason").val("")
+            $("#addLeaveDuration").val("")
+        }
+
+        document.onkeyup = function (e){
+            e = e || window.event;
+            var code = e.which || e.keyCode;
+            if (code == 27){
+                addClose()
+            }
+        }
     </script>
 </head>
 
@@ -291,7 +305,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true" onclick="addClose()">×</span><span
                         class="sr-only">Close</span></button>
                 <h4 class="modal-title">请假记录 添加</h4>
             </div>
@@ -332,7 +346,7 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                    <button onclick="addClose()" data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addLeaveRecord" class="btn btn-primary">提交</button>
                 </div>
             </div>

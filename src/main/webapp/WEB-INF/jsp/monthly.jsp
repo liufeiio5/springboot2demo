@@ -475,6 +475,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addSummary").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
@@ -520,6 +521,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addDifficulty").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
@@ -563,6 +565,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addProgramme").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
@@ -606,6 +609,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addSuggest").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)
@@ -649,6 +653,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addRemark").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/monthly"
                                     }, 500)

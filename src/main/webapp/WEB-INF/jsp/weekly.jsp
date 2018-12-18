@@ -430,13 +430,13 @@
                                 assismans: assisMan,
                                 sdate:$(this).attr("sdate")
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addSummary").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
@@ -476,6 +476,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addDifficulty").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
@@ -513,6 +514,7 @@
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addProgramme").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
@@ -544,13 +546,13 @@
                                 suggestContent: addSuggestContent,
                                 sdate:$(this).attr('sdate')
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addSuggest").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
@@ -582,13 +584,13 @@
                                 remarkContent: addRemarkContent,
                                 sdate:$(this).attr('sdate')
                             },
-                            async:false,
                             success: function (data) {
                                 if (data.message == "添加成功") {
                                     layer.msg('添加成功!', {
                                         icon: 1,
                                         time: 1000
                                     });
+                                    $("#addRemark").unbind('click')
                                     setTimeout(function wlh() {
                                         window.location.href = "/weekly"
                                     }, 500)
