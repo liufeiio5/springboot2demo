@@ -40,7 +40,7 @@ public class LoginController {
     @RequestMapping(value = "/home")
     public String home(HttpSession session)
     {
-        if (session.getAttribute("user") == null)
+        if (session.getAttribute("sessionUser") == null)
             return "redirect:/login";
         return "home";
     }
