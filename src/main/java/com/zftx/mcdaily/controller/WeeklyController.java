@@ -109,7 +109,7 @@ public class WeeklyController {
     public R addDaily(Weekly weekly,HttpSession session){
         if(weekly!=null) {
             //获取用户信息
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("sessionUser");
             if(user!=null && user.getId()!=null&&weekly.getUserId()==null){
                 weekly.setUserId(user.getId());
             }

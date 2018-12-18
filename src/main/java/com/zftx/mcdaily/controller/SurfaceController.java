@@ -27,7 +27,7 @@ public class SurfaceController {
     @RequestMapping(value = "/getSurface",method = RequestMethod.GET)
     @ResponseBody
     public R getSurface(HttpSession session,Surface surface){
-        User user = (User)session.getAttribute("user");
+        User user = (User)session.getAttribute("sessionUser");
         List<Surface> surfaceList = surfaceService.findAllSurFace(surface.setCreateUser(user.getId()));
         if(surfaceList.size()>0&&surface != null){
             return R.ok("数据获取成功").put("data",surfaceList);
@@ -44,7 +44,7 @@ public class SurfaceController {
     @RequestMapping(value = "/addSurface",method = RequestMethod.POST)
     @ResponseBody
     public R addSurface(HttpSession session, Surface surface){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         surface.setCreateUser(user.getId());
         Integer result = surfaceService.addSurface(surface);
         if(result>0){

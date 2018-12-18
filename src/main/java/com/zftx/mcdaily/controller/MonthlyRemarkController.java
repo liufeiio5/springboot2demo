@@ -3,7 +3,6 @@ package com.zftx.mcdaily.controller;
 import com.zftx.mcdaily.bean.MonthlyRemark;
 import com.zftx.mcdaily.service.MonthlyRemarkService;
 import com.zftx.mcdaily.util.R;
-import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +41,6 @@ public class MonthlyRemarkController {
     /**
      * 添加 月 备注
      * @param monthlyRemark
-     * @param year
-     * @param month
      * @return
      */
     @RequestMapping("/addMonthlyRemark")
@@ -64,8 +61,6 @@ public class MonthlyRemarkController {
     /**
      * 修改 月 备注
      * @param monthlyRemark
-     * @param year
-     * @param month
      * @return
      */
     @RequestMapping("/updateMonthlyRemark" )

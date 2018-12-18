@@ -257,11 +257,114 @@
                 window.location.href="/logout";
             }
         }
+        function addClose() {
+            $("#addDate").val("")
+            $('.assisManItem').prop('selected', false).trigger("chosen:updated");
+            $("#addLeaveReason").val("")
+            $("#addLeaveDuration").val("")
+        }
+
+        document.onkeyup = function (e){
+            e = e || window.event;
+            var code = e.which || e.keyCode;
+            if (code == 27){
+                addClose()
+            }
+        }
+
+        //爱心气泡，听我号令
+        onload = function() {
+            var click_cnt = 0;
+            var $html = document.getElementsByTagName("html")[0];
+            var $body = document.getElementsByTagName("body")[0];
+            $html.onclick = function(e) {
+                var $elem = document.createElement("b");
+                if(click_cnt%7==0){
+                    $elem.style.color="#00beff";
+                }else if(click_cnt%7==1){
+                    $elem.style.color="#dff0d8";
+                }else if(click_cnt%7==2){
+                    $elem.style.color="#ebcccc"
+                }else if(click_cnt%7==3){
+                    $elem.style.color="#7fff00";
+                }else if(click_cnt%7==5){
+                    $elem.style.color="#ffA500";
+                }else{
+                    $elem.style.color="#E94F06";
+                }
+                if(click_cnt==0){
+                    $elem.style.color="#E94F06";
+                }
+                $elem.style.zIndex = 9999;
+                $elem.style.position = "absolute";
+                $elem.style.select = "none";
+                var x = e.pageX;
+                var y = e.pageY;
+                $elem.style.left = (x - 10) + "px";
+                $elem.style.top = (y - 20) + "px";
+                clearInterval(anim);
+                switch (++click_cnt) {
+                    case 10:
+                        $elem.innerText = "OωO";
+                        break;
+                    case 20:
+                        $elem.innerText = "(๑•́ ∀ •̀๑)";
+                        break;
+                    case 30:
+                        $elem.innerText = "(๑•́ ₃ •̀๑)";
+                        break;
+                    case 40:
+                        $elem.innerText = "(๑•̀_•́๑)";
+                        break;
+                    case 50:
+                        $elem.innerText = "（￣へ￣）";
+                        break;
+                    case 60:
+                        $elem.innerText = "(╯°口°)╯(┴—┴";
+                        break;
+                    case 70:
+                        $elem.innerText = "૮( ᵒ̌皿ᵒ̌ )ა";
+                        break;
+                    case 80:
+                        $elem.innerText = "╮(｡>口<｡)╭";
+                        break;
+                    case 90:
+                        $elem.innerText = "( ง ᵒ̌皿ᵒ̌)ง⁼³₌₃";
+                        break;
+                    case 100:
+                    case 101:
+                    case 102:
+                    case 103:
+                    case 104:
+                    case 105:
+                        $elem.innerText = "(ꐦ°᷄д°᷅)";
+                        break;
+                    default:
+                        $elem.innerText = "❤";
+                        break;
+                }
+                $elem.style.fontSize = Math.random() * 10 + 8 + "px";
+                var increase = 0;
+                var anim;
+                setTimeout(function() {
+                    anim = setInterval(function() {
+                        if (++increase == 150) {
+                            clearInterval(anim);
+                            $body.removeChild($elem);
+                        }
+                        $elem.style.top = y - 20 - increase + "px";
+                        $elem.style.opacity = (150 - increase) / 120;
+                    }, 8);
+                }, 70);
+                $body.appendChild($elem);
+            };
+        };
+
     </script>
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">请假记录</span></div>
+<div style="height: 10px;margin-left:20px; "><b>当前操作:</b><span style="color: red">请假记录</span></div>
 <input type="text" id="leaveRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <input  id="leaveRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
@@ -291,7 +394,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true" onclick="addClose()">×</span><span
                         class="sr-only">Close</span></button>
                 <h4 class="modal-title">请假记录 添加</h4>
             </div>
@@ -332,7 +435,7 @@
                     </tbody>
                 </table>
                 <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                    <button onclick="addClose()" data-dismiss="modal" class="btn btn-default">关闭</button>
                     <button id="addLeaveRecord" class="btn btn-primary">提交</button>
                 </div>
             </div>

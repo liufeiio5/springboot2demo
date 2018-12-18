@@ -27,7 +27,7 @@ public class MonthlyController {
 
     @RequestMapping(value = "/monthly")
     public String table(HttpSession session){
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
         }
         return "monthly";
@@ -82,7 +82,7 @@ public class MonthlyController {
     public R addmonthly(Monthly monthly,HttpSession session){
         if(monthly!=null){
             //获取用户信息
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("sessionUser");
             if (user != null && user.getId() != null && monthly.getUserId() == null) {
                 monthly.setUserId(user.getId());
             }

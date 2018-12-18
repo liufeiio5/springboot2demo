@@ -2,21 +2,16 @@ package com.zftx.mcdaily.controller;
 
 import com.zftx.mcdaily.bean.Summary;
 import com.zftx.mcdaily.bean.User;
-import com.zftx.mcdaily.bean.Weekly;
 import com.zftx.mcdaily.service.SummaryService;
-import com.zftx.mcdaily.service.WeeklyService;
 import com.zftx.mcdaily.util.R;
-import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 /**
  * 周小结
@@ -77,7 +72,7 @@ public class SummaryController {
         if(summary!=null) {
             summary.setAssisMan(assismans);
             //获取用户信息
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("sessionUser");
 
             String str = summaryService.updateSummary(summary);
             if ("success".equals(str)) {

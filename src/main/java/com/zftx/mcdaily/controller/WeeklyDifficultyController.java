@@ -3,7 +3,6 @@ package com.zftx.mcdaily.controller;
 import com.zftx.mcdaily.bean.WeeklyDifficulty;
 import com.zftx.mcdaily.service.WeeklyDifficultyService;
 import com.zftx.mcdaily.util.R;
-import com.zftx.mcdaily.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +40,6 @@ public class WeeklyDifficultyController {
     /**
      * 添加 周 困难
      * @param weeklyDifficulty
-     * @param sdate
      * @return
      */
     @RequestMapping(value = "/addWeeklyDifficulty")

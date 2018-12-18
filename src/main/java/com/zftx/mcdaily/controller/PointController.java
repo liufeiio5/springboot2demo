@@ -22,7 +22,7 @@ public class PointController {
     @RequestMapping(value = "/getPoint",method = RequestMethod.GET)
     @ResponseBody
     public R getPoint(HttpSession session,Point point){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         point.setCreateUser(user.getId());
         System.out.println("用户ID"+user.getId());
         List<Point> pointList = pointService.findPointAll(point);
@@ -41,7 +41,7 @@ public class PointController {
     @RequestMapping(value = "/addPoint",method = RequestMethod.POST)
     @ResponseBody
     public R addPoint(HttpSession session,Point point){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         point.setCreateUser(user.getId());
         Integer result = pointService.addPoint(point);
         if(result>0){
@@ -59,7 +59,7 @@ public class PointController {
     @RequestMapping(value = "/updatePoint",method = RequestMethod.PUT)
     @ResponseBody
     public R updatePoint(HttpSession session,Point point){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("sessionUser");
         point.setCreateUser(user.getId());
         Integer result = pointService.updatePoint(point);
         if(result>0){
