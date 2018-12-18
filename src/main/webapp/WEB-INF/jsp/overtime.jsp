@@ -304,7 +304,22 @@
             var $body = document.getElementsByTagName("body")[0];
             $html.onclick = function(e) {
                 var $elem = document.createElement("b");
-                $elem.style.color = "#E94F06";
+                if(click_cnt%7==0){
+                    $elem.style.color="#00beff";
+                }else if(click_cnt%7==1){
+                    $elem.style.color="#dff0d8";
+                }else if(click_cnt%7==2){
+                    $elem.style.color="#ebcccc"
+                }else if(click_cnt%7==3){
+                    $elem.style.color="#7fff00";
+                }else if(click_cnt%7==5){
+                    $elem.style.color="#ffA500";
+                }else{
+                    $elem.style.color="#E94F06";
+                }
+                if(click_cnt==0){
+                    $elem.style.color="#E94F06";
+                }
                 $elem.style.zIndex = 9999;
                 $elem.style.position = "absolute";
                 $elem.style.select = "none";

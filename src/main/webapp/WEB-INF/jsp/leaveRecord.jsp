@@ -279,7 +279,22 @@
             var $body = document.getElementsByTagName("body")[0];
             $html.onclick = function(e) {
                 var $elem = document.createElement("b");
-                $elem.style.color = "#E94F06";
+                if(click_cnt%7==0){
+                    $elem.style.color="#00beff";
+                }else if(click_cnt%7==1){
+                    $elem.style.color="#dff0d8";
+                }else if(click_cnt%7==2){
+                    $elem.style.color="#ebcccc"
+                }else if(click_cnt%7==3){
+                    $elem.style.color="#7fff00";
+                }else if(click_cnt%7==5){
+                    $elem.style.color="#ffA500";
+                }else{
+                    $elem.style.color="#E94F06";
+                }
+                if(click_cnt==0){
+                    $elem.style.color="#E94F06";
+                }
                 $elem.style.zIndex = 9999;
                 $elem.style.position = "absolute";
                 $elem.style.select = "none";
@@ -349,7 +364,7 @@
 </head>
 
 <body>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">请假记录</span></div>
+<div style="height: 10px;margin-left:20px; "><b>当前操作:</b><span style="color: red">请假记录</span></div>
 <input type="text" id="leaveRecoredDate" name="user_date" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请选择日期或输入Id"/>
 <input  id="leaveRecoredNameOrId" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入用户Id或用户姓名"/>
 <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
