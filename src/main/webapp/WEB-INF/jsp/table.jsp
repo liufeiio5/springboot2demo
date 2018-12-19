@@ -284,7 +284,6 @@
                 url: "getType",
                 dataType: 'json',
                 data: {islive: 1},
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json)
@@ -302,7 +301,6 @@
                 data: {
                     islive: 1
                 },
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json)
@@ -337,7 +335,6 @@
                 data: {
                     islive: 1
                 },
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json) {
@@ -354,7 +351,6 @@
                 url: "getType",
                 dataType: 'json',
                 data: {islive: 1},
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json)
@@ -374,7 +370,6 @@
                 data: {
                     islive: 1
                 },
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json)
@@ -409,7 +404,6 @@
                 data: {
                     islive: 1
                 },
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     for (var i in json) {
@@ -446,7 +440,6 @@
                 url: "getType",
                 dataType: 'json',
                 data: {islive: 1},
-                async: false,
                 success: function (data) {
                     var str = $('#setType')
                     var json = data.data;
@@ -472,7 +465,6 @@
                 url: "getSurface",
                 dataType: 'json',
                 data: {islive: 1},
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     var str;
@@ -526,7 +518,6 @@
                 data: {
                     islive: 1
                 },
-                async: false,
                 success: function (data) {
                     var json = data.data;
                     var str;
