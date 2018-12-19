@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zftx.mcdaily.mapper.TeaRepositoryMapper">
+    <resultMap id="teaRepository" type="com.zftx.mcdaily.bean.TeaRepository">
+        <id column="id" property="id"/>
+        <result column="item_name" property="tName"/>
+        <result column="item_img" property="tImg"/>
+        <result column="standard" property="standard"/>
+        <result column="price" property="price"/>
+        <result column="note" property="note"/>
+    </resultMap>
+    <sql id="columnAll">id,item_name,item_img,standard,price,note</sql>
+    <!--查询 下午茶库存-->
+    <select id="getTeaRepository" resultType="java.util.Map">
+        select
+        <include refid="columnAll"/>
+        from tea_repository
+        <if test="teaRepository!=null">
+            <where>
+                <if test="teaRepository.id!=null">
+                    id=#{teaRepository.id}
+                </if>
+                <if test="teaRepository.tName!=null">
+                    and item_name=#{teaRepository.tName}
+                </if>
+                <if test="teaRepository.standard!=null">
+                    and item_img=#{teaRepository.standard}
+                </if>
+                <if test="teaRepository.tImg!=null">
+                    and standard=#{teaRepository.tImg}
+                </if>
+                <if test="teaRepository.price!=null">
+                    and price=#{teaRepository.price}
+                </if>
+                <if test="teaRepository.note!=null">
+                    and note=#{teaRepository.note}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--入库  添加 下午茶库存 -->
+    <insert id="addTeaRepository" keyProperty="teaRepository.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.TeaRepository">
+        INSERT INTO tea_repository
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaRepository !=null">
+                <if test="teaRepository.tName!=null">
+                    item_name,
+                </if>
+                <if test="teaRepository.tImg!=null">
+                    item_img,
+                </if>
+                <if test="teaRepository.standard!=null">
+                    standard,
+                </if>
+                <if test="teaRepository.price!=null">
+                    price,
+                </if>
+                <if test="teaRepository.note!=null">
+                    note,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="teaRepository !=null">
+                <if test="teaRepository.tName!=null">
+                    #{teaRepository.tName},
+                </if>
+                <if test="teaRepository.tImg!=null">
+                    #{teaRepository.tImg},
+                </if>
+                <if test="teaRepository.standard!=null">
+                    #{teaRepository.standard},
+                </if>
+                <if test="teaRepository.price!=null ">
+                    #{teaRepository.price},
+                </if>
+                <if test="teaRepository.note!=null ">
+                    #{teaRepository.note},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 下午茶库存-->
+    <update id="updateTeaRepository" parameterType="com.zftx.mcdaily.bean.TeaRepository">
+        UPDATE tea_repository
+        <set>
+            <if test="teaRepository.tName!=null">
+                item_name=#{teaRepository.tName},
+            </if>
+            <if test="teaRepository.tImg!=null">
+                item_img=#{teaRepository.tImg},
+            </if>
+            <if test="teaRepository.standard!=null ">
+                standard=#{teaRepository.standard},
+            </if>
+            <if test="teaRepository.price!=null">
+                price=#{teaRepository.price},
+            </if>
+            <if test="teaRepository.note!=null">
+                note=#{teaRepository.note},
+            </if>
+        </set>
+        <where>
+            <if test="teaRepository.id!=null and teaRepository.id!=0">
+                id=#{teaRepository.id}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delTeaRepository" parameterType="com.zftx.mcdaily.bean.TeaRepository">
+        delete from tea_repository where  id=#{teaRepository.id}
+    </delete>
+</mapper>
