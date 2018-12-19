@@ -11,6 +11,6 @@
     <title>欢迎页</title>
 </head>
 <body>
-<h1>登录成功!</h1>
+<jsp:forward page="login.jsp"></jsp:forward>
 </body>
 </html>
