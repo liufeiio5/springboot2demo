@@ -6,13 +6,14 @@
 <mapper namespace="com.zftx.mcdaily.mapper.TeaRepositoryMapper">
     <resultMap id="teaRepository" type="com.zftx.mcdaily.bean.TeaRepository">
         <id column="id" property="id"/>
+        <result column="cat_name" property="catName"/>
         <result column="item_name" property="tName"/>
         <result column="item_img" property="tImg"/>
         <result column="standard" property="standard"/>
         <result column="price" property="price"/>
         <result column="note" property="note"/>
     </resultMap>
-    <sql id="columnAll">id,item_name,item_img,standard,price,note</sql>
+    <sql id="columnAll">id,cat_name catName,item_name tName,item_img tImg,standard,price,note</sql>
     <!--查询 下午茶库存-->
     <select id="getTeaRepository" resultType="java.util.Map">
         select
@@ -22,6 +23,9 @@
             <where>
                 <if test="teaRepository.id!=null">
                     id=#{teaRepository.id}
+                </if>
+                <if test="teaRepository.catName!=null">
+                    and cat_name=#{teaRepository.catName}
                 </if>
                 <if test="teaRepository.tName!=null">
                     and item_name=#{teaRepository.tName}
@@ -47,6 +51,9 @@
         INSERT INTO tea_repository
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="teaRepository !=null">
+                <if test="teaRepository.catName!=null">
+                    cat_name,
+                </if>
                 <if test="teaRepository.tName!=null">
                     item_name,
                 </if>
@@ -66,6 +73,9 @@
         </trim>
         <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
             <if test="teaRepository !=null">
+                <if test="teaRepository.catName!=null">
+                     #{teaRepository.catName},
+                </if>
                 <if test="teaRepository.tName!=null">
                     #{teaRepository.tName},
                 </if>
@@ -89,6 +99,9 @@
     <update id="updateTeaRepository" parameterType="com.zftx.mcdaily.bean.TeaRepository">
         UPDATE tea_repository
         <set>
+            <if test="teaRepository.catName!=null">
+                cat_name=#{teaRepository.catName},
+            </if>
             <if test="teaRepository.tName!=null">
                 item_name=#{teaRepository.tName},
             </if>

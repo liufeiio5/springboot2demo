@@ -24,7 +24,7 @@ public class DutyRecordController {
     private DutyRecordService dutyRecordService;
 
     @RequestMapping(value = "/dutyRecord")
-    public String table(HttpSession session){
+    public String dutyRecord(HttpSession session){
         if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
         }

@@ -1,16 +1,13 @@
 package com.zftx.mcdaily.util;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.DateFormat;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -202,4 +199,26 @@ public class Tool
         day=Integer.parseInt(day)<10?'0'+day:day;
         return day;
     }
+
+   /* *//**
+     * 截取文件的格式后缀
+     * @param srcInputStream
+     * @return
+     * @throws IOException
+     *//*
+    public static List<String> getImageFormat(InputStream srcInputStream) throws IOException {
+        List<String> formatNameList = new ArrayList<>();
+
+        // 获取ImageInputStream 对象
+        ImageInputStream imageInputStream = ImageIO.createImageInputStream(srcInputStream);
+        // 获取ImageReader对象的迭代器
+        Iterator<ImageReader> iterator = ImageIO.getImageReaders(imageInputStream);
+
+        // 如果能获得ImageReader对象则说明流中含有图片文件
+        while(iterator.hasNext()) {
+            // ImageReader对象的getFormatName()方法可以获得图片格式
+            formatNameList.add(iterator.next().getFormatName());
+        }
+        return formatNameList;
+    }*/
 }
