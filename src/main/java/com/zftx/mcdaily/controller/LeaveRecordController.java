@@ -31,13 +31,13 @@ public class LeaveRecordController {
     @RequestMapping(value = "/getLeaveRecord",method = RequestMethod.GET)
     @ResponseBody
     public R getLeaveRecord(HttpSession session, LeaveRecord leaveRecord,String fullName){
-        User user= (User) session.getAttribute("user");
+        User user= (User) session.getAttribute("sessionUser");
         ArrayList<Map<String,Object>> list=LeaveRecordService.getLeaveRecord(leaveRecord,fullName);
 
         if(list!=null && list.size()>0){
-            return R.ok("获取数据成功！！").put("data",list).put("fullName", user != null ? user.getFullName() : "").put("userId",user.getId());
+            return R.ok("获取数据成功！！").put("data",list);
         }else{
-            return R.error("获取数据失败！！").put("fullName", user != null ? user.getFullName() : "").put("userId",user.getId());
+            return R.error("获取数据失败！！");
         }
 
     }

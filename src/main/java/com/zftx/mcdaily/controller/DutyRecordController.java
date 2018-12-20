@@ -25,7 +25,7 @@ public class DutyRecordController {
 
     @RequestMapping(value = "/dutyRecord")
     public String table(HttpSession session){
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
         }
         return "dutyRecord";
@@ -89,7 +89,7 @@ public class DutyRecordController {
     @ResponseBody
     public R updateDutyRecord(DutyRecord dutyRecord,HttpSession session){
         if(dutyRecord!=null) {
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("sessionUser");
 
             String str = dutyRecordService.updateDutyRecord(dutyRecord);
             if ("success".equals(str)) {
