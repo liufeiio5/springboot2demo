@@ -4,12 +4,12 @@ spring:
     username: root
     password: mysql
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.63:3306/daily?characterEncoding=utf-8
+    url: jdbc:mysql://192.168.101.29:3306/daily?characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
+    initialSize: 10
+    minIdle: 10
+    maxActive: 30
     maxWait: 60000
     timeBetweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 300000
