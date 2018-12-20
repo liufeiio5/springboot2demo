@@ -6,6 +6,7 @@ import com.zftx.mcdaily.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -17,12 +18,16 @@ public class TeaRepositoryController {
     @Autowired
     private TeaRepositoryService teaRepositoryService;
 
+    @RequestMapping(value ="/teaRepository")
+    public String  teaRepository(){
+        return "teaRepository";
+    }
     /**
      * 查询 茶库茶点
      * @param teaRepository
      * @return
      */
-    @RequestMapping(value = "/getTeaRepository")
+    @RequestMapping(value = "/getTeaRepository",method = RequestMethod.GET)
     @ResponseBody
     public R getLine(TeaRepository teaRepository){
         ArrayList<Map<String,Object>> list = teaRepositoryService.getTeaRepository(teaRepository);
