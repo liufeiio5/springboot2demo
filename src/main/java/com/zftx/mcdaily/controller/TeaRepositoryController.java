@@ -120,42 +120,44 @@ public class TeaRepositoryController {
         String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
         ArrayList<String> urls = new ArrayList<String>();
         List<MultipartFile> files = mrequest.getFiles("file");
-
-        String tImg="";
-        for (MultipartFile file : files) {
-            tImg="/upload/tea_images/"+tName.trim()+file.getOriginalFilename().substring(file.getOriginalFilename().length()-4, file.getOriginalFilename().length());
-            File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/"+tImg);
-            System.out.println("qqqqqqqqqqqqqqqqqqqqqqq"+tImg);
-            urls.add(dir + file.getOriginalFilename());
-            //如果文件夹不存在则创建
-            if (!f.getParentFile().exists())
-                f.getParentFile().mkdirs();
-            //创建文件
-            try {
-                file.transferTo(f);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return R.error("上传失败");
+        TeaRepository teaRepository = new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
+        System.out.println("qqqqqqqqqqqqqqqqqqqqqqq" + files);
+        if (!files.isEmpty()) {
+            String tImg = "";
+            for (MultipartFile file : files) {
+                tImg = "/upload/tea_images/" + tName.trim() + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4, file.getOriginalFilename().length());
+                File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/" + tImg);
+                urls.add(dir + file.getOriginalFilename());
+                //如果文件夹不存在则创建
+                if (!f.getParentFile().exists())
+                    f.getParentFile().mkdirs();
+                //创建文件
+                try {
+                    file.transferTo(f);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return R.error("上传失败");
+                }
             }
-        }
-        TeaRepository teaRepository=new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setTImg(tImg.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
-        if (teaRepository != null) {
-            String str = teaRepositoryService.updateTeaRepository(teaRepository);
-            if ("success".equals(str)) {
-                return R.ok("修改成功");
-            } else if ("repeat".equals(str)) {
-                return R.error("该茶点已存在");
+            if (teaRepository.setTImg(tImg.trim()) != null) {
+                String str = teaRepositoryService.updateTeaRepository(teaRepository);
+                if ("success".equals(str)) {
+                    return R.ok("修改成功");
+                } else if ("repeat".equals(str)) {
+                    return R.error("该茶点已存在");
+                } else {
+                    return R.error("修改失败");
+                }
             } else {
-                return R.error("修改失败");
+                return R.error("参数有误!");
             }
-        } else {
-            return R.error("参数有误!");
+        }else{
+            return null;
         }
     }
 
     /**
      * 删除 茶点
-     *
      * @param teaRepository
      * @return
      */

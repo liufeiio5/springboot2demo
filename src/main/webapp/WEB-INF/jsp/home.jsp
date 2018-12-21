@@ -49,19 +49,19 @@
         </a>
       </li>
       <li>
-        <a  href="http://192.168.1.62:8090" target="_blank">
+        <a  href="http://192.168.101.97:8090" target="_blank">
           <input id='7' type='checkbox'>
           <label title="Confluence"><img src="/images/confluence.png"	/> </label>
         </a>
       </li>
       <li>
-        <a  href="http://192.168.1.73:8080" target="_blank">
+        <a  href="http://192.168.1.84:8080" target="_blank">
           <input id='8' type='checkbox'>
           <label title="Jira"><img src="/images/jira.png"	/> </label>
         </a>
       </li>
       <li>
-        <a  href="http://192.168.1.70:8888" target="_blank">
+        <a  href="http://192.168.1.59:8888" target="_blank">
           <input id='9' type='checkbox'>
           <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
