@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,8 +19,8 @@ public class TeaRepositoryServiceImpl implements TeaRepositoryService {
     private TeaRepositoryMapper teaRepositoryMapper;
 
     @Override
-    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository) {
-        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository);
+    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository,String flag) {
+        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository,flag);
         if(list.size()>0){
             return list;
         }
@@ -28,30 +29,20 @@ public class TeaRepositoryServiceImpl implements TeaRepositoryService {
 
     @Override
     public String addTeaRepository(TeaRepository teaRepository) {
-        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository);
-        if(list.size()>0){
-            return "repeat";
-        }else {
-            Integer i = teaRepositoryMapper.addTeaRepository(teaRepository);
-            if (i> 0) {
-                return "success";
-            }
-            return "false";
+        Integer i = teaRepositoryMapper.addTeaRepository(teaRepository);
+        if (i> 0) {
+            return "success";
         }
+        return "false";
     }
 
     @Override
     public String updateTeaRepository(TeaRepository teaRepository) {
-        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository);
-        if(list.size()>0){
-            return "repeat";
-        }else {
-            Integer i = teaRepositoryMapper.updateTeaRepository(teaRepository);
-            if (i> 0) {
-                return "success";
-            }
-            return "false";
+        Integer i = teaRepositoryMapper.updateTeaRepository(teaRepository);
+        if (i> 0) {
+            return "success";
         }
+        return "false";
     }
 
     @Override
@@ -61,5 +52,14 @@ public class TeaRepositoryServiceImpl implements TeaRepositoryService {
                 return "success";
             }
             return "false";
+    }
+
+    @Override
+    public List<TeaRepository> getTeaRepositoryCatName() {
+        List<TeaRepository> catNameList=teaRepositoryMapper.getTeaRepositoryCatName();
+        if(catNameList.size()>0){
+            return catNameList;
+        }
+        return null;
     }
 }

@@ -24,11 +24,14 @@
                 <if test="teaRepository.id!=null">
                     id=#{teaRepository.id}
                 </if>
-                <if test="teaRepository.catName!=null">
+                <if test="teaRepository.catName!=null and teaRepository.catName!=''">
                     and cat_name=#{teaRepository.catName}
                 </if>
-                <if test="teaRepository.tName!=null">
-                    and item_name=#{teaRepository.tName}
+                <if test="teaRepository.tName!=null and teaRepository.tName!='' and flag==null">
+                    and item_name like concat(#{teaRepository.tName},'%')
+                </if>
+                <if test="teaRepository.tName!=null and teaRepository.tName!='' and flag!=null">
+                    and item_name =#{teaRepository.tName}
                 </if>
                 <if test="teaRepository.standard!=null">
                     and item_img=#{teaRepository.standard}
@@ -128,4 +131,10 @@
     <delete id="delTeaRepository" parameterType="com.zftx.mcdaily.bean.TeaRepository">
         delete from tea_repository where  id=#{teaRepository.id}
     </delete>
+
+
+    <!--查询 下午茶库存-->
+    <select id="getTeaRepositoryCatName" resultMap="teaRepository">
+        select distinct cat_name from tea_repository
+    </select>
 </mapper>

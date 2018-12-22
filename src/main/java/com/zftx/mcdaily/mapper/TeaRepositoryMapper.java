@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -16,7 +17,13 @@ public interface TeaRepositoryMapper {
      * @param teaRepository
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaRepository(@Param("teaRepository") TeaRepository teaRepository);
+    public ArrayList<Map<String,Object>> getTeaRepository(@Param("teaRepository") TeaRepository teaRepository,@Param("flag")String flag);
+
+    /**
+     *  查询 茶点类型
+     * @return
+     */
+    public List<TeaRepository> getTeaRepositoryCatName();
 
     /**
      * 新增 下午茶仓库

@@ -411,7 +411,7 @@
                         checkAddInput()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
-                        if(parseInt(singleProgress)>100||parseFloat('100%') <= parseFloat(singleProgress)){
+                        if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                             layer.msg("您输入的进度指数不规范")
                             ajax().abort()
                         }

@@ -49,6 +49,18 @@
         </a>
       </li>
       <li>
+        <a  href="/teaChoose">
+          <input id='7' type='checkbox'>
+          <label title="茶点选餐"><img src=""	/> </label>
+        </a>
+      </li>
+      <li>
+        <a  href="/teaRepository">
+          <input id='8' type='checkbox'>
+          <label title="茶点入库"><img src=""	/> </label>
+        </a>
+      </li>
+      <%--<li>
         <a  href="http://192.168.101.97:8090" target="_blank">
           <input id='7' type='checkbox'>
           <label title="Confluence"><img src="/images/confluence.png"	/> </label>
@@ -65,7 +77,7 @@
           <input id='9' type='checkbox'>
           <label title="gitlab"><img src="/images/gitlab.png" /></label>
         </a>
-      </li>
+      </li>--%>
     </ul>
     <button>米仓金服</button>
   </div>

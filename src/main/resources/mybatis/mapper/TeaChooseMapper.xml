@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zftx.mcdaily.mapper.TeaChooseMapper">
+    <resultMap id="teaChoose" type="com.zftx.mcdaily.bean.TeaChoose">
+        <id column="id" property="id"/>
+        <result column="userId" property="userId"/>
+        <result column="teaId" property="teaId"/>
+        <result column="number" property="number"/>
+        <result column="money" property="money"/>
+        <result column="date" property="date"/>
+    </resultMap>
+    <sql id="columnAll">tc.id,tc.userId,u.full_name fullName,tc.teaId,tr.item_name tName,tr.item_img tImg,tr.standard,tr.note,tr.cat_name catName,tr.price,tc.number,tc.money</sql>
+    <!--查询 茶点选餐-->
+    <select id="getTeaChoose" resultType="java.util.Map">
+        select
+        <include refid="columnAll"/>
+        from tea_choose tc
+        join user u on u.id=tc.userId
+        join tea_repository tr on tr.id=tc.teaId
+        <if test="teaChoose!=null">
+            <where>
+                <if test="teaChoose.id!=null">
+                    tc.id=#{teaChoose.id}
+                </if>
+                <if test="teaChoose.userId!=null and teaChoose.userId!=0">
+                    and tc.userId=#{teaChoose.userId}
+                </if>
+                <if test="teaChoose.teaId!=null and teaChoose.teaId!=0">
+                    and tc.teaId =#{teaChoose.teaId}
+                </if>
+                <if test="teaChoose.number!=null">
+                    and tc.number=#{teaChoose.number}
+                </if>
+                <if test="teaChoose.money!=null">
+                    and tc.money=#{teaChoose.money}
+                </if>
+                <if test="teaChoose.date!=null">
+                    and tc.date=#{teaChoose.date}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加 选餐记录-->
+    <insert id="addTeaChoose" keyProperty="teaChoose.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        INSERT INTO tea_choose
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaChoose !=null">
+                <if test="teaChoose.userId!=null">
+                    userId,
+                </if>
+                <if test="teaChoose.teaId!=null">
+                    teaId,
+                </if>
+                <if test="teaChoose.number!=null">
+                    number,
+                </if>
+                <if test="teaChoose.money!=null">
+                    money,
+                </if>
+                <if test="teaChoose.date!=null">
+                    date,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="teaChoose !=null">
+                <if test="teaChoose.userId!=null">
+                    #{teaChoose.userId},
+                </if>
+                <if test="teaChoose.teaId!=null">
+                    #{teaChoose.teaId},
+                </if>
+                <if test="teaChoose.number!=null">
+                    #{teaChoose.number},
+                </if>
+                <if test="teaChoose.money!=null ">
+                    #{teaChoose.money},
+                </if>
+                <if test="teaChoose.date!=null ">
+                    #{teaChoose.date},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 选餐数量-->
+    <update id="updateTeaChoose" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        UPDATE tea_choose
+        <set>
+            <if test="teaChoose.money!=null">
+                money=#{teaChoose.money},
+            </if>
+            <if test="teaChoose.number!=null">
+                number=#{teaChoose.number},
+            </if>
+        </set>
+        <where>
+            <if test="teaChoose.id!=null and teaChoose.id!=0">
+                id=#{teaChoose.id}
+            </if>
+        </where>
+    </update>
+    <!--删除 选中茶点-->
+    <delete id="delTeaChoose" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        delete from tea_choose where  id=#{teaChoose.id}
+    </delete>
+
+    <!--用户选餐价格不能超过10茶币-->
+    <select id="isBeOutTenMoney" parameterType="com.zftx.mcdaily.bean.TeaChoose" resultType="java.lang.Integer">
+        SELECT SUM(money)  FROM tea_choose WHERE userId=58
+    </select>
+</mapper>

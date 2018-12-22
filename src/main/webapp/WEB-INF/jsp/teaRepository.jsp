@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>下午茶点入库</title>
+    <title>茶点入库</title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/table.css" />
     <link rel="stylesheet" href="css/chosen.css" />
@@ -30,27 +30,72 @@
             text-align: center;
             margin-bottom: 10px;
         }
+        .timg{
+            width: 90px;
+            height: 90px;
+        }
+
+        .tcen tr th{
+            text-align: center !important;
+        }
+
+        .cen tr td{
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        #pic {
+            position: fixed;
+            display: none;
+        }
+
+        #pic1 {
+            width: 300px;
+            height: auto;
+            border-radius: 5px;
+            -webkit-box-shadow: 5px 5px 5px 5px hsla(0, 0%, 5%, 1.00);
+            box-shadow: 5px 5px 5px 0px hsla(0, 0%, 5%, 0.3);
+        }
     </style>
     <script type="text/javascript">
         $(function () {
+            //查询
+            $("#query").click(function () {
+                inittable()
+            })
             inittable()
             function inittable() {
+                $("#tbody").html("");
                 $.ajax({
                     url:"getTeaRepository",
                     type:'get',
                     dataType:"json",
                     data:{
-
+                        catName:$("#queryCatName").val(),
+                        tName:$("#querytName").val().trim()
                     },
                     success:function (data) {
+                        if($("#queryCatName").val()==null){
+                        $("#queryCatName").html("");
+                            var str='<option value="" >请选择品类</option>';
+                            $("#queryCatName").append(str);
+                            for(var i in data.catNameList){
+                                var str1 = '<option value="' +data.catNameList[i].catName + '" >' + data.catNameList[i].catName + '</option>';
+                                $("#queryCatName").append(str1);
+                                $("#updCatName").append(str1);
+                            }
+                        }
                         var json=data.data
-                        console.log(json)
                         for (var i in json) {
                             var tr = $('<tr>');
                             tr.append($('<td>').html(json[i].id))
                             tr.append($('<td>').html(json[i].catName))
                             tr.append($('<td>').html(json[i].tName))
-                            tr.append($('<td>').append($('<img>').attr('src',json[i].tImg)))
+                            tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src',json[i].tImg).attr('bigUrl',json[i].tImg)))))
                             tr.append($('<td>').html(json[i].standard))
                             tr.append($('<td>').html(json[i].price))
                             tr.append($('<td>').html(json[i].note))
@@ -63,6 +108,46 @@
                             tr.append(td);
                             $("#tbody").append(tr);
                         }
+                        //图片放大
+                        $(".timgs .timgs-item img").hover(function() {
+                            var bigUrl = $(this).attr("bigUrl");
+                            $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
+                            $(".timgs .timgs-item img").mousemove(function(e) {
+                                var wH = document.documentElement.clientHeight
+                                var wW = document.documentElement.clientWidth
+                                var imgW = $("#pic1").width()
+                                var imgH = $("#pic1").height()
+                                var cssArr = {
+                                    "top": "",
+                                    "left": "",
+                                    "bottom": "",
+                                    "right": ""
+                                }
+
+                                if(e.clientX + imgW > wW) {
+                                    if(wW - e.clientX < imgW) {
+                                        cssArr.left = (e.clientX - imgW - 10) + "px";;
+
+                                    } else {
+                                        cssArr.right = 0;
+                                    }
+
+                                } else {
+                                    cssArr.left = (e.clientX + 10) + "px";
+                                }
+
+                                if(e.clientY + imgH > wH) {
+                                    cssArr.bottom = 0;
+                                } else {
+                                    cssArr.top = (e.clientY + 10) + "px";
+                                }
+                                console.log($("#pic1").height(), wH)
+                                console.log(cssArr)
+                                $("#pic").css(cssArr).fadeIn("fast");
+                            });
+                        }, function() {
+                            $("#pic").remove();
+                        });
 
                         //茶点入库 上传图片
                         $('#addfiles').unbind('click').click(function () {
@@ -88,6 +173,8 @@
                                         }, 500)
                                     }else if(data.message=="重复添加"){
                                         layer.msg("该茶点已存在!")
+                                    }else if(data.message=="图片不能无"){
+                                        layer.msg("请上传图片!")
                                     }else{
                                         layer.msg("修改失败!")
                                     }
@@ -122,7 +209,7 @@
                                 url: "/updateTeaRepository",
                                 type: 'post',
                                 cache: false,
-                                data: new FormData($('#updfileform')[0],$('#updfileform')[1],$('#updfileform')[2],$('#updfileform')[3],$('#updfileform')[4],$('#updfileform')[5],$('#updfileform')[6]),
+                                data: new FormData($('#updfileform')[0]),
                                 processData: false,
                                 contentType: false,
                                 dataType:"json",
@@ -136,7 +223,7 @@
                                         setTimeout(function wlh() {
                                             window.location.href = "/teaRepository"
                                         }, 500)
-                                    }else if(data.message=="重复添加"){
+                                    }else if(data.message=="重复"){
                                         layer.msg("该茶点已存在")
                                     }else{
                                         layer.msg("修改失败!")
@@ -153,6 +240,10 @@
         function Close() {
             $("#updtImgShow").empty()
             $("#looktImg").empty()
+            $("#addtName").val("")
+            $("#addStandard").val("")
+            $("#aadPrice").val("")
+            $("#addNote").val("")
         }
 
         document.onkeyup = function (e){
@@ -199,18 +290,18 @@
         }
     </script>
 </head>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">下午茶茶点仓库</span></div>
-<select id="queryCatName" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入茶点类别"/></select>
-<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
-<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
-</button>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 下午茶茶点仓库</span>
-<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-<a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
-<div>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
+    <select id="queryCatName" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入茶点类别"/></select>
+    <input type="text" class="" id="querytName" placeholder="请输入茶点名">
+    <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+    <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 下午茶茶点仓库</span>
+    <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
+    <a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+    <div>
     <table class="table table-bordered" id="table-bordered">
-        <thead style="background-color: #f4f4f4;">
-        <tr>
+        <thead style="background-color: #f4f4f4;" class="tcen">
+        <tr >
             <th>茶点id</th>
             <th>类别</th>
             <th>名称</th>
@@ -221,11 +312,11 @@
             <th>操作</th>
         </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="tbody" class="cen">
 
         </tbody>
     </table>
-</div>
+    </div>
 <!--更新茶点-->
 <div class="modal fade" id="updModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
@@ -249,7 +340,7 @@
                             <tr>
                                 <td style="width:12%;">类别:</td>
                                 <td style="width:60%;">
-                                    <input class="form-control" id="updCatName" name="catName"></input>
+                                    <select class="form-control" id="updCatName" name="catName"></select>
                                 </td>
                             </tr>
                             <tr>
@@ -367,7 +458,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span
+                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true" onclick="Close()">×</span><span
                         class="sr-only">Close</span></button>
                 <h4 class="modal-title">添加 茶点</h4>
             </div>
@@ -417,7 +508,7 @@
                         </tbody>
                     </table>
                     <tr><td class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                        <button data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
                         <button id="addfiles" >上传提交</button>
                         <input id="addDutyRecord" class="btn btn-primary" type="reset" value="重置">
                     </td></tr>

@@ -1,13 +1,10 @@
 package com.zftx.mcdaily.util;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -123,8 +120,7 @@ public class Tool
      * @param email
      * @return
      */
-    public static boolean checkEmail(String email)
-    {
+    public static boolean checkEmail(String email) {
         if(isEmpty(email))
             return false;
         String regex = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";

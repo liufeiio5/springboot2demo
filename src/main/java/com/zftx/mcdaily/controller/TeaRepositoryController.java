@@ -41,9 +41,11 @@ public class TeaRepositoryController {
     @RequestMapping(value = "/getTeaRepository", method = RequestMethod.GET)
     @ResponseBody
     public R getLine(TeaRepository teaRepository) {
-        ArrayList<Map<String, Object>> list = teaRepositoryService.getTeaRepository(teaRepository);
+        String flage=null;
+        ArrayList<Map<String, Object>> list = teaRepositoryService.getTeaRepository(teaRepository,flage);
+        List<TeaRepository> catNameList=teaRepositoryService.getTeaRepositoryCatName();
         if (list.size() > 0 && list != null) {
-            return R.ok("数据获取成功").put("data", list);
+            return R.ok("数据获取成功").put("data", list).put("catNameList", catNameList);
         } else {
             return R.error("获取数据失败");
         }
@@ -62,43 +64,55 @@ public class TeaRepositoryController {
      */
     @RequestMapping(value = "/addTeaRepository", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public R addTeaRepository(@RequestParam("catName")String catName,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")float price,@RequestParam("note") String note)throws IOException{
-        //上传地址
-        System.out.println(catName+"xxxxxxxxxxxxxxxxxxxxxxxx"+tName+"xxxxxxxxxxxxxxxxxxxxxxxx"+standard+"xxxxxxxxxxxxxxxxxxxxxxxx"+price+"xxxxxxxxxxxxxxxxxxxxxxxx"+note+"xxxxxxxxxxxxxxxxxxxxxxxx");
-        String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
-        ArrayList<String> urls = new ArrayList<String>();
-        List<MultipartFile> files = mrequest.getFiles("file");
+    public R addTeaRepository(@RequestParam("catName")String catName,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")float price,@RequestParam("note") String note)throws IOException {
+        TeaRepository teaRepository = new TeaRepository().setTName(tName.trim());
+        //茶点不能重复
+        String flag="isNoLike";
+        ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag);
+        if (arrayList==null) {
+            teaRepository.setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
+            //上传地址
+            String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
+            ArrayList<String> urls = new ArrayList<String>();
+            List<MultipartFile> files = mrequest.getFiles("file");
 
-        String tImg="";
-        for (MultipartFile file : files) {
-            tImg="/upload/tea_images/"+tName.trim()+file.getOriginalFilename().substring(file.getOriginalFilename().length()-4, file.getOriginalFilename().length());
-            File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/"+tImg);
-            System.out.println("qqqqqqqqqqqqqqqqqqqqqqq"+tImg);
-            urls.add(dir + file.getOriginalFilename());
-            //如果文件夹不存在则创建
-            if (!f.getParentFile().exists())
-                f.getParentFile().mkdirs();
-            //创建文件
-            try {
-                file.transferTo(f);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return R.error("上传失败");
+            String tImg = "";
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    tImg = "/upload/tea_images/" + tName.trim() + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4, file.getOriginalFilename().length());
+                    File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/" + tImg);
+                    urls.add(dir + file.getOriginalFilename());
+                    //如果文件夹不存在则创建
+                    if (!f.getParentFile().exists())
+                        f.getParentFile().mkdirs();
+                    //创建文件
+                    try {
+                        file.transferTo(f);
+                        teaRepository.setTImg(tImg);
+                        if (teaRepository != null) {
+                            String str = teaRepositoryService.addTeaRepository(teaRepository);
+                            if ("success".equals(str)) {
+                                return R.ok("添加成功");
+                            } else if ("repeat".equals(str)) {
+                                return R.error("重复添加");
+                            } else {
+                                return R.error("添加失败");
+                            }
+                        } else {
+                            return R.error("参数有误!");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return R.error("上传失败");
+                    }
+                } else {
+                    return R.error("图片不能无");
+                }
             }
+        }else{
+            return R.error("重复添加");
         }
-        TeaRepository teaRepository=new TeaRepository().setCatName(catName.trim()).setTName(tName.trim()).setTImg(tImg.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
-        if (teaRepository != null) {
-            String str = teaRepositoryService.addTeaRepository(teaRepository);
-            if ("success".equals(str)) {
-                return R.ok("添加成功");
-            } else if ("repeat".equals(str)) {
-                return R.error("重复添加");
-            } else {
-                return R.error("添加失败");
-            }
-        } else {
-            return R.error("参数有误!");
-        }
+        return null;
     }
 
     /**
@@ -115,31 +129,36 @@ public class TeaRepositoryController {
     @RequestMapping(value = "/updateTeaRepository", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public R updateTeaRepository(@RequestParam("id")Integer id,@RequestParam("catName")String catName,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")float price,@RequestParam("note") String note)throws IOException{
-        //上传地址
-        System.out.println(catName+"xxxxxxxxxxxxxxxxxxxxxxxx"+tName+"xxxxxxxxxxxxxxxxxxxxxxxx"+standard+"xxxxxxxxxxxxxxxxxxxxxxxx"+price+"xxxxxxxxxxxxxxxxxxxxxxxx"+note+"xxxxxxxxxxxxxxxxxxxxxxxx");
-        String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
-        ArrayList<String> urls = new ArrayList<String>();
-        List<MultipartFile> files = mrequest.getFiles("file");
-        TeaRepository teaRepository = new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
-        System.out.println("qqqqqqqqqqqqqqqqqqqqqqq" + files);
-        if (!files.isEmpty()) {
+        /*//茶点不能重复
+        TeaRepository teaRepository = new TeaRepository().setTName(tName.trim());
+        String flag="isNoLike";
+        ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag);
+        if (arrayList==null) {*/
+            //上传地址
+            String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
+            ArrayList<String> urls = new ArrayList<String>();
+            List<MultipartFile> files = mrequest.getFiles("file");
+            TeaRepository teaRepository = new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
             String tImg = "";
             for (MultipartFile file : files) {
-                tImg = "/upload/tea_images/" + tName.trim() + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4, file.getOriginalFilename().length());
-                File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/" + tImg);
-                urls.add(dir + file.getOriginalFilename());
-                //如果文件夹不存在则创建
-                if (!f.getParentFile().exists())
-                    f.getParentFile().mkdirs();
-                //创建文件
-                try {
-                    file.transferTo(f);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return R.error("上传失败");
+                if (!file.isEmpty()) {
+                    tImg = "/upload/tea_images/" + tName.trim() + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4, file.getOriginalFilename().length());
+                    File f = new File(System.getProperty("user.dir") + "/src/main/resources/static/" + tImg);
+                    urls.add(dir + file.getOriginalFilename());
+                    //如果文件夹不存在则创建
+                    if (!f.getParentFile().exists())
+                        f.getParentFile().mkdirs();
+                    //创建文件
+                    try {
+                        file.transferTo(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return R.error("上传失败");
+                    }
+                    teaRepository.setTImg(tImg);
                 }
             }
-            if (teaRepository.setTImg(tImg.trim()) != null) {
+            if (teaRepository != null) {
                 String str = teaRepositoryService.updateTeaRepository(teaRepository);
                 if ("success".equals(str)) {
                     return R.ok("修改成功");
@@ -151,9 +170,9 @@ public class TeaRepositoryController {
             } else {
                 return R.error("参数有误!");
             }
-        }else{
-            return null;
-        }
+        /*else{
+            return R.error("重复");
+        }*/
     }
 
     /**

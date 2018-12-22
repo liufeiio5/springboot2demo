@@ -68,3 +68,7 @@ server:
     session:
       timeout: 3000s
 
+#springbootdo:
+ # uploadPath: D:/var/uploaded_files/
+  #imagePath: file:///D:/var/uploaded_files/image/
+
