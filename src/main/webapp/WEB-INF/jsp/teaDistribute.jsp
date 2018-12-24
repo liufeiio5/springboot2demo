@@ -48,25 +48,16 @@
                     data:{
                     },
                     success:function (data) {
-                        if (data.code == 200) {
+                        if (data.code == 200){
+                            console.log(data)
                             var json = data.data
-                            var numberAll=0
-                            var moneyAll=0
-                            for (var i in json) {
+                            for (var j in data.ulist){
                                 var tr = $('<tr>');
-                                tr.append($('<td>').html(json[i].id))
-                                tr.append($('<td>').html(json[i].catName))
-                                tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<img>').attr('src', json[i].tImg)))
-                                tr.append($('<td>').html(json[i].price))
-                                tr.append($('<td>').html(json[i].number))
-                                numberAll=numberAll+json[i].number
-                                tr.append($('<td>').html(json[i].money))
-                                moneyAll=moneyAll+json[i].money
+                                tr.append($('<td>').html(data.ulist[j].fullName))
+                                tr.append()
                                 $("#tbody").append(tr);
                             }
-                            $("#tbody").append($('<tr style="border: 1px;">').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("总量:"+numberAll)).append($('<td>').html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>'))
-                    }else {
+                     }else {
                            layer.msg("当前数据为空!")
                         }
                     }
