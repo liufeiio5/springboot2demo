@@ -49,15 +49,27 @@
         </a>
       </li>
       <li>
-        <a  href="/teaChoose">
+        <a  href="/teaRepository">
           <input id='7' type='checkbox'>
+          <label title="茶点入库"><img src=""	/> </label>
+        </a>
+      </li>
+      <li>
+        <a  href="/teaChoose">
+          <input id='8' type='checkbox'>
           <label title="茶点选餐"><img src=""	/> </label>
         </a>
       </li>
       <li>
-        <a  href="/teaRepository">
-          <input id='8' type='checkbox'>
-          <label title="茶点入库"><img src=""	/> </label>
+        <a  href="/teaStatistics">
+          <input id='9' type='checkbox'>
+          <label title="茶点统计"><img src=""	/> </label>
+        </a>
+      </li>
+      <li>
+        <a  href="/teaDistribute">
+          <input id='10' type='checkbox'>
+          <label title="茶点分发"><img src=""	/> </label>
         </a>
       </li>
       <%--<li>
