@@ -17,7 +17,7 @@ public interface TeaRepositoryMapper {
      * @param teaRepository
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaRepository(@Param("teaRepository") TeaRepository teaRepository,@Param("flag")String flag);
+    public ArrayList<Map<String,Object>> getTeaRepository(@Param("teaRepository") TeaRepository teaRepository,@Param("flag")String flag,@Param("lowPrice")Float lowPrice,@Param("highPrice")Float highPrice);
 
     /**
      *  查询 茶点类型

@@ -44,4 +44,23 @@ public interface TeaChooseService {
      * @return
      */
     public String isBeOutTenMoney(@Param("teaRepository") TeaChoose teaChoose,Integer teaPrice);
+
+    /**
+     * 茶点总量统计
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaStatistics(TeaChoose teaChoose);
+
+    /**
+     * 茶点分发
+     * @param teaChoose
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaDistribute(TeaChoose teaChoose);
+
+    /**
+     * 获取所有选餐人
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose);
 }

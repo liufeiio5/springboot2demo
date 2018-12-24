@@ -40,11 +40,19 @@ public class TeaRepositoryController {
      */
     @RequestMapping(value = "/getTeaRepository", method = RequestMethod.GET)
     @ResponseBody
-    public R getLine(TeaRepository teaRepository) {
+    public R getLine(TeaRepository teaRepository,String lowPrices,String highPrices) {
+        Float lowPrice=null;
+        Float highPrice=null;
+        if(lowPrices!=null&&lowPrices!=""){
+             lowPrice=Float.parseFloat(lowPrices);
+        }
+        if(highPrices!=null&&highPrices!=""){
+             highPrice=Float.parseFloat(highPrices);
+        }
         String flage=null;
-        ArrayList<Map<String, Object>> list = teaRepositoryService.getTeaRepository(teaRepository,flage);
+        ArrayList<Map<String, Object>> list = teaRepositoryService.getTeaRepository(teaRepository,flage,lowPrice,highPrice);
         List<TeaRepository> catNameList=teaRepositoryService.getTeaRepositoryCatName();
-        if (list.size() > 0 && list != null) {
+        if (list.size()> 0 && list != null) {
             return R.ok("数据获取成功").put("data", list).put("catNameList", catNameList);
         } else {
             return R.error("获取数据失败");
@@ -68,7 +76,7 @@ public class TeaRepositoryController {
         TeaRepository teaRepository = new TeaRepository().setTName(tName.trim());
         //茶点不能重复
         String flag="isNoLike";
-        ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag);
+        ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag,null,null);
         if (arrayList==null) {
             teaRepository.setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
             //上传地址

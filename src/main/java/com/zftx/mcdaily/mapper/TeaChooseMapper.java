@@ -45,4 +45,23 @@ public interface TeaChooseMapper {
      * @return
      */
     public Integer isBeOutTenMoney(@Param("teaChoose") TeaChoose teaChoose);
+
+
+    /**
+     * 茶点总量统计
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaStatistics(@Param("teaChoose")TeaChoose teaChoose);
+
+    /**
+     * 茶点分发
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaDistribute(@Param("teaChoose")TeaChoose teaChoose);
+
+    /**
+     * 获取所有选餐人
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose);
 }

@@ -19,12 +19,9 @@ public class TeaRepositoryServiceImpl implements TeaRepositoryService {
     private TeaRepositoryMapper teaRepositoryMapper;
 
     @Override
-    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository,String flag) {
-        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository,flag);
-        if(list.size()>0){
-            return list;
-        }
-        return null;
+    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository,String flag,Float lowPrice,Float highPrice) {
+        ArrayList<Map<String,Object>> list=teaRepositoryMapper.getTeaRepository(teaRepository,flag,lowPrice,highPrice);
+        return list;
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface TeaRepositoryService {
      * @param teaRepository
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository,String flag);
+    public ArrayList<Map<String,Object>> getTeaRepository(TeaRepository teaRepository,String flag,Float lowPrice,Float highPrice);
 
    /**
      * 新增 下午茶仓库

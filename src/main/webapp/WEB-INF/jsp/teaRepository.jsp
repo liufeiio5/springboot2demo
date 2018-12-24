@@ -70,167 +70,177 @@
             inittable()
             function inittable() {
                 $("#tbody").html("");
+                var lowPrice=$("#lowPrice").val();
+                var highPrice=$("#highPrice").val();
                 $.ajax({
                     url:"getTeaRepository",
                     type:'get',
                     dataType:"json",
                     data:{
                         catName:$("#queryCatName").val(),
-                        tName:$("#querytName").val().trim()
+                        tName:$("#querytName").val().trim(),
+                        lowPrices:lowPrice,
+                        highPrices:highPrice
                     },
                     success:function (data) {
-                        if($("#queryCatName").val()==null){
-                        $("#queryCatName").html("");
-                            var str='<option value="" >请选择品类</option>';
-                            $("#queryCatName").append(str);
-                            for(var i in data.catNameList){
-                                var str1 = '<option value="' +data.catNameList[i].catName + '" >' + data.catNameList[i].catName + '</option>';
-                                $("#queryCatName").append(str1);
-                                $("#updCatName").append(str1);
-                            }
-                        }
-                        var json=data.data
-                        for (var i in json) {
-                            var tr = $('<tr>');
-                            tr.append($('<td>').html(json[i].id))
-                            tr.append($('<td>').html(json[i].catName))
-                            tr.append($('<td>').html(json[i].tName))
-                            tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src',json[i].tImg).attr('bigUrl',json[i].tImg)))))
-                            tr.append($('<td>').html(json[i].standard))
-                            tr.append($('<td>').html(json[i].price))
-                            tr.append($('<td>').html(json[i].note))
-                            var look = $('<button>').attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
-                                .addClass('btn btn-info lookTeaRepository').attr('data-toggle', 'modal').attr('data-target', '#lookModal').css('margin-right', '10px').html('<i class="glyphicon glyphicon-asterisk"></i>');
-                            var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
-                                .addClass('btn btn-warning updTeaRepository').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
-                            var td = $('<td>');
-                            td.append(look).append(upd);
-                            tr.append(td);
-                            $("#tbody").append(tr);
-                        }
-                        //图片放大
-                        $(".timgs .timgs-item img").hover(function() {
-                            var bigUrl = $(this).attr("bigUrl");
-                            $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
-                            $(".timgs .timgs-item img").mousemove(function(e) {
-                                var wH = document.documentElement.clientHeight
-                                var wW = document.documentElement.clientWidth
-                                var imgW = $("#pic1").width()
-                                var imgH = $("#pic1").height()
-                                var cssArr = {
-                                    "top": "",
-                                    "left": "",
-                                    "bottom": "",
-                                    "right": ""
+                        console.log(data)
+                        if(data.message=="数据获取成功") {
+                            if ($("#queryCatName").val() == null) {
+                                $("#queryCatName").html("");
+                                var str = '<option value="" >请选择品类</option>';
+                                $("#queryCatName").append(str);
+                                for (var i in data.catNameList) {
+                                    var str1 = '<option value="' + data.catNameList[i].catName + '" >' + data.catNameList[i].catName + '</option>';
+                                    $("#queryCatName").append(str1);
+                                    $("#updCatName").append(str1);
                                 }
+                            }
+                            var json = data.data
+                            for (var i in json) {
+                                var tr = $('<tr>');
+                                tr.append($('<td>').html(json[i].id))
+                                tr.append($('<td>').html(json[i].catName))
+                                tr.append($('<td>').html(json[i].tName))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
+                                tr.append($('<td>').html(json[i].standard))
+                                tr.append($('<td>').html(json[i].price))
+                                tr.append($('<td>').html(json[i].note))
+                                var look = $('<button>').attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
+                                    .addClass('btn btn-info lookTeaRepository').attr('data-toggle', 'modal').attr('data-target', '#lookModal').css('margin-right', '10px').html('<i class="glyphicon glyphicon-asterisk"></i>');
+                                var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
+                                    .addClass('btn btn-warning updTeaRepository').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
+                                var td = $('<td>');
+                                td.append(look).append(upd);
+                                tr.append(td);
+                                $("#tbody").append(tr);
+                            }
+                            //图片放大
+                            $(".timgs .timgs-item img").hover(function () {
+                                var bigUrl = $(this).attr("bigUrl");
+                                $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
+                                $(".timgs .timgs-item img").mousemove(function (e) {
+                                    var wH = document.documentElement.clientHeight
+                                    var wW = document.documentElement.clientWidth
+                                    var imgW = $("#pic1").width()
+                                    var imgH = $("#pic1").height()
+                                    var cssArr = {
+                                        "top": "",
+                                        "left": "",
+                                        "bottom": "",
+                                        "right": ""
+                                    }
 
-                                if(e.clientX + imgW > wW) {
-                                    if(wW - e.clientX < imgW) {
-                                        cssArr.left = (e.clientX - imgW - 10) + "px";;
+                                    if (e.clientX + imgW > wW) {
+                                        if (wW - e.clientX < imgW) {
+                                            cssArr.left = (e.clientX - imgW - 10) + "px";
+                                            ;
+
+                                        } else {
+                                            cssArr.right = 0;
+                                        }
 
                                     } else {
-                                        cssArr.right = 0;
+                                        cssArr.left = (e.clientX + 10) + "px";
                                     }
 
-                                } else {
-                                    cssArr.left = (e.clientX + 10) + "px";
-                                }
-
-                                if(e.clientY + imgH > wH) {
-                                    cssArr.bottom = 0;
-                                } else {
-                                    cssArr.top = (e.clientY + 10) + "px";
-                                }
-                                console.log($("#pic1").height(), wH)
-                                console.log(cssArr)
-                                $("#pic").css(cssArr).fadeIn("fast");
-                            });
-                        }, function() {
-                            $("#pic").remove();
-                        });
-
-                        //茶点入库 上传图片
-                        $('#addfiles').unbind('click').click(function () {
-                            addcheck();
-                            $.ajax({
-                                url: "addTeaRepository",
-                                type: 'post',
-                                cache: false, // 不缓存
-                                data: new FormData($('#fileform')[0]),
-                                processData: false,//  告诉jquery不要处理发送的数据
-                                contentType:false,    // 告诉jquery不要设置content-Type请求头
-                                dataType:"json",
-                                async:false,
-                                success : function(data) {
-                                    /*$('#x8').val('['+data.urls+']');*/
-                                    if(data.code==200){
-                                        layer.msg('上传成功,已入库!', {
-                                            icon: 1,
-                                            time: 1000
-                                        });
-                                        setTimeout(function wlh() {
-                                            window.location.href = "/teaRepository"
-                                        }, 500)
-                                    }else if(data.message=="重复添加"){
-                                        layer.msg("该茶点已存在!")
-                                    }else if(data.message=="图片不能无"){
-                                        layer.msg("请上传图片!")
-                                    }else{
-                                        layer.msg("修改失败!")
+                                    if (e.clientY + imgH > wH) {
+                                        cssArr.bottom = 0;
+                                    } else {
+                                        cssArr.top = (e.clientY + 10) + "px";
                                     }
-                                }
+                                    console.log($("#pic1").height(), wH)
+                                    console.log(cssArr)
+                                    $("#pic").css(cssArr).fadeIn("fast");
+                                });
+                            }, function () {
+                                $("#pic").remove();
                             });
-                        })
 
-                        //查看
-                        $('.lookTeaRepository').click(function () {
-                            $("#lookCatName").val($(this).attr("catName"))
-                            $("#looktName").val($(this).attr("tName"))
-                            $("#looktImg").append($('<img>').attr('src',$(this).attr("tImg")))
-                            $("#lookStandard").val($(this).attr("standard"))
-                            $("#lookPrice").val($(this).attr("price"))
-                            $("#lookNote").val($(this).attr("note"))
-                        })
-
-                        //修改
-                        $('.updTeaRepository').unbind('click').click(function () {
-                            $("#updId").val($(this).attr("id"))
-                            $("#updCatName").val($(this).attr("catName"))
-                            $("#updtName").val($(this).attr("tName"))
-                            $("#updtImgShow").append($('<img>').attr('src',$(this).attr("tImg")))
-                            $("#updStandard").val($(this).attr("standard"))
-                            $("#updPrice").val($(this).attr("price"))
-                            $("#updNote").val($(this).attr("note"))
-                        })
-
-                        //提交 更新仓库 修改图片
-                        $('#updfiles').click(function () {
-                            $.ajax({
-                                url: "/updateTeaRepository",
-                                type: 'post',
-                                cache: false,
-                                data: new FormData($('#updfileform')[0]),
-                                processData: false,
-                                contentType: false,
-                                dataType:"json",
-                                success : function(data) {
-                                    /*$('#s9').val('['+data.urls+']');*/
-                                    if(data.code==200){
-                                        layer.msg('修改成功!', {
-                                            icon: 1,
-                                            time: 1000
-                                        });
-                                        setTimeout(function wlh() {
-                                            window.location.href = "/teaRepository"
-                                        }, 500)
-                                    }else if(data.message=="重复"){
-                                        layer.msg("该茶点已存在")
-                                    }else{
-                                        layer.msg("修改失败!")
+                            //茶点入库 上传图片
+                            $('#addfiles').unbind('click').click(function () {
+                                addcheck();
+                                $.ajax({
+                                    url: "addTeaRepository",
+                                    type: 'post',
+                                    cache: false, // 不缓存
+                                    data: new FormData($('#fileform')[0]),
+                                    processData: false,//  告诉jquery不要处理发送的数据
+                                    contentType: false,    // 告诉jquery不要设置content-Type请求头
+                                    dataType: "json",
+                                    async: false,
+                                    success: function (data) {
+                                        /*$('#x8').val('['+data.urls+']');*/
+                                        if (data.code == 200) {
+                                            layer.msg('上传成功,已入库!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                            setTimeout(function wlh() {
+                                                window.location.href = "/teaRepository"
+                                            }, 500)
+                                        } else if (data.message == "重复添加") {
+                                            layer.msg("该茶点已存在!")
+                                        } else if (data.message == "图片不能无") {
+                                            layer.msg("请上传图片!")
+                                        } else {
+                                            layer.msg("修改失败!")
+                                        }
                                     }
-                                }
-                            });
-                        })
+                                });
+                            })
+
+                            //查看
+                            $('.lookTeaRepository').click(function () {
+                                $("#lookCatName").val($(this).attr("catName"))
+                                $("#looktName").val($(this).attr("tName"))
+                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")))
+                                $("#lookStandard").val($(this).attr("standard"))
+                                $("#lookPrice").val($(this).attr("price"))
+                                $("#lookNote").val($(this).attr("note"))
+                            })
+
+                            //修改
+                            $('.updTeaRepository').unbind('click').click(function () {
+                                $("#updId").val($(this).attr("id"))
+                                $("#updCatName").val($(this).attr("catName"))
+                                $("#updtName").val($(this).attr("tName"))
+                                $("#updtImgShow").append($('<img>').attr('src', $(this).attr("tImg")))
+                                $("#updStandard").val($(this).attr("standard"))
+                                $("#updPrice").val($(this).attr("price"))
+                                $("#updNote").val($(this).attr("note"))
+                            })
+
+                            //提交 更新仓库 修改图片
+                            $('#updfiles').click(function () {
+                                $.ajax({
+                                    url: "/updateTeaRepository",
+                                    type: 'post',
+                                    cache: false,
+                                    data: new FormData($('#updfileform')[0]),
+                                    processData: false,
+                                    contentType: false,
+                                    dataType: "json",
+                                    success: function (data) {
+                                        /*$('#s9').val('['+data.urls+']');*/
+                                        if (data.code == 200) {
+                                            layer.msg('修改成功!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
+                                            setTimeout(function wlh() {
+                                                window.location.href = "/teaRepository"
+                                            }, 500)
+                                        } else if (data.message == "重复") {
+                                            layer.msg("该茶点已存在")
+                                        } else {
+                                            layer.msg("修改失败!")
+                                        }
+                                    }
+                                });
+                            })
+                        }else {
+                            layer.msg("当前数据为空")
+                        }
                     }
                 })
             }
@@ -293,6 +303,7 @@
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
     <select id="queryCatName" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入茶点类别"/></select>
     <input type="text" class="" id="querytName" placeholder="请输入茶点名">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格区间:&nbsp;<input type="text" id="lowPrice" placeholder="请输入最低期望价格">&nbsp;—&nbsp<input type="text" id="highPrice" placeholder="请输入最高期望价格">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 下午茶茶点仓库</span>

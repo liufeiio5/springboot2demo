@@ -34,6 +34,8 @@
     </style>
     <script type="text/javascript">
         $(function () {
+            laydate.render({elem: '#chooseDate'});
+
             //查询
             $("#query").click(function () {
                 inittable()
@@ -46,11 +48,11 @@
                     type:'get',
                     dataType:"json",
                     data:{
-                        userId:${sessionUser.id}
+                        userId:${sessionUser.id},
+                        date:$("#chooseDate").val().replace('-', '').replace('-', '').trim()
                     },
                     success:function (data) {
                         if (data.code == 200) {
-                            alert(111)
                             var json = data.data
                             //余额
                             var TeaBalance = 10;
@@ -98,7 +100,7 @@
                                         money: teaMoney
                                     },
                                     success: function (data) {
-                                        $("#TeaBalance").html(10 - parseInt($("#TeaBalance").html()) - parseInt(teaPrice) + "茶币")
+                                            $("#TeaBalance").html( parseInt($("#TeaBalance").html())+parseInt(teaPrice) + "茶币")
                                     }
                                 })
                             })
@@ -184,8 +186,9 @@
                                 $("#lookNote").val($(this).attr("note"))
                             })
                     }else {
-                            alert(111)
-                        }                    }
+                            layer.msg("当前数据为空")
+                        }
+                    }
                 })
             }
 
@@ -246,7 +249,7 @@
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点选餐</span></div>
-    <input type="text" class="" id="querytName" placeholder="请输入茶点名">
+    <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择点餐日期"/>
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>

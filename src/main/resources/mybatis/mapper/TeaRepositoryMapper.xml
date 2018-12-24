@@ -39,13 +39,17 @@
                 <if test="teaRepository.tImg!=null">
                     and standard=#{teaRepository.tImg}
                 </if>
-                <if test="teaRepository.price!=null">
-                    and price=#{teaRepository.price}
+                <if test="lowPrice!=null">
+                    and price &gt;= #{lowPrice}
+                </if>
+                <if test="highPrice!=null">
+                    and price &lt;=#{highPrice}
                 </if>
                 <if test="teaRepository.note!=null">
                     and note=#{teaRepository.note}
                 </if>
             </where>
+            order by cat_name desc,price
         </if>
     </select>
 

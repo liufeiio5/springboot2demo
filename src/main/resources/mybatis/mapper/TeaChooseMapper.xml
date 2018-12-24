@@ -113,4 +113,51 @@
     <select id="isBeOutTenMoney" parameterType="com.zftx.mcdaily.bean.TeaChoose" resultType="java.lang.Integer">
         SELECT SUM(money)  FROM tea_choose WHERE userId=58
     </select>
+
+
+    <!--茶点总量统计-->
+    <select id="getTeaStatistics" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        SELECT tr.id,tr.item_name tName,SUM(tc.number) number,SUM(tc.money) money,tr.item_img tImg,tr.cat_name catName,tr.price
+        FROM tea_choose tc
+        JOIN tea_repository tr ON tr.id=tc.teaId
+        <if test="teaChoose!=null">
+            <where>
+                <if test="teaChoose.date!=null">
+                    tc.date=#{teaChoose.date}
+                </if>
+            </where>
+        </if>
+        GROUP BY  tr.id
+    </select>
+
+    <!--茶点分发-->
+    <select id="getTeaDistribute" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        SELECT u.full_name fullName,tr.item_name tName,SUM(tc.number) number,tr.item_img tImg
+        FROM tea_choose tc
+        JOIN user u ON u.id=tc.userId
+        JOIN tea_repository tr ON tr.id=tc.teaId
+        <if test="teaChoose!=null">
+            <where>
+                <if test="teaChoose.date!=null">
+                    tc.date=#{teaChoose.date}
+                </if>
+            </where>
+        </if>
+        GROUP BY u.id,tr.id
+    </select>
+
+    <!--所有选餐人-->
+    <select id="getTeaUser" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        SELECT  u.id,u.full_name fullName
+        FROM tea_choose tc
+        JOIN USER u ON u.id=tc.userId
+        <if test="teaChoose!=null">
+            <where>
+                <if test="teaChoose.date!=null">
+                    tc.date=#{teaChoose.date}
+                </if>
+            </where>
+        </if>
+        GROUP BY u.id
+    </select>
 </mapper>

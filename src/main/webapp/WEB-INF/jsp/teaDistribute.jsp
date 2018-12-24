@@ -34,7 +34,6 @@
     </style>
     <script type="text/javascript">
         $(function () {
-            laydate.render({elem: '#chooseDate'});
             //查询
             $("#query").click(function () {
                 inittable()
@@ -42,13 +41,11 @@
             inittable()
             function inittable() {
                 $("#tbody").html("");
-                var chooseDate=$("#chooseDate").val().replace('-', '').replace('-', '').trim()
                 $.ajax({
-                    url:"getTeatatistics",
+                    url:"getTeaDistribute",
                     type:'get',
                     dataType:"json",
                     data:{
-                        date:chooseDate
                     },
                     success:function (data) {
                         if (data.code == 200) {
@@ -70,7 +67,7 @@
                             }
                             $("#tbody").append($('<tr style="border: 1px;">').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("总量:"+numberAll)).append($('<td>').html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>'))
                     }else {
-                            alert(111)
+                           layer.msg("当前数据为空!")
                         }
                     }
                 })
@@ -85,8 +82,8 @@
         }
     </script>
 </head>
-<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点统计</span></div>
-    <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择统计日期"/>
+<div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点分配</span></div>
+    <input type="text" class="" id="querytName" placeholder="请输入茶点名">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
     <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
@@ -95,13 +92,10 @@
     <table class="table table-bordered" id="table-bordered">
         <thead style="background-color: #f4f4f4;">
         <tr>
-            <th>茶点id</th>
-            <th>品类</th>
-            <th>茶点名</th>
+            <th>选餐人</th>
+            <th>茶点</th>
             <th>图片</th>
-            <th>单价</th>
-            <th>总数</th>
-            <th>RMB</th>
+            <th>个数</th>
         </tr>
         </thead>
         <tbody id="tbody">

@@ -39,7 +39,7 @@ public class TeaChooseController {
         if (list.size() > 0 && list != null) {
             return R.ok("数据获取成功").put("data", list);
         } else if(list.size()==0) {
-            return R.ok("数据为空");
+            return R.error("数据为空");
         } else{
             return R.error("获取数据失败");
         }
@@ -58,7 +58,7 @@ public class TeaChooseController {
             if ("success".equals(str)) {
                 return R.ok("添加成功");
             } else if ("repeat".equals(str)) {
-                return R.error("重复添加");
+                return R.ok("重复添加");
             } else {
                 return R.error("添加失败");
             }
@@ -123,4 +123,57 @@ public class TeaChooseController {
         }
     }
 
+    //茶点  统计
+    @RequestMapping(value = "/teaStatistics")
+    public String teaStatistics(HttpSession session) {
+       /* if (session.getAttribute("sessionUser") == null) {
+            return "redirect:/login";
+        }*/
+        return "teaStatistics";
+    }
+
+    /**
+     * 查询 茶点统计
+     * @param teaChoose
+     * @return
+     */
+    @RequestMapping(value = "/getTeatatistics", method = RequestMethod.GET)
+    @ResponseBody
+    public R getTeatatistics(TeaChoose teaChoose) {
+        ArrayList<Map<String, Object>> list = teaChooseService.getTeaStatistics(teaChoose);
+        if (list.size() > 0 && list != null) {
+            return R.ok("数据获取成功").put("data", list);
+        } else if(list.size()==0) {
+            return R.error("数据为空");
+        } else{
+            return R.error("获取数据失败");
+        }
+    }
+
+    @RequestMapping(value = "/teaDistribute")
+    public String teaDistribute(HttpSession session) {
+      /*  if (session.getAttribute("sessionUser") == null) {
+            return "redirect:/login";
+        }*/
+        return "teaDistribute";
+    }
+
+    /**
+     * 查询 茶点分发
+     * @param teaChoose
+     * @return
+     */
+    @RequestMapping(value = "/getTeaDistribute", method = RequestMethod.GET)
+    @ResponseBody
+    public R getTeaDistribute(TeaChoose teaChoose) {
+        ArrayList<Map<String, Object>> list = teaChooseService.getTeaDistribute(teaChoose);
+        ArrayList<Map<String, Object>> ulist = teaChooseService.getTeaUser(teaChoose);
+        if (list.size() > 0 && list != null) {
+            return R.ok("数据获取成功").put("data", list).put("ulist", ulist);
+        } else if(list.size()==0) {
+            return R.error("数据为空");
+        } else{
+            return R.error("获取数据失败");
+        }
+    }
 }
