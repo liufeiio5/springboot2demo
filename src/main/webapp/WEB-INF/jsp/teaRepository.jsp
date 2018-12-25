@@ -120,6 +120,7 @@
                                 td.append(look).append(upd);
                                 tr.append(td);
                                 $("#tbody").append(tr);
+
                             }
                             //图片放大
                             $(".timgs .timgs-item img").hover(function () {
@@ -250,6 +251,12 @@
                         }
                     }
                 })
+
+                $('#addCatNameSelect').next().bind('click', function () {
+                    $('#addCatName').val('')
+                    $('#addCatName').toggle();
+                    $('#addCatNameSelect').toggle();
+                })
             }
 
         })
@@ -273,12 +280,15 @@
 
         //校验
         function addcheck() {
-            if ($("#addCatName").val().trim() == null || $("#addCatName").val().trim() == '') {
-                layer.msg("类别不能为空!");
-                ajax().abort;
+            if($("#addtName").val().trim()==null|| $("#addtName").val().trim()=="") {
+                alert($("#addCatNameSelect").val())
+                if ($("#addCatNameSelect").val().trim() == null || $("#addCatNameSelect").val().trim() == "") {
+                    layer.msg("茶点名不能为空!");
+                    ajax().abort;
+                }
             }
-            if($("#addtName").val().trim()== null|| $("#addtName").val().trim() == ''){
-                layer.msg("名称不能为空!");
+            if ($("#addtName").val().trim() == null || $("#addtName").val().trim() == '') {
+                layer.msg("品类不能为空!");
                 ajax().abort;
             }
             if ($("#tImg")== null ) {
@@ -305,6 +315,7 @@
                 window.location.href="/logout";
             }
         }
+
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
@@ -363,7 +374,7 @@
                     <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                         <table>
                             <tbody>
-                            <form id="updfileform" action="upload" method="post" enctype="multipart/form-data">
+                            <form id="updfileform" method="post" enctype="multipart/form-data">
                             <tr>
                                 <td style="width:12%;">编号:</td>
                                 <td style="width:60%;">
@@ -499,13 +510,13 @@
                 <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                     <table>
                         <tbody>
-                        <form id="fileform" action="upload" method="post" enctype="multipart/form-data">
+                        <form id="fileform" method="post" enctype="multipart/form-data">
                             <tr>
                                 <td style="width:12%;">品类:</td>
                                 <td style="width:60%;">
-                                    <input type="text" class="form-control" id="addCatName" style="display:none;" name="catName">
-                                    <select class="form-control" id="addCatNameSelect"></select>&nbsp;<button class="btn btn-danger" name="catName">
-                                    <i class="glyphicon glyphicon-transfer"></i></button>
+                                    <input type="text" class="form-control" id="addCatName" style="display:none;" name="catName1">
+                                    <select class="form-control" id="addCatNameSelect" name="catName2"></select>&nbsp;
+                                    <input type="button" value="→" style="width: 30px;height: 30px;" class="btn btn-danger"></input>
                                 </td>
                             </tr>
                             <tr>

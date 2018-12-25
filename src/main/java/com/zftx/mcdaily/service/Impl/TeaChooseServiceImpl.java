@@ -91,6 +91,7 @@ public class TeaChooseServiceImpl implements TeaChooseService {
         if(allMopney==null){
             allMopney=0;
         }
+
         if((allMopney+teaPrice)>10){
             return "out";
         }else{

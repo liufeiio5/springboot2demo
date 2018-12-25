@@ -364,14 +364,15 @@
                         <tr>
                             <td style="width:12%;">茶点:</td>
                             <td style="width:60%;">
-                                <select tabindex="1" id="addTeaId">
+                                <select tabindex="1" id="addTeaId" style="width: 200px;">
+                                    <option value="">-----------请选择----------</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td style="width:12%;">数量:</td>
                             <td style="width:60%;">
-                                <input class="form-control" id="addNumber" name="number"></input>
+                                <input class="form-control" id="addNumber" name="number" style="width: 250px;" placeholder="请输入您要点餐的个数"></input>
                             </td>
                         </tr>
                         </tbody>
@@ -402,29 +403,33 @@
             },
             success: function (data) {
                 var json = data.data
+                var td = $("#addTeaId").parent();
+                td.html('');
+                td.append($('<select>').attr('tabindex',1).attr('id','addTeaId'));
                 for (var i in json) {
-                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">' + json[i].catName + '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
                     $("#addTeaId").append(str)
                 }
+                $("#addTeaId").addClass("wSelect-el");
                 $("#addTeaId").wSelect();
             }
         })
     }
 
-       /* $.ajax({
+        $.ajax({
             url: "/getTeaRepository",
             type: 'get',
             dataType: "json",
             data: {},
             success: function (data) {
                 var json = data.data
-                console.log(json)
+                var str
                 for (var i in json) {
-                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">' + json[i].catName + '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                    str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
                     $("#addTeaId").append(str)
                 }
                 $("#addTeaId").wSelect();
             }
-        })*/
+        })
 </script>
 </html>
