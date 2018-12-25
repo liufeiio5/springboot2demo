@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/chosen.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-dropdown-hover.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
@@ -63,6 +64,9 @@
     </style>
     <script type="text/javascript">
         $(function () {
+
+            $.fn.bootstrapDropdownHover();
+
             //查询
             $("#query").click(function () {
                 inittable()
@@ -87,12 +91,15 @@
                         if(data.message=="数据获取成功") {
                             if ($("#queryCatName").val() == null) {
                                 $("#queryCatName").html("");
+                                $("#addCatNameSelect").html("");
                                 var str = '<option value="" >请选择品类</option>';
                                 $("#queryCatName").append(str);
+                                $("#addCatNameSelect").append(str);
                                 for (var i in data.catNameList) {
                                     var str1 = '<option value="' + data.catNameList[i].catName + '" >' + data.catNameList[i].catName + '</option>';
                                     $("#queryCatName").append(str1);
                                     $("#updCatName").append(str1);
+                                    $("#addCatNameSelect").append(str1);
                                 }
                             }
                             var json = data.data
@@ -306,9 +313,21 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格区间:&nbsp;<input type="text" id="lowPrice" placeholder="请输入最低期望价格">&nbsp;—&nbsp<input type="text" id="highPrice" placeholder="请输入最高期望价格">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-    <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 下午茶茶点仓库</span>
-    <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-    <a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+    <div class="dropdown" style="float: right;margin-right:80px;margin-top: 20px;cursor:pointer;">
+        <p class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <img style="width: 40px;border-radius:50px;border: 1px solid #999999;margin-right: 10px;" src="/images/touxiang.jpg" />
+            ${sessionUser.fullName}
+            <span class="caret"></span>
+        </p>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li>
+                <a href="/home">返回首页</a>
+            </li>
+            <li role="presentation">
+                <a onclick="loginOut()">退出登录</a>
+            </li>
+        </ul>
+    </div>
     <a href="/teaChoose">点餐</a>
     <a href="/teaStatistics">统计</a>
     <a href="/teaDistribute">分发</a>
@@ -352,13 +371,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">类别:</td>
+                                <td style="width:12%;">品类:</td>
                                 <td style="width:60%;">
                                     <select class="form-control" id="updCatName" name="catName"></select>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">名称:</td>
+                                <td style="width:12%;">茶点:</td>
                                 <td>
                                     <input type="text" id="updtName"  class="form-control" name="tName"/>
                                 </td>
@@ -393,8 +412,8 @@
                         </table>
                         <tr><td class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
-                            <button id="updfiles" >上传提交</button>
-                            <input id="updDutyRecord" class="btn btn-primary" type="reset" value="重置">
+                            <button id="updfiles" class="btn btn-primary">上传提交</button>
+                            <input id="updDutyRecord" class="btn btn-danger" type="reset" value="重置">
                         </td></tr>
                         <tr><td class="main_tdbor"></td></tr>
                     </table>
@@ -482,13 +501,15 @@
                         <tbody>
                         <form id="fileform" action="upload" method="post" enctype="multipart/form-data">
                             <tr>
-                                <td style="width:12%;">类别:</td>
+                                <td style="width:12%;">品类:</td>
                                 <td style="width:60%;">
-                                    <input class="form-control" id="addCatName" name="catName"></input>
+                                    <input type="text" class="form-control" id="addCatName" style="display:none;" name="catName">
+                                    <select class="form-control" id="addCatNameSelect"></select>&nbsp;<button class="btn btn-danger" name="catName">
+                                    <i class="glyphicon glyphicon-transfer"></i></button>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">名称:</td>
+                                <td style="width:12%;">茶点:</td>
                                 <td>
                                     <input type="text" id="addtName"  class="form-control" name="tName"/>
                                 </td>
@@ -523,8 +544,8 @@
                     </table>
                     <tr><td class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
-                        <button id="addfiles" >上传提交</button>
-                        <input id="addDutyRecord" class="btn btn-primary" type="reset" value="重置">
+                        <button id="addfiles" class="btn btn-primary">上传提交</button>
+                        <input id="addDutyRecord" class="btn btn-danger" type="reset" value="重置">
                     </td></tr>
                     <tr><td class="main_tdbor"></td></tr>
                 </table>

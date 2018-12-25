@@ -103,7 +103,6 @@ public class TeaChooseServiceImpl implements TeaChooseService {
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx"+tName);
         ArrayList<Map<String,Object>> list=teaChooseMapper. getTeaStatistics(teaChoose,tName);
         return list;
     }

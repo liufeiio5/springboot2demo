@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/chosen.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-dropdown-hover.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
@@ -31,9 +32,42 @@
             text-align: center;
             margin-bottom: 10px;
         }
+        .timg{
+            width: 90px;
+            height: 90px;
+        }
+
+        .tcen tr th{
+            text-align: center !important;
+        }
+
+        .cen tr td{
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        #pic {
+            position: fixed;
+            display: none;
+        }
+
+        #pic1 {
+            width: 300px;
+            height: auto;
+            border-radius: 5px;
+            -webkit-box-shadow: 5px 5px 5px 5px hsla(0, 0%, 5%, 1.00);
+            box-shadow: 5px 5px 5px 0px hsla(0, 0%, 5%, 0.3);
+        }
     </style>
     <script type="text/javascript">
         $(function () {
+
+            $.fn.bootstrapDropdownHover();
+
             laydate.render({elem: '#chooseDate'});
             //查询
             $("#query").click(function () {
@@ -61,7 +95,7 @@
                                 tr.append($('<td>').html(json[i].id))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<img>').attr('src', json[i].tImg)))
+                                tr.append($('<td>').append($('<img>').attr('width','154px').attr('height','136px').attr('src', json[i].tImg)))
                                 tr.append($('<td>').html(json[i].price))
                                 tr.append($('<td>').html(json[i].number))
                                 numberAll=numberAll+json[i].number
@@ -69,7 +103,9 @@
                                 moneyAll=moneyAll+json[i].money
                                 $("#tbody").append(tr);
                             }
-                            $("#tbody").append($('<tr style="border: 1px;">').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("")).append($('<td>').html("总量:"+numberAll)).append($('<td>').html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>'))
+                            var zhongji = $("#zhongji").html("总量:"+numberAll).css('margin-right','100px')
+                            var zhongji2 = $("#zhongji2").html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>')
+                            $('#zhongji1').append(zhongji).append(zhongji2).css('text-align','right').css('margin-right','100px').css('font-size','20px')
                     }else {
                             layer.msg("当前数据为空")
                         }
@@ -90,14 +126,26 @@
     <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择统计日期"/>
     <input type="text" id="tea_tName" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择茶点"/>
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
-    <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
-    <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-    <a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+    <div class="dropdown" style="float: right;margin-right:80px;margin-top: 20px;cursor:pointer;">
+        <p class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <img style="width: 40px;border-radius:50px;border: 1px solid #999999;margin-right: 10px;" src="/images/touxiang.jpg" />
+            ${sessionUser.fullName}
+            <span class="caret"></span>
+        </p>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li>
+                <a href="/home">返回首页</a>
+            </li>
+            <li role="presentation">
+                <a onclick="loginOut()">退出登录</a>
+            </li>
+        </ul>
+    </div>
     <a href="/teaRepository">茶点仓库</a>
     <a href="/teaChoose">点餐</a>
     <a href="/teaDistribute">分发</a>
     <div>
-    <table class="table table-bordered" id="table-bordered">
+    <table class="table table-bordered" id="table-bordered" class="tcen">
         <thead style="background-color: #f4f4f4;">
         <tr>
             <th>茶点id</th>
@@ -109,10 +157,14 @@
             <th>RMB</th>
         </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="tbody" class="cen">
 
         </tbody>
     </table>
+    <div id="zhongji1">
+        <span id="zhongji"></span>
+        <span id="zhongji2"></span>
+    </div>
     </div>
 </body>
 </html>

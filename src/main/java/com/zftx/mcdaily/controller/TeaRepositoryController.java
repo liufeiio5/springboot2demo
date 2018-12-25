@@ -99,7 +99,6 @@ public class TeaRepositoryController {
                         teaRepository.setTImg(tImg);
                         if (teaRepository != null) {
                             String str = teaRepositoryService.addTeaRepository(teaRepository);
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+str);
                             if ("success".equals(str)) {
                                 return R.ok("添加成功");
                             } else if ("repeat".equals(str)) {
