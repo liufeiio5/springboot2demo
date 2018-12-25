@@ -63,6 +63,9 @@
             -webkit-box-shadow: 5px 5px 5px 5px hsla(0, 0%, 5%, 1.00);
             box-shadow: 5px 5px 5px 0px hsla(0, 0%, 5%, 0.3);
         }
+        th{
+            text-align: center !important;
+        }
     </style>
     <script type="text/javascript">
         $(function () {
@@ -78,7 +81,7 @@
                     var json = data.catNameList
                     $("#addCatName").append('<option value="">请选择</option>')
                     for (var i in json) {
-                        var str = '<option  class="assisManItem" value="' + json[i].catName + '"  >' + json[i].catName + '</option>';
+                        var str = '<option  class="assisManItem" value="' + json[i].catName + '">' + json[i].catName + '</option>';
                         $("#addCatName").append(str)
                     }
                     $("#addCatName").trigger("liszt:updated");
@@ -124,7 +127,7 @@
                                 var minus = $('<td>').append($('<button>').attr('id', id).html("-").addClass('minus').attr("teaPrice", json[i].price).css('background', 'white').css('border', 'white'))
                                 var number = $('<td>').append(json[i].number).addClass('teaNumber' + '_' + id)
                                 var addTeaNumber = $('<td>').append($('<button>').attr('id', id).html("+").addClass('addTeaNumber').attr("teaPrice", json[i].price).css('background', 'white').css('border', 'white'))
-                                tr.append($('<td>').append($('<table>')).append($('<tr>')).append(minus).append(number).append(addTeaNumber))
+                                tr.append($('<td>').append($('<table>').css("")).append($('<tr>')).append(minus).append(number).append(addTeaNumber))
                                 $("#tbody").append(tr);
                             }
                             $("#TeaBalance").html(TeaBalance + "茶币")
@@ -203,6 +206,7 @@
                         }
                         //茶点选餐
                         $('#addfiles').click(function () {
+                            addcheck()
                             var addNumber=$("#addNumber").val();
                             var teaId=$("#addTeaId").val();
                             $.ajax({
@@ -240,6 +244,12 @@
             }
 
         })
+        function check() {
+            var reg = new RegExp(/^\d+$/);
+            if(!reg.test($("#").val())){
+                layer.msg("单价请输入数字")
+            }
+        }
 
         function Close() {
             $("#updtImgShow").empty()
@@ -281,10 +291,23 @@
 
         //校验
         function addcheck() {
-            /*if ($("#addCatName").val().trim() == null || $("#addCatName").val().trim() == '') {
+            if ($("#addCatName").val().trim() == null || $("#addCatName").val().trim() == '') {
                 layer.msg("类别不能为空!");
                 ajax().abort;
-            }*/
+            }
+            if ($("#addTeaId").val().trim() == null || $("#addTeaId").val().trim() == '') {
+                layer.msg("请选择茶点!");
+                ajax().abort;
+            }
+            if ($("#addNumber").val().trim() == null || $("#addNumber").val().trim() == '') {
+                layer.msg("数量不能为空!");
+                ajax().abort;
+            }
+            var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
+            if (r.test($("#addNumber").val())||isNaN($("#addNumber").val())) {
+                layer.msg("数量请输入规范!");
+                ajax.abort;
+            }
         }
 
         function loginOut(){
@@ -352,39 +375,37 @@
             </div>
             <div class="modal-body">
                 <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
-                    <table>
-                        <tbody>
                         <tr>
-                            <td style="width:12%;">品类:</td>
+                            <td style="width:22%;" align="center">品类:</td>
                             <td style="width:60%;">
                                 <select class="form-control" id="addCatName" style="width: 100px;" onchange="addCatNameChoose()" />
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:12%;">茶点:</td>
+                            <td style="width:22%;" align="center">茶点:</td>
                             <td style="width:60%;">
                                 <select tabindex="1" id="addTeaId" style="width: 200px;">
-                                    <option value="">-----------请选择----------</option>
+                                    <option value="">---------请选择---------</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:12%;">数量:</td>
+                            <td style="width:22%;" align="center">数量:</td>
                             <td style="width:60%;">
                                 <input class="form-control" id="addNumber" name="number" style="width: 250px;" placeholder="请输入您要点餐的个数"></input>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                    <tr><td class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default">关闭</button>
-                        <button id="addfiles" >提交</button>
-                    </td></tr>
-                    <tr><td class="main_tdbor"></td></tr>
+                        <tr>
+                            <td class="modal-footer"  style="width:22%;"></td>
+                            <td class="modal-footer"  style="width:60%;">
+                                <button data-dismiss="modal" class="btn btn-info" onclick="Close()">关闭</button>
+                                <button id="addfiles" class="btn btn-danger">提交</button>
+                            </td>
+                            <td class="modal-footer" align="right" >
+                            </td>
+                        </tr>
                 </table>
-                <tr>
-                </tr>
             </div>
         </div>
     </div>

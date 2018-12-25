@@ -37,7 +37,7 @@
             height: 90px;
         }
 
-        .tcen tr th{
+         th{
             text-align: center !important;
         }
 

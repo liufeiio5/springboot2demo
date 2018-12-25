@@ -262,6 +262,8 @@
         })
 
         function Close() {
+            $("#addCatNameSelect").val("")
+            $("#addCatName").val("")
             $("#updtImgShow").empty()
             $("#looktImg").empty()
             $("#addtName").val("")
@@ -281,14 +283,13 @@
         //校验
         function addcheck() {
             if($("#addtName").val().trim()==null|| $("#addtName").val().trim()=="") {
-                alert($("#addCatNameSelect").val())
                 if ($("#addCatNameSelect").val().trim() == null || $("#addCatNameSelect").val().trim() == "") {
-                    layer.msg("茶点名不能为空!");
+                    layer.msg("品类不能为空!");
                     ajax().abort;
                 }
             }
             if ($("#addtName").val().trim() == null || $("#addtName").val().trim() == '') {
-                layer.msg("品类不能为空!");
+                layer.msg("品名不能为空!");
                 ajax().abort;
             }
             if ($("#tImg")== null ) {
@@ -339,7 +340,8 @@
             </li>
         </ul>
     </div>
-    <a href="/teaChoose">点餐</a>
+    <%--<a href="/teaChoose"><img src="/images/tea_dc.png" title="选餐" style="width:30px;height: 30px;"></a>--%>
+    <a href="/teaChoose">选餐</a>
     <a href="/teaStatistics">统计</a>
     <a href="/teaDistribute">分发</a>
     <div>
@@ -388,7 +390,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">茶点:</td>
+                                <td style="width:12%;">品名:</td>
                                 <td>
                                     <input type="text" id="updtName"  class="form-control" name="tName"/>
                                 </td>
@@ -407,7 +409,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">价格:</td>
+                                <td style="width:12%;">单价:</td>
                                 <td style="width:60%;">
                                     <input class="form-control" id="updPrice" name="price"></input>
                                 </td>
@@ -419,14 +421,16 @@
                                 </td>
                             </tr>
                             </form>
+                            <tr >
+                                <td colspan="3" align="right" class="modal-footer">
+                                    <button style="width:50px;" data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
+                                    <button style="width:50px;" id="updfiles" class="btn btn-primary">提交</button>
+                                    <button  style="width:50px;" id="updDutyRecord" class="btn btn-danger" onclick="Close()">重置</button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
-                        <tr><td class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
-                            <button id="updfiles" class="btn btn-primary">上传提交</button>
-                            <input id="updDutyRecord" class="btn btn-danger" type="reset" value="重置">
-                        </td></tr>
-                        <tr><td class="main_tdbor"></td></tr>
+
                     </table>
                     <tr>
                     </tr>
@@ -454,7 +458,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">名称:</td>
+                                <td style="width:12%;">品名:</td>
                                 <td>
                                     <input type="text" id="looktName"  class="form-control" name="tName"/>
                                 </td>
@@ -520,7 +524,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">茶点:</td>
+                                <td style="width:12%;">品名:</td>
                                 <td>
                                     <input type="text" id="addtName"  class="form-control" name="tName"/>
                                 </td>
@@ -539,7 +543,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:12%;">价格:</td>
+                                <td style="width:12%;">单价:</td>
                                 <td style="width:60%;">
                                     <input class="form-control" id="aadPrice" name="price"></input>
                                 </td>
@@ -551,14 +555,15 @@
                                 </td>
                             </tr>
                         </form>
+                            <tr >
+                                <td colspan="3" align="right">
+                                    <button style="width:50px;" data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
+                                    <button style="width:50px;" id="addfiles" class="btn btn-primary">提交</button>
+                                    <button  style="width:50px;" class="btn btn-danger" onclick="Close()">重置</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-                    <tr><td class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
-                        <button id="addfiles" class="btn btn-primary">上传提交</button>
-                        <input id="addDutyRecord" class="btn btn-danger" type="reset" value="重置">
-                    </td></tr>
-                    <tr><td class="main_tdbor"></td></tr>
                 </table>
                 <tr>
                 </tr>
