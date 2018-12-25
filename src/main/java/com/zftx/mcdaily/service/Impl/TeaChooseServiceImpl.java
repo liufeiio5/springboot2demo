@@ -1,6 +1,7 @@
 package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.TeaChoose;
+import com.zftx.mcdaily.bean.TeaRepository;
 import com.zftx.mcdaily.mapper.TeaChooseMapper;
 import com.zftx.mcdaily.mapper.TeaRepositoryMapper;
 import com.zftx.mcdaily.service.TeaChooseService;
@@ -32,15 +33,20 @@ public class TeaChooseServiceImpl implements TeaChooseService {
 
     @Override
     public String addTeaChoose(TeaChoose teaChoose) {
-        /*ArrayList<Map<String,Object>> trlist=teaRepositoryMapper.getTeaRepository(new TeaRepository().setId(teaChoose.getTeaId()),null,null,null);
-        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwww"+trlist.toString());
-        TeaRepository teaRepository=(TeaRepository)trlist.get(0);
-        teaChoose.setMoney(teaChoose.getNumber()*teaRepository.getPrice());*/
+        ArrayList<Map<String,Object>> trlist=teaRepositoryMapper.getTeaRepository(new TeaRepository().setId(teaChoose.getTeaId()),null,null,null);
+        Float price=(Float)trlist.get(0).get("price");
+        teaChoose.setMoney(teaChoose.getNumber()*price);
+        if(teaChoose.getDate()==null||teaChoose.getDate()==""){
+            teaChoose.setDate(Tool.getNowDate());
+        }
         Integer allMopney = teaChooseMapper.isBeOutTenMoney(teaChoose);
+        if(allMopney==null){
+            allMopney=0;
+        }
         if ((allMopney + teaChoose.getMoney()) > 10) {
             return "out";
         } else {
-            ArrayList<Map<String, Object>> list = teaChooseMapper.getTeaChoose(new TeaChoose().setUserId(teaChoose.getUserId()).setTeaId(teaChoose.getTeaId()));
+            ArrayList<Map<String, Object>> list = teaChooseMapper.getTeaChoose(new TeaChoose().setUserId(teaChoose.getUserId()).setTeaId(teaChoose.getTeaId()).setDate(teaChoose.getDate()));
             if (list.size() > 0) {
                 return "repeat";
             } else {
@@ -56,6 +62,9 @@ public class TeaChooseServiceImpl implements TeaChooseService {
 
     @Override
     public String updateTeaChoose(TeaChoose teaChoose) {
+        if(teaChoose.getDate()==null||teaChoose.getDate()==""){
+            teaChoose.setDate(Tool.getNowDate());
+        }
         Integer i = teaChooseMapper.updateTeaChoose(teaChoose);
         if (i> 0) {
             return "success";
@@ -74,15 +83,20 @@ public class TeaChooseServiceImpl implements TeaChooseService {
 
 
     @Override
-    public String isBeOutTenMoney(TeaChoose teaChoose,Integer teaPrice) {
+    public String isBeOutTenMoney(TeaChoose teaChoose,Float teaPrice) {
+        if(teaChoose.getDate()==null||teaChoose.getDate()==""){
+            teaChoose.setDate(Tool.getNowDate());
+        }
         Integer allMopney=teaChooseMapper.isBeOutTenMoney(teaChoose);
+        if(allMopney==null){
+            allMopney=0;
+        }
         if((allMopney+teaPrice)>10){
             return "out";
         }else{
             return ""+(allMopney+teaPrice);
         }
     }
-
 
     @Override
     public ArrayList<Map<String,Object>>  getTeaStatistics(TeaChoose teaChoose) {

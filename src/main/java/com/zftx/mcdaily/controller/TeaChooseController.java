@@ -110,9 +110,15 @@ public class TeaChooseController {
         }
     }
 
+    /**
+     * 限制10茶币
+     * @param teaChoose
+     * @param teaPrice
+     * @return
+     */
     @RequestMapping(value = "/isBeOutTenMoney")
     @ResponseBody
-    public R isBeOutTenMoney(TeaChoose teaChoose,Integer teaPrice) {
+    public R isBeOutTenMoney(TeaChoose teaChoose,Float teaPrice) {
         if (teaChoose != null&&teaPrice!=null&&teaPrice!=0){
             String str = teaChooseService.isBeOutTenMoney(teaChoose,teaPrice);
             if ("out".equals(str)) {
@@ -128,9 +134,9 @@ public class TeaChooseController {
     //茶点  统计
     @RequestMapping(value = "/teaStatistics")
     public String teaStatistics(HttpSession session) {
-       /* if (session.getAttribute("sessionUser") == null) {
+        if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
-        }*/
+        }
         return "teaStatistics";
     }
 
@@ -152,11 +158,12 @@ public class TeaChooseController {
         }
     }
 
+    //茶点分发
     @RequestMapping(value = "/teaDistribute")
     public String teaDistribute(HttpSession session) {
-      /*  if (session.getAttribute("sessionUser") == null) {
+        if (session.getAttribute("sessionUser") == null) {
             return "redirect:/login";
-        }*/
+        }
         return "teaDistribute";
     }
 

@@ -309,6 +309,9 @@
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓 下午茶茶点仓库</span>
     <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
     <a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+    <a href="/teaChoose">点餐</a>
+    <a href="/teaStatistics">统计</a>
+    <a href="/teaDistribute">分发</a>
     <div>
     <table class="table table-bordered" id="table-bordered">
         <thead style="background-color: #f4f4f4;" class="tcen">

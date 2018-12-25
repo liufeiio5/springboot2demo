@@ -43,7 +43,7 @@ public interface TeaChooseService {
      * @param teaPrice
      * @return
      */
-    public String isBeOutTenMoney(@Param("teaRepository") TeaChoose teaChoose,Integer teaPrice);
+    public String isBeOutTenMoney(@Param("teaRepository") TeaChoose teaChoose,Float teaPrice);
 
     /**
      * 茶点总量统计
