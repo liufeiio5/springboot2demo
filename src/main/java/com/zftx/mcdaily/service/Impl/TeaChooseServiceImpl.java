@@ -99,29 +99,30 @@ public class TeaChooseServiceImpl implements TeaChooseService {
     }
 
     @Override
-    public ArrayList<Map<String,Object>>  getTeaStatistics(TeaChoose teaChoose) {
+    public ArrayList<Map<String,Object>>  getTeaStatistics(TeaChoose teaChoose,String tName) {
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
-        ArrayList<Map<String,Object>> list=teaChooseMapper. getTeaStatistics(teaChoose);
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx"+tName);
+        ArrayList<Map<String,Object>> list=teaChooseMapper. getTeaStatistics(teaChoose,tName);
         return list;
     }
 
     @Override
-    public ArrayList<Map<String,Object>>  getTeaDistribute(TeaChoose teaChoose) {
+    public ArrayList<Map<String,Object>>  getTeaDistribute(TeaChoose teaChoose,String fullName) {
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
-        ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaDistribute(teaChoose);
+        ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaDistribute(teaChoose,fullName);
         return list;
     }
 
     @Override
-    public ArrayList<Map<String,Object>>  getTeaUser(TeaChoose teaChoose) {
+    public ArrayList<Map<String,Object>>  getTeaUser(TeaChoose teaChoose,String fullName) {
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
-        ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaUser(teaChoose);
+        ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaUser(teaChoose,fullName);
         return list;
     }
 }

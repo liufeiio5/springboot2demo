@@ -40,12 +40,21 @@
             })
             inittable()
             function inittable() {
+                $('#DistributeTable').html("")
                 $("#tbody").html("");
+                var queryNameOruserId=$("#queryNameOruserId").val()
+                if(isNaN(queryNameOruserId)){
+                    var fullName=queryNameOruserId
+                }else{
+                    var userId=queryNameOruserId
+                }
                 $.ajax({
                     url:"getTeaDistribute",
                     type:'get',
                     dataType:"json",
                     data:{
+                        userId:userId,
+                        fullName:fullName
                     },
                     success:function (data) {
                         if (data.code == 200){
@@ -67,7 +76,8 @@
                                     else if(json[i-1].fullName == json[i].fullName)
                                     {
                                         length++;
-                                        console.log($('#DistributeTable').children('tbody').eq(0).children('tr').eq(index).children('td').eq(0).attr('rowspan',length))
+                                        $('#DistributeTable').children('tbody').eq(0).children('tr').eq(index).children('td').eq(0).attr('rowspan',length)
+                                        /*console.log($('#DistributeTable').children('tbody').eq(0).children('tr').eq(index).children('td').eq(0).attr('rowspan',length))*/
                                     }
                                 }
                                 tr.append($('<td>').text(json[i].tName))
@@ -75,28 +85,6 @@
                                 tr.append($('<td>').text(json[i].number))
                                 table.append(tr);
                             }
-
-                          /* /!* for (var i in json){
-                                var tr = $('<tr>');
-                                tr.append($('<td>').html(json[i].fullName).addClass("row"+json.id))
-                                tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
-                                tr.append($('<td>').html(json[i].number))
-                                $("#tbody").append(tr);
-                            }*!/
-                            for(var j in data.ulist){
-                                var tr = $('<tr>');
-                                tr.append($('<td>').html(data.ulist[j].fullName))
-                                tr.append($('<td>').attr('colspan',3).addClass("row"+data.ulist[j].id))
-                                $("#tbody").append(tr);
-                            }
-                            for(var i in json){
-                                var tr = $('<tr>')
-                                tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
-                                tr.append($('<td>').html(json[i].number))
-                                $(".row"+json[i].id).append(tr)
-                            }*/
                      }else {
                            layer.msg("当前数据为空!")
                         }
@@ -114,7 +102,7 @@
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点分配</span></div>
-    <input type="text" class="" id="querytName" placeholder="请输入茶点名">
+    <input type="text" class="" id="queryNameOruserId" placeholder="请输入用户Id或真实姓名">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
     <a id="home" href="/home" class="glyphicon glyphicon-home"></a>

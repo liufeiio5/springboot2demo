@@ -130,13 +130,14 @@
         SELECT tr.id,tr.item_name tName,SUM(tc.number) number,SUM(tc.money) money,tr.item_img tImg,tr.cat_name catName,tr.price
         FROM tea_choose tc
         JOIN tea_repository tr ON tr.id=tc.teaId
-        <if test="teaChoose!=null">
-            <where>
-                <if test="teaChoose.date!=null">
-                    tc.date=#{teaChoose.date}
-                </if>
-            </where>
-        </if>
+        <where>
+            <if test="teaChoose.date!=null">
+                tc.date=#{teaChoose.date}
+            </if>
+            <if test="tName!=null and tName!=''">
+                and tr.item_name like concat(#{tName},'%')
+            </if>
+        </where>
         GROUP BY  tr.id
     </select>
 
@@ -150,6 +151,12 @@
             <where>
                 <if test="teaChoose.date!=null">
                     tc.date=#{teaChoose.date}
+                </if>
+                <if test="fullName!=null and fullName!=''">
+                    and u.full_name=#{fullName}
+                </if>
+                <if test="teaChoose.userId!=null and teaChoose.userId!=0">
+                    and tc.userId=#{teaChoose.userId}
                 </if>
             </where>
         </if>
@@ -165,6 +172,12 @@
             <where>
                 <if test="teaChoose.date!=null">
                     tc.date=#{teaChoose.date}
+                </if>
+                <if test="fullName!=null and fullName!=''">
+                    and u.full_name=#{fullName}
+                </if>
+                <if test="teaChoose.userId!=null and teaChoose.userId!=0">
+                    and tc.userId=#{teaChoose.userId}
                 </if>
             </where>
         </if>

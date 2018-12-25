@@ -51,7 +51,7 @@
       <li>
         <a  href="/teaRepository">
           <input id='7' type='checkbox'>
-          <label title="茶点入库"><img src=""	/> </label>
+          <label title="茶点入库"><img src="/images/xwc.png"/> </label>
         </a>
       </li>
       <li>

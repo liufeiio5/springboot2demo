@@ -51,17 +51,17 @@ public interface TeaChooseMapper {
      * 茶点总量统计
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaStatistics(@Param("teaChoose")TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaStatistics(@Param("teaChoose")TeaChoose teaChoose,@Param("tName")String tName);
 
     /**
      * 茶点分发
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaDistribute(@Param("teaChoose")TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaDistribute(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
 
     /**
      * 获取所有选餐人
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
 }

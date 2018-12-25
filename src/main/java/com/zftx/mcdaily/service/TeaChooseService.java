@@ -49,18 +49,18 @@ public interface TeaChooseService {
      * 茶点总量统计
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaStatistics(TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaStatistics(TeaChoose teaChoose,String tName);
 
     /**
      * 茶点分发
      * @param teaChoose
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaDistribute(TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaDistribute(TeaChoose teaChoose,@Param("fullName")String fullName);
 
     /**
      * 获取所有选餐人
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose);
+    public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
 }

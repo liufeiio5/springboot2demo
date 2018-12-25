@@ -48,7 +48,8 @@
                     type:'get',
                     dataType:"json",
                     data:{
-                        date:chooseDate
+                        date:chooseDate,
+                        tName:$("#tea_tName").val().trim()
                     },
                     success:function (data) {
                         if (data.code == 200) {
@@ -87,6 +88,7 @@
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点统计</span></div>
     <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择统计日期"/>
+    <input type="text" id="tea_tName" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择茶点"/>
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
     <a id="home" href="/home" class="glyphicon glyphicon-home"></a>

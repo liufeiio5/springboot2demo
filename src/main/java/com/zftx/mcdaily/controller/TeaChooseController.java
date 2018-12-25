@@ -147,8 +147,8 @@ public class TeaChooseController {
      */
     @RequestMapping(value = "/getTeatatistics", method = RequestMethod.GET)
     @ResponseBody
-    public R getTeatatistics(TeaChoose teaChoose) {
-        ArrayList<Map<String, Object>> list = teaChooseService.getTeaStatistics(teaChoose);
+    public R getTeatatistics(TeaChoose teaChoose,String tName) {
+        ArrayList<Map<String, Object>> list = teaChooseService.getTeaStatistics(teaChoose,tName);
         if (list.size() > 0 && list != null) {
             return R.ok("数据获取成功").put("data", list);
         } else if(list.size()==0) {
@@ -174,9 +174,9 @@ public class TeaChooseController {
      */
     @RequestMapping(value = "/getTeaDistribute", method = RequestMethod.GET)
     @ResponseBody
-    public R getTeaDistribute(TeaChoose teaChoose) {
-        ArrayList<Map<String, Object>> list = teaChooseService.getTeaDistribute(teaChoose);
-        ArrayList<Map<String, Object>> ulist = teaChooseService.getTeaUser(teaChoose);
+    public R getTeaDistribute(TeaChoose teaChoose,String fullName) {
+        ArrayList<Map<String, Object>> list = teaChooseService.getTeaDistribute(teaChoose,fullName);
+        ArrayList<Map<String, Object>> ulist = teaChooseService.getTeaUser(teaChoose,fullName);
         if (list.size() > 0 && list != null) {
             return R.ok("数据获取成功").put("data", list).put("ulist", ulist);
         } else if(list.size()==0) {
