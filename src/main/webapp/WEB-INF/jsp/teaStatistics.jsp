@@ -142,7 +142,7 @@
         </ul>
     </div>
     <a href="/teaRepository">茶点仓库</a>
-    <a href="/teaChoose">点餐</a>
+    <a href="/teaChoose">选餐</a>
     <a href="/teaDistribute">分发</a>
     <div>
     <table class="table table-bordered" id="table-bordered" class="tcen">

@@ -203,7 +203,7 @@
                                 $("#looktName").val($(this).attr("tName"))
                                 $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")))
                                 $("#lookStandard").val($(this).attr("standard"))
-                                $("#lookPrice").val($(this).attr("price"))
+                                $("#lookPrice").val($(this).attr("price")+"元")
                                 $("#lookNote").val($(this).attr("note"))
                             })
 
@@ -214,7 +214,7 @@
                                 $("#updtName").val($(this).attr("tName"))
                                 $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")))
                                 $("#updStandard").val($(this).attr("standard"))
-                                $("#updPrice").val($(this).attr("price"))
+                                $("#updPrice").val($(this).attr("price")+"元")
                                 $("#updNote").val($(this).attr("note"))
                             })
 
@@ -425,7 +425,6 @@
                                 <td colspan="3" align="right" class="modal-footer">
                                     <button style="width:50px;" data-dismiss="modal" class="btn btn-default" onclick="Close()">关闭</button>
                                     <button style="width:50px;" id="updfiles" class="btn btn-primary">提交</button>
-                                    <button  style="width:50px;" id="updDutyRecord" class="btn btn-danger" onclick="Close()">重置</button>
                                 </td>
                             </tr>
                             </tbody>

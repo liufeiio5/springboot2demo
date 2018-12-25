@@ -153,7 +153,7 @@
         </ul>
     </div>
     <a href="/teaRepository">茶点仓库</a>
-    <a href="/teaChoose">点餐</a>
+    <a href="/teaChoose">选餐</a>
     <a href="/teaStatistics">统计</a>
     <div>
     <table class="table table-bordered" id="table-bordered">
