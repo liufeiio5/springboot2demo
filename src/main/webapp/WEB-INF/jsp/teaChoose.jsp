@@ -262,6 +262,7 @@
         }
 
 
+
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点选餐</span></div>
@@ -347,22 +348,40 @@
 <link rel="Stylesheet" type="text/css" href="/css/Select.css"/>
 <script type="text/javascript" src="/js/select.min.js"></script>
 <script type="text/javascript">
-
+    function addCatNameChoose() {
         $.ajax({
-            url:"/getTeaRepository",
-            type:'get',
-            dataType:"json",
-            data:{
+            url: "/getTeaRepository",
+            type: 'get',
+            dataType: "json",
+            data: {
+                catName:$("#addCatName").val()
             },
-            success:function (data) {
-                var json=data.data
-                console.log(json)
-                for (var i in json){
-                    var str='<option value="'+json[i].id+'" data-icon="'+json[i].tImg+'">'+json[i].catName+'&nbsp;-&nbsp;'+json[i].tName+'&nbsp;-&nbsp;'+json[i].price+'元'+'</option>';
+            success: function (data) {
+                var json = data.data
+                $("#addTeaId").addClass("addTeaId_"+flag)
+                for (var i in json) {
+                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">' + json[i].catName + '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
                     $("#addTeaId").append(str)
                 }
                 $("#addTeaId").wSelect();
             }
         })
+    }
+
+       /* $.ajax({
+            url: "/getTeaRepository",
+            type: 'get',
+            dataType: "json",
+            data: {},
+            success: function (data) {
+                var json = data.data
+                console.log(json)
+                for (var i in json) {
+                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">' + json[i].catName + '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                    $("#addTeaId").append(str)
+                }
+                $("#addTeaId").wSelect();
+            }
+        })*/
 </script>
 </html>
