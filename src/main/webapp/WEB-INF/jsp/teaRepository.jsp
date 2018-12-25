@@ -204,7 +204,7 @@
                                 $("#updId").val($(this).attr("id"))
                                 $("#updCatName").val($(this).attr("catName"))
                                 $("#updtName").val($(this).attr("tName"))
-                                $("#updtImgShow").append($('<img>').attr('src', $(this).attr("tImg")))
+                                $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")))
                                 $("#updStandard").val($(this).attr("standard"))
                                 $("#updPrice").val($(this).attr("price"))
                                 $("#updNote").val($(this).attr("note"))
@@ -301,7 +301,7 @@
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
-    <select id="queryCatName" style="width:155px;margin-left: 10px;" class="layui-input" placeholder="请输入茶点类别"/></select>
+    <select id="queryCatName" style="width:174px;margin-left: 10px;height: 27px" class="layui-input" placeholder="请输入茶点类别"/></select>
     <input type="text" class="" id="querytName" placeholder="请输入茶点名">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格区间:&nbsp;<input type="text" id="lowPrice" placeholder="请输入最低期望价格">&nbsp;—&nbsp<input type="text" id="highPrice" placeholder="请输入最高期望价格">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>

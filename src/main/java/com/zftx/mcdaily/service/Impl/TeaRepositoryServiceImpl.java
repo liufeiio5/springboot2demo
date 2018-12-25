@@ -54,9 +54,6 @@ public class TeaRepositoryServiceImpl implements TeaRepositoryService {
     @Override
     public List<TeaRepository> getTeaRepositoryCatName() {
         List<TeaRepository> catNameList=teaRepositoryMapper.getTeaRepositoryCatName();
-        if(catNameList.size()>0){
-            return catNameList;
-        }
-        return null;
+        return catNameList;
     }
 }

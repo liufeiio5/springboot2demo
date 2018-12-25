@@ -77,7 +77,7 @@ public class TeaRepositoryController {
         //茶点不能重复
         String flag="isNoLike";
         ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag,null,null);
-        if (arrayList==null) {
+        if (arrayList.size()==0) {
             teaRepository.setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
             //上传地址
             String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
@@ -99,6 +99,7 @@ public class TeaRepositoryController {
                         teaRepository.setTImg(tImg);
                         if (teaRepository != null) {
                             String str = teaRepositoryService.addTeaRepository(teaRepository);
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+str);
                             if ("success".equals(str)) {
                                 return R.ok("添加成功");
                             } else if ("repeat".equals(str)) {

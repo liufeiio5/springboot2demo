@@ -12,7 +12,7 @@
         <result column="money" property="money"/>
         <result column="date" property="date"/>
     </resultMap>
-    <sql id="columnAll">tc.id,tc.userId,u.full_name fullName,tc.teaId,tr.item_name tName,tr.item_img tImg,tr.standard,tr.note,tr.cat_name catName,tr.price,tc.number,tc.money</sql>
+    <sql id="columnAll">tc.id,tc.userId,u.full_name fullName,tc.teaId,tr.item_name tName,tr.item_img tImg,tr.standard,tr.note,tr.cat_name catName,tr.price,tc.number,tc.money,tc.date</sql>
     <!--查询 茶点选餐-->
     <select id="getTeaChoose" resultType="java.util.Map">
         select
@@ -111,7 +111,7 @@
 
     <!--用户选餐价格不能超过10茶币-->
     <select id="isBeOutTenMoney" parameterType="com.zftx.mcdaily.bean.TeaChoose" resultType="java.lang.Integer">
-        SELECT SUM(money)  FROM tea_choose WHERE userId=58
+        SELECT SUM(money)  FROM tea_choose WHERE userId=#{teaChoose.userId}
     </select>
 
 
@@ -132,7 +132,7 @@
 
     <!--茶点分发-->
     <select id="getTeaDistribute" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
-        SELECT u.full_name fullName,tr.item_name tName,SUM(tc.number) number,tr.item_img tImg
+        SELECT u.id,u.full_name fullName,tr.item_name tName,SUM(tc.number) number,tr.item_img tImg
         FROM tea_choose tc
         JOIN user u ON u.id=tc.userId
         JOIN tea_repository tr ON tr.id=tc.teaId

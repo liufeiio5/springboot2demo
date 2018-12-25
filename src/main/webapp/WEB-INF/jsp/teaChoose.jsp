@@ -60,6 +60,7 @@
                                 var tr = $('<tr>');
                                 var id = json[i].id
                                 tr.append($('<td>').html(id))
+                                tr.append($('<td>').html(json[i].date))
                                 tr.append($('<td>').html(json[i].fullName))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
@@ -100,7 +101,7 @@
                                         money: teaMoney
                                     },
                                     success: function (data) {
-                                            $("#TeaBalance").html( parseInt($("#TeaBalance").html())+parseInt(teaPrice) + "茶币")
+                                        $("#TeaBalance").html( parseInt($("#TeaBalance").html())+parseInt(teaPrice) + "茶币")
                                     }
                                 })
                             })
@@ -145,49 +146,47 @@
                                 })
                             })
 
-                            //茶点选餐
-                            $('#addfiles').unbind('click').click(function () {
-                                addcheck();
-                                $.ajax({
-                                    url: "addTeaRepository",
-                                    type: 'post',
-                                    cache: false, // 不缓存
-                                    data: new FormData($('#fileform')[0]),
-                                    processData: false,//  告诉jquery不要处理发送的数据
-                                    contentType: false,    // 告诉jquery不要设置content-Type请求头
-                                    dataType: "json",
-                                    async: false,
-                                    success: function (data) {
-                                        /*$('#x8').val('['+data.urls+']');*/
-                                        if (data.code == 200) {
-                                            layer.msg('上传成功,已入库!', {
-                                                icon: 1,
-                                                time: 1000
-                                            });
-                                            setTimeout(function wlh() {
-                                                window.location.href = "/teaRepository"
-                                            }, 500)
-                                        } else if (data.message == "重复添加") {
-                                            layer.msg("该茶点已存在!")
-                                        } else {
-                                            layer.msg("修改失败!")
-                                        }
-                                    }
-                                });
-                            })
 
-                            //查看
-                            $('.lookTeaRepository').click(function () {
-                                $("#lookCatName").val($(this).attr("catName"))
-                                $("#looktName").val($(this).attr("tName"))
-                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")))
-                                $("#lookStandard").val($(this).attr("standard"))
-                                $("#lookPrice").val($(this).attr("price"))
-                                $("#lookNote").val($(this).attr("note"))
-                            })
-                    }else {
+                        }else {
+                            $("#TeaBalance").html("10茶币")
                             layer.msg("当前数据为空")
                         }
+                        //茶点选餐
+                        $('#addfiles').click(function () {
+                            var addNumber=$("#addNumber").val();
+                            var money=addNumber*2;
+                            var teaId=$("#addTeaId").val();
+                            $.ajax({
+                                url: "addTeaChoose",
+                                data: {
+                                    userId:${sessionUser.id},
+                                    teaId:teaId,
+                                    money:money,
+                                    number:addNumber,
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        layer.msg('点餐成功!', {
+                                            icon: 1,
+                                            time: 1000
+                                        });
+                                        setTimeout(function wlh() {
+                                            window.location.href = "/teaChoose"
+                                        }, 500)
+                                    }else if(data.message=="out"){
+                                        layer.msg('您的茶币不足!', {
+                                            icon: 1,
+                                            time: 1000
+                                        });
+                                    } else if (data.message == "repeat") {
+                                        layer.msg("该茶点已点!")
+                                    } else {
+                                        layer.msg("修改失败!")
+                                    }
+                                }
+                            });
+                        })
                     }
                 })
             }
@@ -235,10 +234,10 @@
         }
         //校验
         function addcheck() {
-            if ($("#addCatName").val().trim() == null || $("#addCatName").val().trim() == '') {
+            /*if ($("#addCatName").val().trim() == null || $("#addCatName").val().trim() == '') {
                 layer.msg("类别不能为空!");
                 ajax().abort;
-            }
+            }*/
         }
 
         function loginOut(){
@@ -249,18 +248,19 @@
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点选餐</span></div>
-    <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择点餐日期"/>
-    <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
-    <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
-    <span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
-    <a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-    <a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
-    <span><font size="4"><b>今日余额:<span style="color: red" id="TeaBalance"></span></b></font></span>
-    <div>
+<input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择点餐日期"/>
+<button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>
+<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red">${sessionUser.fullName}</font> 登录米仓日报系统</span>
+<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
+<a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+<span><font size="4"><b>今日余额:<span style="color: red" id="TeaBalance"></span></b></font></span>
+<div>
     <table class="table table-bordered" id="table-bordered">
         <thead style="background-color: #f4f4f4;">
         <tr>
             <th>茶点id</th>
+            <th>日期</th>
             <th>选餐人</th>
             <th>品类</th>
             <th>品名</th>
@@ -275,7 +275,7 @@
 
         </tbody>
     </table>
-    </div>
+</div>
 <!--下午茶点新增-->
 <div class="modal fade" id="addModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
@@ -289,27 +289,24 @@
                 <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                     <table>
                         <tbody>
-                            <tr>
-                                <td style="width:12%;">茶点:</td>
-                                <td style="width:60%;">
-                                    <select tabindex="1" id="demo">
-                                        <option value="">请选择</option>
-                                      <%-- <option data-icon="/upload/tea_images/奥利奥.png">&nbsp;&nbsp;&nbsp;&nbsp;Thailand</option>--%>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width:12%;">数量:</td>
-                                <td style="width:60%;">
-                                    <input class="form-control" id="addNumber" name="number"></input>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td style="width:12%;">茶点:</td>
+                            <td style="width:60%;">
+                                <select tabindex="1" id="addTeaId">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:12%;">数量:</td>
+                            <td style="width:60%;">
+                                <input class="form-control" id="addNumber" name="number"></input>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <tr><td class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default">关闭</button>
-                        <button id="addfiles" >上传提交</button>
-                        <input id="addDutyRecord" class="btn btn-primary" type="reset" value="重置">
+                        <button id="addfiles" >提交</button>
                     </td></tr>
                     <tr><td class="main_tdbor"></td></tr>
                 </table>
@@ -323,25 +320,21 @@
 <link rel="Stylesheet" type="text/css" href="/css/Select.css"/>
 <script type="text/javascript" src="/js/select.min.js"></script>
 <script type="text/javascript">
-  /*  $(function () {
-        $.ajax({
-            url:"/getTeaRepository",
-            type:'get',
-            dataType:"json",
-            data:{
-            },
-            success:function (data) {
-                console.log(data)
-                var json=data.data
-                var str;
-                for (var i in json){
-                    str='<option value="1" data-icon="'+json[i].tImg+'">json[i].tName</option>'
-                    $("#demo").append('<option data-icon="/upload/tea_images/奥利奥.png">'+'&nbsp;&nbsp;&nbsp;&nbsp;'+Thailand+'</option>')
-                    /!*var str='<option value="'+json[i].id+'" data-icon="\'+json[i].tImg+\'">' + json[i].tName + '</option>';*!/
-                }
+    $.ajax({
+        url:"/getTeaRepository",
+        type:'get',
+        dataType:"json",
+        data:{
+        },
+        success:function (data) {
+            var json=data.data
+            $("#addTeaId").append('<option value="">---------------请选择--------------</option>')
+            for (var i in json){
+                var str='<option value="'+json[i].id+'" data-icon="'+json[i].tImg+'">'+json[i].catName+'&nbsp;-&nbsp;'+json[i].tName+'&nbsp;-&nbsp;'+json[i].price+'元'+'</option>';
+                $("#addTeaId").append(str)
             }
-        })
-    })*/
-    $('select').wSelect();
+            $('select').wSelect();
+        }
+    })
 </script>
 </html>

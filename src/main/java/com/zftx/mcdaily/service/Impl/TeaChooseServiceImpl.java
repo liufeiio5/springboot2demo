@@ -2,6 +2,7 @@ package com.zftx.mcdaily.service.Impl;
 
 import com.zftx.mcdaily.bean.TeaChoose;
 import com.zftx.mcdaily.mapper.TeaChooseMapper;
+import com.zftx.mcdaily.mapper.TeaRepositoryMapper;
 import com.zftx.mcdaily.service.TeaChooseService;
 import com.zftx.mcdaily.util.Tool;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ public class TeaChooseServiceImpl implements TeaChooseService {
 
     @Autowired
     private TeaChooseMapper teaChooseMapper;
+    @Autowired
+    private TeaRepositoryMapper teaRepositoryMapper;
 
     @Override
     public ArrayList<Map<String,Object>> getTeaChoose(TeaChoose teaChoose) {
@@ -28,17 +31,26 @@ public class TeaChooseServiceImpl implements TeaChooseService {
     }
 
     @Override
-    public String addTeaChoose(TeaChoose teaChoose){
-        ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaChoose(teaChoose);
-        if(list.size()>0) {
-            return "repeat";
-        }else{
-            teaChoose.setDate(Tool.getNowDate());
-            Integer i = teaChooseMapper.addTeaChoose(teaChoose);
-            if (i > 0) {
-                return "success";
+    public String addTeaChoose(TeaChoose teaChoose) {
+        /*ArrayList<Map<String,Object>> trlist=teaRepositoryMapper.getTeaRepository(new TeaRepository().setId(teaChoose.getTeaId()),null,null,null);
+        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwww"+trlist.toString());
+        TeaRepository teaRepository=(TeaRepository)trlist.get(0);
+        teaChoose.setMoney(teaChoose.getNumber()*teaRepository.getPrice());*/
+        Integer allMopney = teaChooseMapper.isBeOutTenMoney(teaChoose);
+        if ((allMopney + teaChoose.getMoney()) > 10) {
+            return "out";
+        } else {
+            ArrayList<Map<String, Object>> list = teaChooseMapper.getTeaChoose(new TeaChoose().setUserId(teaChoose.getUserId()).setTeaId(teaChoose.getTeaId()));
+            if (list.size() > 0) {
+                return "repeat";
+            } else {
+                teaChoose.setDate(Tool.getNowDate());
+                Integer i = teaChooseMapper.addTeaChoose(teaChoose);
+                if (i > 0) {
+                    return "success";
+                }
+                return "false";
             }
-            return "false";
         }
     }
 

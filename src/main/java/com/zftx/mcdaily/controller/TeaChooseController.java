@@ -58,8 +58,10 @@ public class TeaChooseController {
             if ("success".equals(str)) {
                 return R.ok("添加成功");
             } else if ("repeat".equals(str)) {
-                return R.ok("重复添加");
-            } else {
+                return R.error("repeat");
+            } else if("out".equals(str)){
+                return R.error("out");
+            }else{
                 return R.error("添加失败");
             }
         }else{

@@ -49,14 +49,54 @@
                     },
                     success:function (data) {
                         if (data.code == 200){
-                            console.log(data)
                             var json = data.data
-                            for (var j in data.ulist){
+                            console.log(data)
+                            var table = $('#DistributeTable');
+                            var index = 0;
+                            var length = 1;
+                            for (var i = 0 ; i< json.length ; i++) {
+                                var tr = $('<tr>');
+                                if(i-1<0)
+                                    tr.append($('<td>').text(json[i].fullName))
+                                if((i-1)>=0) {
+                                    if(json[i-1].fullName != json[i].fullName){
+                                        index = i;
+                                        length = 1;
+                                        tr.append($('<td>').text(json[i].fullName))
+                                    }
+                                    else if(json[i-1].fullName == json[i].fullName)
+                                    {
+                                        length++;
+                                        console.log($('#DistributeTable').children('tbody').eq(0).children('tr').eq(index).children('td').eq(0).attr('rowspan',length))
+                                    }
+                                }
+                                tr.append($('<td>').text(json[i].tName))
+                                tr.append($('<td>').append($('<img>').attr('src',json[i].tImg)))
+                                tr.append($('<td>').text(json[i].number))
+                                table.append(tr);
+                            }
+
+                          /* /!* for (var i in json){
+                                var tr = $('<tr>');
+                                tr.append($('<td>').html(json[i].fullName).addClass("row"+json.id))
+                                tr.append($('<td>').html(json[i].tName))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
+                                tr.append($('<td>').html(json[i].number))
+                                $("#tbody").append(tr);
+                            }*!/
+                            for(var j in data.ulist){
                                 var tr = $('<tr>');
                                 tr.append($('<td>').html(data.ulist[j].fullName))
-                                tr.append()
+                                tr.append($('<td>').attr('colspan',3).addClass("row"+data.ulist[j].id))
                                 $("#tbody").append(tr);
                             }
+                            for(var i in json){
+                                var tr = $('<tr>')
+                                tr.append($('<td>').html(json[i].tName))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
+                                tr.append($('<td>').html(json[i].number))
+                                $(".row"+json[i].id).append(tr)
+                            }*/
                      }else {
                            layer.msg("当前数据为空!")
                         }
@@ -88,10 +128,10 @@
             <th>图片</th>
             <th>个数</th>
         </tr>
-        </thead>
-        <tbody id="tbody">
+        <table id="DistributeTable" cellspacing="0" border="1" style="border-collapse:collapse;width: 100%;height: 500px;">
 
-        </tbody>
+        </table>
+        </thead>
     </table>
     </div>
 </body>
