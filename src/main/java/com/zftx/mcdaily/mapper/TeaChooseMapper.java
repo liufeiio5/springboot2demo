@@ -46,22 +46,43 @@ public interface TeaChooseMapper {
      */
     public Integer isBeOutTenMoney(@Param("teaChoose") TeaChoose teaChoose);
 
-
     /**
      * 茶点总量统计
+     * @param teaChoose
+     * @param catName
+     * @param tName
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaStatistics(@Param("teaChoose")TeaChoose teaChoose,@Param("tName")String tName);
+    public ArrayList<Map<String,Object>> getTeaStatistics(@Param("teaChoose")TeaChoose teaChoose,@Param("catName")String catName,@Param("tName")String tName);
 
     /**
      * 茶点分发
+     * @param teaChoose
+     * @param fullName
      * @return
      */
     public ArrayList<Map<String,Object>> getTeaDistribute(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
 
     /**
      * 获取所有选餐人
+     * @param teaChoose
+     * @param fullName
      * @return
      */
     public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
+
+    /**
+     * 查询所有被选中的 品类（不重复）
+     * @param teaChoose
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctCatName(@Param("teaChoose")TeaChoose teaChoose);
+
+    /**
+     * 查询所有被选中的 茶点（不重复）
+     * @param teaChoose
+     * @param catName
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctTName(@Param("teaChoose")TeaChoose teaChoose,@Param("catName")String catName);
 }

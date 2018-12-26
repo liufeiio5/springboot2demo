@@ -134,6 +134,9 @@
             <if test="teaChoose.date!=null">
                 tc.date=#{teaChoose.date}
             </if>
+            <if test="catName!=null and catName!=''">
+                and tr.cat_name =#{catName}
+            </if>
             <if test="tName!=null and tName!=''">
                 and tr.item_name like concat(#{tName},'%')
             </if>
@@ -182,5 +185,34 @@
             </where>
         </if>
         GROUP BY u.id
+    </select>
+
+    <!--查询所有被选餐选中的品类(不重复)-->
+    <select id="getChooseTeaDistinctCatName" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        SELECT distinct tr.cat_name catName
+        FROM tea_choose tc
+        JOIN tea_repository tr ON tr.id=tc.teaId
+        <if test="teaChoose!=null">
+            <where>
+                <if test="teaChoose.date!=null and teaChoose.date!=''">
+                    tc.date=#{teaChoose.date}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--查询所有被选餐选中的品类(不重复)-->
+    <select id="getChooseTeaDistinctTName" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
+        SELECT distinct tr.item_name tName
+        FROM tea_choose tc
+        JOIN tea_repository tr ON tr.id=tc.teaId
+        <where>
+            <if test="teaChoose.date!=null and teaChoose.date!=''">
+                tc.date=#{teaChoose.date}
+            </if>
+            <if test="catName!=null and catName!=''">
+                and tr.cat_name=#{catName}
+            </if>
+        </where>
     </select>
 </mapper>

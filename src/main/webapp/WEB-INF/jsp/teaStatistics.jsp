@@ -11,7 +11,7 @@
     <title>茶点统计</title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/table.css" />
-    <link rel="stylesheet" href="css/chosen.css" />
+    <link rel="stylesheet" href="css/chosen_11.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.bootstrap-dropdown-hover.js"></script>
@@ -19,11 +19,12 @@
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/Date.js"></script>
-    <script type="text/javascript" src="/js/chosen.js"></script>
+    <script type="text/javascript" src="/js/chosen_11.js"></script>
     <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="http://xiazai.jb51.net/201508/yuanma/imageselect.js"></script>
+    <script type="text/javascript" src="/js/fq.js"></script>
     <style type="text/css">
         #addtImgShow{
             height:200px;
@@ -64,9 +65,37 @@
         }
     </style>
     <script type="text/javascript">
-        $(function () {
 
-            $.fn.bootstrapDropdownHover();
+
+        $(function () {
+            $("#tea_catName").html("")
+            $.ajax({
+                url: "getChooseTeaDistinct",
+                type: 'get',
+                dataType: "json",
+                data: {
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        var str ="";
+                        var str1 ="";
+                        $("#tea_catName").empty()
+                        $("#tea_catName").append('<option value="">请选择品类</option>')
+                        for (var i in data.data) {
+                            str = '<option  value="' + data.data[i].catName + '">' + data.data[i].catName + '</option>';
+                            $("#tea_catName").append(str)
+                        }
+                        for (var i in data.tlist) {
+                            str1= '<option class="teaChosen" value="' + data.tlist[i].tName + '">' + data.tlist[i].tName + '</option>';
+                            $("#tea_tName").append(str1)
+                        }
+                        $("#tea_tName").trigger("liszt:updated");
+                        $("#tea_tName").chosen({
+                            no_results_text:'未找到',
+                        });
+                    }
+                }
+            })
 
             laydate.render({elem: '#chooseDate'});
             //查询
@@ -77,13 +106,18 @@
             function inittable() {
                 $("#tbody").html("");
                 var chooseDate=$("#chooseDate").val().replace('-', '').replace('-', '').trim()
+                var tName=$("#tea_tName").val()
+                if(tName=='undefined'){
+                    tName=''
+                }
                 $.ajax({
                     url:"getTeatatistics",
                     type:'get',
                     dataType:"json",
                     data:{
                         date:chooseDate,
-                        tName:$("#tea_tName").val().trim()
+                        catName:$("#tea_catName").val(),
+                        tName:tName
                     },
                     success:function (data) {
                         if (data.code == 200) {
@@ -106,6 +140,7 @@
                             var zhongji = $("#zhongji").html("总量:"+numberAll).css('margin-right','100px')
                             var zhongji2 = $("#zhongji2").html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>')
                             $('#zhongji1').append(zhongji).append(zhongji2).css('text-align','right').css('margin-right','100px').css('font-size','20px')
+
                     }else {
                             layer.msg("当前数据为空")
                         }
@@ -115,17 +150,41 @@
 
         })
 
-        function loginOut(){
-            if(confirm("确定要退出登录吗？")){
-                window.location.href="/logout";
+        function changetName() {
+            $.ajax({
+                url:"/getChooseTeaDistinct",
+                type:'get',
+                dataType:"json",
+                data:{
+                    catName:$("#tea_catName").val(),
+                },
+                success:function (data) {
+                    if (data.code == 200) {
+                        var str1
+                        $('#tea_tName').empty()
+                        $('#tea_tName').chosen("destroy")
+                        $("#tea_tName").append('<option  value="">请选择茶点</option>')
+                        for (var i in data.tlist) {
+                            str1= '<option  value="'+ data.tlist[i].tName + '">' + data.tlist[i].tName + '</option>';
+                            $("#tea_tName").append(str1)
+                        }
+                        $("#tea_tName").trigger("liszt:updated");
+                        $("#tea_tName").chosen({
+                            no_results_text:'未找到',
+                        });
+                        }
+                    }
+                })
             }
-        }
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点统计</span></div>
     <input type="text" id="chooseDate" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择统计日期"/>
-    <input type="text" id="tea_tName" name="user_date" style="width:130px;margin-left: 10px;" class="layui-input" placeholder="请选择茶点"/>
-    <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
+    <select  id="tea_catName" style="width:174px;margin-left: 10px;height: 27px;!important;" onchange="changetName()"/></select>
+    <select  id="tea_tName" style="width:174px;margin-left: 10px;height: 27px" class="chosen-select" tabindex="-1"  style="display: block;"/>
+                <option value="">请选择茶点</option>
+    </select>
+    <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
     <div class="dropdown" style="float: right;margin-right:80px;margin-top: 20px;cursor:pointer;">
         <p class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <img style="width: 40px;border-radius:50px;border: 1px solid #999999;margin-right: 10px;" src="/images/touxiang.jpg" />

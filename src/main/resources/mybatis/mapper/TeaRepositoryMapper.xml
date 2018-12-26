@@ -137,7 +137,7 @@
     </delete>
 
 
-    <!--查询 下午茶库存-->
+    <!--查询 下午茶库存的类型不重复-->
     <select id="getTeaRepositoryCatName" resultMap="teaRepository">
         select distinct cat_name from tea_repository
     </select>

@@ -100,11 +100,11 @@ public class TeaChooseServiceImpl implements TeaChooseService {
     }
 
     @Override
-    public ArrayList<Map<String,Object>>  getTeaStatistics(TeaChoose teaChoose,String tName) {
+    public ArrayList<Map<String,Object>>  getTeaStatistics(TeaChoose teaChoose,String catName,String tName) {
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
-        ArrayList<Map<String,Object>> list=teaChooseMapper. getTeaStatistics(teaChoose,tName);
+        ArrayList<Map<String,Object>> list=teaChooseMapper. getTeaStatistics(teaChoose,catName,tName);
         return list;
     }
 
@@ -123,6 +123,36 @@ public class TeaChooseServiceImpl implements TeaChooseService {
             teaChoose.setDate(Tool.getNowDate());
         }
         ArrayList<Map<String,Object>> list=teaChooseMapper.getTeaUser(teaChoose,fullName);
+        return list;
+    }
+
+
+    /**
+     * 查询所有被选中的 品类（不重复）
+     * @param teaChoose
+     * @return
+     */
+    @Override
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctCatName(TeaChoose teaChoose){
+        if(teaChoose.getDate()==null||teaChoose.getDate()==""){
+            teaChoose.setDate(Tool.getNowDate());
+        }
+        ArrayList<Map<String,Object>> list=teaChooseMapper.getChooseTeaDistinctCatName(teaChoose);
+        return list;
+    }
+
+    /**
+     * 查询所有被选中的 茶点（不重复）
+     * @param teaChoose
+     * @param catName
+     * @return
+     */
+    @Override
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctTName(TeaChoose teaChoose,String catName){
+        if(teaChoose.getDate()==null||teaChoose.getDate()==""){
+            teaChoose.setDate(Tool.getNowDate());
+        }
+        ArrayList<Map<String,Object>> list=teaChooseMapper.getChooseTeaDistinctTName(teaChoose,catName);
         return list;
     }
 }

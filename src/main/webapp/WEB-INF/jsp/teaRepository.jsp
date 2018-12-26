@@ -23,6 +23,7 @@
     <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/fq.js"></script>
     <style type="text/css">
         #addtImgShow{
             height:200px;
@@ -64,8 +65,6 @@
     </style>
     <script type="text/javascript">
         $(function () {
-
-            $.fn.bootstrapDropdownHover();
 
             //查询
             $("#query").click(function () {
@@ -311,17 +310,11 @@
             }
         }
 
-        function loginOut(){
-            if(confirm("确定要退出登录吗？")){
-                window.location.href="/logout";
-            }
-        }
-
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
     <select id="queryCatName" style="width:174px;margin-left: 10px;height: 27px" class="layui-input" placeholder="请输入茶点类别"/></select>
-    <input type="text" class="" id="querytName" placeholder="请输入茶点名">
+    <input type="text" id="querytName" placeholder="请输入茶点名">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格区间:&nbsp;<input type="text" id="lowPrice" placeholder="请输入最低期望价格">&nbsp;—&nbsp<input type="text" id="highPrice" placeholder="请输入最高期望价格">
     <button id="query" style="margin: 30px;" class="btn btn-primary"><i class="glyphicon glyphicon-search" ></i>&nbsp;查询</button>
     <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增</button>

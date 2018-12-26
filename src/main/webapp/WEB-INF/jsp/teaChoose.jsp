@@ -24,6 +24,7 @@
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="http://xiazai.jb51.net/201508/yuanma/imageselect.js"></script>
+    <script type="text/javascript" src="/js/fq.js"></script>
     <style type="text/css">
         #addtImgShow{
             height:200px;
@@ -135,12 +136,13 @@
                             $(".minus").click(function () {
                                 var id = $(this).attr('id')
                                 if ($(".teaNumber" + '_' + id).html() == 1) {
-                                    if (confirm("是否删除该茶点？")) {
+                                    layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认要移除该茶点吗？', {
+                                        title: '信息',
+                                        btn: ['朕意已决', '爱卿退下，朕且三思']
+                                    },function(index){
                                         del(id)
-                                        return false;
-                                    } else {
-                                        return false;
-                                    }
+                                    })
+                                    return false;
                                 }
                                 var teaNumber = eval($(".teaNumber" + '_' + id).html() - 1)
                                 var teaPrice = $(this).attr("teaPrice")
@@ -171,6 +173,10 @@
                                     },
                                     success: function (data) {
                                         if (data.code == 200) {
+                                            layer.msg('已移除!', {
+                                                icon: 1,
+                                                time: 1000
+                                            });
                                             setTimeout(function () {
                                                 window.location.href = "/teaChoose"
                                             }, 500)
@@ -308,16 +314,11 @@
                 layer.msg("数量请输入规范!");
                 ajax.abort;
             }
-        }
-
-        function loginOut(){
-            if(confirm("确定要退出登录吗？")){
-                window.location.href="/logout";
+            if($("#addNumber").val().indexOf(".")!=-1){
+                layer.msg("数量输入不规范,请输入整数!");
+                ajax.abort;
             }
         }
-
-
-
     </script>
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点选餐</span></div>
