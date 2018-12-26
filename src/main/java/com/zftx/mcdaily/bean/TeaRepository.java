@@ -14,6 +14,6 @@ public class TeaRepository  implements Serializable {
     private String catName;   //茶点类别
     private String tImg;    //图片
     private String standard;//规格
-    private Float price;   //价格
+    private Double price;   //价格
     private String note;    //备注
 }

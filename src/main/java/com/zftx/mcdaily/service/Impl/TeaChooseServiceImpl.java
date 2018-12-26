@@ -34,7 +34,7 @@ public class TeaChooseServiceImpl implements TeaChooseService {
     @Override
     public String addTeaChoose(TeaChoose teaChoose) {
         ArrayList<Map<String,Object>> trlist=teaRepositoryMapper.getTeaRepository(new TeaRepository().setId(teaChoose.getTeaId()),null,null,null);
-        Float price=(Float)trlist.get(0).get("price");
+         Double price= (Double) trlist.get(0).get("price");
         teaChoose.setMoney(teaChoose.getNumber()*price);
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());

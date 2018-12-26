@@ -201,9 +201,9 @@
                             $('.lookTeaRepository').click(function () {
                                 $("#lookCatName").val($(this).attr("catName"))
                                 $("#looktName").val($(this).attr("tName"))
-                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")+"?t="+Math.random()))
+                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")))
                                 $("#lookStandard").val($(this).attr("standard"))
-                                $("#lookPrice").val($(this).attr("price")+"元")
+                                $("#lookPrice").val($(this).attr("price"))
                                 $("#lookNote").val($(this).attr("note"))
                             })
 
@@ -212,9 +212,9 @@
                                 $("#updId").val($(this).attr("id"))
                                 $("#updCatName").val($(this).attr("catName"))
                                 $("#updtName").val($(this).attr("tName"))
-                                $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")+"?t="+Math.random()))
+                                $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")))
                                 $("#updStandard").val($(this).attr("standard"))
-                                $("#updPrice").val($(this).attr("price")+"元")
+                                $("#updPrice").val($(this).attr("price"))
                                 $("#updNote").val($(this).attr("note"))
                             })
 
@@ -282,8 +282,9 @@
 
         //校验
         function addcheck() {
-            if($("#addtName").val().trim()==null|| $("#addtName").val().trim()=="") {
+            if($("#addCatName").val().trim()==null|| $("#addCatName").val().trim()=="") {
                 if ($("#addCatNameSelect").val().trim() == null || $("#addCatNameSelect").val().trim() == "") {
+                    alert(2);
                     layer.msg("品类不能为空!");
                     ajax().abort;
                 }
