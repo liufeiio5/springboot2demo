@@ -49,7 +49,7 @@ public interface TeaChooseService {
      * 茶点总量统计
      * @return
      */
-    public ArrayList<Map<String,Object>> getTeaStatistics(TeaChoose teaChoose,String tName);
+    public ArrayList<Map<String,Object>> getTeaStatistics(TeaChoose teaChoose,String catName,String tName);
 
     /**
      * 茶点分发
@@ -63,4 +63,16 @@ public interface TeaChooseService {
      * @return
      */
     public ArrayList<Map<String,Object>> getTeaUser(@Param("teaChoose")TeaChoose teaChoose,@Param("fullName")String fullName);
+
+    /**
+     * 查询所有被选中的 品类（不重复）
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctCatName(@Param("teaChoose")TeaChoose teaChoose);
+
+    /**
+     * 查询所有被选中的 茶点（不重复）
+     * @return
+     */
+    public ArrayList<Map<String,Object>> getChooseTeaDistinctTName(@Param("teaChoose")TeaChoose teaChoose,@Param("catName")String catNmae);
 }

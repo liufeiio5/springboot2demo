@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-dropdown-hover.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
@@ -17,6 +18,7 @@
     <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/fq.js"></script>
     <style>
         table{
             font-size: 13px;
@@ -1358,13 +1360,6 @@
                 $body.appendChild($elem);
             };
         };
-
-        function loginOut(){
-            if(confirm("确定要退出登录吗？")){
-                window.location.href="/logout";
-            }
-        }
-
     </script>
 </head>
 

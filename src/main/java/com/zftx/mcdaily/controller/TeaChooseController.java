@@ -147,8 +147,8 @@ public class TeaChooseController {
      */
     @RequestMapping(value = "/getTeatatistics", method = RequestMethod.GET)
     @ResponseBody
-    public R getTeatatistics(TeaChoose teaChoose,String tName) {
-        ArrayList<Map<String, Object>> list = teaChooseService.getTeaStatistics(teaChoose,tName);
+    public R getTeatatistics(TeaChoose teaChoose,String catName,String tName) {
+        ArrayList<Map<String, Object>> list = teaChooseService.getTeaStatistics(teaChoose,catName,tName);
         if (list.size() > 0 && list != null) {
             return R.ok("数据获取成功").put("data", list);
         } else if(list.size()==0) {
@@ -180,6 +180,24 @@ public class TeaChooseController {
         if (list.size() > 0 && list != null) {
             return R.ok("数据获取成功").put("data", list).put("ulist", ulist);
         } else if(list.size()==0) {
+            return R.error("数据为空");
+        } else{
+            return R.error("获取数据失败");
+        }
+    }
+
+    /**
+     * 查询所有被选中的 品类和茶点（不重复）
+     * @return
+     */
+    @RequestMapping(value = "/getChooseTeaDistinct", method = RequestMethod.GET)
+    @ResponseBody
+    public R getChooseCatNameDistinct(TeaChoose teaChoose,String catName){
+        ArrayList<Map<String, Object>> clist = teaChooseService.getChooseTeaDistinctCatName(teaChoose);
+        ArrayList<Map<String, Object>> tlist = teaChooseService.getChooseTeaDistinctTName(teaChoose,catName);
+        if (clist.size() > 0 && clist != null) {
+            return R.ok("数据获取成功").put("data", clist).put("tlist", tlist);
+        } else if(clist.size()==0) {
             return R.error("数据为空");
         } else{
             return R.error("获取数据失败");
