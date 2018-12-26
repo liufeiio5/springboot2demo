@@ -108,13 +108,14 @@
                                 tr.append($('<td>').html(json[i].id))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg+"?t="+Math.random())))))
                                 tr.append($('<td>').html(json[i].standard))
                                 tr.append($('<td>').html(json[i].price))
                                 tr.append($('<td>').html(json[i].note))
+                                console.log(json[i].tImg);
                                 var look = $('<button>').attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
                                     .addClass('btn btn-info lookTeaRepository').attr('data-toggle', 'modal').attr('data-target', '#lookModal').css('margin-right', '10px').html('<i class="glyphicon glyphicon-asterisk"></i>');
-                                var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
+                                var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg +"?t="+Math.random()).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
                                     .addClass('btn btn-warning updTeaRepository').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
                                 var td = $('<td>');
                                 td.append(look).append(upd);
@@ -201,7 +202,7 @@
                             $('.lookTeaRepository').click(function () {
                                 $("#lookCatName").val($(this).attr("catName"))
                                 $("#looktName").val($(this).attr("tName"))
-                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")))
+                                $("#looktImg").append($('<img>').attr('src', $(this).attr("tImg")+"?t="+Math.random()))
                                 $("#lookStandard").val($(this).attr("standard"))
                                 $("#lookPrice").val($(this).attr("price"))
                                 $("#lookNote").val($(this).attr("note"))
@@ -212,7 +213,7 @@
                                 $("#updId").val($(this).attr("id"))
                                 $("#updCatName").val($(this).attr("catName"))
                                 $("#updtName").val($(this).attr("tName"))
-                                $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")))
+                                $("#updtImgShow").append($('<img>').attr('width','154px').attr('height','136px').attr('src', $(this).attr("tImg")+"?t="+Math.random()))
                                 $("#updStandard").val($(this).attr("standard"))
                                 $("#updPrice").val($(this).attr("price"))
                                 $("#updNote").val($(this).attr("note"))
@@ -317,6 +318,7 @@
         }
 
     </script>
+
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
     <select id="queryCatName" style="width:174px;margin-left: 10px;height: 27px" class="layui-input" placeholder="请输入茶点类别"/></select>

@@ -104,6 +104,7 @@ public class TeaRepositoryController {
                     //创建文件
                     try {
                         file.transferTo(f);
+
                         teaRepository.setTImg(tImg);
                         if (teaRepository != null) {
                             String str = teaRepositoryService.addTeaRepository(teaRepository);
