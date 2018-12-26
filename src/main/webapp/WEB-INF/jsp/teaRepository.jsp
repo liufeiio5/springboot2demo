@@ -107,14 +107,13 @@
                                 tr.append($('<td>').html(json[i].id))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg+"?t="+Math.random())))))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
                                 tr.append($('<td>').html(json[i].standard))
                                 tr.append($('<td>').html(json[i].price))
                                 tr.append($('<td>').html(json[i].note))
-                                console.log(json[i].tImg);
                                 var look = $('<button>').attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
                                     .addClass('btn btn-info lookTeaRepository').attr('data-toggle', 'modal').attr('data-target', '#lookModal').css('margin-right', '10px').html('<i class="glyphicon glyphicon-asterisk"></i>');
-                                var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg +"?t="+Math.random()).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
+                                var upd = $('<button>').attr("id", json[i].id).attr("catName", json[i].catName).attr("tName", json[i].tName).attr("tImg", json[i].tImg).attr("standard", json[i].standard).attr("price", json[i].price).attr("note", json[i].note)
                                     .addClass('btn btn-warning updTeaRepository').css('margin-right', '10px').attr('data-toggle', 'modal').attr('data-target', '#updModal').html('<i class="glyphicon glyphicon-edit"></i>');
                                 var td = $('<td>');
                                 td.append(look).append(upd);
@@ -284,8 +283,7 @@
         function addcheck() {
             if($("#addCatName").val().trim()==null|| $("#addCatName").val().trim()=="") {
                 if ($("#addCatNameSelect").val().trim() == null || $("#addCatNameSelect").val().trim() == "") {
-                    alert(2);
-                    layer.msg("品类不能为空!");
+                    layer.msg("品名不能为空!");
                     ajax().abort;
                 }
             }
@@ -302,7 +300,7 @@
                 ajax().abort;
             }
             if($("#aadPrice").val().trim()== null|| $("#aadPrice").val().trim() == ''){
-                layer.msg("价格不能为空!");
+                layer.msg("单格不能为空!");
                 ajax().abort;
             }
             var r=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
@@ -313,7 +311,6 @@
         }
 
     </script>
-
 </head>
 <div style="height: 10px;margin-left: 20px;"><b>当前操作:</b><span style="color: red">茶点仓库</span></div>
     <select id="queryCatName" style="width:174px;margin-left: 10px;height: 27px" class="layui-input" placeholder="请输入茶点类别"/></select>

@@ -12,6 +12,6 @@ public class TeaChoose {
     private Integer userId;
     private Integer teaId;
     private Integer number;
-    private Double money;
+    private BigDecimal money;
     private String date;
 }

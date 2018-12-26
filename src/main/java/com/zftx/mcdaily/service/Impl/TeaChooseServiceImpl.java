@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -34,8 +35,9 @@ public class TeaChooseServiceImpl implements TeaChooseService {
     @Override
     public String addTeaChoose(TeaChoose teaChoose) {
         ArrayList<Map<String,Object>> trlist=teaRepositoryMapper.getTeaRepository(new TeaRepository().setId(teaChoose.getTeaId()),null,null,null);
-         Double price= (Double) trlist.get(0).get("price");
-        teaChoose.setMoney(teaChoose.getNumber()*price);
+        BigDecimal price=(BigDecimal)trlist.get(0).get("price");
+        BigDecimal number=new BigDecimal(teaChoose.getNumber());
+        teaChoose.setMoney( price.multiply(number));
         if(teaChoose.getDate()==null||teaChoose.getDate()==""){
             teaChoose.setDate(Tool.getNowDate());
         }
@@ -43,7 +45,9 @@ public class TeaChooseServiceImpl implements TeaChooseService {
         if(allMopney==null){
             allMopney=0;
         }
-        if ((allMopney + teaChoose.getMoney()) > 10) {
+        BigDecimal aa=new BigDecimal(allMopney);
+        BigDecimal tenFlag=new BigDecimal(10);
+        if ((aa.add(teaChoose.getMoney())).compareTo(tenFlag)==1) {
             return "out";
         } else {
             ArrayList<Map<String, Object>> list = teaChooseMapper.getTeaChoose(new TeaChoose().setUserId(teaChoose.getUserId()).setTeaId(teaChoose.getTeaId()).setDate(teaChoose.getDate()));
