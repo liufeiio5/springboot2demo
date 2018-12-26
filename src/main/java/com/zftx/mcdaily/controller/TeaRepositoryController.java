@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,7 @@ public class TeaRepositoryController {
      */
     @RequestMapping(value = "/addTeaRepository", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public R addTeaRepository(@RequestParam("catName1")String catName1,@RequestParam("catName2")String catName2,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")float price,@RequestParam("note") String note)throws IOException {
+    public R addTeaRepository(@RequestParam("catName1")String catName1,@RequestParam("catName2")String catName2,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")String price,@RequestParam("note") String note)throws IOException {
         TeaRepository teaRepository = new TeaRepository().setTName(tName.trim());
         //茶点名下拉文本切换
         String catName="";
@@ -86,7 +87,8 @@ public class TeaRepositoryController {
         String flag="isNoLike";
         ArrayList<Map<String, Object>> arrayList = teaRepositoryService.getTeaRepository(teaRepository,flag,null,null);
         if (arrayList.size()==0) {
-            teaRepository.setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
+            BigDecimal tprice=new BigDecimal(price);
+            teaRepository.setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(tprice).setNote(note.trim());
             //上传地址
             String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
             ArrayList<String> urls = new ArrayList<String>();
@@ -144,7 +146,7 @@ public class TeaRepositoryController {
      */
     @RequestMapping(value = "/updateTeaRepository", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public R updateTeaRepository(@RequestParam("id")Integer id,@RequestParam("catName")String catName,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")float price,@RequestParam("note") String note)throws IOException{
+    public R updateTeaRepository(@RequestParam("id")Integer id,@RequestParam("catName")String catName,@RequestParam("tName")String tName, MultipartRequest mrequest,@RequestParam("standard") String standard,@RequestParam("price")String price,@RequestParam("note") String note)throws IOException{
         /*//茶点不能重复
         TeaRepository teaRepository = new TeaRepository().setTName(tName.trim());
         String flag="isNoLike";
@@ -154,7 +156,8 @@ public class TeaRepositoryController {
             String dir = System.getProperty("user.dir") + "/src/main/resources/static/upload/tea_images/";
             ArrayList<String> urls = new ArrayList<String>();
             List<MultipartFile> files = mrequest.getFiles("file");
-            TeaRepository teaRepository = new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(price).setNote(note.trim());
+            BigDecimal tprice=new BigDecimal(price);
+            TeaRepository teaRepository = new TeaRepository().setId(id).setCatName(catName.trim()).setTName(tName.trim()).setStandard(standard.trim()).setPrice(tprice).setNote(note.trim());
             String tImg = "";
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
