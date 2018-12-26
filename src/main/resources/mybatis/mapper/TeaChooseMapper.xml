@@ -127,7 +127,7 @@
 
     <!--茶点总量统计-->
     <select id="getTeaStatistics" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
-        SELECT tr.id,tr.item_name tName,SUM(tc.number) number,SUM(tc.money) money,tr.item_img tImg,tr.cat_name catName,tr.price
+        SELECT tr.id,tc.date,tr.item_name tName,SUM(tc.number) number,SUM(tc.money) money,tr.item_img tImg,tr.cat_name catName,tr.price
         FROM tea_choose tc
         JOIN tea_repository tr ON tr.id=tc.teaId
         <where>
@@ -146,14 +146,17 @@
 
     <!--茶点分发-->
     <select id="getTeaDistribute" resultType="java.util.Map" parameterType="com.zftx.mcdaily.bean.TeaChoose">
-        SELECT u.id,u.full_name fullName,tr.item_name tName,SUM(tc.number) number,tr.item_img tImg
+        SELECT u.id,u.full_name fullName,tr.item_name tName,SUM(tc.number) number,tr.item_img tImg,tc.date
         FROM tea_choose tc
         JOIN user u ON u.id=tc.userId
         JOIN tea_repository tr ON tr.id=tc.teaId
         <if test="teaChoose!=null">
             <where>
+                <if test="teaChoose.teaId!=null and teaChoose.teaId!=0">
+                     tc.teaId=#{teaChoose.teaId}
+                </if>
                 <if test="teaChoose.date!=null">
-                    tc.date=#{teaChoose.date}
+                    and tc.date=#{teaChoose.date}
                 </if>
                 <if test="fullName!=null and fullName!=''">
                     and u.full_name=#{fullName}
@@ -173,8 +176,11 @@
         JOIN USER u ON u.id=tc.userId
         <if test="teaChoose!=null">
             <where>
+                <if test="teaChoose.teaId!=null and teaChoose.teaId!=0">
+                    tc.teaId=#{teaChoose.teaId}
+                </if>
                 <if test="teaChoose.date!=null">
-                    tc.date=#{teaChoose.date}
+                    and tc.date=#{teaChoose.date}
                 </if>
                 <if test="fullName!=null and fullName!=''">
                     and u.full_name=#{fullName}

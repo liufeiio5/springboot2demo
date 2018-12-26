@@ -113,13 +113,52 @@
                                     }
                                 }
                                 tr.append($('<td>').text(json[i].tName))
-                                tr.append($('<td>').append($('<img>').attr('width','172px').attr('height','147px').attr('src',json[i].tImg)))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
                                 tr.append($('<td>').text(json[i].number))
                                 table.append(tr);
                             }
+                            //图片放大
+                            $(".timgs .timgs-item img").hover(function () {
+                                var bigUrl = $(this).attr("bigUrl");
+                                $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
+                                $(".timgs .timgs-item img").mousemove(function (e) {
+                                    var wH = document.documentElement.clientHeight
+                                    var wW = document.documentElement.clientWidth
+                                    var imgW = $("#pic1").width()
+                                    var imgH = $("#pic1").height()
+                                    var cssArr = {
+                                        "top": "",
+                                        "left": "",
+                                        "bottom": "",
+                                        "right": ""
+                                    }
+
+                                    if (e.clientX + imgW > wW) {
+                                        if (wW - e.clientX < imgW) {
+                                            cssArr.left = (e.clientX - imgW - 10) + "px";
+                                            ;
+                                        } else {
+                                            cssArr.right = 0;
+                                        }
+                                    } else {
+                                        cssArr.left = (e.clientX + 10) + "px";
+                                    }
+                                    if (e.clientY + imgH > wH) {
+                                        cssArr.bottom = 0;
+                                    } else {
+                                        cssArr.top = (e.clientY - 160) + "px";
+                                    }
+                                    console.log($("#pic1").height(), wH)
+                                    console.log(cssArr)
+                                    $("#pic").css(cssArr).fadeIn("fast");
+                                });
+                            }, function () {
+                                $("#pic").remove();
+                            });
                             getUser()
                      }else {
-                           layer.msg("当前数据为空!")
+                            getUser()
+                           layer.msg("当前数据为空, 还未点餐!")
                         }
                     }
                 })

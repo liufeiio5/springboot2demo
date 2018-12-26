@@ -82,7 +82,7 @@
                     var json = data.catNameList
                     $("#addCatName").append('<option value="">请选择</option>')
                     for (var i in json) {
-                        var str = '<option  class="assisManItem" value="' + json[i].catName + '">' + json[i].catName + '</option>';
+                        var str = '<option  class="teaChosen" value="' + json[i].catName + '">' + json[i].catName + '</option>';
                         $("#addCatName").append(str)
                     }
                     $("#addCatName").trigger("liszt:updated");
@@ -120,7 +120,7 @@
                                 tr.append($('<td>').html(json[i].fullName))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<img>').attr('width','154px').attr('height','136px').attr('src', json[i].tImg)))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
                                 tr.append($('<td>').html(json[i].standard))
                                 tr.append($('<td>').html(json[i].price))
                                 tr.append($('<td>').html(json[i].money).addClass('teaMoney' + '_' + id))
@@ -131,6 +131,45 @@
                                 tr.append($('<td>').append($('<table>').css("")).append($('<tr>')).append(minus).append(number).append(addTeaNumber))
                                 $("#tbody").append(tr);
                             }
+                            //图片放大
+                            $(".timgs .timgs-item img").hover(function () {
+                                var bigUrl = $(this).attr("bigUrl");
+                                $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
+                                $(".timgs .timgs-item img").mousemove(function (e) {
+                                    var wH = document.documentElement.clientHeight
+                                    var wW = document.documentElement.clientWidth
+                                    var imgW = $("#pic1").width()
+                                    var imgH = $("#pic1").height()
+                                    var cssArr = {
+                                        "top": "",
+                                        "left": "",
+                                        "bottom": "",
+                                        "right": ""
+                                    }
+
+                                    if (e.clientX + imgW > wW) {
+                                        if (wW - e.clientX < imgW) {
+                                            cssArr.left = (e.clientX - imgW - 10) + "px";
+                                            ;
+                                        } else {
+                                            cssArr.right = 0;
+                                        }
+                                    } else {
+                                        cssArr.left = (e.clientX + 10) + "px";
+                                    }
+                                    if (e.clientY + imgH > wH) {
+                                        cssArr.bottom = 0;
+                                    } else {
+                                        cssArr.top = (e.clientY - 160) + "px";
+                                    }
+                                    console.log($("#pic1").height(), wH)
+                                    console.log(cssArr)
+                                    $("#pic").css(cssArr).fadeIn("fast");
+                                });
+                            }, function () {
+                                $("#pic").remove();
+                            });
+
                             $("#TeaBalance").html(TeaBalance + "茶币")
                             //减
                             $(".minus").click(function () {
@@ -208,7 +247,7 @@
                             })
                         }else {
                             $("#TeaBalance").html("10茶币")
-                            layer.msg("当前数据为空")
+                            layer.msg("当前数据为空,请及时选餐")
                         }
                         //茶点选餐
                         $('#addfiles').click(function () {
@@ -225,7 +264,7 @@
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.code == 200) {
-                                        layer.msg('点餐成功!', {
+                                        layer.msg('选餐成功!', {
                                             icon: 1,
                                             time: 1000
                                         });
@@ -258,15 +297,34 @@
         }
 
         function Close() {
-            $("#updtImgShow").empty()
-            $("#looktImg").empty()
+            $('.teaChosen').attr('selected',false).trigger("chosen:updated");
+            $.ajax({
+                url: "/getTeaRepository",
+                type: 'get',
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    var json = data.data
+                    var str
+                    var td = $("#addTeaId").parent();
+                    td.html('');
+                    td.append($('<select>').attr('tabindex',1).attr('id','addTeaId'));
+                    $("#addTeaId").append('<option value="">&nbsp;请选择</option>')
+                    for (var i in json) {
+                        str = '<option class="teaTwoChosen" value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                        $("#addTeaId").append(str)
+                    }
+                    $("#addTeaId").wSelect();
+                }
+            })
+            $("#addNumber").val("")
         }
 
         document.onkeyup = function (e){
             e = e || window.event;
             var code = e.which || e.keyCode;
             if (code == 27){
-                Close()()
+                Close()
             }
         }
         //校验是否超过10 茶币
@@ -387,7 +445,6 @@
                             <td style="width:22%;" align="center">茶点:</td>
                             <td style="width:60%;">
                                 <select tabindex="1" id="addTeaId" style="width: 200px;">
-                                    <option value="">---------请选择---------</option>
                                 </select>
                             </td>
                         </tr>
@@ -428,10 +485,15 @@
                 var td = $("#addTeaId").parent();
                 td.html('');
                 td.append($('<select>').attr('tabindex',1).attr('id','addTeaId'));
+                $("#addTeaId").append('<option value="">&nbsp;请选择</option>')
                 for (var i in json) {
-                    var str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                    var str = '<option class="teaTwoChosen" value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
                     $("#addTeaId").append(str)
                 }
+               /* $("#addTeaId").trigger("liszt:updated");
+                $("#addTeaId").chosen({
+                    no_results_text:'未找到',
+                });*/
                 $("#addTeaId").addClass("wSelect-el");
                 $("#addTeaId").wSelect();
             }
@@ -446,8 +508,9 @@
             success: function (data) {
                 var json = data.data
                 var str
+                $("#addTeaId").append('<option value="">&nbsp;请选择</option>')
                 for (var i in json) {
-                    str = '<option value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
+                    str = '<option class="teaTwoChosen" value="' + json[i].id + '" data-icon="' + json[i].tImg + '">'+ '&nbsp;-&nbsp;' + json[i].tName + '&nbsp;-&nbsp;' + json[i].price + '元' + '</option>';
                     $("#addTeaId").append(str)
                 }
                 $("#addTeaId").wSelect();

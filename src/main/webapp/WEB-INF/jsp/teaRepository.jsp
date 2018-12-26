@@ -153,7 +153,7 @@
                                     if (e.clientY + imgH > wH) {
                                         cssArr.bottom = 0;
                                     } else {
-                                        cssArr.top = (e.clientY + 10) + "px";
+                                        cssArr.top = (e.clientY - 160) + "px";
                                     }
                                     console.log($("#pic1").height(), wH)
                                     console.log(cssArr)

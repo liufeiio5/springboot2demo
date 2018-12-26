@@ -63,6 +63,7 @@
             -webkit-box-shadow: 5px 5px 5px 5px hsla(0, 0%, 5%, 1.00);
             box-shadow: 5px 5px 5px 0px hsla(0, 0%, 5%, 0.3);
         }
+
     </style>
     <script type="text/javascript">
 
@@ -122,21 +123,104 @@
                     success:function (data) {
                         if (data.code == 200) {
                             var json = data.data
+                            console.log(json)
                             var numberAll=0
                             var moneyAll=0
                             for (var i in json) {
                                 var tr = $('<tr>');
                                 tr.append($('<td>').html(json[i].id))
+                                tr.append($('<td>').html(json[i].date))
                                 tr.append($('<td>').html(json[i].catName))
                                 tr.append($('<td>').html(json[i].tName))
-                                tr.append($('<td>').append($('<img>').attr('width','154px').attr('height','136px').attr('src', json[i].tImg)))
+                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
                                 tr.append($('<td>').html(json[i].price))
-                                tr.append($('<td>').html(json[i].number))
+                                tr.append($('<td>').html(json[i].number).css("color", "blue").css("cursor", "pointer").attr('id',json[i].id).addClass('skipTeaDistribute').attr('data-toggle', 'modal').attr('data-target', '#getModal'))
                                 numberAll=numberAll+json[i].number
                                 tr.append($('<td>').html(json[i].money))
                                 moneyAll=moneyAll+json[i].money
                                 $("#tbody").append(tr);
                             }
+                            //数量跳转分发显示具体
+                            $(".skipTeaDistribute").unbind('click').click(function () {
+                                $('#DistributeTable').html('')
+                                var teaId= $(this).attr('id')
+                                $.ajax({
+                                    url:"getTeaDistribute",
+                                    type:'get',
+                                    dataType:"json",
+                                    data:{
+                                        teaId:teaId,
+                                    },
+                                    success:function (data) {
+                                        if (data.code == 200) {
+                                            var json = data.data
+                                            console.log(data)
+                                            var table = $('#DistributeTable');
+                                            var index = 0;
+                                            var length = 1;
+                                            for (var i = 0; i < json.length; i++) {
+                                                var tr = $('<tr>');
+                                                if (i - 1 < 0)
+                                                    tr.append($('<td>').text(json[i].fullName))
+                                                if ((i - 1) >= 0) {
+                                                    if (json[i - 1].fullName != json[i].fullName) {
+                                                        index = i;
+                                                        length = 1;
+                                                        tr.append($('<td>').text(json[i].fullName))
+                                                    }
+                                                    else if (json[i - 1].fullName == json[i].fullName) {
+                                                        length++;
+                                                        $('#DistributeTable').children('tr').eq(index).children('td').eq(0).attr('rowspan', length)
+                                                        /*console.log($('#DistributeTable').children('tbody').eq(0).children('tr').eq(index).children('td').eq(0).attr('rowspan',length))*/
+                                                    }
+                                                }
+                                                tr.append($('<td>').text(json[i].tName))
+                                                tr.append($('<td>').append($('<div>').addClass('timgs').append($('<div>').addClass('timgs-item').append($('<img>').addClass('timg').attr('src', json[i].tImg).attr('bigUrl', json[i].tImg)))))
+                                                tr.append($('<td>').text(json[i].number))
+                                                table.append(tr);
+                                            }
+                                        }
+                                        }
+                                    })
+                            })
+                            //图片放大
+                            $(".timgs .timgs-item img").hover(function () {
+                                var bigUrl = $(this).attr("bigUrl");
+                                $(this).parents(".timgs-item").append("<div id='pic'><img src='" + bigUrl + "' id='pic1'></div>");
+                                $(".timgs .timgs-item img").mousemove(function (e) {
+                                    var wH = document.documentElement.clientHeight
+                                    var wW = document.documentElement.clientWidth
+                                    var imgW = $("#pic1").width()
+                                    var imgH = $("#pic1").height()
+                                    var cssArr = {
+                                        "top": "",
+                                        "left": "",
+                                        "bottom": "",
+                                        "right": ""
+                                    }
+
+                                    if (e.clientX + imgW > wW) {
+                                        if (wW - e.clientX < imgW) {
+                                            cssArr.left = (e.clientX - imgW - 10) + "px";
+                                            ;
+                                        } else {
+                                            cssArr.right = 0;
+                                        }
+                                    } else {
+                                        cssArr.left = (e.clientX + 10) + "px";
+                                    }
+                                    if (e.clientY + imgH > wH) {
+                                        cssArr.bottom = 0;
+                                    } else {
+                                        cssArr.top = (e.clientY - 160) + "px";
+                                    }
+                                    console.log($("#pic1").height(), wH)
+                                    console.log(cssArr)
+                                    $("#pic").css(cssArr).fadeIn("fast");
+                                });
+                            }, function () {
+                                $("#pic").remove();
+                            });
                             var zhongji = $("#zhongji").html("总量:"+numberAll).css('margin-right','100px')
                             var zhongji2 = $("#zhongji2").html("总RMB:"+'<font color="red">'+moneyAll+'元'+'</font>')
                             $('#zhongji1').append(zhongji).append(zhongji2).css('text-align','right').css('margin-right','100px').css('font-size','20px')
@@ -208,6 +292,7 @@
         <thead style="background-color: #f4f4f4;">
         <tr>
             <th>茶点id</th>
+            <th>日期</th>
             <th>品类</th>
             <th>茶点名</th>
             <th>图片</th>
@@ -225,5 +310,34 @@
         <span id="zhongji2"></span>
     </div>
     </div>
+
+<div class="modal fade" id="getModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 100%;">
+        <div class="modal-content">
+            <div>
+                <div align="center"><b><font size="16" color="red"><span id="weekspan"></span>分发情况</font></b></div>
+                    <div>
+                        <table class="table table-bordered" id="tables-bordereds">
+                            <thead style="background-color: #f4f4f4;" class="tcen">
+                            <tr>
+                                <th>选餐人</th>
+                                <th>茶点</th>
+                                <th>图片</th>
+                                <th>个数</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="DistributeTable" cellspacing="0" border="1" style="border-collapse:collapse;width: 100%;height: 500px;" class="cen">
+
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default">关闭</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 </body>
 </html>
