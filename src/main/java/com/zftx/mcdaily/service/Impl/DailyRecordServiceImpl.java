@@ -1,5 +1,6 @@
 package com.zftx.mcdaily.service.Impl;
 
+import com.zftx.mcdaily.annotation.DataSource;
 import com.zftx.mcdaily.bean.DailyRecord;
 import com.zftx.mcdaily.mapper.DailyRecordMapper;
 import com.zftx.mcdaily.service.DailyRecordService;
@@ -20,6 +21,8 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     private DailyRecordMapper dailyRecordMapper;
 
 
+    @Override
+    @DataSource(name = "first")
     public List<DailyRecord> getDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
