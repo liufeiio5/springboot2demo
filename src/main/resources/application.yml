@@ -3,7 +3,7 @@ spring:
   datasource:
     #   数据源基本配置
     username: root
-    password: 1234
+    password: mysql
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/daily?characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
@@ -60,7 +60,7 @@ mybatis:
 #  - classpath:sql/employee.sql
 
 server:
-  port: 19000
+  port: 9000
 
   devtools:
     livereload:
@@ -78,7 +78,5 @@ server:
       timeout: 3000s
     context-path: /
 
-  #springbootdo:
- # uploadPath: D:/var/uploaded_files/
-  #imagePath: file:///D:/var/uploaded_files/image/
+
 

@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2018/12/20
-  Time: 9:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <title>茶点选餐</title>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/table.css" />
@@ -23,7 +17,7 @@
     <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="http://xiazai.jb51.net/201508/yuanma/imageselect.js"></script>
+    <script type="text/javascript" src="http://enkj.jb51.net:81/201508/yuanma/imageselect.js"></script>
     <script type="text/javascript" src="/js/fq.js"></script>
     <style type="text/css">
         #addtImgShow{
