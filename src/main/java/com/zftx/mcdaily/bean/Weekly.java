@@ -19,5 +19,4 @@ public class Weekly {
     private Integer remarkId;
     private String sdate;
     private String edate;
-
 }

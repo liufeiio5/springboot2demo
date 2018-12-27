@@ -33,6 +33,9 @@
                     <a style="color: white;" data-toggle="modal" data-target="#Modal">立即注册</a>
                 </label>
             </div>
+            <div id="show">
+                <img src="upload/tea_images/华夫饼.png">
+            </div>
             <input type="button" class="login_btn" value="登录" onclick="Login()"/>
         </form>
     </div><!--row end-->
@@ -113,10 +116,12 @@
                     </tr>
                     </tbody>
                 </table>
+
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
                     <button id="add" class="btn btn-primary">提交</button>
                 </div>
+
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/chosen.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.min.css" media="screen">
     <script src="http://libs.baidu.com/jquery/2.0.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.bootstrap-dropdown-hover.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
     <script type="text/javascript" src="/laydate/laydate.js"></script>
@@ -17,6 +18,7 @@
     <script src="/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/bootstrap-datetimepicker.fr.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/fq.js"></script>
     <style>
         table{
             font-size: 13px;
@@ -411,7 +413,7 @@
                         checkAddInput()
                         var workHours = $('#addworkHours').val() + $('#addworkHoursUnit').val()
                         var singleProgress=$('#addsingleProgress').val()
-                        if(parseInt(singleProgress)>100||parseFloat('100%') <= parseFloat(singleProgress)){
+                        if(parseInt(singleProgress)>100||parseFloat('100%') < parseFloat(singleProgress)){
                             layer.msg("您输入的进度指数不规范")
                             ajax().abort()
                         }
@@ -1358,13 +1360,6 @@
                 $body.appendChild($elem);
             };
         };
-
-        function loginOut(){
-            if(confirm("确定要退出登录吗？")){
-                window.location.href="/logout";
-            }
-        }
-
     </script>
 </head>
 
@@ -1381,9 +1376,21 @@
 </button>
 <button class="btn btn-danger" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;新增
 </button>
-<span style="float: right;margin:20px 40px 0px 0px;" id="username">欢迎 <font color="red"> ${sessionUser.fullName}</font> 登录米仓 周报</span>
-<a id="home" href="/home" class="glyphicon glyphicon-home"></a>
-<a onclick="loginOut()" class="glyphicon glyphicon-off"></a>
+<div class="dropdown" style="float: right;margin-right:80px;margin-top: 20px;cursor:pointer;">
+    <p class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <img style="width: 40px;border-radius:50px;border: 1px solid #999999;margin-right: 10px;" src="/images/touxiang.jpg" />
+        ${sessionUser.fullName}
+        <span class="caret"></span>
+    </p>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li>
+            <a href="/home">返回首页</a>
+        </li>
+        <li role="presentation">
+            <a onclick="loginOut()">退出登录</a>
+        </li>
+    </ul>
+</div>
 <div>
     <table class="table table-bordered" id="table-bordered">
         <thead style="background-color: #f4f4f4;">

@@ -1,0 +1,13 @@
+package com.zftx.mcdaily.constants;
+
+import java.security.PrivateKey;
+
+public interface SingConstnt {
+     String PrivateKey="MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAIGEgGxi0UHyKZePbpfELoGG5/M9lTjD43KkrSDuyX3SJY4EndQwK3pzMjpU39c+sLkBQXOIOWaVC4XFeLeuN8FY7+sMUopEJuJjaoUI7C8pb0nQzaSgijTOdsPf6P4es6SOsiRkpx80mmTlqxHqnvgeBGM35Cl0TeADlZvW+q4dAgMBAAECgYBAa3xI7LmyeFWRqejTGeQbztMN3EKdcmlt+1SVfc/AgkblpYwvHypxBF0mQFL5x5e03VgFs+sBB/8sMTVC/yeBkYCAb8M5qn5VjAtANZAi+3EqOqGDqQ7J9P+Os2TDpUglJ8IhXgdNps8cORMvxAc70Ou5+WvGr2mEab43UOzXDQJBAL4vjvLRYnhz6ablL33m/dBkPjdfOnIXbUKZHkThugclHcT1f86DYeqTPW0W25U3/g488kkomKMZI6seC/W9PGcCQQCuVmKluSfAM5yCjk0EAB98BXrSbRHNPAJY2HVGj34A1JWBl7D4XZ9BrnrxuTwcsTeNnnhobKMpVhE5VrfiZq7bAkAJ2ibal1Q1jzOkbKz4JbYyTG8YqTs629HSKGJ0CQl9A0Q2hs03IoE5CKWe+Bcp9LuZezjF5294y32YiLbv5PyzAkAxEPUQqWzrplr9T6mTX6l80VoBEVt6RNJwSPOw2T/gYfR2FchkDo19AetuTvEBLktxW1GOKk09nBCa77IvUTETAkBT0iJye0ORefXRjXweHr5Z06NJrI7l76E7Q7mc3uAAIR6FFMtgWPwOdaye0oru+YekU4URzziJPWy2gKV2s+Qu";
+     String agentNum="A151201806291654416990";
+     String startTime ="2018-07-09 09:00:00";
+     String endTime="2018-07-09 10:00:00";
+     int pageSize=100;
+     int pageNum=1;
+
+}
