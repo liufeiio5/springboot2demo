@@ -22,7 +22,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
 
 
     @Override
-    @DataSource(name = "first")
+    @DataSource()
     public List<DailyRecord> getDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
