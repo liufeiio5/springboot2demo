@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
@@ -10,13 +10,14 @@
         <aop:aspect id="aspect" ref="aspectBean">
             <!--配置com.lzq.spring.service包下所有类或接口的所有方法-->
             <aop:pointcut id="logService"
-                          expression="execution(* com.zftx.demo.aop.service.impl.*Impl.*(..))"/>
+                          expression="execution(* com.zftx.mcdaily.aop.service.impl.*Impl.*(..))"/>
             <aop:before pointcut-ref="logService" method="doBefore"/>
             <aop:after pointcut-ref="logService" method="doAfter"/>
             <aop:around pointcut-ref="logService" method="doAround"/>
         </aop:aspect>
     </aop:config>
-    <bean id="aspectBean" class="com.zftx.demo.aop.aspect.Aspect"/>
-    <bean id="aService" class="com.zftx.demo.aop.service.impl.AServiceImpl"/>
+
+    <bean id="aspectBean" class="com.zftx.mcdaily.aop.aspect.Aspect"/>
+    <bean id="aService" class="com.zftx.mcdaily.aop.service.impl.AServiceImpl"/>
 
 </beans>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.DutyRecordMapper">
+    <resultMap id="dutyRecord" type="com.zftx.mcdaily.bean.DutyRecord">
+        <id column="id" property="id"/>
+        <result column="emp_name" property="empName"/>
+        <result column="customer_service_name" property="customerServiceName"/>
+        <result column="jira_code" property="jiraId"/>
+    </resultMap>
+
+    <select id="getDutyRecord" resultMap="dutyRecord">
+          select * from duty_record
+          <if test="dutyRecord != null">
+              <where>
+                  <if test="dutyRecord.id != null">
+                      id=#{dutyRecord.id}
+                  </if>
+                  <if test="dutyRecord.empName != null">
+                      and emp_name like concat('%',#{dutyRecord.empName},'%')
+                  </if>
+                  <if test="dutyRecord.customerServiceName != null">
+                      and customer_service_name=#{dutyRecord.customerServiceName}
+                  </if>
+                  <if test="dutyRecord.jiraId != null">
+                      and jira_code=#{dutyRecord.jiraId}
+                  </if>
+              </where>
+          </if>
+          order by id desc
+    </select>
+
+
+    <insert id="addDutyRecord" useGeneratedKeys="true" keyProperty="dutyRecord.id" parameterType="com.zftx.mcdaily.bean.DutyRecord">
+        insert ignore into duty_record
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="dutyRecord!=null">
+                <if test="dutyRecord.id!=null">
+                    id,
+                </if>
+                <if test="dutyRecord.empName != null">
+                    emp_name,
+                </if>
+                <if test="dutyRecord.customerServiceName != null">
+                    customer_service_name,
+                </if>
+                <if test="dutyRecord.jiraId!=null">
+                    jira_code,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dutyRecord!=null">
+                <if test="dutyRecord.id!=null">
+                    #{dutyRecord.id},
+                </if>
+                <if test="dutyRecord.empName != null">
+                    #{dutyRecord.empName},
+                </if>
+                <if test="dutyRecord.customerServiceName != null">
+                    #{dutyRecord.customerServiceName},
+                </if>
+                <if test="dutyRecord.jiraId!=null">
+                    #{dutyRecord.jiraId},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateDutyRecord" parameterType="com.zftx.mcdaily.bean.DutyRecord">
+        UPDATE duty_record
+        <set>
+            <if test="dutyRecord.empName!=null and dutyRecord.empName !=''">
+                emp_name=#{dutyRecord.empName},
+            </if>
+            <if test="dutyRecord.customerServiceName!=null">
+                customer_service_name=#{dutyRecord.customerServiceName},
+            </if>
+            <if test="dutyRecord.jiraId!=null ">
+                jira_code=#{dutyRecord.jiraId},
+            </if>
+        </set>
+        <where>
+            <if test="dutyRecord.id!=null">
+                id=#{dutyRecord.id}
+            </if>
+        </where>
+    </update>
+
+</mapper>

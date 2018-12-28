@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.WeeklySuggestMapper">
+    <resultMap id="weeklySuggest" type="com.zftx.mcdaily.bean.WeeklySuggest">
+        <id column="id" property="id"/>
+        <result column="suggest_id" property="suggestId"/>
+        <result column="suggest_content" property="suggestContent"/>
+    </resultMap>
+
+    <!--查询  周 建议-->
+    <select id="getWeeklySuggest" resultType="com.zftx.mcdaily.bean.WeeklySuggest">
+        select * from weekly_suggest
+        <if test="weeklySuggest != null">
+            <where>
+                <if test="weeklySuggest.id != null">
+                    id=#{weeklySuggest.id}
+                </if>
+                <if test="weeklySuggest.suggestId != null">
+                    and suggest_id=#{weeklySuggest.suggestId}
+                </if>
+                <if test="weeklySuggest.suggestContent != null">
+                    and suggest_content=#{weeklySuggest.suggestContent}
+                </if>
+            </where>
+        </if>
+    </select>
+
+   <!-- 添加 周报 建议-->
+    <insert id="addWeeklySuggest" keyProperty="weeklySuggest.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklySuggest">
+        INSERT ignore INTO weekly_suggest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="weeklySuggest !=null">
+                <if test="weeklySuggest.suggestId!=null">
+                    suggest_id,
+                </if>
+                <if test="weeklySuggest.suggestContent!=null">
+                    suggest_content,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="weeklySuggest !=null">
+                <if test="weeklySuggest.suggestId!=null">
+                    #{weeklySuggest.suggestId},
+                </if>
+                <if test="weeklySuggest.suggestContent!=null">
+                    #{weeklySuggest.suggestContent},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 周 困难-->
+    <update id="updateWeeklySuggest" parameterType="com.zftx.mcdaily.bean.WeeklySuggest">
+        UPDATE weekly_suggest
+        <set>
+            <if test="weeklySuggest.suggestId!=null">
+                suggest_id=#{weeklySuggest.suggestId},
+            </if>
+            <if test="weeklySuggest.suggestContent!=null ">
+                suggest_content=#{weeklySuggest.suggestContent},
+            </if>
+        </set>
+        <where>
+            <if test="weeklySuggest.id!=null and weeklySuggest.id!=0">
+                id=#{weeklySuggest.id}
+            </if>
+            <if test="weeklySuggest.suggestId!=null">
+                and suggest_id=#{weeklySuggest.suggestId}
+            </if>
+        </where>
+    </update>
+
+   <!--实际删除 周 建议-->
+    <delete id="deleteWeeklySuggest" parameterType="com.zftx.mcdaily.bean.WeeklySuggest">
+       delete from weekly_suggest  where id=#{weeklySuggest.id}
+    </delete>
+
+    <!--根据suggestId删除 周结表-->
+    <delete id="deleteSuggestBySid" parameterType="java.lang.Integer">
+       delete from weekly_suggest  where suggest_id=#{suggestId}
+    </delete>
+</mapper>

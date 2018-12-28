@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.MonthlyMapper">
+    <resultMap id="monthly" type="com.zftx.mcdaily.bean.Monthly">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="year" property="year"/>
+        <result column="month" property="month"/>
+        <result column="summary_id" property="summaryId"/>
+        <result column="difficulty_id" property="difficultyId"/>
+        <result column="programme_id" property="programmeId"/>
+        <result column="suggest_id" property="suggestId"/>
+        <result column="remark_id" property="remarkId"/>
+        <result column="create_date" property="createDate"/>
+    </resultMap>
+
+    <!--查询-->
+    <select id="getMonthly" resultType="java.util.HashMap">
+          select m.*,u.full_name as fullName from monthly m
+          join user u on m.user_id= u.id
+          <if test="monthly != null">
+              <where>
+                  <if test="monthly.id != null">
+                      m.id=#{monthly.id}
+                  </if>
+                  <if test="monthly.userId != null">
+                      and m.user_id=#{monthly.userId}
+                  </if>
+                  <if test="monthly.year != null">
+                      and m.year=#{monthly.year}
+                  </if>
+                  <if test="monthly.year == null and halfyearY!=null">
+                      and m.year>=#{halfyearY}
+                  </if>
+                  <if test="monthly.month != null">
+                      and m.month=#{monthly.month}
+                  </if>
+                  <if test="monthly.month == null and halfyearM!=null">
+                      and m.month>=#{halfyearM}
+                  </if>
+                  <if test="monthly.summaryId != null">
+                      and m.summaryId=#{monthly.summaryId}
+                  </if>
+                  <if test="monthly.difficultyId != null">
+                      and m.difficulty_id=#{monthly.difficultyId}
+                  </if>
+                  <if test="monthly.programmeId != null">
+                      and m.programme_id=#{monthly.programmeId}
+                  </if>
+                  <if test="monthly.suggestId != null">
+                      and m.suggest_id=#{monthly.suggestId}
+                  </if>
+                  <if test="monthly.remarkId != null">
+                      and m.remark_id=#{monthly.remarkId}
+                  </if>
+              </where>
+          </if>
+        order by m.year desc,m.month desc
+    </select>
+
+
+    <insert id="addmonthly" useGeneratedKeys="true" keyProperty="monthly.id" parameterType="com.zftx.mcdaily.bean.Monthly">
+        insert ignore into monthly
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="monthly!=null">
+                <if test="monthly.id != null">
+                    id,
+                </if>
+                <if test="monthly.userId != null">
+                     user_id,
+                </if>
+                <if test="monthly.year != null">
+                    year,
+                </if>
+                <if test="monthly.month != null">
+                     month,
+                </if>
+                <if test="monthly.summaryId!=null">
+                    summary_id,
+                </if>
+                <if test="monthly.summaryId==null">
+                    summary_id,
+                </if>
+                <if test="monthly.difficultyId!=null">
+                    difficulty_id,
+                </if>
+                <if test="monthly.difficultyId==null">
+                    difficulty_id,
+                </if>
+                <if test="monthly.programmeId!=null">
+                    programme_id,
+                </if>
+                <if test="monthly.programmeId==null">
+                    programme_id,
+                </if>
+                <if test="monthly.suggestId!=null">
+                    suggest_id,
+                </if>
+                <if test="monthly.suggestId==null">
+                    suggest_id,
+                </if>
+                <if test="monthly.remarkId!=null">
+                    remark_id,
+                </if>
+                <if test="monthly.remarkId==null">
+                    remark_id,
+                </if>
+                <if test="monthly.createDate!=null">
+                    create_date,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="monthly!=null">
+                <if test="monthly.id != null">
+                    #{monthly.id},
+                </if>
+                <if test="monthly.userId != null">
+                    #{monthly.userId},
+                </if>
+                <if test="monthly.year != null">
+                    #{monthly.year},
+                </if>
+                <if test="monthly.month != null">
+                    #{monthly.month},
+                </if>
+                <if test="monthly.summaryId!=null">
+                    #{monthly.summaryId},
+                </if>
+                <if test="monthly.summaryId==null">
+                    (SELECT CASE  WHEN MAX(m.summary_id) IS NULL THEN '1' ELSE MAX(m.summary_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.difficultyId!=null">
+                    #{monthly.difficultyId},
+                </if>
+                <if test="monthly.difficultyId==null">
+                    (SELECT CASE  WHEN MAX(m.difficulty_id) IS NULL THEN '1' ELSE MAX(m.difficulty_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.programmeId!=null">
+                    #{monthly.programmeId},
+                </if>
+                <if test="monthly.programmeId==null">
+                    (SELECT CASE  WHEN MAX(m.programme_id) IS NULL THEN '1' ELSE MAX(m.programme_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.suggestId!=null">
+                    #{monthly.suggestId},
+                </if>
+                <if test="monthly.suggestId==null">
+                    (SELECT CASE  WHEN MAX(m.suggest_id) IS NULL THEN '1' ELSE MAX(m.suggest_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.remarkId!=null">
+                    #{monthly.remarkId},
+                </if>
+                <if test="monthly.remarkId==null">
+                    (SELECT CASE  WHEN MAX(m.remark_id) IS NULL THEN '1' ELSE MAX(m.remark_id)+1 END FROM monthly m),
+                </if>
+                <if test="monthly.createDate!=null">
+                    #{monthly.createDate},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--实际删除 综合表-->
+    <delete id="deleteMonthly" parameterType="com.zftx.mcdaily.bean.Monthly">
+       delete from monthly  where
+       id=#{monthly.id}
+    </delete>
+</mapper>

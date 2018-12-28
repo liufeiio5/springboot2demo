@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.SurfaceMapper">
+    <resultMap id="surface" type="com.zftx.mcdaily.bean.Surface">
+        <id column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
+        <result column="surface_id" property="surfaceId"/>
+        <result column="surface_name" property="surfaceName"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="islive" property="islive"/>
+    </resultMap>
+    <sql id="columnAll">id,type_id,surface_id,surface_name,create_user,create_time,update_user,update_time</sql>
+    <sql id="columnBase">id,type_id,surface_id,surface_name</sql>
+
+    <select id="findAllSurFace" resultMap="surface">
+        select
+        <include refid="columnAll"/>
+        from surface
+        <if test="surface!=null">
+            <where>
+                <if test="surface.id!=null">
+                    id=#{surface.id}
+                </if>
+                <if test="surface.typeId!=null">
+                    and type_id=#{surface.typeId}
+                </if>
+                <if test="surface.surfaceId!=null">
+                    and surface_id=#{surface.surfaceId}
+                </if>
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    and surface_name=#{surface.surfaceName}
+                </if>
+                <if test="surface.createUser!=null">
+                    and create_user=#{surface.createUser}
+                </if>
+                <if test="surface.createTime!=null">
+                    and create_time=#{surface.createTime}
+                </if>
+                <if test="surface.updateUser!=null">
+                    and update_user=#{surface.updateUser}
+                </if>
+                <if test="surface.updateTime!=null">
+                    and update_time=#{surface.updateTime}
+                </if>
+                <if test="surface.islive!=null">
+                    and islive=#{surface.islive}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addSurface" parameterType="com.zftx.mcdaily.bean.Surface" useGeneratedKeys="true"
+            keyProperty="surface.id">
+        insert  into surface
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="surface!=null">
+                <if test="surface.typeId!=null">
+                    type_id,
+                </if>
+                surface_id,
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    surface_name,
+                </if>
+                <if test="surface.createUser!=null">
+                    create_user,
+                </if>
+                <if test="surface.createTime!=null">
+                    create_time,
+                </if>
+                <if test="surface.updateUser!=null">
+                    update_user,
+                </if>
+                <if test="surface.updateTime!=null">
+                    update_time,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="surface!=null">
+                <if test="surface.typeId!=null">
+                    #{surface.typeId},
+                </if>
+                (SELECT CASE  WHEN MAX(s.surface_id) IS NULL THEN '1' ELSE MAX(s.surface_id)+1 END FROM surface s),
+                <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                    #{surface.surfaceName},
+                </if>
+                <if test="surface.createUser!=null">
+                    #{surface.createUser},
+                </if>
+                <if test="surface.createTime!=null">
+                    #{surface.createTime},
+                </if>
+                <if test="surface.updateUser!=null">
+                    #{surface.updateUser},
+                </if>
+                <if test="surface.updateTime!=null">
+                    #{surface.updateTime},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSurface" parameterType="com.zftx.mcdaily.bean.Surface">
+        UPDATE surface
+        <set>
+            <if test="surface.typeId!=null">
+                type_id=#{surface.typeId},
+            </if>
+            <if test="surface.surfaceId!=null">
+                surface_id=#{surface.surfaceId},
+            </if>
+            <if test="surface.surfaceName!=null and surface.surfaceName!=''">
+                surface_name=#{surface.surfaceName},
+            </if>
+            <if test="surface.createUser!=null">
+                create_user=#{surface.createUser},
+            </if>
+            <if test="surface.createTime!=null">
+                create_time=#{surface.createTime},
+            </if>
+            <if test="surface.updateUser!=null">
+                update_user=#{surface.updateUser},
+            </if>
+            <if test="surface.updateTime!=null">
+                update_time=#{surface.updateTime}
+            </if>
+        </set>
+        WHERE id=#{surface.id}
+    </update>
+
+    <update id="delSurface" parameterType="com.zftx.mcdaily.bean.Surface">
+        UPDATE surface
+        <set>
+            <if test="surface.islive!=null">
+                islive=#{surface.islive}
+            </if>
+        </set>
+        WHERE id=#{surface.id}
+    </update>
+
+    <delete id="delSurfaceById" parameterType="com.zftx.mcdaily.bean.Surface">
+        delete from surface WHERE id=#{surface.id}
+    </delete>
+
+</mapper>

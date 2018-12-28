@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.WeeklyDifficultyMapper">
+    <resultMap id="weeklyDifficulty" type="com.zftx.mcdaily.bean.WeeklyDifficulty">
+        <id column="id" property="id"/>
+        <result column="difficulty_id" property="difficultyId"/>
+        <result column="difficulty_content" property="difficultyContent"/>
+    </resultMap>
+
+    <!--查询 周 困难-->
+    <select id="getWeeklyDifficulty" resultType="com.zftx.mcdaily.bean.WeeklyDifficulty">
+        select * from weekly_difficulty
+        <if test="weeklyDifficulty != null">
+            <where>
+                <if test="weeklyDifficulty.id != null">
+                    id=#{weeklyDifficulty.id}
+                </if>
+                <if test="weeklyDifficulty.difficultyId != null">
+                    and difficulty_id=#{weeklyDifficulty.difficultyId}
+                </if>
+                <if test="weeklyDifficulty.difficultyContent != null">
+                    and difficulty_content=#{weeklyDifficulty.difficultyContent}
+                </if>
+            </where>
+        </if>
+    </select>
+
+   <!-- 添加 周报 困难-->
+    <insert id="addWeeklyDifficulty" keyProperty="weeklyDifficulty.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.WeeklyDifficulty">
+        INSERT ignore INTO weekly_difficulty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="weeklyDifficulty !=null">
+                <if test="weeklyDifficulty.difficultyId!=null">
+                    difficulty_id,
+                </if>
+                <if test="weeklyDifficulty.difficultyContent!=null">
+                    difficulty_content,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="weeklyDifficulty !=null">
+                <if test="weeklyDifficulty.difficultyId!=null">
+                    #{weeklyDifficulty.difficultyId},
+                </if>
+                <if test="weeklyDifficulty.difficultyContent!=null">
+                    #{weeklyDifficulty.difficultyContent},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+   <!--修改 周 困难-->
+    <update id="updateWeeklyDifficulty" parameterType="com.zftx.mcdaily.bean.WeeklyDifficulty">
+        UPDATE weekly_difficulty
+        <set>
+            <if test="weeklyDifficulty.difficultyId!=null">
+                difficulty_id=#{weeklyDifficulty.difficultyId},
+            </if>
+            <if test="weeklyDifficulty.difficultyContent!=null ">
+                difficulty_content=#{weeklyDifficulty.difficultyContent},
+            </if>
+        </set>
+        <where>
+            <if test="weeklyDifficulty.id!=null and weeklyDifficulty.id!=0">
+                id=#{weeklyDifficulty.id}
+            </if>
+            <if test="weeklyDifficulty.difficultyId!=null">
+                and difficulty_id=#{weeklyDifficulty.difficultyId}
+            </if>
+        </where>
+    </update>
+
+
+   <!--实际删除 周 困难-->
+    <delete id="deleteWeeklyDifficulty" parameterType="com.zftx.mcdaily.bean.WeeklyDifficulty">
+       delete from weekly_difficulty  where id=#{weeklyDifficulty.id}
+    </delete>
+
+    <!--根据difficultyId删除 周结表-->
+    <delete id="deleteDifficultyByDid" parameterType="java.lang.Integer">
+       delete from weekly_difficulty  where difficulty_id=#{difficultyId}
+    </delete>
+</mapper>

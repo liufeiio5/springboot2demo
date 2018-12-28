@@ -1,15 +1,35 @@
 spring:
   datasource:
-    #   数据源基本配置
-    username: root
-    password: mysql
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.63:3306/mc_sc_test?characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      first:  #数据源1
+          driverClassName: com.mysql.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/daily?useUnicode=true&characterEncoding=UTF-8
+          username: root
+          password: mysql
+      second:  #数据源2
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://localhost:3306/daily_data?useUnicode=true&characterEncoding=UTF-8
+          username: root
+          password: mysql
+          driverClassName: com.mysql.jdbc.Driver
+      test:  #数据源3
+          type: com.alibaba.druid.pool.DruidDataSource
+          url: jdbc:mysql://localhost:3306/daily_test?useUnicode=true&characterEncoding=UTF-8
+          username: root
+          password: mysql
+          driverClassName: com.mysql.jdbc.Driver
+      filter:
+        slf4j:
+          enabled: true
+        statement-create-after-log-enabled: false
+        statement-close-after-log-enabled: false
+        result-set-open-after-log-enabled: false
+        result-set-close-after-log-enabled: false
     #   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
+    initialSize: 10
+    minIdle: 10
+    maxActive: 30
     maxWait: 60000
     timeBetweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 300000
@@ -24,17 +44,24 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
-    druid:
-      filter:
-        slf4j:
-          enabled: true
-        statement-create-after-log-enabled: false
-        statement-close-after-log-enabled: false
-        result-set-open-after-log-enabled: false
-        result-set-close-after-log-enabled: false
 
 
+  mvc:
+    view:
+      #采用jsp模板引擎
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 10Mb
 
+    chain:
+      cache: false
+
+  thymeleaf:
+    cache: false
 
 mybatis:
   # 指定全局配置文件位置
@@ -46,7 +73,7 @@ mybatis:
 #  - classpath:sql/employee.sql
 
 server:
-  port: 18999
+  port: 29000
 
   devtools:
     livereload:
@@ -59,3 +86,11 @@ server:
     health:
       mail:
         enabled: false
+
+  servlet:
+    session:
+      timeout: 3000s
+    context-path: /
+
+
+

@@ -1,3 +1,3 @@
-# test-demo
+# mc_daily
 
-用来测试
+模板

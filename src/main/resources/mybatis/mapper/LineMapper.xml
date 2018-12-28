@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zftx.mcdaily.mapper.LineMapper">
+    <resultMap id="line" type="com.zftx.mcdaily.bean.Line">
+        <id column="id" property="id"/>
+        <result column="type_id" property="typeId"/>
+        <result column="surface_id" property="surfaceId"/>
+        <result column="line_id" property="lineId"/>
+        <result column="line_name" property="lineName"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="islive" property="islive"/>
+    </resultMap>
+    <sql id="columnAll">id,type_id,surface_id,line_id,line_name,create_user,create_time,update_user,update_time</sql>
+    <sql id="columnBase">id,type_id,surface_id,line_id,line_name</sql>
+
+    <select id="findLineAll" resultMap="line">
+        SELECT <include refid="columnAll"/> FROM line
+        <if test="line!=null">
+            <where>
+                <if test="line.id!=null">
+                    id=#{line.id}
+                </if>
+                <if test="line.typeId!=null">
+                    and type_id=#{line.typeId}
+                </if>
+                <if test="line.surfaceId!=null">
+                    and surface_id=#{line.surfaceId}
+                </if>
+                <if test="line.lineId!=null">
+                    and line_id=#{line.lineId}
+                </if>
+                <if test="line.lineName!=null and line.lineName!=''">
+                    and line_name=#{line.lineName}
+                </if>
+                <if test="line.createUser!=null">
+                    and create_user=#{line.createUser}
+                </if>
+                <if test="line.createTime!=null">
+                    and create_time=#{line.createTime}
+                </if>
+                <if test="line.updateUser!=null">
+                    and update_user=#{line.updateUser}
+                </if>
+                <if test="line.updateTime!=null">
+                    and update_time=#{line.updateTime}
+                </if>
+                <if test="line.islive!=null">
+                    and islive=#{line.islive}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="addLine" keyProperty="line.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.Line">
+        INSERT  into line
+        <trim prefix=" (" suffix=")" suffixOverrides=",">
+            <if test="line!=null">
+                <if test="line.typeId!=null">
+                    type_id,
+                </if>
+                <if test="line.surfaceId!=null">
+                    surface_id,
+                </if>
+                line_id,
+                <if test="line.lineName!=null and line.lineName!=''">
+                    line_name,
+                </if>
+                <if test="line.createUser!=null">
+                    create_user,
+                </if>
+                <if test="line.createTime!=null">
+                    create_time,
+                </if>
+                <if test="line.updateUser!=null">
+                    update_user,
+                </if>
+                <if test="line.updateTime!=null">
+                    update_time,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="line!=null">
+                <if test="line.typeId!=null">
+                    #{line.typeId},
+                </if>
+                <if test="line.surfaceId!=null">
+                    #{line.surfaceId},
+                </if>
+                (SELECT CASE  WHEN MAX(l.line_id) IS NULL THEN '1' ELSE MAX(l.line_id)+1 END FROM line l),
+                <if test="line.lineName!=null and line.lineName!=''">
+                    #{line.lineName},
+                </if>
+                <if test="line.createUser!=null">
+                    #{line.createUser},
+                </if>
+                <if test="line.createTime!=null">
+                    #{line.createTime},
+                </if>
+                <if test="line.updateUser!=null">
+                    #{line.updateUser},
+                </if>
+                <if test="line.updateTime!=null">
+                    #{line.updateTime},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateLine" parameterType="com.zftx.mcdaily.bean.Line">
+        UPDATE line
+        <set>
+            <if test="line.typeId!=null">
+                type_id=#{line.typeId},
+            </if>
+            <if test="line.surfaceId!=null">
+                surface_id=#{line.surfaceId},
+            </if>
+            <if test="line.lineId!=null">
+                line_id=#{line.lineId},
+            </if>
+            <if test="line.lineName!=null and line.lineName!=''">
+                line_name=#{line.lineName},
+            </if>
+            <if test="line.createUser!=null">
+                create_user=#{line.createUser},
+            </if>
+            <if test="line.createTime!=null">
+                create_time=#{line.createTime},
+            </if>
+            <if test="line.updateUser!=null">
+                update_user=#{line.updateUser},
+            </if>
+            <if test="line.updateTime!=null">
+                update_time=#{line.updateTime}
+            </if>
+        </set>
+        WHERE id=#{line.id}
+    </update>
+
+    <update id="delLine" parameterType="com.zftx.mcdaily.bean.Line">
+        UPDATE line
+        <set>
+            <if test="line.islive!=null">
+                islive=#{line.islive}
+            </if>
+        </set>
+        WHERE id=#{line.id}
+    </update>
+
+    <delete id="delLineById" parameterType="com.zftx.mcdaily.bean.Line">
+        delete from line WHERE id=#{line.id}
+    </delete>
+
+
+
+</mapper>

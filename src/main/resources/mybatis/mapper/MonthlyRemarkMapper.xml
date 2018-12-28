@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN "
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zftx.mcdaily.mapper.MonthlyRemarkMapper">
+    <resultMap id="monthlyRemark" type="com.zftx.mcdaily.bean.MonthlyRemark">
+        <id column="id" property="id"/>
+        <id column="remark_id" property="remarkId"/>
+        <result column="remark_content" property="remarkContent"/>
+    </resultMap>
+
+    <!--查询 月 备注-->
+    <select id="getMonthlyRemark" resultType="com.zftx.mcdaily.bean.MonthlyRemark">
+        select * from monthly_remark
+        <if test="monthlyRemark != null">
+            <where>
+                <if test="monthlyRemark.id != null">
+                    id=#{monthlyRemark.id}
+                </if>
+                <if test="monthlyRemark.remarkId != null">
+                    and remark_id=#{monthlyRemark.remarkId}
+                </if>
+                <if test="monthlyRemark.remarkContent != null">
+                    and remark_content=#{monthlyRemark.remarkContent}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <!--添加 月备注-->
+    <insert id="addMonthlyRemark" keyProperty="monthlyRemark.id" useGeneratedKeys="true" parameterType="com.zftx.mcdaily.bean.MonthlyRemark">
+        INSERT ignore INTO monthly_remark
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="monthlyRemark !=null">
+                <if test="monthlyRemark.remarkId!=null">
+                    remark_id,
+                </if>
+                <if test="monthlyRemark.remarkContent!=null">
+                    remark_content,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")"  suffixOverrides=",">
+            <if test="monthlyRemark !=null">
+                <if test="monthlyRemark.remarkId!=null">
+                    #{monthlyRemark.remarkId},
+                </if>
+                <if test="monthlyRemark.remarkContent!=null">
+                    #{monthlyRemark.remarkContent},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改 月备注-->
+    <update id="updateMonthlyRemark" parameterType="com.zftx.mcdaily.bean.MonthlyRemark">
+        UPDATE monthly_remark
+        <set>
+            <if test="monthlyRemark.remarkId!=null">
+                remark_id=#{monthlyRemark.remarkId},
+            </if>
+            <if test="monthlyRemark.remarkContent!=null">
+                remark_content=#{monthlyRemark.remarkContent},
+            </if>
+        </set>
+        <where>
+            <if test="monthlyRemark.id!=null and monthlyRemark.id!=0">
+                id=#{monthlyRemark.id}
+            </if>
+            <if test="monthlyRemark.remarkId!=null">
+                and remark_id=#{monthlyRemark.remarkId}
+            </if>
+        </where>
+    </update>
+
+
+    <!--实际删除 月 备注-->
+    <delete id="deleteMonthlyRemark" parameterType="com.zftx.mcdaily.bean.MonthlyRemark">
+       delete from monthly_remark  where id=#{monthlyRemark.id}
+    </delete>
+
+
+    <!--根据remarkId删除 月 备注-->
+    <delete id="deleteMonthlyRemarkByRid" parameterType="java.lang.Integer">
+       delete from monthly_remark  where remark_id=#{remarkId}
+    </delete>
+</mapper>
