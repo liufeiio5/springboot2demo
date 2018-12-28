@@ -47,4 +47,9 @@ public class TestController {
         }
         return R.error().put("msg","没取到数据");
     }
+
+    @RequestMapping("thyme/index")
+    public String thymeIndex(){
+        return "html/index";
+    }
 }

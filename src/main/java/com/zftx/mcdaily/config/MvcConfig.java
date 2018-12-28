@@ -7,7 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 
 @Configuration
@@ -24,11 +27,18 @@ public class MvcConfig implements WebMvcConfigurer {
          * 如果是/xxxx/** 引用静态资源 加不加/xxxx/ 均可，因为系统默认配置（/**）也会作用
          * 如果是/** 会覆盖默认配置，应用addResourceLocations添加所有会用到的静态资源地址，系统默认不会再起作用
          */
+
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/META-INF/resources/")
                 .addResourceLocations("classpath:/resources/")
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/META-INF/resources/")
+                .addResourceLocations("classpath:/resources/")
+                .addResourceLocations("classpath:/static/")
+                .addResourceLocations("classpath:/public/");
+
         registry.addResourceHandler("/upload/tea_images/**").addResourceLocations("file:D:\\workspace\\1126\\mc_daily\\src\\main\\resources\\static\\upload\\tea_images\\");
     }
 
@@ -48,14 +58,34 @@ public class MvcConfig implements WebMvcConfigurer {
         return resolver;
     }
 
+    @Bean
+    public ITemplateResolver templateResolver() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setPrefix("/WEB-INF/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("utf-8");
+        templateResolver.setCacheable(false);
+        return templateResolver;
+    }
 
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        return templateEngine;
+    }
 
-
-
-
-
-
-
+    @Bean
+    public ThymeleafViewResolver viewResolverThymeLeaf() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("utf-8");
+        viewResolver.setViewNames(new String[]{"html/*"});
+        viewResolver.setOrder(1);
+        viewResolver.setCache(false);
+        return viewResolver;
+    }
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

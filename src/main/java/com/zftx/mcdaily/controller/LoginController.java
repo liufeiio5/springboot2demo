@@ -29,7 +29,8 @@ public class LoginController {
      */
     @RequestMapping(value = "/login")
     public String Login(){
-        return "login";
+        System.out.println("aa");
+        return "jsp/login";
     }
 
     /**
