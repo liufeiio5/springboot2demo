@@ -224,7 +224,7 @@ CKEDITOR.dialog.add( 'video', function ( editor )
 							{
 								type : 'button',
 								id : 'browse',
-								hidden : 'true',
+								hidden : 'false',
 								style : 'display:inline-block;margin-top:10px;',
 								filebrowser :
 								{
@@ -280,7 +280,7 @@ CKEDITOR.dialog.add( 'video', function ( editor )
 							{
 								type : 'button',
 								id : 'browse',
-								hidden : 'true',
+								hidden : 'false',
 								style : 'display:inline-block;margin-top:10px;',
 								filebrowser :
 								{
@@ -319,7 +319,7 @@ CKEDITOR.dialog.add( 'video', function ( editor )
 							{
 								type : 'button',
 								id : 'browse',
-								hidden : 'true',
+								hidden : 'false',
 								style : 'display:inline-block;margin-top:10px;',
 								filebrowser :
 								{

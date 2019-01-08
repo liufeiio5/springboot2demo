@@ -56,6 +56,6 @@ CKEDITOR.editorConfig =  function (config) {
 	];     
        //config.extraPlugins = 'flvPlayer,fmath_formula';
        config.extraPlugins = 'video'; 
-     
+
 }; 
 
