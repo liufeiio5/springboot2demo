@@ -13,12 +13,12 @@ CKEDITOR.editorConfig = function (config) {
     //config.filebrowserImageBrowseUrl =  '${base}/ckfinder/ckfinder.html?type=Images' ;
     //config.filebrowserFlashBrowseUrl =  '${base}/ckfinder/ckfinder.html?type=Flash' ;
     //config.filebrowserUploadUrl = "/edit/ckeditorUpload";
-    config.filebrowserUploadUrl = "/ckeditor/upload";
+    config.filebrowserUploadUrl = "/ckeditor/imageUpload";
     //config.filebrowserUploadUrl =  '${base}/ckEditorAjax_uploadFile.action';
     // config.filebrowserImageUploadUrl = '${base}/ckEditorAjax_uploadImg.action';
     //config.removeDialogTabs = 'image:advanced;image:Link';//隐藏超链接与高级选项
-    config.filebrowserImageUploadUrl = "/ckeditor/upload";//上传图片的地址
-    config.filebrowserHtml5videoUploadUrl = "/ckeditor/upload";//上传视频的地址
+    config.filebrowserImageUploadUrl = "/ckeditor/imageUpload";//上传图片的地址
+    config.filebrowserHtml5videoUploadUrl = "/ckeditor/videoUpload";//上传视频的地址
     config.image_previewText = ' '//设置图片预览默认值为' '
 
 
@@ -26,6 +26,7 @@ CKEDITOR.editorConfig = function (config) {
     config.filebrowserWindowHeight = '700';
     config.language = "zh-cn";
     config.toolbar = 'Full';
+    config.fullPage=true;
 
     config.toolbar_MyToolbar =
         [

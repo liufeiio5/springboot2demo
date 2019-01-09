@@ -40,6 +40,8 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/public/");
 
         registry.addResourceHandler("/upload/tea_images/**").addResourceLocations("file:D:\\workspace\\1126\\mc_daily\\src\\main\\resources\\static\\upload\\tea_images\\");
+        registry.addResourceHandler("/upload/marketing/images/**").addResourceLocations("file:D:\\workspace\\1031\\mc-sc2\\src\\main\\resources\\static\\upload\\marketing\\images\\");
+        registry.addResourceHandler("/upload/marketing/videos/**").addResourceLocations("file:D:\\workspace\\1031\\mc-sc2\\src\\main\\resources\\static\\upload\\marketing\\videos\\");
     }
 
     @Override

@@ -9,7 +9,7 @@ CKEDITOR.addTemplates("default", {
         title: "Image and Title",
         image: "template1.gif",
         description: "One ",
-        html: '<h1><span id="title" onblur="javascript:alert(222)" style="display: inline">请输入标题....</span></h1><hr><br>'
+        html: '<h1><span id="title"  style="display: inline">请输入标题....</span></h1><hr><br>'
     },
         ]
 });

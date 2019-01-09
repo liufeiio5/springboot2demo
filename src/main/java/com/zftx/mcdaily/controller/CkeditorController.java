@@ -10,17 +10,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 @Controller
-@RequestMapping("/edit")
+@RequestMapping("/ckeditor")
 public class CkeditorController {
 
-	// 注意路径格式，一般为项目路径下的一个文件夹里边，项目发布到linux服务器上又得改了
-	String imageFilePath = "D:\\workspace\\tool\\CKeditor\\2\\src\\main\\webapp\\static\\myImage\\";
+	//图片上传路径
+	final String  imageFilePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/marketing/images/";
+	//视频上传路径
+	final String  videoFilePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/marketing/videos/";
+	final String  videoName = "marketing_video";
+	final String  imageName = "marketing_image";
 
 	/**
 	 * 进入编辑器页面
 	 * @return
 	 */
-	@RequestMapping("/ckeditor")
+	@RequestMapping("/edit")
 	public String editor() {
 		return "html/edit";
 	}
@@ -33,21 +37,45 @@ public class CkeditorController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping("/ckeditorUpload")
-	//名字upload是固定的，有兴趣，可以打开浏览器查看元素验证
+	@RequestMapping("/imageUpload")
+	//名字upload是固定的
 	public String ckeditorUpload(@RequestParam("upload") MultipartFile file, String CKEditorFuncNum) throws Exception {
 		// 获取文件名
 		String fileName = file.getOriginalFilename();
 		// 获取文件的后缀名
 		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-		//实际处理肯定是要加上一段唯一的字符串（如现在时间），这里简单加 cun
-		String newFileName = "cun" + suffixName;
-		//使用架包 common-io实现图片上传
-		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(imageFilePath + newFileName));
-		//实现图片回显，基本上是固定代码，只需改路劲即可
+		String newFileName = this.imageName+ System.currentTimeMillis()+fileName;
+		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(this.imageFilePath + newFileName));
+		//实现图片回显
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script type=\"text/javascript\">");
-		sb.append("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'" + "/static/myImage/" + newFileName
+		sb.append("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'" + "/upload/marketing/images/" + newFileName
+				+ "','')");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
+	/**
+	 * 编辑器视频上传实现
+	 * @param file
+	 * @param CKEditorFuncNum
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping("/videoUpload")
+	//名字upload是固定的
+	public String videoUpload(@RequestParam("upload") MultipartFile file, String CKEditorFuncNum) throws Exception {
+		// 获取文件名
+		String fileName = file.getOriginalFilename();
+		// 获取文件的后缀名
+		String suffixName = fileName.substring(fileName.lastIndexOf("."));
+		String newFileName = this.videoName+ System.currentTimeMillis() +fileName;
+		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(this.videoFilePath + newFileName));
+		//实现视频回显
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script type=\"text/javascript\">");
+		sb.append("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'" + "/upload/marketing/videos/" + newFileName
 				+ "','')");
 		sb.append("</script>");
 
@@ -55,10 +83,9 @@ public class CkeditorController {
 	}
 
 	@RequestMapping("showHtml")
-	@ResponseBody
 	public String receiveHtml(String editor1){
 		System.out.println(editor1);
-		return "success";
+		return "redirect:edit";
 	}
 
 }
