@@ -15,7 +15,7 @@ spring:
           driverClassName: com.mysql.jdbc.Driver
       test:  #数据源3
           type: com.alibaba.druid.pool.DruidDataSource
-          url: jdbc:mysql://localhost:3306/daily_test?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://localhost:3306/mchb_test?useUnicode=true&characterEncoding=UTF-8
           username: root
           password: mysql
           driverClassName: com.mysql.jdbc.Driver
@@ -73,7 +73,7 @@ mybatis:
 #  - classpath:sql/employee.sql
 
 server:
-  port: 29000
+  port: 39000
 
   devtools:
     livereload:
