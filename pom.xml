@@ -185,7 +185,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 
-                    <mainClass>com.zftx.mcdaily.McdailyApplication</mainClass><!--这个要改成自己的入口类-->
+                    <mainClass>com.qgwy.dfb.QgwyApplication</mainClass><!--这个要改成自己的入口类-->
                     <fork>true</fork>
                 </configuration>
                 <executions>

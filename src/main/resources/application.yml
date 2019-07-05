@@ -4,20 +4,20 @@ spring:
     druid:
       first:  #数据源1
           driverClassName: com.mysql.jdbc.Driver
-          url: jdbc:mysql://192.168.1.176:3306/daily?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/daily?useUnicode=true&characterEncoding=UTF-8
           username: root
-          password: zookeeper
+          password: 123456
       second:  #数据源2
           type: com.alibaba.druid.pool.DruidDataSource
-          url: jdbc:mysql://192.168.1.176:3306/daily?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/daily?useUnicode=true&characterEncoding=UTF-8
           username: root
-          password: zookeeper
+          password: 123456
           driverClassName: com.mysql.jdbc.Driver
       test:  #数据源3
           type: com.alibaba.druid.pool.DruidDataSource
-          url: jdbc:mysql://192.168.1.176:3306/daily?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/daily?useUnicode=true&characterEncoding=UTF-8
           username: root
-          password: zookeeper
+          password: 123456
           driverClassName: com.mysql.jdbc.Driver
       filter:
         slf4j:
