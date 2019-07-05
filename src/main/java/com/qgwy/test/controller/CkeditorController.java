@@ -1,4 +1,4 @@
-package com.qgwy.template.controller;
+package com.qgwy.test.controller;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;

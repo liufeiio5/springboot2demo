@@ -1,4 +1,4 @@
-package com.qgwy.template.interceptor;
+package com.qgwy.test.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

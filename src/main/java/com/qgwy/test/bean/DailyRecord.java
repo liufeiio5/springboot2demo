@@ -1,4 +1,4 @@
-package com.qgwy.template.bean;
+package com.qgwy.test.bean;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

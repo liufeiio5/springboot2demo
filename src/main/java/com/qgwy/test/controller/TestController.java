@@ -1,9 +1,9 @@
-package com.qgwy.template.controller;
+package com.qgwy.test.controller;
 
 
-import com.qgwy.template.mapper.DailyRecordMapper;
-import com.qgwy.template.service.DailyRecordService;
-import com.qgwy.template.util.R;
+import com.qgwy.test.mapper.DailyRecordMapper;
+import com.qgwy.test.service.DailyRecordService;
+import com.qgwy.test.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

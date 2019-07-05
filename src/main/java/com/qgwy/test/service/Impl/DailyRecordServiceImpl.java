@@ -1,9 +1,9 @@
-package com.qgwy.template.service.Impl;
+package com.qgwy.test.service.Impl;
 
-import com.qgwy.template.bean.DailyRecord;
-import com.qgwy.template.annotation.DataSource;
-import com.qgwy.template.mapper.DailyRecordMapper;
-import com.qgwy.template.service.DailyRecordService;
+import com.qgwy.test.bean.DailyRecord;
+import com.qgwy.test.annotation.DataSource;
+import com.qgwy.test.mapper.DailyRecordMapper;
+import com.qgwy.test.service.DailyRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;

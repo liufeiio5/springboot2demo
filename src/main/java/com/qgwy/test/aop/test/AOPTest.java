@@ -1,6 +1,6 @@
-package com.qgwy.template.aop.test;
+package com.qgwy.test.aop.test;
 
-import com.qgwy.template.aop.service.AService;
+import com.qgwy.test.aop.service.AService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

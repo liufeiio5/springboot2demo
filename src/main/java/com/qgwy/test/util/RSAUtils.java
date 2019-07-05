@@ -1,4 +1,4 @@
-package com.qgwy.template.util;
+package com.qgwy.test.util;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;

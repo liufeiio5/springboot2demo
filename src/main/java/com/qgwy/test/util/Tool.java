@@ -1,4 +1,4 @@
-package com.qgwy.template.util;
+package com.qgwy.test.util;
 
 import java.io.IOException;
 import java.text.ParseException;

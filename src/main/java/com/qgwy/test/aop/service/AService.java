@@ -1,4 +1,4 @@
-package com.qgwy.template.aop.service;
+package com.qgwy.test.aop.service;
 
 public interface AService {
     public void cool(String _msg);

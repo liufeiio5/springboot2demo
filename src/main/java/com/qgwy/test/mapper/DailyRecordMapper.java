@@ -1,6 +1,6 @@
-package com.qgwy.template.mapper;
+package com.qgwy.test.mapper;
 
-import com.qgwy.template.bean.DailyRecord;
+import com.qgwy.test.bean.DailyRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

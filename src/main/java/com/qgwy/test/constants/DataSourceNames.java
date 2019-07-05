@@ -1,4 +1,4 @@
-package com.qgwy.template.constants;
+package com.qgwy.test.constants;
 
 /**
  * 增加多数据源，在此配置 

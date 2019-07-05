@@ -1,8 +1,8 @@
-package com.qgwy.template.config;
+package com.qgwy.test.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import com.qgwy.template.constants.DataSourceNames;
-import com.qgwy.template.util.DynamicDataSource;
+import com.qgwy.test.constants.DataSourceNames;
+import com.qgwy.test.util.DynamicDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ public class DynamicDataSourceConfig {
     }
 
     @Bean
-    @ConfigurationProperties("spring.datasource.druid.template")
+    @ConfigurationProperties("spring.datasource.druid.test")
     public DataSource testDataSource(){
         return DruidDataSourceBuilder.create().build();
     }

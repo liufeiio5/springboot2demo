@@ -797,7 +797,7 @@
 	 *		} );
 	 *
 	 * It is also possible to create instances during runtime by using a command
-	 * (if a {@link CKEDITOR.plugins.widget.definition#template} property was defined):
+	 * (if a {@link CKEDITOR.plugins.widget.definition#test} property was defined):
 	 *
 	 *		// You can execute an automatically defined command to
 	 *		// insert a new simplebox widget or edit the one currently focused.
@@ -968,11 +968,11 @@
 		 */
 
 		/**
-		 * The template which will be used to create a new widget element (when the widget's command is executed).
+		 * The test which will be used to create a new widget element (when the widget's command is executed).
 		 * It will be populated with {@link #defaults default values}.
 		 *
 		 * @readonly
-		 * @property {CKEDITOR.template} template
+		 * @property {CKEDITOR.template} test
 		 */
 
 		/**
@@ -1942,10 +1942,10 @@
 						editor: editor,
 						commandData: commandData
 					} );
-				} else if ( widgetDef.template ) {
-					// ... or create a brand-new widget from template.
+				} else if ( com.qgwy.test ) {
+					// ... or create a brand-new widget from test.
 					var defaults = typeof widgetDef.defaults == 'function' ? widgetDef.defaults() : widgetDef.defaults,
-						element = CKEDITOR.dom.element.createFromHtml( widgetDef.template.output( defaults ) ),
+						element = CKEDITOR.dom.element.createFromHtml( com.qgwy.test.output( defaults ) ),
 						instance,
 						wrapper = editor.widgets.wrapElement( element, widgetDef.name ),
 						temp = new CKEDITOR.dom.documentFragment( wrapper.getDocument() );
@@ -4088,11 +4088,11 @@
  */
 
 /**
- * The template which will be used to create a new widget element (when the widget's command is executed).
+ * The test which will be used to create a new widget element (when the widget's command is executed).
  * This string is populated with {@link #defaults default values} by using the {@link CKEDITOR.template} format.
  * Therefore it has to be a valid {@link CKEDITOR.template} argument.
  *
- * @property {String} template
+ * @property {String} test
  */
 
 /**
@@ -4120,7 +4120,7 @@
 
 /**
  * An object containing definitions of nested editables (editable name => {@link CKEDITOR.plugins.widget.nestedEditable.definition}).
- * Note that editables *have to* be defined in the same order as they are in DOM / {@link CKEDITOR.plugins.widget.definition#template template}.
+ * Note that editables *have to* be defined in the same order as they are in DOM / {@link CKEDITOR.plugins.widget.definition#test test}.
  * Otherwise errors will occur when nesting widgets inside each other.
  *
  *		editables: {

@@ -1,12 +1,12 @@
 /*
-package com.qgwy.template;
+package com.qgwy.test;
 
-import com.qgwy.template.util.MD5;
+import com.qgwy.test.util.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.template.context.SpringBootTest;
-import org.springframework.template.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 @RunWith(SpringRunner.class)

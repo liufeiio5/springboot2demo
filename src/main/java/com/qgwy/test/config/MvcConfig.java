@@ -1,6 +1,6 @@
-package com.qgwy.template.config;
+package com.qgwy.test.config;
 
-import com.qgwy.template.interceptor.ResourceInterceptor;
+import com.qgwy.test.interceptor.ResourceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

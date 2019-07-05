@@ -42,8 +42,8 @@ CKEDITOR.plugins.add( 'simplebox', {
 				}
 			},
 
-			// Define the template of a new Simple Box widget.
-			// The template will be used when creating new instances of the Simple Box widget.
+			// Define the test of a new Simple Box widget.
+			// The test will be used when creating new instances of the Simple Box widget.
 			template:
 				'<div class="simplebox">' +
 					'<h2 class="simplebox-title">Title</h2>' +
@@ -52,7 +52,7 @@ CKEDITOR.plugins.add( 'simplebox', {
 
 			// Define the label for a widget toolbar button which will be automatically
 			// created by the Widgets System. This button will insert a new widget instance
-			// created from the template defined above, or will edit selected widget
+			// created from the test defined above, or will edit selected widget
 			// (see second part of this tutorial to learn about editing widgets).
 			//
 			// Note: In order to be able to translate your widget you should use the

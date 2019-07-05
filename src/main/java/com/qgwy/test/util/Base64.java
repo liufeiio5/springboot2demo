@@ -4,7 +4,7 @@
  * author: shiqun.shi@alipay.com
  */
 
-package com.qgwy.template.util;
+package com.qgwy.test.util;
 
 public final class Base64 {
 

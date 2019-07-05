@@ -1,4 +1,4 @@
-package com.qgwy.template.config;
+package com.qgwy.test.config;
  
 import javax.servlet.Servlet;
  

@@ -1,6 +1,6 @@
-package com.qgwy.template.aop.service.impl;
+package com.qgwy.test.aop.service.impl;
 
-import com.qgwy.template.aop.service.AService;
+import com.qgwy.test.aop.service.AService;
 
 /**
  * 接口的实现

@@ -1,6 +1,6 @@
-package com.qgwy.template.service;
+package com.qgwy.test.service;
 
-import com.qgwy.template.bean.DailyRecord;
+import com.qgwy.test.bean.DailyRecord;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;

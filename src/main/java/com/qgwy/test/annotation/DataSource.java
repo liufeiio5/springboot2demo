@@ -1,4 +1,4 @@
-package com.qgwy.template.annotation;
+package com.qgwy.test.annotation;
 
 import java.lang.annotation.*;
 

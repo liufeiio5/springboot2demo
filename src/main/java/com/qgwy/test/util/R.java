@@ -1,4 +1,4 @@
-package com.qgwy.template.util;
+package com.qgwy.test.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

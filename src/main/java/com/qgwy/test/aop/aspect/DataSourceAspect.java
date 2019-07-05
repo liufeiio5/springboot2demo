@@ -1,8 +1,8 @@
-package com.qgwy.template.aop.aspect;
+package com.qgwy.test.aop.aspect;
 
-import com.qgwy.template.annotation.DataSource;
-import com.qgwy.template.constants.DataSourceNames;
-import com.qgwy.template.util.DynamicDataSource;
+import com.qgwy.test.annotation.DataSource;
+import com.qgwy.test.constants.DataSourceNames;
+import com.qgwy.test.util.DynamicDataSource;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,7 +24,7 @@ public class DataSourceAspect implements Ordered {
  
 	protected Logger logger = LoggerFactory.getLogger(getClass());
  
-	@Pointcut("@annotation(com.qgwy.template.annotation.DataSource)")//注意：这里的xxxx代表的是上面public @interface DataSource这个注解DataSource的包名
+	@Pointcut("@annotation(com.qgwy.test.annotation.DataSource)")//注意：这里的xxxx代表的是上面public @interface DataSource这个注解DataSource的包名
 	public void dataSourcePointCut() {
  
 	}

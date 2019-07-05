@@ -678,7 +678,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			resultItem[ajaxConfig.keyDis] = item.disabled;
 			return resultItem;
 		}() : item;
-		var template = data[id].config.template(id, item);
+		var template = com.qgwy.test(id, item);
 		var pid = item[FORM_TEAM_PID];
 		pid ? pid = JSON.parse(pid) : pid = [-1];
 		var attr = pid[0] == -1 ? '' : 'tree-id="' + pid.join('-') + '" tree-folder="' + !!item['XM_TREE_FOLDER'] + '"';
@@ -1645,7 +1645,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			filter: options.filter,
 			maxTips: options.maxTips,
 			on: options.on
-		}, _defineProperty(_ref2, 'on', options.on), _defineProperty(_ref2, 'opened', options.opened), _defineProperty(_ref2, 'closed', options.closed), _defineProperty(_ref2, 'template', options.template), _defineProperty(_ref2, 'clearInput', options.clearInput), _ref2) : {};
+		}, _defineProperty(_ref2, 'on', options.on), _defineProperty(_ref2, 'opened', options.opened), _defineProperty(_ref2, 'closed', options.closed), _defineProperty(_ref2, 'test', com.qgwy.test), _defineProperty(_ref2, 'clearInput', options.clearInput), _ref2) : {};
 
 		options && options.searchType != undefined && (config.searchType = options.searchType == 'dl' ? 1 : 0);
 
