@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qgwy</groupId>
-    <artifactId>template</artifactId>
+    <artifactId>qgwy-template</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>war</packaging>
 
-    <name>template</name>
-    <description>template project for Spring Boot</description>
+    <name>qgwy-template</name>
+    <description>qgwy-template project for Spring Boot</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -97,11 +97,11 @@
             <version>1.7.0</version>
         </dependency>
         <!--druid数据库连接池引入-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.1.10</version>
-        </dependency>
+        </dependency>-->
         <!--mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -185,7 +185,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 
-                    <mainClass>com.qgwy.test.QgwyApplication</mainClass><!--这个要改成自己的入口类-->
+                    <mainClass>com.qgwy.template.QgwyApplication</mainClass><!--这个要改成自己的入口类-->
                     <fork>true</fork>
                 </configuration>
                 <executions>
