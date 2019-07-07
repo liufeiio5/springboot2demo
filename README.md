@@ -1,3 +1,3 @@
-# mc_daily
+# qgwy-template
 
 模板

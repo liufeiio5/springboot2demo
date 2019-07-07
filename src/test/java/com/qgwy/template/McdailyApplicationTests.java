@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @Slf4j
 public class McdailyApplicationTests {
 
-    git
+
 
     @Test
     public void md5test()

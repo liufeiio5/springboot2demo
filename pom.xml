@@ -13,6 +13,7 @@
     <name>qgwy-template</name>
     <description>qgwy-template project for Spring Boot</description>
 
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -37,6 +38,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
 
 
         <dependency>
@@ -137,6 +139,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+        <!--freemarker-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
         <!--健康检查-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -179,6 +186,7 @@
                 </includes>
             </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
