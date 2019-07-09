@@ -66,6 +66,11 @@ spring:
 
   thymeleaf:
     cache: false
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
 
 mybatis:
   # 指定全局配置文件位置
@@ -75,7 +80,6 @@ mybatis:
 #  schema:
 #  - classpath:sql/department.sql
 #  - classpath:sql/employee.sql
-
 server:
   port: 39000
 
@@ -95,6 +99,8 @@ server:
     session:
       timeout: 3000s
     context-path: /
+  tomcat:
+    uri-encoding: UTF-8
 
 
 

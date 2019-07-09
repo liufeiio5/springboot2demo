@@ -65,12 +65,19 @@ public class TestController {
         return "html/index";
     }
 
-    @RequestMapping("show2")
+    //@RequestMapping(value = "show2",produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "show2")
     @ResponseBody
     public String show2()
     {
-        log.info("hello {},welcome!","fei哥3");
-        return "好像没什么反应";
+        log.info("hello {},welcome!","fei哥6543");
+        return "好像没什么反应并不是很对";
+    }
+    @RequestMapping(value = "show3")
+    @ResponseBody
+    public R json()
+    {
+        return R.ok().put("data","有木有乱码");
     }
 
 

@@ -1,9 +1,15 @@
 package com.qgwy.template.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.qgwy.template.interceptor.ResourceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -11,6 +17,10 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
@@ -79,7 +89,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode("HTML");
         templateResolver.setPrefix("classpath:/template/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("utf-8");
@@ -108,6 +118,39 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    @Bean
+    public HttpMessageConverter<String> responseBodyConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter(
+                Charset.forName("UTF-8"));
+        List<MediaType> list=new ArrayList<>();
+        list.add(MediaType.ALL);
+        converter.setSupportedMediaTypes(list);
+        return converter;
+    }
+
+    @Override
+    public void configureMessageConverters(
+            List<HttpMessageConverter<?>> converters) {
+        WebMvcConfigurer.super.configureMessageConverters(converters);
+        converters.add(responseBodyConverter());
+    }
+
+    @Override
+    public void configureContentNegotiation(
+            ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(false);
+    }
+
+    //json转换器
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        FastJsonHttpMessageConverter fjc = new FastJsonHttpMessageConverter();
+        FastJsonConfig fj = new FastJsonConfig();
+        fj.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
+        fjc.setFastJsonConfig(fj);
+        converters.add(fjc);
     }
 
 }
