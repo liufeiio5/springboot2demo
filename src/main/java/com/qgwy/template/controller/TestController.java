@@ -3,12 +3,18 @@ package com.qgwy.template.controller;
 
 import com.qgwy.template.mapper.DailyRecordMapper;
 import com.qgwy.template.service.DailyRecordService;
+import com.qgwy.template.util.DynamicDataSource;
 import com.qgwy.template.util.R;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,16 +22,29 @@ import java.util.HashMap;
 @Slf4j
 public class TestController {
 
-    @Autowired
-    private DailyRecordService dailyRecord;
+   /* @Autowired
+    @Lazy
+    private DailyRecordService dailyRecord;*/
 
     @Autowired
+    private DynamicDataSource dataSource;
+
+    @Autowired
+    @Lazy
     private DailyRecordMapper dailyRecordMapper;
 
     @RequestMapping("/show")
     @ResponseBody
     public R show() {
-        ArrayList<HashMap<String, Object>> daily = dailyRecordMapper.getDaily(91, "20190601", "20190705");
+
+        System.out.println(dataSource.getClass());
+        try {
+            final Connection connection = dataSource.getConnection();
+            System.out.println(dataSource);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ArrayList<HashMap<String, Object>> daily = dailyRecordMapper.getDaily(92, "20190601", "20190705");
 
         return R.ok().put("data",daily);
     }
@@ -48,8 +67,10 @@ public class TestController {
 
     @RequestMapping("show2")
     @ResponseBody
-    public String show2(){
-        return "貌似没什么反应";
+    public String show2()
+    {
+        log.info("hello {},welcome!","fei哥3");
+        return "好像没什么反应";
     }
 
 

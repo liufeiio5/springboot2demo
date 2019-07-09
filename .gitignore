@@ -8,6 +8,7 @@ target/
 logs/
 log/
 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -24,6 +25,7 @@ log/
 *.ipr
 mvnw
 mvnw.cmd
+rebel.xml
 
 ### NetBeans ###
 nbproject/private/
@@ -36,3 +38,4 @@ nbdist/
 .idea/vcs.xml
 .idea/workspace.xml
 src/test/
+

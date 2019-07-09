@@ -1,3 +1,4 @@
+/*
 package com.qgwy.template.service.Impl;
 
 import com.qgwy.template.bean.DailyRecord;
@@ -7,6 +8,8 @@ import com.qgwy.template.service.DailyRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,11 +21,12 @@ import java.util.List;
 public class DailyRecordServiceImpl implements DailyRecordService {
 
     @Autowired
+    @Lazy
     private DailyRecordMapper dailyRecordMapper;
 
 
     @Override
-    @DataSource()
+    @DataSource(name="first")
     public List<DailyRecord> getDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
@@ -35,11 +39,13 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         return dailyRecordMapper.getDaily(userId,startDate,endDate);
     }
 
-    /**
+    */
+/**
      * 添加日报
      * @param dailyRecord
      * @return
-     */
+     *//*
+
     public String addDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
@@ -54,11 +60,13 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         }
     }
 
-    /**
+    */
+/**
      * 修改日报
      * @param dailyRecord
      * @return
-     */
+     *//*
+
     public Integer updateDailyRecord(@Param("dailyRecord") DailyRecord dailyRecord){
         //日志
         StringBuilder info=new StringBuilder().append(this.getClass().getName()).append("||").
@@ -67,11 +75,13 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         return dailyRecordMapper.updateDailyRecord(dailyRecord);
     }
 
-    /**
+    */
+/**
      * 删除日报
      * @param dailyRecord
      * @return
-     */
+     *//*
+
     public String deleteDailyRecord(DailyRecord dailyRecord){
         int i=dailyRecordMapper.deleteDailyRecord(dailyRecord);
         if(i>0){
@@ -81,3 +91,4 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         }
     }
 }
+*/

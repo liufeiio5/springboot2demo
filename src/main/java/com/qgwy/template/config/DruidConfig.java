@@ -19,16 +19,14 @@ import java.util.Map;
 @Configuration
 public class DruidConfig {
 
-    @Value("${spring.datasource.druid.initialSize}")
-    private int initialSize;
 
-    @ConfigurationProperties(prefix = "spring.datasource.druid")
-    @Bean
+    /*@ConfigurationProperties(prefix = "spring.datasource.druid")
+    @Bean("druidDataSource")
     public DataSource druidDataSource(){
-        //DruidDataSource druidDataSource = new DruidDataSource();
-        //System.out.println(druidDataSource.getInitialSize()+"====="+initialSize);
-        return  new DruidDataSource();
-    }
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setDbType("mysql");
+        return  druidDataSource;
+    }*/
 
     //配置Druid的监控
     //1、配置一个管理后台的Servlet
