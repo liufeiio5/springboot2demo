@@ -71,6 +71,20 @@ spring:
       force: true
       charset: UTF-8
       enabled: true
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  redis:
+    host: 192.168.100.50
+    password: qgwyadmin
+  rabbitmq:
+    host: 192.168.100.51
+    username: admin
+    password: admin
+    virtual-host: my_vhost
+
 
 mybatis:
   # 指定全局配置文件位置
