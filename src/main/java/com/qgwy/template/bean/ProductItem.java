@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @TableName(value = "cbec_product_item")
 @Data
@@ -41,5 +42,6 @@ public class ProductItem implements Serializable {
     private BigDecimal promotionAmount;
     private BigDecimal integrationAmount;
     private BigDecimal realAmount;
+    private Date createDate;
     private String remark;
 }

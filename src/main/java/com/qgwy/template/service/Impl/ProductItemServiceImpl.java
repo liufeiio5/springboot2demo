@@ -8,9 +8,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qgwy.template.bean.ProductItem;
 import com.qgwy.template.mapper.ProductItemMapper;
 import com.qgwy.template.service.ProductItemService;
+import com.qgwy.template.vo.ItemListVo;
 import com.qgwy.template.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -32,6 +35,34 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
                 .select("product_id","product_name","product_cost_price","product_price","create_date");
         return this.productItemMapper.selectPage(page,queryWrapper);
 
+    }
+
+    public IPage<ProductItem> getItemList(Page page){
+        //查询构造器，将数据查询出来
+        QueryWrapper<ProductItem> queryWrapper = new QueryWrapper<>();
+        //分页器，传入分页条件page，需要分页的数据，根据分页条件对传如的参数进行分页
+        IPage<ProductItem> itemIPage = productItemMapper.selectPage(page,queryWrapper);
+        //返回分页后的数据
+        return itemIPage;
+    }
+
+    /**
+     * mybatis-plus自带的单表分页方法
+     * @param currPage 分页条件
+     * @param marketId 超市Id
+     * @param categoryId 分类ID
+     * @return
+     */
+    public Page<ItemListVo> getItemListVo(Integer currPage,Integer size, Integer marketId, Integer categoryId){
+
+        //分页构造器，传如分页条件：page--当前第几页，size--每一页的数据量
+        Page<ItemListVo> page = new Page<>(currPage,size);
+        //mapper接口方法查询数据,传入一个分页构造器，查询的时候mybatis-plus会帮我们将分页的条件SQL语句进行拼接
+        List<ItemListVo> listVos = productItemMapper.getItemListVo(page,marketId,categoryId);
+        //将查询到的数据set到Page对象里面，获得数据的总条数，页数，当前第几页
+        page.setRecords(listVos);
+        //将查询到的数据set到分页器进行分页
+        return page;
     }
 
 }

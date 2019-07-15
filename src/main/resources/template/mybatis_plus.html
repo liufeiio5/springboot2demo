@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>mybatis-plus后端分页实现</title>
+    <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/static/bootstrap-table-master/dist/bootstrap-table.css}" rel="stylesheet"/>
+    <script th:src="@{/static/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/static/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+    <script th:src="@{/static/bootstrap-table-master/dist/bootstrap-table.js}"></script>
+    <script th:src="@{/static/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js}"></script>
+</head>
+<body>
+<h2>mybatis-plus后端分页实现</h2>
+<table id="mytable"></table>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#mytable").bootstrapTable({
+            url:"http://localhost:39000/productItem/getItemListVo",   //请求地址
+            striped : true, //是否显示行间隔色
+            pageNumber : 1, //初始化加载第一页
+            pagination : true,//是否分页
+            sidePagination : 'server',//server:服务器端分页|client：前端分页
+            pageSize : 5,//单页记录数
+            pageList : [ 5, 10, 20],//可选择单页记录数
+            showRefresh : true,//刷新按钮
+            queryParams : function(params) {//上传服务器的参数
+                var temp = {
+                    currPage :params.offset + 0,// SQL语句起始索引
+                    size : params.limit,  // 每页显示数量
+                    marketId:1,
+                    categoryId:1
+                };
+                return temp;
+            },columns : [ {
+                title : '超市名称',
+                field : 'marketName',
+                sortable : true
+            }, {
+                title : '分类名',
+                field : 'categoryName',
+                sortable : true
+            }, {
+                title : '产品名称',
+                field : 'productName',
+                sortable : true
+            },{
+                title : '原产地',
+                field : 'origin',
+                sortable : true
+            }, {
+                title : '价格',
+                field : 'productCostPrice',
+                sortable : true
+            }, {
+                title : '重量',
+                field : 'weight',
+                sortable : true
+            }, {
+                title : '超市ID',
+                field : 'marketId',
+                sortable : true
+            }, {
+                title : '分类ID',
+                field : 'categoryId',
+                sortable : true
+            }, {
+                title : '日期',
+                field : 'createDate',
+                sortable : true
+            }]
+        })
+    })
+</script>
+
+</html>
