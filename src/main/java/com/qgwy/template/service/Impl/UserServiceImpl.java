@@ -21,6 +21,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param user
      * @return
      */
+    @Override
     public Integer insertUser(User user){
         //返回一个数字：返回插入的条数
         return userMapper.insert(user);
@@ -32,6 +33,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param users
      * @return
      */
+    @Override
     public Boolean batchSaveUser(List<User> users,Integer batchSize){
         //注意这里调用的是IService<T>里面的方法，并不是BaseMapper<T>的基类方法
         boolean batch = this.saveBatch(users,batchSize);
@@ -40,11 +42,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 根据主键ID删除数据
-     * @param Id
+     * @param id
      * @return
      */
-    public Integer deleteUserById(Integer Id){
-        return userMapper.deleteById(Id);
+    @Override
+    public Integer deleteUserById(Integer id){
+        return userMapper.deleteById(id);
     }
 
 
@@ -54,6 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param gender 性别
      * @return
      */
+    @Override
     public Integer deleteUserByQueryWrapper(String username,Integer gender){
         //声明一个条件构造器对象
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -71,6 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param user
      * @return
      */
+    @Override
     public Integer updateUserById(User user){
         return userMapper.updateById(user);
     }
@@ -80,6 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param username
      * @return
      */
+    @Override
     public Boolean batchUpdateByWrapper(User user,String username){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("username",username);
@@ -91,6 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param username
      * @return
      */
+    @Override
     public List<User> getUserList(String username){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("username",username);
@@ -102,6 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param userList
      * @return
      */
+    @Override
     public Boolean batchUpdateUser(List<User> userList,Integer batchSize){
         //batchSize 是每一次更新的数据量大小
         return this.updateBatchById(userList,batchSize);

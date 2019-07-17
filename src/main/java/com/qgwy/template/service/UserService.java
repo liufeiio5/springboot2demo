@@ -24,10 +24,10 @@ public interface UserService extends IService<User> {
 
     /**
      * 根据主键删除
-     * @param Id
+     * @param id
      * @return
      */
-    Integer deleteUserById(Integer Id);
+    Integer deleteUserById(Integer id);
 
     /**
      * 根据条件构造器构造好的删除条件进行删除

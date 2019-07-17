@@ -48,7 +48,7 @@ public class UserController {
     public R batchSaveUser(Integer batchSize){
         //1、先构造一个List<User>
         List<User> userList = new ArrayList<>();
-        for(int i=1;i<=10000;i++){
+        for(int i=1;i<=100;i++){
             User user = new User();
             user.setUsername("陈平安"+i+"号");
             user.setAge(i);
@@ -57,7 +57,7 @@ public class UserController {
             }else{
                 user.setGender(0);
             }
-            user.setCreateTime( new Date());
+            user.setCreateTime(new Date());
             userList.add(user);
         }
         Long start = System.currentTimeMillis();
@@ -74,16 +74,16 @@ public class UserController {
 
     /**
      * 根据主键ID删除数据
-     * @param Id
+     * @param id
      * @return
      */
     @RequestMapping(value = "/deleteUserById")
     @ResponseBody
     @ApiOperation("根据主键删除数据")
-    public R deleteUserById(Integer Id){
+    public R deleteUserById(Integer id){
 
-        if(Id != null){
-            Integer result = userService.deleteUserById(Id);
+        if(id != null){
+            Integer result = userService.deleteUserById(id);
             if(result != null){
                 return R.ok("删除成功").put("result",result);
             }else{
