@@ -48,7 +48,7 @@ public class UserController {
     public R batchSaveUser(Integer batchSize){
         //1、先构造一个List<User>
         List<User> userList = new ArrayList<>();
-        for(int i=0;i<10000;i++){
+        for(int i=1;i<=10000;i++){
             User user = new User();
             user.setUsername("陈平安"+i+"号");
             user.setAge(i);
