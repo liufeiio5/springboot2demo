@@ -48,21 +48,38 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
 
     /**
      * mybatis-plus自带的单表分页方法
-     * @param currPage 分页条件
+     * @param offset 分页条件
      * @param marketId 超市Id
      * @param categoryId 分类ID
      * @return
      */
-    public Page<ItemListVo> getItemListVo(Integer currPage,Integer size, Integer marketId, Integer categoryId){
+    public Page<ItemListVo> getItemListVo(Integer offset,Integer pageNumber, Integer marketId, Integer categoryId){
 
         //分页构造器，传如分页条件：page--当前第几页，size--每一页的数据量
-        Page<ItemListVo> page = new Page<>(currPage,size);
+        Page<ItemListVo> page = new Page<>(offset,pageNumber);
         //mapper接口方法查询数据,传入一个分页构造器，查询的时候mybatis-plus会帮我们将分页的条件SQL语句进行拼接
         List<ItemListVo> listVos = productItemMapper.getItemListVo(page,marketId,categoryId);
         //将查询到的数据set到Page对象里面，获得数据的总条数，页数，当前第几页
         page.setRecords(listVos);
         //将查询到的数据set到分页器进行分页
         return page;
+    }
+
+    /**
+     * 查询product表查询所需字段的信息
+     * @param currPage 当前第几页
+     * @param size 每一页数据大小
+     * @param categoryId 查询条件：分类Id
+     * @return
+     */
+    public IPage<ProductItem> getProductItemInfo(Integer currPage,Integer size,Integer categoryId){
+        //分页构造器，传入分页参数
+        Page page = new Page(currPage,size);
+        //条件构造查询
+        QueryWrapper<ProductItem> queryWrapper = new QueryWrapper<ProductItem>()
+                .eq("category_id",categoryId) //查询条件
+                .select("product_id","product_name","category_id","origin","sp1");//查询返回的字段
+        return productItemMapper.selectPage(page,queryWrapper);
     }
 
 }

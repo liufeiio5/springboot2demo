@@ -74,7 +74,7 @@ public class ProductItemController {
     @ResponseBody
     @GetMapping(value = "/getItemListVo")
     @ApiOperation(value = "多表查询分页，使用mybatis-plus自带分页工具",notes = "查询商品的信息")
-    public R getItemListVo(Integer currPage,Integer size,Integer marketId,Integer categoryId){
+    public R getItemListVo(Integer offset,Integer pageNumber,Integer marketId,Integer categoryId){
 //        if(currPage == null){
 //            currPage = 1;
 //        }
@@ -88,7 +88,9 @@ public class ProductItemController {
 //            categoryId = 1;
 //        }
         //调用service接口，返回一个分页对象，里面包含分页数据的各种信息
-        Page<ItemListVo> listVoPage = productItemService.getItemListVo(currPage,size,marketId,categoryId);
+        Page<ItemListVo> listVoPage = productItemService.getItemListVo(offset,pageNumber,marketId,categoryId);
+        System.out.println("AAAA>>>>>>>>>>>>>>>>>>>>>>>>:"+offset);
+        System.out.println("BBBBB>>>>>>>>>>>>>>>>>>>>>>:"+pageNumber);
         return R.ok().put("pages",listVoPage.getPages())
                 .put("size",listVoPage.getSize())
                 .put("total",listVoPage.getTotal())
@@ -108,5 +110,24 @@ public class ProductItemController {
     @RequestMapping("/mybatis_plus")
     public String getMybatis_plus(){
         return "mybatis_plus";
+    }
+
+
+    @ResponseBody
+    @GetMapping(value = "/getProductItemInfo")
+    @ApiOperation(value = "使用条件构造器进行筛选查询，并进行分页",notes = "查询商品的信息")
+    public R getProductItemInfo(Integer currPage,Integer size,Integer categoryId){
+
+        IPage<ProductItem> productItemIPage = productItemService.getProductItemInfo(currPage,size,categoryId);
+        if(productItemIPage != null){
+            return R.ok().put("total",productItemIPage.getTotal())
+                    .put("current",productItemIPage.getCurrent())
+                    .put("pages",productItemIPage.getPages())
+                    .put("size",productItemIPage.getSize())
+                    .put("data",productItemIPage.getRecords())
+                    .put("currDataSize",productItemIPage.getRecords().size());
+        }else{
+            return R.error("没有数据");
+        }
     }
 }

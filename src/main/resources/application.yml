@@ -4,7 +4,7 @@ spring:
     druid:
       first:  #数据源1
           driverClassName: com.mysql.jdbc.Driver
-          url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8
           username: root
           password: 123456
 
@@ -35,13 +35,13 @@ spring:
 
       second:  #数据源2
           type: com.alibaba.druid.pool.DruidDataSource
-          url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8
           username: root
           password: 123456
           driverClassName: com.mysql.jdbc.Driver
       test:  #数据源3
           type: com.alibaba.druid.pool.DruidDataSource
-          url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8
+          url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8
           username: root
           password: 123456
           driverClassName: com.mysql.jdbc.Driver
