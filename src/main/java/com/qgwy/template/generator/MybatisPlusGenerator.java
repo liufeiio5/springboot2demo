@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -148,13 +149,16 @@ public class MybatisPlusGenerator {
         //strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
         // 写于父类中的公共字段
         //strategy.setSuperEntityColumns("id");
-        //表名
-        strategy.setInclude("cbec_area");
+        //表名 可以同时输入多个
+        strategy.setInclude("cbec_consume","cbec_country_phone","cbec_market","cbec_order");
         strategy.setControllerMappingHyphenStyle(true);
         //根据你的表名来建对应的类名，如果你的表名没有什么下划线，比如test，那么你就可以取消这一步
         strategy.setTablePrefix("t_");
         mpg.setStrategy(strategy);
+        //freemarker模板引擎
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        //velocity模板引擎
+        //mpg.setTemplateEngine(new VelocityTemplateEngine());
         mpg.execute();
     }
 }
