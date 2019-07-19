@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 @Configuration
-@MapperScan("com.mybatisplus.myplus.mp.mapper")
+@MapperScan("com.qgwy.template.mapper")
 @EnableTransactionManagement
 public class MybatisPlusConf {
 

@@ -114,4 +114,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //batchSize 是每一次更新的数据量大小
         return this.updateBatchById(userList,batchSize);
     }
+
+    /**
+     * 使用mybatis的批量插入方法
+     * @param userList
+     * @return
+     */
+    @Override
+    public Integer insertUserByBatch(List<User> userList){
+        return userMapper.insertUserByBatch(userList);
+    }
 }

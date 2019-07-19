@@ -64,4 +64,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     Boolean batchUpdateUser(List<User> userList,Integer batchSize);
+
+    /**
+     * 批量插入用户，使用mybatis的动态SQL foreach
+     * @param userList
+     * @return
+     */
+    Integer insertUserByBatch(List<User> userList);
 }

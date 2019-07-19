@@ -48,7 +48,9 @@ public class UserController {
     public R batchSaveUser(Integer batchSize){
         //1、先构造一个List<User>
         List<User> userList = new ArrayList<>();
-        for(int i=1;i<=100;i++){
+        //容量大小
+        int length = 10000;
+        for(int i=1;i<=length;i++){
             User user = new User();
             user.setUsername("陈平安"+i+"号");
             user.setAge(i);
@@ -204,6 +206,71 @@ public class UserController {
             }
         }else{
             return R.error("没有查询到数据");
+        }
+    }
+
+    @RequestMapping(value = "insertUserByBatch")
+    @ResponseBody
+    @ApiOperation("使用mybatis的批量插入")
+    public R insertUserByBatch(Integer size){
+        List<User> userList = new ArrayList<>();
+        Long t = System.currentTimeMillis();
+        //构造数据
+        for(int i = 1;i <= size;i++){
+            User user = new User();
+            user.setUsername("裴钱"+i+"号");
+            user.setAge(16);
+            user.setGender(0);
+            user.setCreateTime(new Date());
+            userList.add(user);
+        }
+        Long n = System.currentTimeMillis();
+
+        //分批次提交数量
+        int insertFlag = 20000;
+        //插入返回的总数
+        Integer result = 0;
+        //标记当前是第几次
+        int flag = 0;
+        //计算总的插入提交次数
+        int s = size/insertFlag;
+        //每次插入的数据保存在一个新的list中，每次插入完成后清空list
+        List<User> insertUsers = new ArrayList<>();
+        Long start = System.currentTimeMillis();
+        //循环数据源list
+        for(User user : userList){
+            //将数据保存到插入list中
+            insertUsers.add(user);
+            //如果是最后一次的,将剩余的元素全部获取
+            if(s==flag){
+                //使用当前已经插入的总条数+1,和数据源的size 截取剩余的数据
+                insertUsers.addAll(userList.subList(result+1,userList.size()));
+                //执行插入操作，将插入成功的条数累加到result中
+                result += userService.insertUserByBatch(insertUsers);
+                //插入次数自增
+                flag++;
+                //清空list
+                insertUsers.clear();
+                //最后一次执行插入，插入操作完成，终止循环
+                break;
+            }
+            //判断插入list的数据量是否达到插入标记提交数量，是--执行插入，否--继续往插入list中添加数据
+            if(insertUsers.size() == insertFlag ){
+                //将插入成功的数据累加
+                result += userService.insertUserByBatch(insertUsers);
+                //插入次数自增
+                flag++;
+                //清空插入list，进行下一次循环
+                insertUsers.clear();
+            }
+        }
+        System.out.println(">>>>>>>:"+s);
+        Long end = System.currentTimeMillis();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>耗时(s)："+(end-start)/1000);
+        if(result != null){
+            return R.ok().put("result",result).put("耗时(s)",end-start).put("次数",flag).put("构造数据耗时：",n-t);
+        }else{
+            return R.error();
         }
     }
 }
