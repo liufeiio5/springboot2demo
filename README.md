@@ -1,3 +1,3 @@
-# template
+# alpha-web-manager
 
-模板项目，可以作公共模板的项目文件
+超市pc端管理后台
