@@ -40,3 +40,4 @@ nbdist/
 .idea/workspace.xml
 src/test/
 
+src/main/webapp/WEB-INF/ureportfiles/
