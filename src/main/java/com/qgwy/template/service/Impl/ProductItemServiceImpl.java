@@ -28,6 +28,7 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
     }
 
 
+    @Override
     public IPage<ProductItem> getProductItemList(Page<ProductItem> page, Integer marketId){
         //条件构造器，单表查询数据
         QueryWrapper<ProductItem> queryWrapper = new QueryWrapper<ProductItem>()
@@ -37,6 +38,7 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
 
     }
 
+    @Override
     public IPage<ProductItem> getItemList(Page page){
         //查询构造器，将数据查询出来
         QueryWrapper<ProductItem> queryWrapper = new QueryWrapper<>();
@@ -53,6 +55,7 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
      * @param categoryId 分类ID
      * @return
      */
+    @Override
     public Page<ItemListVo> getItemListVo(Integer offset,Integer pageNumber, Integer marketId, Integer categoryId){
 
         //分页构造器，传如分页条件：page--当前第几页，size--每一页的数据量
@@ -72,6 +75,7 @@ public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,Produc
      * @param categoryId 查询条件：分类Id
      * @return
      */
+    @Override
     public IPage<ProductItem> getProductItemInfo(Integer currPage,Integer size,Integer categoryId){
         //分页构造器，传入分页参数
         Page page = new Page(currPage,size);
