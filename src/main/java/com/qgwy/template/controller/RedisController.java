@@ -3,14 +3,18 @@ package com.qgwy.template.controller;
 import com.qgwy.template.bean.User2;
 import com.qgwy.template.util.R;
 import com.qgwy.template.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("redis")
+@Slf4j
 public class RedisController {
 
 //    @Autowired
@@ -27,11 +31,12 @@ public class RedisController {
 //    }
 
 
-    @RequestMapping(value = "/getValueFromRedis")
+    @GetMapping(value = "/getValueFromRedis/{key}")
     @ResponseBody
-    public R getValueFromRedis(String key){
+    public R getValueFromRedis(@PathVariable("key") String key){
         if(key != null){
             Object object = RedisUtil.get(key);
+            log.info("获取数据{}成功",object);
             return R.ok().put("data",object);
         }else{
             return R.error("没有找到数据，或参数错误");
