@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qgwy.alpha_web_manager.mapper.DailyRecordMapper">
     <resultMap id="dailyRecord" type="com.qgwy.alpha_web_manager.bean.DailyRecord">
-
         <id column="id" property="id"/>
         <result column="userId" property="userId"/>
         <result column="type" property="type"/>
@@ -71,7 +70,6 @@
     </select>
 
     <insert id="addDailyRecord" keyProperty="dailyRecord.id" useGeneratedKeys="true" parameterType="com.qgwy.alpha_web_manager.bean.DailyRecord">
-
         INSERT INTO daily_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="dailyRecord !=null">
@@ -132,7 +130,6 @@
     </insert>
 
     <update id="updateDailyRecord" parameterType="com.qgwy.alpha_web_manager.bean.DailyRecord">
-
         UPDATE daily_record
         <set>
             <if test="dailyRecord.userId!=null">
@@ -182,7 +179,6 @@
 
     <!--实际删除 综合表-->
     <delete id="deleteDailyRecord" parameterType="com.qgwy.alpha_web_manager.bean.DailyRecord">
-
        delete from daily_record  where id=#{dailyRecord.id}
     </delete>
 
