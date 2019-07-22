@@ -3,6 +3,8 @@ package com.qgwy.template.controller;
 import com.qgwy.template.bean.User2;
 import com.qgwy.template.mapper.User2Repository;
 import com.qgwy.template.util.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,13 +25,15 @@ import java.util.List;
 @Controller
 @RequestMapping("jpa")
 @Slf4j
+@Api(tags = "jpa测试")
 public class JpaController {
 
     @Autowired
     private User2Repository user2Repository;
 
-    @RequestMapping("/save")//保存用户
+    @PostMapping("/save")//保存用户
     @ResponseBody
+    @ApiOperation(value ="1-jpa-保存用户",notes = "测试用jpa插入一条数据")
     public R saveUser(User2 user) {
         if (user != null && !StringUtils.isEmpty(user.getName())) {
             User2 user2 = user2Repository.save(user);

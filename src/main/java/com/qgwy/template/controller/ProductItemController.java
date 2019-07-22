@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/productItem")
 @Api(tags = {"mybatis-plus分页测试"})
+@Slf4j
 public class ProductItemController {
 
     @Autowired
@@ -39,6 +41,7 @@ public class ProductItemController {
         Page<ProductDetailVo> page1 = new Page<>(page,size);
         Page<ProductDetailVo> detailVoPage = productItemService.getProductDetail(page1,marketId,categoryId);
         map.put("data",detailVoPage);
+        log.info("返回结果：/n{},成功,哈哈！！！",detailVoPage);
         return R.ok().put("data",detailVoPage);
     }
 
@@ -46,10 +49,8 @@ public class ProductItemController {
     @PostMapping("/getProductItemList")
     @ApiOperation(value = "单表分页，使用mybatis-plus自带的分页",notes = "单表查询商品的基本信息")
     public R getProductItemList(Integer page, Integer size, Integer marketId){
-        Map<String,Object> map = new HashMap<>();
         IPage<ProductItem> productItemPage = productItemService.getProductItemList(new Page<>(page,size),marketId);
         List<ProductItem> list = productItemPage.getRecords();
-        map.put("data",productItemPage);
         return R.ok().put("data",productItemPage);
     }
 

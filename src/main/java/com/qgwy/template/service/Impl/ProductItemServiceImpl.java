@@ -5,30 +5,35 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qgwy.template.annotation.DataSource;
 import com.qgwy.template.bean.ProductItem;
 import com.qgwy.template.mapper.ProductItemMapper;
 import com.qgwy.template.service.ProductItemService;
 import com.qgwy.template.vo.ItemListVo;
 import com.qgwy.template.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
+
 public class ProductItemServiceImpl extends ServiceImpl<ProductItemMapper,ProductItem> implements ProductItemService {
 
     @Autowired
     private ProductItemMapper productItemMapper;
 
     @Override
+    @DataSource(name="second")
     public Page<ProductDetailVo> getProductDetail(Page<ProductDetailVo> page, Integer marketId, Integer categoryId){
         return page.setRecords(this.productItemMapper.getProductDetails(page,marketId,categoryId));
     }
 
 
     @Override
+    @DataSource(name = "second")
     public IPage<ProductItem> getProductItemList(Page<ProductItem> page, Integer marketId){
         //条件构造器，单表查询数据
         QueryWrapper<ProductItem> queryWrapper = new QueryWrapper<ProductItem>()
