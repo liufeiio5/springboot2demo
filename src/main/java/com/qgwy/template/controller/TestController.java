@@ -48,7 +48,7 @@ public class TestController {
             e.printStackTrace();
         }
         ArrayList<HashMap<String, Object>> daily = dailyRecordMapper.getDaily(92, "20190601", "20190705");
-
+        log.info("查询日报数据如下:{}",daily);
         return R.ok().put("data",daily);
     }
 
@@ -77,7 +77,8 @@ public class TestController {
     @ApiOperation("测试文本方式返回")
     public String show2()
     {
-        log.info("hello {},welcome!","fei哥");
+        log.info("hello {},welcome!","fei哥aaa");
+        System.out.println("我试下有不有");
         return "好像没什么反应并不是很对";
     }
 

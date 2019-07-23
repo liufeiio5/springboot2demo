@@ -1,4 +1,4 @@
-package com.qgwy.template.service.Impl;
+package com.qgwy.template.service.impl;
 
 import com.qgwy.template.bean.CbecConsume;
 import com.qgwy.template.mapper.CbecConsumeMapper;

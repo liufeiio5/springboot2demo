@@ -1,4 +1,4 @@
-package com.qgwy.template.service.Impl;
+package com.qgwy.template.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,7 +12,6 @@ import com.qgwy.template.service.ProductItemService;
 import com.qgwy.template.vo.ItemListVo;
 import com.qgwy.template.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
