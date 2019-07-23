@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecStockMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecStock">
+        <id column="id" property="id" />
+        <result column="stock_no" property="stockNo" />
+        <result column="product_no" property="productNo" />
+        <result column="brand_name" property="brandName" />
+        <result column="category_id" property="categoryId" />
+        <result column="stock_num" property="stockNum" />
+        <result column="stock_price" property="stockPrice" />
+        <result column="total_price" property="totalPrice" />
+        <result column="stock_status" property="stockStatus" />
+        <result column="receive_addr" property="receiveAddr" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_time" property="updateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+</mapper>

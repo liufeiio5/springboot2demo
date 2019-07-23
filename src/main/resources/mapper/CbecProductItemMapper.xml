@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecProductItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecProductItem">
+        <id column="product_id" property="productId" />
+        <result column="product_name" property="productName" />
+        <result column="product_cost_price" property="productCostPrice" />
+        <result column="product_price" property="productPrice" />
+        <result column="product_unit" property="productUnit" />
+        <result column="weight" property="weight" />
+        <result column="inventory" property="inventory" />
+        <result column="category_id" property="categoryId" />
+        <result column="market_id" property="marketId" />
+        <result column="origin" property="origin" />
+        <result column="service" property="service" />
+        <result column="node1" property="node1" />
+        <result column="node2" property="node2" />
+        <result column="node3" property="node3" />
+        <result column="node4" property="node4" />
+        <result column="node5" property="node5" />
+        <result column="sp1" property="sp1" />
+        <result column="sp2" property="sp2" />
+        <result column="sp3" property="sp3" />
+        <result column="img_banner" property="imgBanner" />
+        <result column="img_path1" property="imgPath1" />
+        <result column="img_path2" property="imgPath2" />
+        <result column="img_path3" property="imgPath3" />
+        <result column="img_path4" property="imgPath4" />
+        <result column="img_path5" property="imgPath5" />
+        <result column="promotion_name" property="promotionName" />
+        <result column="promotion_amount" property="promotionAmount" />
+        <result column="integration_amount" property="integrationAmount" />
+        <result column="real_amount" property="realAmount" />
+        <result column="create_date" property="createDate" />
+        <result column="remark" property="remark" />
+        <result column="is_recommend" property="isRecommend" />
+        <result column="is_on_sell" property="isOnSell" />
+        <result column="product_no" property="productNo" />
+        <result column="brand_name" property="brandName" />
+    </resultMap>
+
+</mapper>

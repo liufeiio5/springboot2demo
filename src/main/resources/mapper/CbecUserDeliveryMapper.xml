@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecUserDeliveryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecUserDelivery">
+        <id column="delivery_id" property="deliveryId" />
+        <result column="user_id" property="userId" />
+        <result column="city" property="city" />
+        <result column="address" property="address" />
+        <result column="house_number" property="houseNumber" />
+        <result column="phone" property="phone" />
+        <result column="consignee" property="consignee" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+</mapper>

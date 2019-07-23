@@ -36,7 +36,7 @@ spring:
 
       second:  #数据源2
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
         #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
         username: root
         password: 123456
@@ -67,7 +67,7 @@ spring:
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       test:  #数据源3
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
         #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
         username: root
         password: 123456

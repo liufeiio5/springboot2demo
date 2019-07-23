@@ -1,10 +1,9 @@
 package com.qgwy.alpha_web_manager.config;
 
-import org.apache.ibatis.session.Configuration;
-import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@org.springframework.context.annotation.Configuration
+@Configuration
 public class MyBatisConfig {
 
     /*@Autowired
@@ -14,16 +13,16 @@ public class MyBatisConfig {
     @Autowired
     DataSource testDataSource;*/
 
-    @Bean
-    public ConfigurationCustomizer configurationCustomizer(){
-        return new ConfigurationCustomizer(){
-
-            @Override
-            public void customize(Configuration configuration) {
-                configuration.setMapUnderscoreToCamelCase(true);
-            }
-        };
-    }
+//    @Bean
+//    public ConfigurationCustomizer configurationCustomizer(){
+//        return new ConfigurationCustomizer(){
+//
+//            @Override
+//            public void customize(Configuration configuration) {
+//                configuration.setMapUnderscoreToCamelCase(true);
+//            }
+//        };
+//    }
 
     /*//重点在这个方法
     @Bean

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecUserLevelUpgradeInviteMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecUserLevelUpgradeInvite">
+        <id column="id" property="id" />
+        <result column="level_id" property="levelId" />
+        <result column="invite_level_id" property="inviteLevelId" />
+        <result column="invite_users" property="inviteUsers" />
+        <result column="is_enable" property="isEnable" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+</mapper>

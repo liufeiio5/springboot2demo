@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecScoreOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecScoreOrder">
+        <id column="id" property="id" />
+        <result column="seller_id" property="sellerId" />
+        <result column="seller_level_id" property="sellerLevelId" />
+        <result column="buyer_id" property="buyerId" />
+        <result column="buyer_level_id" property="buyerLevelId" />
+        <result column="rate" property="rate" />
+        <result column="score" property="score" />
+        <result column="pay_type" property="payType" />
+        <result column="pay_state" property="payState" />
+        <result column="status" property="status" />
+        <result column="gathering_account" property="gatheringAccount" />
+        <result column="remark" property="remark" />
+        <result column="usdt_amount" property="usdtAmount" />
+        <result column="pay_amount" property="payAmount" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="finish_time" property="finishTime" />
+    </resultMap>
+
+</mapper>

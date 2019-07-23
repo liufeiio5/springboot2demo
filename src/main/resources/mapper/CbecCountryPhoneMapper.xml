@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qgwy.template.mapper.CbecCountryPhoneMapper">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecCountryPhoneMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qgwy.template.bean.CbecCountryPhone">
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecCountryPhone">
         <id column="id" property="id" />
         <result column="country" property="country" />
         <result column="english" property="english" />
         <result column="prefix" property="prefix" />
         <result column="hot" property="hot" />
         <result column="letter_sort" property="letterSort" />
+        <result column="coin" property="coin" />
+        <result column="rate" property="rate" />
     </resultMap>
 
 </mapper>

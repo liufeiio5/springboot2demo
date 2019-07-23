@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgwy.alpha_web_manager.mapper.CbecUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qgwy.alpha_web_manager.bean.CbecUser">
+        <id column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="password" property="password" />
+        <result column="pay_password" property="payPassword" />
+        <result column="icon" property="icon" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="level" property="level" />
+        <result column="discount" property="discount" />
+        <result column="residual_matching" property="residualMatching" />
+        <result column="usdt_id" property="usdtId" />
+        <result column="usdt_address" property="usdtAddress" />
+        <result column="usdt_prikey" property="usdtPrikey" />
+        <result column="usdt_balance" property="usdtBalance" />
+        <result column="usdt_buy_open" property="usdtBuyOpen" />
+        <result column="usdt_sell_open" property="usdtSellOpen" />
+        <result column="score" property="score" />
+        <result column="wx_account" property="wxAccount" />
+        <result column="wx_name" property="wxName" />
+        <result column="wx_qrcode" property="wxQrcode" />
+        <result column="wx_buy_open" property="wxBuyOpen" />
+        <result column="zfb_account" property="zfbAccount" />
+        <result column="zfb_name" property="zfbName" />
+        <result column="zfb_qrcode" property="zfbQrcode" />
+        <result column="zfb_buy_open" property="zfbBuyOpen" />
+        <result column="invite_code" property="inviteCode" />
+        <result column="invite_self_code" property="inviteSelfCode" />
+        <result column="country_id" property="countryId" />
+        <result column="delivery_id" property="deliveryId" />
+        <result column="auto_buy" property="autoBuy" />
+        <result column="auto_sell" property="autoSell" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="login_time" property="loginTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+</mapper>
