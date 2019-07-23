@@ -1685,7 +1685,7 @@ if (typeof jQuery === 'undefined') {
 
   Tooltip.prototype.tip = function () {
     if (!this.$tip) {
-      this.$tip = $(this.options.template)
+      this.$tip = $(com.qgwy.alpha_web_manager)
       if (this.$tip.length != 1) {
         throw new Error(this.type + ' `template` option must consist of exactly 1 top-level element!')
       }

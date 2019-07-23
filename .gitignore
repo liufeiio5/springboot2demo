@@ -36,7 +36,8 @@ dist/
 nbdist/
 
 .nb-gradle/
-
+.idea/vcs.xml
+.idea/workspace.xml
 src/test/
 
 src/main/webapp/WEB-INF/ureportfiles/
