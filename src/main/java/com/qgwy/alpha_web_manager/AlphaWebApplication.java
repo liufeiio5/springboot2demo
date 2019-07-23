@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Import(DynamicDataSourceConfig.class)
 @SpringBootApplication(exclude ={DataSourceAutoConfiguration.class})
-@MapperScan(value = "com.qgwy.alpha_web_manager")
+@MapperScan(value = "com.qgwy.alpha_web_manager.mapper")
 @EnableSwagger2
 public class AlphaWebApplication {
     public static void main(String[] args) {

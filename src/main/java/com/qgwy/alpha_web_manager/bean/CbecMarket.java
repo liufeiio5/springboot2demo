@@ -3,9 +3,6 @@ package com.qgwy.alpha_web_manager.bean;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,7 +25,6 @@ public class CbecMarket implements Serializable {
     /**
      * 超市id
      */
-    @TableId(value = "market_id",type = IdType.AUTO)
     private Integer marketId;
 
     private Integer areaId;

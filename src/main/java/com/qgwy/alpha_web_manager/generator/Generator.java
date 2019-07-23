@@ -58,7 +58,7 @@ public class Generator {
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         // 不需要ActiveRecord特性的请改为false
-        gc.setFileOverride(false);
+        gc.setFileOverride(true);
         gc.setActiveRecord(false);
         // XML 二级缓存
         gc.setEnableCache(false);

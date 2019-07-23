@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author buzhifeng
- * @since 2019-07-19
+ * @since 2019-07-23
  */
 @Service
 public class CbecConsumeServiceImpl extends ServiceImpl<CbecConsumeMapper, CbecConsume> implements CbecConsumeService {
