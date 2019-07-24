@@ -49,6 +49,12 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/")
                 .addResourceLocations("classpath:/template/");
+        //访问swagger-ui
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        ///~
 
         registry.addResourceHandler("/html/**").addResourceLocations("classpath:/");
         registry.addResourceHandler("/upload/tea_images/**").addResourceLocations("file:D:\\workspace\\1126\\mc_daily\\src\\main\\resources\\static\\upload\\tea_images\\");
@@ -81,11 +87,14 @@ public class MvcConfig implements WebMvcConfigurer {
         String[] addPathPatterns = {"/**"};
         //不用拦截的路径
         String[] excludePathPatterns = {
-                "/sys-user/login"
+                "/sys-user/login",
+                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
         };
         registry.addInterceptor((Interceptor())).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new ResourceInterceptor()).excludePathPatterns("/static/**");
     }
+
+
 
 
     @Bean

@@ -9,6 +9,8 @@ import com.qgwy.alpha_web_manager.util.R;
 import com.qgwy.alpha_web_manager.util.RedisUtil;
 import com.qgwy.alpha_web_manager.util.TokenUtils;
 import com.qgwy.alpha_web_manager.util.UserUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,7 @@ import java.util.Map;
  * @author buzhifeng
  * @since 2019-07-23
  */
+@Api(tags = "用户管理")
 @RestController
 @RequestMapping("/sys-user")
 @Slf4j
@@ -37,6 +40,7 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
+    @ApiOperation(value = "用户登录",notes = "用户名、密码验证登录")
     @PostMapping("/login")
     @ResponseBody
     public R login(@RequestBody UserForm userForm, HttpServletRequest request) {
@@ -66,6 +70,7 @@ public class SysUserController {
         return R.ok(data);
     }
 
+    @ApiOperation(value = "退出登录",notes = "根据token退出用户")
     @GetMapping("/logout")
     public R logout(HttpServletRequest request) {
         String token = request.getHeader("token");
@@ -73,7 +78,7 @@ public class SysUserController {
         log.info("LoginController.logout|session中成功退出用户 token={}",token);
         RedisUtil.del(token);
         log.info("LoginController.logout|redis中成功退出用户 token={}",token);
-        return R.ok();
+        return R.ok("退出成功");
     }
 
     @GetMapping("/list")
