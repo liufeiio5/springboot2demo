@@ -3,6 +3,7 @@ package com.qgwy.alpha_web_manager.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.qgwy.alpha_web_manager.interceptor.LoginInterceptor;
 import com.qgwy.alpha_web_manager.interceptor.ResourceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -68,8 +69,21 @@ public class MvcConfig implements WebMvcConfigurer {
 
     }
 
+    //登录拦截器
+    @Bean
+    public LoginInterceptor Interceptor(){
+        return new LoginInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //需要拦截的路径
+        String[] addPathPatterns = {"/**"};
+        //不用拦截的路径
+        String[] excludePathPatterns = {
+                "/sys-user/login"
+        };
+        registry.addInterceptor((Interceptor())).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new ResourceInterceptor()).excludePathPatterns("/static/**");
     }
 
@@ -150,6 +164,9 @@ public class MvcConfig implements WebMvcConfigurer {
         fjc.setFastJsonConfig(fj);
         converters.add(fjc);
     }
+
+
+
 
 }
 
