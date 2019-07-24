@@ -1,4 +1,4 @@
-package com.qgwy.alpha_web_manager.service.impl;
+package com.qgwy.alpha_web_manager.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qgwy.alpha_web_manager.bean.CbecArea;
