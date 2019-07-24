@@ -41,4 +41,24 @@
         <result column="brand_name" property="brandName" />
     </resultMap>
 
+    <select id="getMarketingManagementDetails" resultType="com.qgwy.alpha_web_manager.vo.MarketingManagementVo">
+        select
+            i.product_no as productNo,
+            c.category_name as categoryName,
+            i.product_name as productName,
+            i.product_price as productPrice,
+            i.inventory as inventory,
+            i.is_on_sell as isOnSell,
+            i.is_recommend as isRecommend
+        from cbec_product_item i,cbec_product_category c
+        where
+            c.category_id = i.category_id
+            <if test="isOnSell != null ">
+                and i.is_on_sell = #{isOnSell}
+            </if>
+            <if test="isRecommend != null">
+                and i.is_recommend = #{isRecommend}
+            </if>
+    </select>
+
 </mapper>
