@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,6 +39,7 @@ public class SysUser implements Serializable {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     private Long deptId;
@@ -128,6 +130,8 @@ public class SysUser implements Serializable {
      * 超市id
      */
     private Integer marketId;
+
+    private Date lastLoginTime;
 
 
 }

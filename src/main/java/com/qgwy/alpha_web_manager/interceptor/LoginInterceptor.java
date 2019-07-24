@@ -54,7 +54,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void returnErrorMessage(HttpServletResponse response, int code, String errorMessage) throws IOException {
+    private void returnErrorMessage(HttpServletResponse response, String code, String errorMessage) throws IOException {
         R rst = new R();
         rst.put("code", code);
         rst.put("msg", errorMessage);
