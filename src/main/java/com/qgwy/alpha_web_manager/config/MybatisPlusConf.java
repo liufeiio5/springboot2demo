@@ -1,6 +1,7 @@
 package com.qgwy.alpha_web_manager.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ public class MybatisPlusConf {
         //格式化sql语句
         Properties properties = new Properties();
         properties.setProperty("format","true");
+        properties.setProperty("call-setters-on-nulls","true");
         performanceInterceptor.setProperties(properties);
         return performanceInterceptor;
     }

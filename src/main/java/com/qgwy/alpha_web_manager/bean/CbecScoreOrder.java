@@ -3,8 +3,9 @@ package com.qgwy.alpha_web_manager.bean;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -98,17 +99,17 @@ public class CbecScoreOrder implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 创建时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**
      * 完成时间(取消时间或确认收款时间)
      */
-    private LocalDateTime finishTime;
+    private Date finishTime;
 
 
 }

@@ -1,11 +1,14 @@
 package com.qgwy.alpha_web_manager.bean;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.annotation.Nullable;
 
 /**
  * <p>
@@ -57,9 +60,10 @@ public class CbecMarket implements Serializable {
     /**
      * 备注
      */
+
     private String remark;
 
-    private LocalDateTime createDate;
+    private Date createDate;
 
     /**
      * 状态1可用 0禁用

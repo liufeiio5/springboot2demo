@@ -3,7 +3,7 @@ package com.qgwy.alpha_web_manager.bean;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -118,7 +118,7 @@ public class CbecOrder implements Serializable {
     /**
      * 自动确认时间
      */
-    private LocalDateTime autoConfirmDay;
+    private Date autoConfirmDay;
 
     /**
      * 收货人姓名
@@ -163,32 +163,32 @@ public class CbecOrder implements Serializable {
     /**
      * 提交时间
      */
-    private LocalDateTime createDate;
+    private Date createDate;
 
     /**
      * 支付时间
      */
-    private LocalDateTime paymentTime;
+    private Date paymentTime;
 
     /**
      * 发货时间
      */
-    private LocalDateTime deliveryTime;
+    private Date deliveryTime;
 
     /**
      * 确认收货时间
      */
-    private LocalDateTime receiveTime;
+    private Date receiveTime;
 
     /**
      * 评价时间
      */
-    private LocalDateTime commentTime;
+    private Date commentTime;
 
     /**
      * 修改时间
      */
-    private LocalDateTime modifyTime;
+    private Date modifyTime;
 
     /**
      * 是否已读，0：未读；1：已读

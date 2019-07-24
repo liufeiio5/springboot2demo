@@ -1,7 +1,7 @@
 package com.qgwy.alpha_web_manager.bean;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -80,7 +80,7 @@ public class CbecStock implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 修改人Id
@@ -90,7 +90,7 @@ public class CbecStock implements Serializable {
     /**
      * 修改时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**
      * 备注

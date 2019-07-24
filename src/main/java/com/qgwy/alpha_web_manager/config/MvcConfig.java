@@ -141,12 +141,12 @@ public class MvcConfig implements WebMvcConfigurer {
         configurer.favorPathExtension(false);
     }
 
-    //json转换器
+//    //json转换器
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter fjc = new FastJsonHttpMessageConverter();
         FastJsonConfig fj = new FastJsonConfig();
-        fj.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
+        fj.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         fjc.setFastJsonConfig(fj);
         converters.add(fjc);
     }

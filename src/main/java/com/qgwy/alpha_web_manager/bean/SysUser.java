@@ -2,7 +2,7 @@ package com.qgwy.alpha_web_manager.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -63,12 +63,12 @@ public class SysUser implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
 
     /**
      * 修改时间
      */
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 
     /**
      * 性别
@@ -78,7 +78,7 @@ public class SysUser implements Serializable {
     /**
      * 出身日期
      */
-    private LocalDateTime birth;
+    private Date birth;
 
     private Long picId;
 
@@ -110,7 +110,7 @@ public class SysUser implements Serializable {
     /**
      * 入职时间
      */
-    private LocalDateTime joinTime;
+    private Date joinTime;
 
     /**
      * 是否在职 1在职  2：离职

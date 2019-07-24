@@ -1,7 +1,8 @@
 package com.qgwy.alpha_web_manager.bean;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -49,7 +50,7 @@ public class CbecIntegralRecords implements Serializable {
     /**
      * 发放时间，默认当天
      */
-    private LocalDateTime createDate;
+    private Date createDate;
 
 
 }

@@ -35,7 +35,7 @@ spring:
     active: @env@
 
 
-  #mybatis:
+  mybatis:
   # 指定全局配置文件位置
   #config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
@@ -62,14 +62,9 @@ spring:
     uri-encoding: UTF-8
 
 
-
 mybatis-plus:
-  mapper-locations: classpath:/resources/mapper/*.xml,classpath:mybatis/mapper/*.xml
+  mapper-locations: classpath:mapper/*Mapper.xml,classpath:mybatis/mapper/*Mapper.xml
   type-aliases-package: com.qgwy.alpha_web_manager.bean
   configuration:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    # 逻辑删除配置
-    logic-delete-value: 0
-    logic-not-delete-value: 1

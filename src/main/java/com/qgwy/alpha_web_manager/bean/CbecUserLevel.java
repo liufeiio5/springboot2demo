@@ -1,7 +1,7 @@
 package com.qgwy.alpha_web_manager.bean;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,12 +45,12 @@ public class CbecUserLevel implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 创建时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }
