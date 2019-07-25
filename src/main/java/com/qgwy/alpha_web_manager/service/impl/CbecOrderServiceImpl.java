@@ -1,4 +1,4 @@
-package com.qgwy.alpha_web_manager.service.Impl;
+package com.qgwy.alpha_web_manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qgwy.alpha_web_manager.bean.CbecOrder;
@@ -38,8 +38,8 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
     }
 
     /**
-     * 新入数：is_read = 0 and create_date = today and market_id = #{}
-     * 未审核数： is_check = 0 and create_date < today and market_id = #{}
+     * 新入数：is_check = 0 and create_date = today and market_id = #{}
+     * 未审核数： is_check = 0 and create_date != today and market_id = #{}
      * 已审核订单数：is_check = 1 market_id = #{}
      * @param marketId
      * @return
@@ -61,7 +61,7 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String today = sdf.format(new Date());
         //新入数
-        newOrderAmount = cbecOrders.stream().filter(item -> (item.getIsRead() == 0))
+        newOrderAmount = cbecOrders.stream().filter(item -> (item.getIsCheck() == 0))
                 .filter(item -> (today.equals(sdf.format(item.getCreateDate()))))
                 .collect(Collectors.toList())
                 .size();
@@ -107,6 +107,11 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
         List<OrderDto> orderDtos = new ArrayList<>();
         if(idList != null && idList.size() > 0) {
             orderDtos = cbecOrderMapper.queryList(map);
+        }
+        //type = 1 || type = 4 ,将订单状态改为已读 is_read = 1
+        int type = Integer.parseInt(map.get("type").toString());
+        if(type == 1 || type == 4) {
+            cbecOrderMapper
         }
         return orderDtos;
     }

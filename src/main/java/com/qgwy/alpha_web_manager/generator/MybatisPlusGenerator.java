@@ -79,7 +79,7 @@ public class MybatisPlusGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.qgwy.alpha_web_manager");
 //        pc.setModuleName("dao"); 自定义包名
-//        pc.setModuleName("dao.Impl");
+//        pc.setModuleName("dao.impl");
         pc.setMapper("mapper");//dao
         pc.setService("service");//servcie
         pc.setController("controller");//controller

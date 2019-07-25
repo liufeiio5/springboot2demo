@@ -56,7 +56,7 @@ public class CbecOrderController {
     /**
      * currPage : 当前页
      * limit ： 每页的条数
-     * type : 1（新入订单） 2（未审核订单） 3（已审核订单）
+     * type : 1（新入订单） 2（未审核订单） 3（已审核订单） 4(消息提醒)
      * sort : 排序的字段名 订单编号（order_sn） 提交日期（create_date）
      * order : desc (降序) asc(升序)
      * orderSn : 编号模糊搜索
@@ -76,12 +76,11 @@ public class CbecOrderController {
         query.put("marketId",userInfo.getMarketId());
         List<OrderDto> orderDtoList = cbecOrderService.orderList(query);
         int total = cbecOrderService.total(query);
-        //新入订单查询将更改订单的查看状态 is_read = 1
-
         return R.ok().put("data",orderDtoList).put("total",total);
     }
 
     //查询订单详情
+
 
     //审核
 

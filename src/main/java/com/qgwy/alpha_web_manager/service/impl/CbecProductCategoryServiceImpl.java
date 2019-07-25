@@ -1,4 +1,4 @@
-package com.qgwy.alpha_web_manager.service.Impl;
+package com.qgwy.alpha_web_manager.service.impl;
 
 import com.qgwy.alpha_web_manager.bean.CbecProductCategory;
 import com.qgwy.alpha_web_manager.mapper.CbecProductCategoryMapper;

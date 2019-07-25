@@ -14,5 +14,9 @@ public class OrderDto {
     private BigDecimal totalAmount;     //订单总价格
     private String userName;    //买家
     private Integer deliveryType;   //交付方式 0.到店自提 1.送货上门
+    private String receiverName;    //收货人
+    private String receiverPhone;   //收货人电话
+    private String receiverDetailAddress;   //收货人详细地址
+    private String note;    //备注
 
 }

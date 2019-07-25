@@ -1,5 +1,5 @@
 /*
-package com.qgwy.template.service.Impl;
+package com.qgwy.template.service.impl;
 
 import com.qgwy.template.bean.DailyRecord;
 import com.qgwy.template.annotation.DataSource;
