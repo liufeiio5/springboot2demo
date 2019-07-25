@@ -1,8 +1,6 @@
 package com.qgwy.alpha_web_manager.util;
 
 
-import com.google.common.io.ByteSource;
-import freemarker.template.SimpleHash;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

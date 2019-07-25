@@ -80,6 +80,12 @@ public class CbecOrderController {
     }
 
     //查询订单详情
+//    @ApiOperation(value = "查询订单详情",notes = "查询订单及关联商品列表")
+//    @GetMapping("/getOrderDetail")
+//    @ResponseBody
+//    public R getOrderDetail(Integer orderId) {
+//
+//    }
 
 
     //审核

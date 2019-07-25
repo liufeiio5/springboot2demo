@@ -23,4 +23,6 @@ public interface CbecOrderMapper extends BaseMapper<CbecOrder> {
     List<Integer> queryIdList(Map<String,Object> map);
 
     int total(Query query);
+
+    OrderDto getOrderById(Integer orderId);
 }

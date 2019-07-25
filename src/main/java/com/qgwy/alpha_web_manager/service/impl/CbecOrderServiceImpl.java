@@ -110,10 +110,25 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
         }
         //type = 1 || type = 4 ,将订单状态改为已读 is_read = 1
         int type = Integer.parseInt(map.get("type").toString());
+        int marketId = Integer.parseInt(map.get("marketId").toString());
         if(type == 1 || type == 4) {
-            cbecOrderMapper
+            CbecOrder order = new CbecOrder();
+            order.setIsRead(1);
+            this.batchUpdateByWrapper(order,marketId);
         }
         return orderDtos;
+    }
+
+    /**
+     * 根据构造条件更新
+     * @param marketId
+     * @return
+     */
+    public Boolean batchUpdateByWrapper(CbecOrder order,int marketId){
+        QueryWrapper<CbecOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("market_id",marketId);
+        queryWrapper.eq("is_read",0);
+        return this.update(order,queryWrapper);
     }
 
     @Override

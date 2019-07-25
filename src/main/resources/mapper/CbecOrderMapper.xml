@@ -48,6 +48,11 @@
         <result column="total_amount" property="totalAmount"></result>
         <result column="user_name" property="userName"></result>
         <result column="delivery_type" property="deliveryType"></result>
+        <result column="receiver_name" property="receiverName"></result>
+        <result column="receiverPhone" property="receiverPhone"></result>
+        <result column="receiver_detail_address" property="receiverDetailAddress"></result>
+        <result column="note" property="note"></result>
+
         <collection property="orderItemDtoList" ofType="com.qgwy.alpha_web_manager.dto.OrderItemDto">
             <id column="id" property="id"></id>
             <result column="product_no" property="productNo"></result>
@@ -149,6 +154,10 @@
                 and o.order_sn like concat('%',#{orderSn},'%')
             </if>
         </where>
+    </select>
+
+    <select id="getOrderById" parameterType="java.lang.Integer" parameterMap="OrderDetailMap">
+
     </select>
 
 </mapper>
