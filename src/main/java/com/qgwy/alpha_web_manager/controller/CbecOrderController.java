@@ -76,6 +76,8 @@ public class CbecOrderController {
         query.put("marketId",userInfo.getMarketId());
         List<OrderDto> orderDtoList = cbecOrderService.orderList(query);
         int total = cbecOrderService.total(query);
+        //新入订单查询将更改订单的查看状态 is_read = 1
+
         return R.ok().put("data",orderDtoList).put("total",total);
     }
 

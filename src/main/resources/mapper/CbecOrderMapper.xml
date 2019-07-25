@@ -102,13 +102,16 @@
                 and o.market_id = #{marketId}
             </if>
             <if test="type == 1">
-                and o.is_read = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') = #{today}
+                and o.is_check = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') = #{today}
             </if>
             <if test="type == 2">
                 and o.is_check = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') != #{today}
             </if>
             <if test="type == 3">
                 and o.is_check = 1
+            </if>
+            <if test="type == 4">
+                and o.is_read = 0
             </if>
             <if test="orderSn != null and orderSn != ''">
                 and o.order_sn like concat('%',#{orderSn},'%')

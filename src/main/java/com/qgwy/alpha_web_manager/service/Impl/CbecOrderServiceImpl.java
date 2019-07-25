@@ -2,7 +2,6 @@ package com.qgwy.alpha_web_manager.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qgwy.alpha_web_manager.bean.CbecOrder;
-import com.qgwy.alpha_web_manager.bean.SysUser;
 import com.qgwy.alpha_web_manager.dto.OrderDto;
 import com.qgwy.alpha_web_manager.mapper.CbecOrderMapper;
 import com.qgwy.alpha_web_manager.service.CbecOrderService;
@@ -88,6 +87,14 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
         return cbecOrderMapper.selectList(queryWrapper);
     }
 
+    /**
+     *type = 1 新入订单（今天未审核的订单）： is_check = 0 and create_date = today and market_id = #{marketId}
+     *type = 2 未审核订单（昨天及之前未审核的订单）： is_check = 0 and create_date != today and market_id = #{marketId}
+     *type = 3 已审核订单（所有已审核的订单）： is_check = 1 and market_id = #{marketId}
+     *type = 4 消息提醒的订单（所有今天未读的订单）：is_read = 0 and create_date = today and market_id = #{marketId}
+     * @param map
+     * @return
+     */
     @Override
     public List<OrderDto> orderList(Map<String, Object> map) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
