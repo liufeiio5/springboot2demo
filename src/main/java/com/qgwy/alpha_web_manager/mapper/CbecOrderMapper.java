@@ -2,6 +2,11 @@ package com.qgwy.alpha_web_manager.mapper;
 
 import com.qgwy.alpha_web_manager.bean.CbecOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qgwy.alpha_web_manager.dto.OrderDto;
+import com.qgwy.alpha_web_manager.util.Query;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +18,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CbecOrderMapper extends BaseMapper<CbecOrder> {
 
+    List<OrderDto> queryList(Map<String,Object> map);
+
+    List<Integer> queryIdList(Map<String,Object> map);
+
+    int total(Query query);
 }

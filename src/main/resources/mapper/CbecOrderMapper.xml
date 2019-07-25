@@ -41,4 +41,111 @@
         <result column="is_check" property="isCheck" />
     </resultMap>
 
+    <resultMap id="OrderResultMap" type="com.qgwy.alpha_web_manager.dto.OrderDto">
+        <id column="order_id" property="orderId" />
+        <result column="order_sn" property="orderSn" />
+        <result column="create_date" property="createDate" />
+        <result column="total_amount" property="totalAmount"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="delivery_type" property="deliveryType"></result>
+        <collection property="orderItemDtoList" ofType="com.qgwy.alpha_web_manager.dto.OrderItemDto">
+            <id column="id" property="id"></id>
+            <result column="product_no" property="productNo"></result>
+            <result column="product_name" property="productName"></result>
+            <result column="category_name" property="categoryName"></result>
+            <result column="product_quantity" property="productQuantity"></result>
+            <result column="product_price" property="productPrice"></result>
+        </collection>
+    </resultMap>
+
+    <select id="queryList" parameterType="map" resultMap="OrderResultMap">
+        SELECT
+        o.order_id,
+        o.order_sn,
+        o.create_date,
+        pi.product_no,
+        pi.product_name,
+        c.category_name,
+        oi.id,
+        oi.product_quantity,
+        oi.product_price,
+        o.total_amount,
+        u.user_name,
+        o.delivery_type
+        FROM
+        `cbec_order` o
+        LEFT JOIN cbec_order_item oi ON oi.order_id = o.order_id
+        LEFT JOIN cbec_product_category c ON c.category_id = oi.category_id
+        LEFT JOIN cbec_user u ON u.user_id = o.user_id
+        LEFT JOIN cbec_product_item pi ON pi.product_id = oi.product_id
+        <where>
+            o.order_id in
+            <foreach collection="idList" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by o.${sort} ${order}
+            </when>
+            <otherwise>
+                order by o.is_read asc,o.create_date desc
+            </otherwise>
+        </choose>
+
+    </select>
+    
+    <select id="queryIdList" parameterType="map" resultType="java.lang.Integer">
+        select o.order_id from cbec_order o
+        <where>
+            <if test="marketId != null">
+                and o.market_id = #{marketId}
+            </if>
+            <if test="type == 1">
+                and o.is_read = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') = #{today}
+            </if>
+            <if test="type == 2">
+                and o.is_check = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') != #{today}
+            </if>
+            <if test="type == 3">
+                and o.is_check = 1
+            </if>
+            <if test="orderSn != null and orderSn != ''">
+                and o.order_sn like concat('%',#{orderSn},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by o.is_read asc,o.create_date desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset},#{limit}
+        </if>
+    </select>
+
+    <select id="total" parameterType="map" resultType="java.lang.Integer">
+        select count(1) from cbec_order o
+        <where>
+            <if test="marketId != null">
+                and o.market_id = #{marketId}
+            </if>
+            <if test="type == 1">
+                and o.is_read = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') = #{today}
+            </if>
+            <if test="type == 2">
+                and o.is_check = 0 and DATE_FORMAT(o.create_date,'%Y-%m-%d') != #{today}
+            </if>
+            <if test="type == 3">
+                and o.is_check = 1
+            </if>
+            <if test="orderSn != null and orderSn != ''">
+                and o.order_sn like concat('%',#{orderSn},'%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

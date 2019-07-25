@@ -2,19 +2,18 @@ package com.qgwy.alpha_web_manager.controller;
 
 
 import com.qgwy.alpha_web_manager.bean.SysUser;
+import com.qgwy.alpha_web_manager.dto.OrderDto;
 import com.qgwy.alpha_web_manager.service.CbecOrderService;
+import com.qgwy.alpha_web_manager.util.Query;
 import com.qgwy.alpha_web_manager.util.R;
 import com.qgwy.alpha_web_manager.util.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +41,9 @@ public class CbecOrderController {
         return R.ok().put("unReadAmount",amount);
     }
     //统计新入订单数、未审核订单数、已审核订单数
+    @ApiOperation(value = "查询三种状态订单的数量",notes = "统计新入订单数、未审核订单数、已审核订单数")
+    @GetMapping("/getOrderNums")
+    @ResponseBody
     public R getOrderNums(HttpServletRequest request) {
         SysUser userInfo = UserUtils.getUserInfo(request);
         Map<String,Integer> res = cbecOrderService.getOrderNums(userInfo.getMarketId());
@@ -51,9 +53,31 @@ public class CbecOrderController {
     //查询新入订单，将未读的订单放在前面，订单按时间倒序排序
 
 
+    /**
+     * currPage : 当前页
+     * limit ： 每页的条数
+     * type : 1（新入订单） 2（未审核订单） 3（已审核订单）
+     * sort : 排序的字段名 订单编号（order_sn） 提交日期（create_date）
+     * order : desc (降序) asc(升序)
+     * orderSn : 编号模糊搜索
+     * @param map
+     * @param request
+     * @return
+     */
     //查询订单列表（新入订单、未审核订单、已审核订单）
     //根据订单编号、提交时间排序
     //根据订单编号搜索
+    @ApiOperation(value = "查询订单列表",notes = "新入订单、未审核订单、已审核订单")
+    @GetMapping("/getOrderList")
+    @ResponseBody
+    public R list(@RequestParam Map<String,Object> map,HttpServletRequest request) {
+        SysUser userInfo = UserUtils.getUserInfo(request);
+        Query query = new Query(map);
+        query.put("marketId",userInfo.getMarketId());
+        List<OrderDto> orderDtoList = cbecOrderService.orderList(query);
+        int total = cbecOrderService.total(query);
+        return R.ok().put("data",orderDtoList).put("total",total);
+    }
 
     //查询订单详情
 
