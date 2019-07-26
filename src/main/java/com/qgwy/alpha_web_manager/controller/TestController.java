@@ -76,7 +76,7 @@ public class TestController {
     @ApiOperation("测试文本方式返回")
     public String show2()
     {
-        log.info("hello {},welcome!","fei哥");
+        log.info("hello {},welcome!","fei哥wqe");
         return "好像没什么反应并不是很对";
     }
 
