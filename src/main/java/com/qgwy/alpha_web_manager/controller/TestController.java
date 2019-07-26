@@ -1,6 +1,7 @@
 package com.qgwy.alpha_web_manager.controller;
 
 
+import com.qgwy.alpha_web_manager.annotation.MyLog;
 import com.qgwy.alpha_web_manager.mapper.DailyRecordMapper;
 import com.qgwy.alpha_web_manager.util.DynamicDataSource;
 import com.qgwy.alpha_web_manager.util.R;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 @Controller
 @Slf4j
 @Api(value = "测试类",tags = {"1-测试"})
+@RequestMapping("/test")
 public class TestController {
 
    /* @Autowired
@@ -34,6 +36,7 @@ public class TestController {
     @ResponseBody
     @ApiOperation(value = "1.2-日报查询",notes = "查询选定时候段内某人的所有日报详情")
     @ApiResponses(@ApiResponse(code = 200,message = "请求成功"))
+    @MyLog("查询日报")
     public R show() {
 
         System.out.println(dataSource.getClass());

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("jpa")
+@RequestMapping("jpatest")
 @Slf4j
 @Api(tags = "jpa测试")
 public class JpaController {

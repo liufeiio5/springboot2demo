@@ -27,6 +27,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserMapper sysUserMapper;
 
     @Override
+    @DataSource(name = "second")
     public SysUser findUserByUsernameAndPwd(UserForm userForm) {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
         queryWrapper.eq("username",userForm.getUsername());

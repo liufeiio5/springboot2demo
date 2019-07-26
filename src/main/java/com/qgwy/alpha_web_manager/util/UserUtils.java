@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Component
 public class UserUtils {
@@ -26,14 +27,19 @@ public class UserUtils {
 
     public static SysUser getUserInfo(HttpServletRequest request) {
         String token = request.getHeader("token");
-        if(StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(token)) {
             return null;
         }
-        SysUser userDO = (SysUser) request.getSession().getAttribute(token);
-        if(userDO == null) {
-            //userDO = (SysUser)redisTemplate.opsForValue().get(token);
-            userDO=(SysUser)RedisUtil.get(token);
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            SysUser userDO = (SysUser) session.getAttribute(token);
+            if (userDO == null) {
+                //userDO = (SysUser)redisTemplate.opsForValue().get(token);
+                userDO = (SysUser) RedisUtil.get(token);
+                return userDO;
+            }
+            return  userDO;
         }
-        return userDO;
+        return null;
     }
 }

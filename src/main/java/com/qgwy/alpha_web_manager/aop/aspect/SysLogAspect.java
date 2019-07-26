@@ -72,9 +72,12 @@ public class SysLogAspect {
 
         sysLog.setLogDate(new Timestamp(new Date().getTime()));
         SysUser userInfo = UserUtils.getUserInfo(request);
+        if (userInfo != null) {
 
-        //获取用户名
-        sysLog.setUsername(userInfo.getUserId()+"-"+userInfo.getUsername());
+            //获取用户名
+            sysLog.setUsername(userInfo.getUserId()+"-"+userInfo.getUsername());
+        }
+
         //获取用户ip地址
         //HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         //sysLog.setIp(IPUtils.getIpAddr(request));

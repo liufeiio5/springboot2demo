@@ -37,7 +37,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         //从session中获取token信息
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if (session != null) {
             Object attribute = session.getAttribute(token);
             if (attribute != null) {

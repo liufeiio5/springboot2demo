@@ -88,7 +88,7 @@ public class MvcConfig implements WebMvcConfigurer {
         //不用拦截的路径
         String[] excludePathPatterns = {
                 "/sys-user/login",
-                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
+                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/*test/*"
         };
         registry.addInterceptor((Interceptor())).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new ResourceInterceptor()).excludePathPatterns("/static/**");
