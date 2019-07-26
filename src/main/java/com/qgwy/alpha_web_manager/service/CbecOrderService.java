@@ -28,4 +28,8 @@ public interface CbecOrderService extends IService<CbecOrder> {
     List<OrderDto> orderList(Map<String, Object> map);
 
     int total(Query query);
+
+    OrderDto getOrderDetail(Integer orderId);
+
+    boolean checkOrder(Integer orderId);
 }

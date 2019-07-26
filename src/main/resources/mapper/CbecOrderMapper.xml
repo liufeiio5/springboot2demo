@@ -60,6 +60,7 @@
             <result column="category_name" property="categoryName"></result>
             <result column="product_quantity" property="productQuantity"></result>
             <result column="product_price" property="productPrice"></result>
+            <result column="img_path1" property="imgPath1"></result>
         </collection>
     </resultMap>
 
@@ -70,6 +71,7 @@
         o.create_date,
         pi.product_no,
         pi.product_name,
+        pi.img_path1,
         c.category_name,
         oi.id,
         oi.product_quantity,
@@ -156,8 +158,30 @@
         </where>
     </select>
 
-    <select id="getOrderById" parameterType="java.lang.Integer" parameterMap="OrderDetailMap">
-
+    <select id="getOrderById" parameterType="java.lang.Integer" resultMap="OrderResultMap">
+        SELECT
+        o.order_id,
+        o.order_sn,
+        o.create_date,
+        pi.product_no,
+        pi.product_name,
+        pi.img_path1,
+        c.category_name,
+        oi.id,
+        oi.product_quantity,
+        oi.product_price,
+        o.total_amount,
+        u.user_name,
+        o.delivery_type
+        FROM
+        `cbec_order` o
+        LEFT JOIN cbec_order_item oi ON oi.order_id = o.order_id
+        LEFT JOIN cbec_product_category c ON c.category_id = oi.category_id
+        LEFT JOIN cbec_user u ON u.user_id = o.user_id
+        LEFT JOIN cbec_product_item pi ON pi.product_id = oi.product_id
+        <where>
+            o.order_id = #{orderId}
+        </where>
     </select>
 
 </mapper>

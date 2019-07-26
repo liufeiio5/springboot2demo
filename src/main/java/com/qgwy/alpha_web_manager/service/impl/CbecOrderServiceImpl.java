@@ -135,4 +135,19 @@ public class CbecOrderServiceImpl extends ServiceImpl<CbecOrderMapper, CbecOrder
     public int total(Query query) {
         return cbecOrderMapper.total(query);
     }
+
+    @Override
+    public OrderDto getOrderDetail(Integer orderId) {
+        return cbecOrderMapper.getOrderById(orderId);
+    }
+
+    @Override
+    public boolean checkOrder(Integer orderId) {
+        //修改订单状态为已审核
+        CbecOrder cbecOrder = new CbecOrder();
+        cbecOrder.setIsCheck(1);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("order_id",orderId);
+        return this.update(cbecOrder,queryWrapper);
+    }
 }
