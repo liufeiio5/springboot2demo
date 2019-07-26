@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -80,16 +81,39 @@ public class CbecOrderController {
     }
 
     //查询订单详情
-//    @ApiOperation(value = "查询订单详情",notes = "查询订单及关联商品列表")
-//    @GetMapping("/getOrderDetail")
-//    @ResponseBody
-//    public R getOrderDetail(Integer orderId) {
-//
-//    }
+    @ApiOperation(value = "查询订单详情",notes = "查询订单及关联商品列表")
+    @GetMapping("/getOrderDetail")
+    @ResponseBody
+    public R getOrderDetail(Integer orderId) {
+        OrderDto orderDetail = cbecOrderService.getOrderDetail(orderId);
+        return R.ok().put("data",orderDetail);
+    }
 
 
     //审核
+    @ApiOperation(value = "审核订单",notes = "审核订单")
+    @GetMapping("/checkOrder")
+    @ResponseBody
+    public R checkOrder(Integer orderId) {
+        if(cbecOrderService.checkOrder(orderId)) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
+    }
 
-    //发货
-
+    /**
+     * 1、消减库存
+     * 2、生成出库单
+     * 3、将订单状态修改为已发货
+     * @param orderId
+     * @return
+     */
+    //订单发货
+//    @ApiOperation(value = "订单发货",notes = "审核订单")
+////    @GetMapping("/delivery")
+////    @ResponseBody
+////    public R delivery(Integer orderId) {
+////
+////    }
 }

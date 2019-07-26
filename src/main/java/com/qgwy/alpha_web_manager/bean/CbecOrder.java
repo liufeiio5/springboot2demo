@@ -200,5 +200,10 @@ public class CbecOrder implements Serializable {
      */
     private Integer isCheck;
 
+    /**
+     * 是否已发货 0：未发货；1：已发货
+     */
+    private Integer isDelivery;
+
 
 }

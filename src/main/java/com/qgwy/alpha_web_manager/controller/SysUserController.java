@@ -74,7 +74,9 @@ public class SysUserController {
     @GetMapping("/logout")
     public R logout(HttpServletRequest request) {
         String token = request.getHeader("token");
-        request.getSession().removeAttribute(token);
+//        request.getSession().removeAttribute(token);
+        //销毁session
+        request.getSession().invalidate();
         log.info("LoginController.logout|session中成功退出用户 token={}",token);
         RedisUtil.del(token);
         log.info("LoginController.logout|redis中成功退出用户 token={}",token);
