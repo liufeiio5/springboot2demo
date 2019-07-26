@@ -84,8 +84,11 @@ spring:
     virtual-host: my_vhost
 
 log:
-  level: debug
+  level: info
 
 server:
   port: 39000
+  servlet:
+    session:
+      timeout: 10s
 

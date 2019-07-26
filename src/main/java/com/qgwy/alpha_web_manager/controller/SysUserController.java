@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 
 import java.util.Date;
@@ -51,6 +52,7 @@ public class SysUserController {
             return R.error("密码不能为空");
         }
         //为调试方便，密码暂未加密
+        HttpSession session = request.getSession();
         SysUser user = sysUserService.findUserByUsernameAndPwd(userForm);
         if(user == null) {
             log.error("用户名或密码错误|前端输入的数据：userForm = {}",userForm);
@@ -59,7 +61,7 @@ public class SysUserController {
         user.setLastLoginTime(new Date());
         //用户存在，生成token，将用户信息放入session和redis
         String token = TokenUtils.generatorToken(userForm.getUsername());
-        request.getSession().setAttribute(token,user);
+        session.setAttribute(token,user);
         log.info("SysUserController.login|将用户信息放入session user={}",user);
         //放入redis,设置过期时间为一天
         RedisUtil.set(token,user,24 * 60 * 60);

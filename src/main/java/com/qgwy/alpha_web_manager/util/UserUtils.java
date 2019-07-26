@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class UserUtils {
-    @SuppressWarnings("rawtypes")
+    /*@SuppressWarnings("rawtypes")
     private static RedisTemplate redisTemplate;
 
     @Autowired
     @SuppressWarnings("rawtypes")
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
-    }
+    }*/
 
-    @SuppressWarnings("rawtypes")
+    /*@SuppressWarnings("rawtypes")
     public static RedisTemplate getRedisTemplate() {
         return redisTemplate;
-    }
+    }*/
 
     public static SysUser getUserInfo(HttpServletRequest request) {
         String token = request.getHeader("token");
@@ -31,7 +31,8 @@ public class UserUtils {
         }
         SysUser userDO = (SysUser) request.getSession().getAttribute(token);
         if(userDO == null) {
-            userDO = (SysUser)redisTemplate.opsForValue().get(token);
+            //userDO = (SysUser)redisTemplate.opsForValue().get(token);
+            userDO=(SysUser)RedisUtil.get(token);
         }
         return userDO;
     }

@@ -16,6 +16,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -36,22 +37,26 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         //从session中获取token信息
-        Object attribute = request.getSession().getAttribute(token);
-        if(attribute != null) {
-            logger.info("LoginInterceptor.preHandle|用户已登录，放行! attribute ={}",attribute);
+        HttpSession session = request.getSession();
+        if (session != null) {
+            Object attribute = session.getAttribute(token);
+            if (attribute != null) {
+                logger.info("LoginInterceptor.preHandle|用户已登录，放行! attribute ={}", attribute);
+                return true;
+            }
+            //从redis中获取用户信息
+            if (!redisTemplate.hasKey(token)) {
+                //errorMessage 中文乱码 TODO
+                logger.error("LoginInterceptor.preHandle|token=" + token + " 不存在");
+                returnErrorMessage(response, ServiceCode.TOKEN_IS_VAILD.getCode(), ServiceCode.TOKEN_IS_VAILD.getMsg());
+                return false;
+            }
+            //把用户信息放到session中
+            SysUser sysUser = (SysUser) redisTemplate.opsForValue().get(token);
+            session.setAttribute(token, sysUser);
             return true;
         }
-        //从redis中获取用户信息
-        if(!redisTemplate.hasKey(token)) {
-            //errorMessage 中文乱码 TODO
-            logger.error("LoginInterceptor.preHandle|token="+token+" 不存在");
-            returnErrorMessage(response, ServiceCode.TOKEN_IS_VAILD.getCode(), ServiceCode.TOKEN_IS_VAILD.getMsg());
-            return false;
-        }
-        //把用户信息放到session中
-        SysUser sysUser = (SysUser) redisTemplate.opsForValue().get(token);
-        request.getSession().setAttribute(token,sysUser);
-        return true;
+        return false;
     }
 
     private void returnErrorMessage(HttpServletResponse response, String code, String errorMessage) throws IOException {
@@ -63,7 +68,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         PrintWriter out = response.getWriter();
 //Assuming your json object is **jsonObject**, perform the following, it will return your json object
         ObjectMapper mapper = new ObjectMapper();
-        String jsonOfRST =  mapper.writeValueAsString(rst);
+        String jsonOfRST = mapper.writeValueAsString(rst);
         out.print(jsonOfRST);
         out.flush();
     }

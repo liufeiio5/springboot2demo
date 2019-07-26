@@ -10,7 +10,7 @@ spring:
       max-file-size: 10Mb
       max-request-size: 10Mb
     session:
-      timeout: 3000s
+      timeout: 10s
     context-path: /
 
     chain:
