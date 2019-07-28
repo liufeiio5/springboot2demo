@@ -3,7 +3,6 @@ package com.qgwy.alpha_web_manager.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.qgwy.alpha_web_manager.interceptor.LoginInterceptor;
 import com.qgwy.alpha_web_manager.interceptor.ResourceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +23,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.qgwy.alpha_web_manager")
+@ComponentScan("com.qgwy")
 public class MvcConfig implements WebMvcConfigurer {
 
     @Override
@@ -42,13 +41,13 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/resources/")
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/")
-                .addResourceLocations("classpath:/template/");
+                .addResourceLocations("classpath:/templates/");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/META-INF/resources/")
                 .addResourceLocations("classpath:/resources/")
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/")
-                .addResourceLocations("classpath:/template/");
+                .addResourceLocations("classpath:/templates/");
         //访问swagger-ui
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
@@ -76,10 +75,10 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     //登录拦截器
-    @Bean
+    /*@Bean
     public LoginInterceptor Interceptor(){
         return new LoginInterceptor();
-    }
+    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -90,7 +89,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 "/sys-user/login",
                 "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/*test/*"
         };
-        registry.addInterceptor((Interceptor())).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
+        //registry.addInterceptor((Interceptor())).addPathPatterns(addPathPatterns).excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new ResourceInterceptor()).excludePathPatterns("/static/**");
     }
 
@@ -111,7 +110,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setTemplateMode("HTML");
-        templateResolver.setPrefix("classpath:/template/");
+        templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("utf-8");
         templateResolver.setCacheable(false);
