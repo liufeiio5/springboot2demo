@@ -1,5 +1,6 @@
 package com.qgwy.template.controller;
 
+import com.qgwy.template.annotation.MyLog;
 import com.qgwy.template.bean.User2;
 import com.qgwy.template.mapper.User2Repository;
 import com.qgwy.template.util.R;
@@ -33,6 +34,7 @@ public class JpaController {
 
     @PostMapping("/save")//保存用户
     @ResponseBody
+    @MyLog("添加用户")
     @ApiOperation(value ="1-jpa-保存用户",notes = "测试用jpa插入一条数据")
     public R saveUser(User2 user) {
         if (user != null && !StringUtils.isEmpty(user.getName())) {

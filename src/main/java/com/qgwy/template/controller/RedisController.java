@@ -4,8 +4,6 @@ import com.qgwy.template.bean.User2;
 import com.qgwy.template.util.R;
 import com.qgwy.template.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +20,18 @@ public class RedisController {
 //
 //
 //
-//    @RequestMapping("/save")
-//    @ResponseBody
-//    public R testRedis(){
-//        User2 userT = new User2().setName("Tom").setPhone("1507800000");
-//        redisTemplate.opsForSet().add("Tom",userT);
-//        return R.ok().put("data",userT);
-//    }
+   @RequestMapping("/save")
+    @ResponseBody
+    public R testRedis(){
+        User2 userT = new User2().setName("Tom").setPhone("1507800000");
+
+       Boolean result = RedisUtil.set("Tom",userT.toString());
+       if(result){
+           return R.ok("插入成功");
+       }else{
+           return R.error("插入失败");
+       }
+    }
 
 
     @GetMapping(value = "/getValueFromRedis/{key}")

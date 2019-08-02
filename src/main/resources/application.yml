@@ -62,7 +62,6 @@ spring:
     uri-encoding: UTF-8
 
 
-
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml,classpath:mybatis/mapper/*.xml
   type-aliases-package: com.qgwy.template.bean

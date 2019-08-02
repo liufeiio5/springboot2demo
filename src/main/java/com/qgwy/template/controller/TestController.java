@@ -1,22 +1,28 @@
 package com.qgwy.template.controller;
 
 
+import com.qgwy.template.bean.SysLog;
 import com.qgwy.template.mapper.DailyRecordMapper;
-import com.qgwy.template.service.DailyRecordService;
+import com.qgwy.template.mapper.SyslogJpaMapper;
 import com.qgwy.template.util.DynamicDataSource;
+import com.qgwy.template.util.LogUtil;
 import com.qgwy.template.util.R;
-import io.swagger.annotations.*;
-import lombok.extern.java.Log;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -27,6 +33,8 @@ public class TestController {
    /* @Autowired
     @Lazy
     private DailyRecordService dailyRecord;*/
+   @Autowired
+   private SyslogJpaMapper jpaMapper;
 
     @Autowired
     private DynamicDataSource dataSource;
@@ -99,5 +107,29 @@ public class TestController {
         return "jsp/index2";
     }
 
+    @GetMapping("/showlog")
+    @ResponseBody
+    public R testLog(){
+        //jpaMapper.save(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
+        LogUtil.insertLog(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
+        return R.ok().put("data","success");
+    }
 
+    @GetMapping("/encPass")
+    @ResponseBody
+    public R testPass(){
+        //jpaMapper.save(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
+
+            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+            //加密所需的salt(盐)
+            textEncryptor.setPassword("G0CvDz7oJn6");
+            //要加密的数据（数据库的用户名或密码）
+            String username = textEncryptor.encrypt("root");
+            String password = textEncryptor.encrypt("123456");
+            System.out.println("username:"+username);
+            System.out.println("password:"+password);
+
+        //LogUtil.insertLog(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
+        return R.ok().put("data","success");
+    }
 }
