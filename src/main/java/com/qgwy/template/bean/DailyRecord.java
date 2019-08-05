@@ -3,10 +3,12 @@ package com.qgwy.template.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 
 @Data
 @Accessors(chain = true)
-public class DailyRecord {
+public class DailyRecord implements Serializable {
 
     private Integer id;
     private Integer userId;

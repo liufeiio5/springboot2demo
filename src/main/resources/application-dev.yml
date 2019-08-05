@@ -4,7 +4,7 @@ spring:
     druid:
       first:  #数据源1
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.100.36:3306/cbec?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        url: jdbc:mysql://192.168.100.36:3306/daily?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
 #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
         username: ENC(gxANzwM5Tr6Ay5q8wIyWxQ==)
         password: ENC(z8kFSfOtjUuGlOTScmQFCg==)
@@ -91,7 +91,7 @@ log:
  level: debug
 
 server:
-  port: 39000
+  port: 49000
 
 jasypt:
   encryptor:

@@ -1,10 +1,14 @@
 package com.qgwy.template.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.qgwy.template.bean.DailyRecord;
 import com.qgwy.template.bean.SysLog;
 import com.qgwy.template.mapper.DailyRecordMapper;
 import com.qgwy.template.mapper.SyslogJpaMapper;
 import com.qgwy.template.util.DynamicDataSource;
+import com.qgwy.template.util.FastJsonUtil;
 import com.qgwy.template.util.LogUtil;
 import com.qgwy.template.util.R;
 import io.swagger.annotations.Api;
@@ -12,11 +16,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -38,6 +43,9 @@ public class TestController {
 
     @Autowired
     private DynamicDataSource dataSource;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private DailyRecordMapper dailyRecordMapper;
@@ -58,6 +66,27 @@ public class TestController {
         ArrayList<HashMap<String, Object>> daily = dailyRecordMapper.getDaily(92, "20190601", "20190705");
         log.info("查询日报数据如下:{}",daily);
         return R.ok().put("data",daily);
+    }
+    @GetMapping("/show/http")
+    @ResponseBody
+    @ApiOperation(value = "1.2-以http方式做日报查询",notes = "查询选定时候段内某人的所有日报详情")
+    @ApiResponses(@ApiResponse(code = 200,message = "请求成功"))
+    public R showHttp() {
+
+        String apiURL = "http://192.168.100.56:39000/show";
+        //String apiURL = "http://192.168.100.56:39000/show2";
+        //DailyRecord[] result = restTemplate.getForObject(apiURL, DailyRecord[].class);
+        String result = restTemplate.getForObject(apiURL, String.class);
+        HashMap<String, Object> resultMap = FastJsonUtil.json2Map(result);
+        System.out.println(resultMap.get("data"));
+        JSONArray jsonArray= (JSONArray) resultMap.get("data");
+        System.out.println(jsonArray.get(1));
+        List<DailyRecord> list=JSONObject.parseArray(jsonArray.toJSONString(),DailyRecord.class);
+        System.out.println(list);
+        //System.out.println(data);
+        //ArrayList<HashMap<String, Object>> daily = dailyRecordMapper.getDaily(92, "20190601", "20190705");
+        log.info("查询日报数据如下:{}",result);
+        return R.ok().put("data",resultMap.get("data"));
     }
 
     @GetMapping("/index")
@@ -115,7 +144,7 @@ public class TestController {
         return R.ok().put("data","success");
     }
 
-    @GetMapping("/encPass")
+    /*@GetMapping("/encPass")
     @ResponseBody
     public R testPass(){
         //jpaMapper.save(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
@@ -131,5 +160,5 @@ public class TestController {
 
         //LogUtil.insertLog(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
         return R.ok().put("data","success");
-    }
+    }*/
 }
