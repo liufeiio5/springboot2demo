@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qgwy.template.mapper.TownMapper">
+    <resultMap id="town" type="com.qgwy.template.bean.Town">
+        <id column="id" property="Id"/>
+        <result column="name" property="name"/>
+        <result column="town_id" property="townId"/>
+        <result column="country_id" property="countryId"/>
+    </resultMap>
+
+
+    <select id="getTownList" resultType="com.qgwy.template.bean.Town">
+        select * from town where id = #{id}
+    </select>
+
+    <update id="updateTown">
+        update town set name=#{name} where id=#{id}
+    </update>
+
+    <delete id="deleteTownById">
+        delete from town where id=#{id}
+    </delete>
+
+</mapper>

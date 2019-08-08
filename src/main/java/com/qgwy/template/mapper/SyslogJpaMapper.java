@@ -4,8 +4,6 @@ import com.qgwy.template.bean.SysLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * t_user 操作
  *

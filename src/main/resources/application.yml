@@ -72,6 +72,17 @@ mybatis-plus:
     # 逻辑删除配置
     logic-delete-value: 0
     logic-not-delete-value: 1
+cache:
+  default:
+    expire-time: 10000L
+  user:
+    expire-time: 6000L
+    name: townList
+
+
+
+
+
 
 app:
   id: qgwy-eureka-client

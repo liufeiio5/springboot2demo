@@ -1,8 +1,8 @@
 package com.qgwy.template.controller;
 
 
-import com.qgwy.template.bean.User2;
 import com.qgwy.template.mapper.User2Repository;
+import com.qgwy.template.bean.User2;
 import com.qgwy.template.util.R;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

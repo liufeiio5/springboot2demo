@@ -1,13 +1,13 @@
 package com.qgwy.template.config;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
+import com.bstek.ureport.definition.datasource.BuildinDatasource;
 import com.qgwy.template.util.DynamicDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.bstek.ureport.definition.datasource.BuildinDatasource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 
 

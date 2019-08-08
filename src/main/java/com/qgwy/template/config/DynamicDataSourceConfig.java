@@ -3,13 +3,12 @@ package com.qgwy.template.config;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.qgwy.template.constants.DataSourceNames;
 import com.qgwy.template.util.DynamicDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
+
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;

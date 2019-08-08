@@ -1,12 +1,7 @@
 package com.qgwy.template.util;
 
-import org.apache.poi.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
