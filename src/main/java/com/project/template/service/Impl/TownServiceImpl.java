@@ -22,7 +22,7 @@ public class TownServiceImpl implements TownService {
 
 
     @Override
-    @Cacheable(key = "'getTownList_'+#id")
+    @Cacheable(key = "'getTownList_'+#id",unless = "#result == null",sync = true)
     public Town getTownList(Integer id){
         return townMapper.getTownList(id);
     }
