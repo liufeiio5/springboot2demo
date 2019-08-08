@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +41,9 @@ public class TestController {
     private DailyRecordService dailyRecord;*/
    @Autowired
    private SyslogJpaMapper jpaMapper;
+
+   @Value("${apollo-name:haha}")
+   private String apolloName;
 
     @Autowired
     private DynamicDataSource dataSource;
@@ -73,7 +77,7 @@ public class TestController {
     @ApiResponses(@ApiResponse(code = 200,message = "请求成功"))
     public R showHttp() {
 
-        String apiURL = "http://192.168.100.56:39000/show";
+        String apiURL = "http://192.168.100.56:49000/show";
         //String apiURL = "http://192.168.100.56:39000/show2";
         //DailyRecord[] result = restTemplate.getForObject(apiURL, DailyRecord[].class);
         String result = restTemplate.getForObject(apiURL, String.class);
@@ -161,4 +165,10 @@ public class TestController {
         //LogUtil.insertLog(new SysLog().setClazName("dsfdsf").setMethodName("m-54654").setLogLevel("info").setMessage("插入测试").setLogDate(new Timestamp(new Date().getTime())));
         return R.ok().put("data","success");
     }*/
+
+    @GetMapping("/hi/apollo")
+    @ResponseBody
+    public String hiApollo(){
+        return apolloName;
+    }
 }

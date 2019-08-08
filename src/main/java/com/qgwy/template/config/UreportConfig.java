@@ -1,5 +1,5 @@
 package com.qgwy.template.config;
- 
+
 import com.bstek.ureport.console.UReportServlet;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

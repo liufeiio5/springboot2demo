@@ -72,3 +72,17 @@ mybatis-plus:
     # 逻辑删除配置
     logic-delete-value: 0
     logic-not-delete-value: 1
+
+app:
+  id: qgwy-eureka-client
+apollo:
+  meta: http://192.168.100.53:8080
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true
+ureport:
+  fileStoreDir: /WEB-INF/ureportfiles
+  disableFileProvider: false
+  disableHttpSessionReportCache: false
+  debug: true
