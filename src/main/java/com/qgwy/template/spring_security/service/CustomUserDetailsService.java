@@ -1,8 +1,8 @@
 package com.qgwy.template.spring_security.service;
 
-import com.qgwy.template.spring_security.bean.SysRole;
-import com.qgwy.template.spring_security.bean.SysUser;
-import com.qgwy.template.spring_security.bean.SysUserRole;
+import com.qgwy.template.spring_security.bean.*;
+import com.qgwy.template.spring_security.mapper.SysPermissionMapper;
+import com.qgwy.template.spring_security.mapper.SysRolePermissionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private SysUserRoleService userRoleService;
 
+    @Autowired
+    private SysRolePermissionMapper rolePermissionMapper;
+
+    @Autowired
+    private SysPermissionMapper permissionMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -42,8 +48,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 添加权限
         List<SysUserRole> userRoles = userRoleService.listByUserId(user.getId());
         for (SysUserRole userRole : userRoles) {
+
             SysRole role = roleService.selectById(userRole.getRoleId());
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+
+            List<SysRolePermission> rolePermissions = rolePermissionMapper.listByRoleId(role.getId());
+            for (SysRolePermission rolePermission : rolePermissions) {
+                SysPermission permission = permissionMapper.selectById(rolePermission.getPermissionId());
+
+                authorities.add(new SimpleGrantedAuthority(permission.getName()));
+            }
         }
 
         // 返回UserDetails实现类

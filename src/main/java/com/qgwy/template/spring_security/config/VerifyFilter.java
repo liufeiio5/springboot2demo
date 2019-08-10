@@ -1,8 +1,8 @@
 package com.qgwy.template.spring_security.config;
 
 import com.qgwy.template.spring_security.exception.VerifyCodeException;
+import com.qgwy.template.util.RedisUtil;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -21,14 +21,12 @@ public class VerifyFilter extends OncePerRequestFilter {
 
     private static final PathMatcher pathMatcher = new AntPathMatcher();
 
-    private StringRedisTemplate stringRedisTemplate;
 
     private String prefix;
 
     public VerifyFilter() {}
 
-    public VerifyFilter(StringRedisTemplate stringRedisTemplate, String prefix) {
-        this.stringRedisTemplate = stringRedisTemplate;
+    public VerifyFilter(  String prefix) {
         this.prefix = prefix;
     }
 
@@ -60,10 +58,12 @@ public class VerifyFilter extends OncePerRequestFilter {
      */
     private boolean validateVerify(HttpServletRequest request, String uuid, String vCode) {
         // 查询验证码
-        String code = stringRedisTemplate.opsForValue().get(prefix + uuid);
+        //String code = (String) stringRedisTemplate.opsForValue().get(prefix + uuid);
+        String code = (String) RedisUtil.get(prefix + uuid);
 
         // 清除验证码
-        stringRedisTemplate.delete(prefix + uuid);
+        //stringRedisTemplate.delete(prefix + uuid);
+        //RedisUtil.deleteKey(prefix + uuid);
 
         if (StringUtils.isBlank(code)) {
             //手动设置异常
@@ -74,7 +74,7 @@ public class VerifyFilter extends OncePerRequestFilter {
             request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new VerifyCodeException("验证码错误"));
             return false;
         }
-
+        request.getSession(false).removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         logger.info("验证码：" + code + "用户输入：" + vCode);
         return true;
     }

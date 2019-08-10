@@ -8,7 +8,7 @@ import com.qgwy.template.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
@@ -48,7 +48,7 @@ public class LoginController {
     @RequestMapping("/login/error")
     @ResponseBody
     public R loginError(HttpServletRequest request) {
-        AuthenticationException authenticationException = (AuthenticationException) request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        AuthenticationException authenticationException = (AuthenticationException) request.getSession(false).getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         log.info("authenticationException={}", authenticationException);
         // 图片验证码校验
         if(authenticationException instanceof VerifyCodeException) {
@@ -89,7 +89,7 @@ public class LoginController {
     @Value("${loginCode.prefix}")
     private String prefix;
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
     /**
      * 获取验证码
      */

@@ -1,16 +1,16 @@
 package com.qgwy.template.spring_security.mapper;
 
 import com.qgwy.template.annotation.DataSource;
-import com.qgwy.template.spring_security.bean.SysUserRole;
+import com.qgwy.template.spring_security.bean.SysRolePermission;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
-public interface SysUserRoleMapper {
+public interface SysRolePermissionMapper {
 
-    @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
+    @Select("SELECT * FROM sys_role_permission WHERE role_id = #{roleId}")
     @DataSource(name = "second")
-    List<SysUserRole> listByUserId(Integer userId);
+    List<SysRolePermission> listByRoleId(Integer roleId);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("redis")
+@RequestMapping("redis-test")
 @Slf4j
 public class RedisController {
 
@@ -39,10 +39,13 @@ public class RedisController {
     public R getValueFromRedis(@PathVariable("key") String key){
         if(key != null){
             Object object = RedisUtil.get(key);
-            log.info("获取数据{}成功",object);
-            return R.ok().put("data",object);
+            if (object != null) {
+                log.info("获取数据{}成功",object);
+                return R.ok().put("data",object);
+            }
+            return R.error("没有对应数据");
         }else{
-            return R.error("没有找到数据，或参数错误");
+            return R.error("输入非法，key不能为空");
         }
     }
 

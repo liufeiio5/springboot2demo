@@ -95,7 +95,7 @@ spring:
       password: tmdwrn
 #security登录-验证码配置
 loginCode:
-  expiration: 1 #登录验证码过期时间，单位 分钟
+  expiration: 3 #登录验证码过期时间，单位 分钟
   prefix: login_code #验证码redis的key值前缀
 
 
