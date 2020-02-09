@@ -4,10 +4,10 @@ spring:
     druid:
       first:  #数据源1
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.100.36:3306/daily?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        url: jdbc:mysql://192.168.1.6:3306/bi_report?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
 #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
-        username: ENC(gxANzwM5Tr6Ay5q8wIyWxQ==)
-        password: ENC(z8kFSfOtjUuGlOTScmQFCg==)
+        username: ENC(OPub1FZ3yqWpPPXBYP+b3A==)
+        password: ENC(ZJf7/u+gsyNd+hFrNN3NeQIBVsEEH6mI)
 
         #   数据源其他配置
         initialSize: 10
@@ -37,11 +37,10 @@ spring:
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
       second:  #数据源2
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://192.168.100.36:3306/security_test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
-#        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
-        username: ENC(gxANzwM5Tr6Ay5q8wIyWxQ==)
-        password: ENC(z8kFSfOtjUuGlOTScmQFCg==)
+        url: jdbc:mysql://192.168.1.6:3306/bi_report?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        username: ENC(OPub1FZ3yqWpPPXBYP+b3A==)
+        password: ENC(ZJf7/u+gsyNd+hFrNN3NeQIBVsEEH6mI)
         driverClassName: com.mysql.jdbc.Driver
           #   数据源其他配置
         initialSize: 10
@@ -69,34 +68,14 @@ spring:
         useGlobalDataSourceStat: true
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       test:  #数据源3
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://192.168.100.36:3306/mybatisplus?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
-#        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
-        username: ENC(gxANzwM5Tr6Ay5q8wIyWxQ==)
-        password: ENC(z8kFSfOtjUuGlOTScmQFCg==)
         driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://192.168.1.6:3306/bi_report?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        #        url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true
+        username: ENC(OPub1FZ3yqWpPPXBYP+b3A==)
+        password: ENC(ZJf7/u+gsyNd+hFrNN3NeQIBVsEEH6mI)
 
   #debug 开发模式
   debug: true
-  redis:
-    host: 192.168.100.50
-    password: qgwyadmin
-    database: 5
-    #连接超时时间
-    timeout: 5000
-  rabbitmq:
-    host: 192.168.100.51
-    username: admin
-    password: admin
-    virtual-host: my_vhost
-  security:
-    user:
-      name: fei
-      password: tmdwrn
-#security登录-验证码配置
-loginCode:
-  expiration: 3 #登录验证码过期时间，单位 分钟
-  prefix: login_code #验证码redis的key值前缀
 
 
 log:
@@ -108,13 +87,6 @@ server:
 jasypt:
   encryptor:
     password: G0CvDz7oJn6
-app:
-  id: qgwy-eureka-client
-apollo:
-  meta: http://192.168.100.53:8080
-  bootstrap:
-    enabled: true
-    eagerLoad:
-      enabled: true
+
 
 #apollo.cacheDir=/var/run/apollo-cache

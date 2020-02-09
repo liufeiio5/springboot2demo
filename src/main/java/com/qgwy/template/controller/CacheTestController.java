@@ -1,3 +1,4 @@
+/*
 package com.qgwy.template.controller;
 
 
@@ -53,3 +54,4 @@ public class CacheTestController {
         return R.ok().put("message","删除town下的所有缓存");
     }
 }
+*/

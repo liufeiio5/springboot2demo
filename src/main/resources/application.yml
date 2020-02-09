@@ -62,16 +62,7 @@ spring:
     uri-encoding: UTF-8
 
 
-mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml,classpath:mybatis/mapper/*.xml
-  type-aliases-package: com.qgwy.template.bean,com.qgwy.template.vo
-  configuration:
-    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    # 逻辑删除配置
-    logic-delete-value: 0
-    logic-not-delete-value: 1
+
 cache:
   default:
     expire-time: 10000L
@@ -80,20 +71,3 @@ cache:
     name: townList
 
 
-
-
-
-
-app:
-  id: qgwy-eureka-client
-apollo:
-  meta: http://192.168.100.53:8080
-  bootstrap:
-    enabled: true
-    eagerLoad:
-      enabled: true
-ureport:
-  fileStoreDir: /WEB-INF/ureportfiles
-  disableFileProvider: false
-  disableHttpSessionReportCache: false
-  debug: true
